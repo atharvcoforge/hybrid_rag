@@ -1,0 +1,2 @@
+{"q": "SKU-7842-XL", "doc_id": "guide.md", "must_contain": "SKU-7842-XL", "kind": "lexical"}
+{"q": "How does the housing attach to the rail?", "doc_id": "guide.md", "must_contain": "clicks into the rail", "kind": "semantic"}
