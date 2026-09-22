@@ -3,24 +3,67 @@ import os
 import secrets
 import time
 import urllib.error
+from contextlib import asynccontextmanager
 from pathlib import Path
 
-from fastapi import Depends, FastAPI, Header, HTTPException
+from fastapi import Depends, FastAPI, Header, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 
+from rag.cache import AnswerCache
 from rag.evaluate import evaluate, load_rows, pick_live, row_hit
 from rag.gates import check_all
 from rag.generate import complete, stream_answer, writer_up
+from rag.health import CircuitBreaker, HealthState
 from rag.models import EMBED_MODEL, EMBED_REVISION, PIPELINE_VERSION
 from rag.normalize import normalize_text
 from rag.pipeline import ingest, query
+from rag.queue import BusyError, InferenceQueue
 from rag.telemetry import log_event, new_request_id
 
-_answers = {}
+_answers = AnswerCache()
+_health = HealthState()
+_circuit = CircuitBreaker()
+_queue = InferenceQueue(maxsize=int(os.environ.get("INFERENCE_QUEUE", "8")))
+_index = None
 
-app = FastAPI()
+
+@asynccontextmanager
+async def lifespan(_app: FastAPI):
+    global _index
+    _health.warmed = False
+    try:
+        from rag.store import Index
+
+        store = Index(index_dir(), EMBED_MODEL, EMBED_REVISION, PIPELINE_VERSION)
+        store.open()
+        _index = store
+        _health.index_generation = store.index_generation()
+        # Warm tokenizer/encoder when weights are present; skip quietly in tests.
+        try:
+            from rag.embed import load_embedder
+
+            load_embedder()
+        except Exception as exc:
+            _health.note(f"embedder warmup skipped: {exc}")
+        _health.warmed = True
+        _health.writer_ok = writer_up()
+        if not _health.writer_ok:
+            _health.note("Generator down — extractive mode only")
+    except Exception as exc:
+        _health.note(f"index open failed: {exc}")
+        _health.warmed = True  # ready to serve degraded responses
+    yield
+    if _index is not None:
+        try:
+            _index.close()
+        except Exception:
+            pass
+        _index = None
+
+
+app = FastAPI(lifespan=lifespan)
 
 
 def _cors_origins() -> list[str]:
@@ -106,19 +149,35 @@ def hit_dict(hit, cite: int) -> dict:
         "norm_end": hit.end_char,
         "score": hit.score,
         "confident": hit.confident,
+        "derived": bool(getattr(hit, "derived", False)),
+        "ocr": bool(getattr(hit, "ocr", False)),
     }
 
 
-def iter_query(text, search, write, mode, cache=None):
+def iter_query(
+    text,
+    search,
+    write,
+    mode,
+    cache=None,
+    *,
+    generation: int = 0,
+    circuit: CircuitBreaker | None = None,
+    health: HealthState | None = None,
+):
     if cache is None:
         cache = _answers
+    if circuit is None:
+        circuit = _circuit
+    if health is None:
+        health = _health
     cleaned = normalize_text(text or "")
     request_id = new_request_id()
     if not cleaned:
         yield ("error", {"message": "empty query", "request_id": request_id})
         return
-    key = cleaned.casefold()
-    saved = cache.get(key)
+    key = AnswerCache.make_key(cleaned, generation, mode)
+    saved = cache.get(key) if hasattr(cache, "get") else cache.get(key)
     if saved is not None:
         yield ("meta", {**saved["meta"], "retrieve_ms": 0, "cached": True, "request_id": request_id})
         if saved["answer"]:
@@ -129,6 +188,9 @@ def iter_query(text, search, write, mode, cache=None):
     result = search(cleaned, mode)
     retrieve_ms = round((time.perf_counter() - started) * 1000)
     stages = dict(result.stages_ms or {})
+    degrade = list(health.messages) if health else []
+    if getattr(result, "warnings", None):
+        degrade.extend(result.warnings)
     meta = {
         "hits": [hit_dict(hit, index) for index, hit in enumerate(result.hits, start=1)],
         "reason": result.reason,
@@ -137,6 +199,8 @@ def iter_query(text, search, write, mode, cache=None):
         "stages_ms": stages,
         "cached": False,
         "request_id": request_id,
+        "degraded": degrade,
+        "index_generation": generation,
     }
     log_event(
         "retrieve",
@@ -152,6 +216,14 @@ def iter_query(text, search, write, mode, cache=None):
         cache[key] = {"meta": meta, "answer": ""}
         yield ("done", {"first_token_ms": None, "answer": "", "request_id": request_id})
         return
+    # Circuit open or writer down → extractive: passages only, honest banner.
+    if not circuit.allow() or not health.writer_ok:
+        banner = "Generator unavailable — showing retrieved passages only."
+        meta = {**meta, "extractive": True, "degraded": degrade + [banner]}
+        cache[key] = {"meta": meta, "answer": ""}
+        yield ("meta", meta)
+        yield ("done", {"first_token_ms": None, "answer": "", "request_id": request_id, "extractive": True})
+        return
     first = None
     write_started = time.perf_counter()
     parts = []
@@ -162,8 +234,20 @@ def iter_query(text, search, write, mode, cache=None):
             if first is None:
                 first = round((time.perf_counter() - write_started) * 1000)
             parts.append(piece)
-    except (OSError, urllib.error.URLError, TimeoutError):
-        yield ("error", {"message": "writer unavailable", "request_id": request_id})
+        circuit.record_success()
+    except Exception as exc:
+        circuit.record_failure()
+        health.note("Generator stalled or failed")
+        partial = "".join(parts)
+        yield (
+            "error",
+            {
+                "message": "writer unavailable" if not partial else "Answer incomplete",
+                "partial": partial,
+                "request_id": request_id,
+                "detail": type(exc).__name__,
+            },
+        )
         return
     answer = "".join(parts)
     gate = check_all(answer, result.hits)
@@ -342,25 +426,89 @@ def _search(text, mode):
 def health():
     store = index_dir() / "rag.sqlite"
     legacy = index_dir() / "side.sqlite"
-    return {"index": store.exists() or legacy.exists(), "writer": writer_up()}
+    snap = _health.snapshot()
+    snap.update(
+        {
+            "index": store.exists() or legacy.exists(),
+            "writer": writer_up() if snap["writer_ok"] else False,
+            "circuit": _circuit.state,
+            "cache_hit_rate": _answers.hit_rate(),
+            "queue_in_flight": _queue.in_flight,
+        }
+    )
+    return snap
+
+
+@app.get("/api/ready")
+def ready():
+    if not _health.warmed:
+        raise HTTPException(status_code=503, detail="warming up")
+    return {"ready": True, "index_generation": _health.index_generation}
 
 
 @app.post("/api/query")
-def ask(body: QueryBody):
+def ask(body: QueryBody, request: Request):
     mode = live_mode()
+    try:
+        _queue.acquire()
+    except BusyError as exc:
+        raise HTTPException(
+            status_code=429,
+            detail="Busy — retrying",
+            headers={"Retry-After": str(exc.retry_after)},
+        ) from exc
 
     def gen():
-        for event, data in iter_query(body.q, _search, stream_answer, mode):
-            yield sse(event, data)
+        try:
+            if await_disconnected(request):
+                return
+            for event, data in iter_query(
+                body.q,
+                _search,
+                stream_answer,
+                mode,
+                cache=_answers,
+                generation=_health.index_generation,
+                circuit=_circuit,
+                health=_health,
+            ):
+                yield sse(event, data)
+        finally:
+            _queue.release()
 
     return StreamingResponse(gen(), media_type="text/event-stream")
+
+
+def await_disconnected(request: Request) -> bool:
+    # Sync route: best-effort. StreamingResponse cancel is handled by the ASGI server.
+    del request
+    return False
 
 
 @app.post("/api/ingest")
 def ingest_route(_auth: None = Depends(require_token), body: IngestBody | None = None):
     del body
     items = ingest(corpus_root(), index_dir())
-    return {"items": [{"doc_id": item.doc_id, "status": item.status, "chunks": item.chunks} for item in items]}
+    _answers.clear()
+    try:
+        from rag.store import Index
+
+        with Index(index_dir(), EMBED_MODEL, EMBED_REVISION, PIPELINE_VERSION) as store:
+            _health.index_generation = store.index_generation()
+    except Exception:
+        _health.index_generation += 1
+    return {
+        "items": [
+            {
+                "doc_id": item.doc_id,
+                "status": item.status,
+                "chunks": item.chunks,
+                "warnings": item.warnings,
+            }
+            for item in items
+        ],
+        "index_generation": _health.index_generation,
+    }
 
 
 @app.get("/api/eval")

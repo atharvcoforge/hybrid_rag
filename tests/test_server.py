@@ -85,3 +85,49 @@ def test_gate_withholds_uncited_answer():
     events = list(iter_query("Who signed?", search, write, "rrf", cache={}))
     assert events[-1][1]["answer"] == "The documents do not say."
     assert events[-1][1]["verification"]["reason"] == "missing_citation"
+
+
+def test_extractive_when_circuit_is_open():
+    from rag.health import CircuitBreaker, HealthState
+
+    breaker = CircuitBreaker(fail_threshold=1, reset_s=60)
+    breaker.record_failure()
+    health = HealthState(writer_ok=True)
+
+    def search(_text, _mode):
+        return Retrieval(hits=[_hit()])
+
+    def write(_text, _hits):
+        raise AssertionError("writer must not run")
+
+    events = list(
+        iter_query(
+            "Who signed?",
+            search,
+            write,
+            "rrf",
+            cache={},
+            circuit=breaker,
+            health=health,
+        )
+    )
+    assert events[-1][1].get("extractive") is True
+    assert events[-1][1]["answer"] == ""
+
+
+def test_cache_misses_after_index_generation_bump():
+    calls = {"search": 0}
+
+    def search(_text, _mode):
+        calls["search"] += 1
+        return Retrieval(hits=[_hit()])
+
+    def write(_text, _hits):
+        yield "John Speight signed the plan [1]."
+
+    cache = {}
+    list(iter_query("Who signed?", search, write, "rrf", cache=cache, generation=1))
+    list(iter_query("Who signed?", search, write, "rrf", cache=cache, generation=1))
+    assert calls["search"] == 1
+    list(iter_query("Who signed?", search, write, "rrf", cache=cache, generation=2))
+    assert calls["search"] == 2
