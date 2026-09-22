@@ -57,6 +57,13 @@ def test_html_div_only_page_keeps_text(tmp_path):
     assert any(block.kind == "caption" and "Campus map" in block.text for block in blocks)
 
 
+def test_html_with_only_a_script_is_refused(tmp_path):
+    path = tmp_path / "empty.html"
+    path.write_text("<html><script>secret()</script></html>", encoding="utf-8")
+    with pytest.raises(IngestError, match="no text"):
+        parse_file(path)
+
+
 def test_csv_repeats_the_column_name(tmp_path):
     path = tmp_path / "parts.csv"
     path.write_text("sku,name\nSKU-7842-XL,housing\n", encoding="utf-8")
