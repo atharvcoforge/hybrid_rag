@@ -1,0 +1,191 @@
+{
+  "tau": 0.7258238196372986,
+  "live_mode": "rrf",
+  "scores": [
+    {
+      "mode": "dense",
+      "kind": "all",
+      "recall": 1.0,
+      "mrr": 0.7696078431372549,
+      "abstain": 0.0,
+      "p50": 409.1039170016302,
+      "n": 20
+    },
+    {
+      "mode": "dense",
+      "kind": "lexical",
+      "recall": 1.0,
+      "mrr": 0.8166666666666667,
+      "abstain": 0.0,
+      "p50": 266.31391599948984,
+      "n": 10
+    },
+    {
+      "mode": "dense",
+      "kind": "semantic",
+      "recall": 1.0,
+      "mrr": 0.7023809523809524,
+      "abstain": 0.0,
+      "p50": 409.3918750004377,
+      "n": 7
+    },
+    {
+      "mode": "dense",
+      "kind": "unanswerable",
+      "recall": 0.0,
+      "mrr": 0.0,
+      "abstain": 0.0,
+      "p50": 410.5254169990076,
+      "n": 3
+    },
+    {
+      "mode": "bm25",
+      "kind": "all",
+      "recall": 0.9411764705882353,
+      "mrr": 0.8137254901960784,
+      "abstain": 0.0,
+      "p50": 1.4004170006955974,
+      "n": 20
+    },
+    {
+      "mode": "bm25",
+      "kind": "lexical",
+      "recall": 1.0,
+      "mrr": 0.95,
+      "abstain": 0.0,
+      "p50": 1.411833000020124,
+      "n": 10
+    },
+    {
+      "mode": "bm25",
+      "kind": "semantic",
+      "recall": 0.8571428571428571,
+      "mrr": 0.619047619047619,
+      "abstain": 0.0,
+      "p50": 1.3890420013922267,
+      "n": 7
+    },
+    {
+      "mode": "bm25",
+      "kind": "unanswerable",
+      "recall": 0.0,
+      "mrr": 0.0,
+      "abstain": 0.0,
+      "p50": 1.3565419940277934,
+      "n": 3
+    },
+    {
+      "mode": "rrf",
+      "kind": "all",
+      "recall": 1.0,
+      "mrr": 0.9264705882352942,
+      "abstain": 0.0,
+      "p50": 300.25916599697666,
+      "n": 20
+    },
+    {
+      "mode": "rrf",
+      "kind": "lexical",
+      "recall": 1.0,
+      "mrr": 0.95,
+      "abstain": 0.0,
+      "p50": 264.8719170028926,
+      "n": 10
+    },
+    {
+      "mode": "rrf",
+      "kind": "semantic",
+      "recall": 1.0,
+      "mrr": 0.8928571428571429,
+      "abstain": 0.0,
+      "p50": 418.86791700380854,
+      "n": 7
+    },
+    {
+      "mode": "rrf",
+      "kind": "unanswerable",
+      "recall": 0.0,
+      "mrr": 0.0,
+      "abstain": 0.0,
+      "p50": 408.76620799826924,
+      "n": 3
+    },
+    {
+      "mode": "rerank",
+      "kind": "all",
+      "recall": 1.0,
+      "mrr": 0.9411764705882353,
+      "abstain": 0.0,
+      "p50": 5779.045419003523,
+      "n": 20
+    },
+    {
+      "mode": "rerank",
+      "kind": "lexical",
+      "recall": 1.0,
+      "mrr": 1.0,
+      "abstain": 0.0,
+      "p50": 5547.19741900044,
+      "n": 10
+    },
+    {
+      "mode": "rerank",
+      "kind": "semantic",
+      "recall": 1.0,
+      "mrr": 0.8571428571428571,
+      "abstain": 0.0,
+      "p50": 6000.0032109965105,
+      "n": 7
+    },
+    {
+      "mode": "rerank",
+      "kind": "unanswerable",
+      "recall": 0.0,
+      "mrr": 0.0,
+      "abstain": 0.0,
+      "p50": 5801.175794003939,
+      "n": 3
+    },
+    {
+      "mode": "cascade",
+      "kind": "all",
+      "recall": 0.8823529411764706,
+      "mrr": 0.8823529411764706,
+      "abstain": 0.1,
+      "p50": 5699.234876999981,
+      "n": 20
+    },
+    {
+      "mode": "cascade",
+      "kind": "lexical",
+      "recall": 1.0,
+      "mrr": 1.0,
+      "abstain": 0.0,
+      "p50": 5422.293710995291,
+      "n": 10
+    },
+    {
+      "mode": "cascade",
+      "kind": "semantic",
+      "recall": 0.7142857142857143,
+      "mrr": 0.7142857142857143,
+      "abstain": 0.0,
+      "p50": 5699.234876999981,
+      "n": 7
+    },
+    {
+      "mode": "cascade",
+      "kind": "unanswerable",
+      "recall": 0.0,
+      "mrr": 0.0,
+      "abstain": 0.6666666666666666,
+      "p50": 5777.9938360035885,
+      "n": 3
+    }
+  ],
+  "span_hit": 0.9411764705882353,
+  "span_n": 17,
+  "verdict": "Live retrieval is rrf: recall@5 1.00, MRR 0.93, abstain 0.00, retrieve p50 300 ms. Full rerank recall@5 is 1.00 at p50 5779 ms. rrf is the fastest mode within 0.05 recall of the best score on this set. Answer span-hit is 0.94 on 17 rows, so the 3B model stays. Still not a production service: one machine, no auth, and the golden set was written by hand against three policies.",
+  "label": "pre-harden-20row",
+  "notes": "Retrieval baseline before the hardening rebuild. Measured on the original 20-row policy set (10 lexical, 7 semantic, 3 unanswerable). Live mode rrf. Unanswerable abstain is 0.00 across dense/bm25/rrf/rerank \u2014 the defect F-01 documents. Subsequent phases measure against the expanded 141-row set in policy.jsonl with the train/test split in split.json."
+}

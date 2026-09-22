@@ -140,7 +140,7 @@ def test_gates(tmp_path, monkeypatch):
 def test_golden_bm25_finds_the_sku(tmp_path):
     index_dir = tmp_path / "index"
     _ingest(CORPUS, index_dir)
-    rows = load_rows("evals/golden.jsonl")
+    rows = load_rows("evals/fixture.jsonl")
     index = Index(index_dir, "test-embed", "rev", PIPELINE_VERSION)
     index.open()
     try:

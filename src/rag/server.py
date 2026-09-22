@@ -12,7 +12,11 @@ from pydantic import BaseModel
 from rag.evaluate import evaluate, load_rows, pick_live, row_hit
 from rag.generate import complete, stream_answer, writer_up
 from rag.models import EMBED_MODEL, EMBED_REVISION, PIPELINE_VERSION
+from rag.normalize import normalize_text
 from rag.pipeline import ingest, query
+from rag.telemetry import log_event, new_request_id
+
+_answers = {}
 
 app = FastAPI()
 app.add_middleware(
@@ -54,12 +58,23 @@ def live_mode() -> str:
     return "cascade"
 
 
-def hit_dict(hit) -> dict:
+TITLES = {
+    "Carbon_New_2040.pdf": "Carbon Reduction Plan",
+    "Envi_2040-1.pdf": "Environmental Sustainability Policy",
+    "Environmental_Sustainability_Policy_2025.pdf": "Environmental Sustainability Policy (2025)",
+    "Water-Management-Policy.pdf": "Water Management Policy",
+}
+
+
+def hit_dict(hit, cite: int) -> dict:
+    source = hit.source_path
     return {
         "parent_id": hit.parent_id,
         "text": hit.parent_text,
         "heading": hit.heading_path,
-        "source": hit.source_path,
+        "source": source,
+        "title": TITLES.get(Path(source).name, Path(source).name),
+        "cite": cite,
         "page_start": hit.page_start,
         "page_end": hit.page_end,
         "score": hit.score,
@@ -67,30 +82,54 @@ def hit_dict(hit) -> dict:
     }
 
 
-def iter_query(text, search, write, mode):
-    if not text or not text.strip():
-        yield ("error", {"message": "empty query"})
+def iter_query(text, search, write, mode, cache=None):
+    if cache is None:
+        cache = _answers
+    cleaned = normalize_text(text or "")
+    request_id = new_request_id()
+    if not cleaned:
+        yield ("error", {"message": "empty query", "request_id": request_id})
+        return
+    key = cleaned.casefold()
+    saved = cache.get(key)
+    if saved is not None:
+        yield ("meta", {**saved["meta"], "retrieve_ms": 0, "cached": True, "request_id": request_id})
+        if saved["answer"]:
+            yield ("token", {"t": saved["answer"]})
+        yield ("done", {"first_token_ms": 0, "answer": saved["answer"], "cached": True, "request_id": request_id})
         return
     started = time.perf_counter()
-    result = search(text, mode)
+    result = search(cleaned, mode)
     retrieve_ms = round((time.perf_counter() - started) * 1000)
-    yield (
-        "meta",
-        {
-            "hits": [hit_dict(hit) for hit in result.hits],
-            "reason": result.reason,
-            "mode": mode,
-            "retrieve_ms": retrieve_ms,
-        },
+    stages = dict(result.stages_ms or {})
+    meta = {
+        "hits": [hit_dict(hit, index) for index, hit in enumerate(result.hits, start=1)],
+        "reason": result.reason,
+        "mode": mode,
+        "retrieve_ms": retrieve_ms,
+        "stages_ms": stages,
+        "cached": False,
+        "request_id": request_id,
+    }
+    log_event(
+        "retrieve",
+        request_id=request_id,
+        mode=mode,
+        retrieve_ms=retrieve_ms,
+        hits=len(result.hits),
+        reason=result.reason or "",
+        **{f"{name}_ms": value for name, value in stages.items()},
     )
+    yield ("meta", meta)
     if result.reason == "no_confident_hit" or not result.hits:
-        yield ("done", {"first_token_ms": None, "answer": ""})
+        cache[key] = {"meta": meta, "answer": ""}
+        yield ("done", {"first_token_ms": None, "answer": "", "request_id": request_id})
         return
     first = None
     write_started = time.perf_counter()
     parts = []
     try:
-        for piece in write(text, result.hits):
+        for piece in write(cleaned, result.hits):
             if not piece:
                 continue
             if first is None:
@@ -98,9 +137,11 @@ def iter_query(text, search, write, mode):
             parts.append(piece)
             yield ("token", {"t": piece})
     except (OSError, urllib.error.URLError, TimeoutError):
-        yield ("error", {"message": "writer unavailable"})
+        yield ("error", {"message": "writer unavailable", "request_id": request_id})
         return
-    yield ("done", {"first_token_ms": first, "answer": "".join(parts)})
+    answer = "".join(parts)
+    cache[key] = {"meta": meta, "answer": answer}
+    yield ("done", {"first_token_ms": first, "answer": answer, "request_id": request_id})
 
 
 def sse(event: str, data: dict) -> str:
@@ -155,7 +196,14 @@ def build_report(index_dir_path, golden, search, finish=None) -> dict:
                 "mrr": line.mrr,
                 "abstain": line.abstain,
                 "p50": line.p50,
+                "p95": line.p95,
+                "p99": line.p99,
                 "n": line.n,
+                "groundedness": line.groundedness,
+                "citation_precision": line.citation_precision,
+                "citation_recall": line.citation_recall,
+                "answerable_abstain": line.answerable_abstain,
+                "unanswerable_abstain": line.unanswerable_abstain,
             }
             for line in lines
         ],

@@ -64,6 +64,10 @@ def encode_query(text: str) -> list[float]:
     return list(_cached_query(EMBED_MODEL, EMBED_REVISION, text))
 
 
+def reset_caches() -> None:
+    _cached_query.cache_clear()
+
+
 def count_tokens(text: str) -> int:
     if not text:
         return 0

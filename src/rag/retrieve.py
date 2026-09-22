@@ -1,3 +1,5 @@
+import time
+
 from rag.models import (
     AGREE_TOP,
     BM25_K,
@@ -14,6 +16,7 @@ from rag.models import (
     Retrieval,
     tau_key,
 )
+from rag.telemetry import StageTimer
 
 
 def fuse(id_lists: list[list[str]], k: int = RRF_K) -> list[tuple[str, float]]:
@@ -50,8 +53,26 @@ def agreed_parent(ranked: list[tuple[str, float]], dense_parents: list[str], bm2
 def retrieve(index, query: str, embed_query, rerank=None, doc_id: str | None = None, mode: str = "cascade") -> Retrieval:
     if not query or not query.strip():
         raise QueryError("empty query")
-    dense = [] if mode == "bm25" else index.dense_search(embed_query(query), DENSE_K, doc_id)
-    lexical = [] if mode == "dense" else index.bm25_search(query, BM25_K, doc_id)
+    timer = StageTimer()
+    wall = time.perf_counter()
+    result = _retrieve(index, query, embed_query, rerank, doc_id, mode, timer)
+    stages = timer.as_ms()
+    stages["total"] = (time.perf_counter() - wall) * 1000.0
+    result.stages_ms = stages
+    return result
+
+
+def _retrieve(index, query, embed_query, rerank, doc_id, mode, timer: StageTimer) -> Retrieval:
+    dense = []
+    lexical = []
+    if mode != "bm25":
+        with timer.measure("embed"):
+            vector = embed_query(query)
+        with timer.measure("dense"):
+            dense = index.dense_search(vector, DENSE_K, doc_id)
+    if mode != "dense":
+        with timer.measure("lexical"):
+            lexical = index.bm25_search(query, BM25_K, doc_id)
     if not dense and not lexical:
         return Retrieval(hits=[])
 
@@ -60,8 +81,11 @@ def retrieve(index, query: str, embed_query, rerank=None, doc_id: str | None = N
         chunks.setdefault(chunk["chunk_id"], chunk)
     dense_parents = _parent_order(dense)
     lexical_parents = _parent_order(lexical)
-    parent_ranked = fuse([dense_parents, lexical_parents])
-    child_ranked = fuse([[chunk["chunk_id"] for chunk in dense], [chunk["chunk_id"] for chunk in lexical]])
+    with timer.measure("fuse"):
+        parent_ranked = fuse([dense_parents, lexical_parents])
+        child_ranked = fuse(
+            [[chunk["chunk_id"] for chunk in dense], [chunk["chunk_id"] for chunk in lexical]]
+        )
     child_scores = dict(child_ranked)
 
     if mode == "dense":
@@ -87,7 +111,8 @@ def retrieve(index, query: str, embed_query, rerank=None, doc_id: str | None = N
     top_ids = [chunk_id for chunk_id in top_ids if chunk_id in chunks]
     if rerank is None:
         raise QueryError("reranker is not available")
-    scores = list(rerank(query, [chunks[chunk_id]["embed_text"] for chunk_id in top_ids]))
+    with timer.measure("rerank"):
+        scores = list(rerank(query, [chunks[chunk_id]["embed_text"] for chunk_id in top_ids]))
     if len(scores) != len(top_ids):
         raise QueryError("reranker returned the wrong number of scores")
     order = sorted(range(len(top_ids)), key=lambda index: -scores[index])
@@ -105,14 +130,15 @@ def retrieve(index, query: str, embed_query, rerank=None, doc_id: str | None = N
     if mode == "rerank":
         return _emit(index, parent_ids[:MAX_PARENTS], parent_scores, child_for, False)
 
-    if not parent_ids:
-        return Retrieval(hits=[])
-    top_score = parent_scores[parent_ids[0]]
-    cutoff = index.get_tau(_stored_tau_key(index))
-    if cutoff is not None and top_score < cutoff:
-        return Retrieval(hits=[], reason="no_confident_hit")
-    kept = [parent_id for parent_id in parent_ids if _in_band(parent_scores[parent_id], top_score)]
-    kept = kept[:MAX_PARENTS]
+    with timer.measure("gate"):
+        if not parent_ids:
+            return Retrieval(hits=[])
+        top_score = parent_scores[parent_ids[0]]
+        cutoff = index.get_tau(_stored_tau_key(index))
+        if cutoff is not None and top_score < cutoff:
+            return Retrieval(hits=[], reason="no_confident_hit")
+        kept = [parent_id for parent_id in parent_ids if _in_band(parent_scores[parent_id], top_score)]
+        kept = kept[:MAX_PARENTS]
     return _emit(index, kept, parent_scores, child_for, len(kept) == 1)
 
 

@@ -104,6 +104,7 @@ class Hit:
 class Retrieval:
     hits: list[Hit]
     reason: str = ""
+    stages_ms: dict | None = None
 
 
 @dataclass

@@ -1,4 +1,4 @@
-from rag.evaluate import evaluate, fit_tau, load_rows, row_hit
+from rag.evaluate import evaluate, fit_tau, load_rows, load_split, percentile, row_hit, rows_for_split
 from rag.models import Hit, Retrieval, tau_key
 
 
@@ -63,9 +63,59 @@ def test_evaluate_writes_tau_from_rank_one_rerank_scores():
     assert lexical.recall == 1
 
 
-def test_golden_file_has_both_kinds():
-    rows = load_rows("evals/golden.jsonl")
+def test_fixture_file_has_both_kinds():
+    rows = load_rows("evals/fixture.jsonl")
     assert {row["kind"] for row in rows} == {"lexical", "semantic"}
+
+
+def test_percentile_reports_tail():
+    samples = [float(n) for n in range(1, 101)]
+    assert percentile(samples, 50) == 50.0
+    assert percentile(samples, 95) == 95.0
+    assert percentile(samples, 99) == 99.0
+
+
+def test_evaluate_fills_latency_tail_and_leaves_gates_empty():
+    row = {"id": "r1", "q": "sku", "doc_id": "guide.md", "must_contain": "SKU-1", "kind": "lexical"}
+    blank = {"id": "u1", "q": "salary", "kind": "unanswerable"}
+    box = _Tau()
+
+    def ask(mode, _row):
+        return Retrieval(hits=[_hit("SKU-1 is here", 0.8)], stages_ms={"total": 40.0})
+
+    lines, _fitted = evaluate(box, [row, blank], ask)
+    overall = next(line for line in lines if line.mode == "bm25" and line.kind == "all")
+    assert overall.p50 > 0
+    assert overall.p95 > 0
+    assert overall.p99 > 0
+    assert overall.groundedness is None
+    assert overall.citation_precision is None
+    assert overall.citation_recall is None
+    assert overall.answerable_abstain == 0.0
+    assert overall.unanswerable_abstain == 0.0
+
+
+def test_policy_golden_has_required_kinds_and_ids():
+    rows = load_rows("evals/policy.jsonl")
+    kinds = {row["kind"] for row in rows}
+    assert {"lexical", "semantic", "multi-hop", "unanswerable", "adversarial"} <= kinds
+    assert len(rows) >= 120
+    assert all(row.get("id") for row in rows)
+    ids = [row["id"] for row in rows]
+    assert len(ids) == len(set(ids))
+
+
+def test_split_file_covers_every_policy_row():
+    rows = load_rows("evals/policy.jsonl")
+    split = load_split("evals/split.json")
+    train = set(split["train"])
+    test = set(split["test"])
+    ids = {row["id"] for row in rows}
+    assert train.isdisjoint(test)
+    assert train | test == ids
+    assert len(test) >= 25
+    held = rows_for_split(rows, split, "test")
+    assert {row["id"] for row in held} == test
 
 
 def test_unanswerable_rows_do_not_dilute_recall():
