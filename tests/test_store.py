@@ -19,8 +19,10 @@ def test_fts_query_still_ors_plain_words():
     assert fts_query("blue housing") == '"blue" OR "housing"'
 
 
-def test_fts_query_empty_when_no_tokens():
-    assert fts_query("???") == ""
+def test_fts_query_drops_stopwords_but_keeps_identifiers():
+    assert "the" not in fts_query("What is the review date of the Water Management Policy?").casefold()
+    assert '"Water"' in fts_query("What is the review date of the Water Management Policy?")
+    assert '"14,644"' in fts_query("what is the 14,644 figure")
 
 
 def test_compound_query_does_not_match_split_distractor():

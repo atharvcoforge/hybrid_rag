@@ -289,7 +289,9 @@ def _search(text, mode):
 
 @app.get("/api/health")
 def health():
-    return {"index": (index_dir() / "side.sqlite").exists(), "writer": writer_up()}
+    store = index_dir() / "rag.sqlite"
+    legacy = index_dir() / "side.sqlite"
+    return {"index": store.exists() or legacy.exists(), "writer": writer_up()}
 
 
 @app.post("/api/query")

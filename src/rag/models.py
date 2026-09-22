@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-PIPELINE_VERSION = 1
+PIPELINE_VERSION = 2
 
 PARENT_TARGET = 700
 PARENT_MAX = 900
