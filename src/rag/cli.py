@@ -1,7 +1,9 @@
 import argparse
+import json
 import sys
+from pathlib import Path
 
-from rag.evaluate import evaluate, format_scores, load_rows
+from rag.evaluate import evaluate, format_scores, load_rows, load_split
 from rag.models import IngestError, QueryError
 from rag.pipeline import ingest, query
 
@@ -22,6 +24,12 @@ def main(argv=None) -> int:
     eval_cmd = sub.add_parser("eval", help="score a golden set")
     eval_cmd.add_argument("--index", required=True)
     eval_cmd.add_argument("--golden", required=True)
+
+    calibrate_cmd = sub.add_parser("calibrate", help="fit confidence thresholds")
+    calibrate_cmd.add_argument("--index", required=True)
+    calibrate_cmd.add_argument("--golden", required=True)
+    calibrate_cmd.add_argument("--split", default="evals/split.json")
+    calibrate_cmd.add_argument("--out", default="evals/calibration.json")
 
     purge_cmd = sub.add_parser("purge", help="drop docs missing from a folder")
     purge_cmd.add_argument("path")
@@ -45,6 +53,8 @@ def main(argv=None) -> int:
             for item in ingest(args.path, args.index):
                 if item.status == "purged":
                     print(f"purged  {item.doc_id}")
+        elif args.cmd == "calibrate":
+            print(_run_calibrate(args.index, args.golden, args.split, args.out))
         else:
             print(_run_eval(args.index, args.golden))
     except (IngestError, QueryError) as exc:
@@ -70,6 +80,28 @@ def _run_eval(index_dir, golden) -> str:
     finally:
         index.close()
     return format_scores(lines, fitted)
+
+
+def _run_calibrate(index_dir, golden, split_path, out_path) -> str:
+    from rag.calibrate import calibrate, write_report
+    from rag.embed import encode_query, rerank_scores
+    from rag.models import EMBED_MODEL, EMBED_REVISION, PIPELINE_VERSION
+    from rag.retrieve import retrieve
+    from rag.store import Index
+
+    rows = load_rows(golden)
+    split = load_split(split_path) if Path(split_path).exists() else None
+    index = Index(index_dir, EMBED_MODEL, EMBED_REVISION, PIPELINE_VERSION)
+    index.open()
+    try:
+        def ask(mode, row):
+            return retrieve(index, row["q"], encode_query, rerank=rerank_scores, mode=mode)
+
+        report = calibrate(index, rows, ask, split=split)
+    finally:
+        index.close()
+    write_report(out_path, report)
+    return json.dumps(report, indent=2)
 
 
 def _format_hit(hit) -> str:

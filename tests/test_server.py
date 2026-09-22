@@ -44,6 +44,8 @@ def test_verdict_survives_a_partial_report():
     assert "Rerank scores are missing" in text
     assert "Still not a production service" in text
 
+
+def test_repeat_skips_retrieve_and_writer():
     calls = {"search": 0, "write": 0}
     seen = []
 
@@ -54,7 +56,7 @@ def test_verdict_survives_a_partial_report():
 
     def write(_text, _hits):
         calls["write"] += 1
-        yield "John Speight"
+        yield "John Speight signed the plan [1]."
 
     cache = {}
     first = list(iter_query("Who signed?", search, write, "rrf", cache))
@@ -63,11 +65,23 @@ def test_verdict_survives_a_partial_report():
     assert calls == {"search": 2, "write": 2}
     assert seen[0] == "Who signed?"
     assert second[0][1]["cached"] is True
-    assert second[1] == ("token", {"t": "John Speight"})
-    assert first[-1][1]["answer"] == "John Speight"
+    assert second[1] == ("token", {"t": "John Speight signed the plan [1]."})
+    assert first[-1][1]["answer"] == "John Speight signed the plan [1]."
     hit = first[0][1]["hits"][0]
     assert hit["cite"] == 1
     assert hit["title"] == "Carbon Reduction Plan"
     assert hit["source"] == "Carbon_New_2040.pdf"
     assert second[0][1]["hits"][0]["cite"] == 1
     assert third[0][1]["cached"] is False
+
+
+def test_gate_withholds_uncited_answer():
+    def search(_text, _mode):
+        return Retrieval(hits=[_hit()])
+
+    def write(_text, _hits):
+        yield "John Speight"
+
+    events = list(iter_query("Who signed?", search, write, "rrf", cache={}))
+    assert events[-1][1]["answer"] == "The documents do not say."
+    assert events[-1][1]["verification"]["reason"] == "missing_citation"

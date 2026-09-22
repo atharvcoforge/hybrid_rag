@@ -11,6 +11,7 @@ from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 
 from rag.evaluate import evaluate, load_rows, pick_live, row_hit
+from rag.gates import check_all
 from rag.generate import complete, stream_answer, writer_up
 from rag.models import EMBED_MODEL, EMBED_REVISION, PIPELINE_VERSION
 from rag.normalize import normalize_text
@@ -161,13 +162,63 @@ def iter_query(text, search, write, mode, cache=None):
             if first is None:
                 first = round((time.perf_counter() - write_started) * 1000)
             parts.append(piece)
-            yield ("token", {"t": piece})
     except (OSError, urllib.error.URLError, TimeoutError):
         yield ("error", {"message": "writer unavailable", "request_id": request_id})
         return
     answer = "".join(parts)
+    gate = check_all(answer, result.hits)
+    if not gate.ok:
+        log_event(
+            "gate_fail",
+            request_id=request_id,
+            reason=gate.reason,
+            unsupported=gate.unsupported,
+        )
+        withheld = "The documents do not say."
+        meta = {
+            **meta,
+            "verification": {
+                "state": gate.state,
+                "reason": gate.reason,
+                "unsupported": gate.unsupported,
+            },
+        }
+        cache[key] = {"meta": meta, "answer": withheld}
+        yield ("meta", {**meta, "gated": True})
+        yield ("token", {"t": withheld})
+        yield (
+            "done",
+            {
+                "first_token_ms": first,
+                "answer": withheld,
+                "request_id": request_id,
+                "verification": meta["verification"],
+            },
+        )
+        return
+    meta = {
+        **meta,
+        "verification": {
+            "state": gate.state,
+            "reason": gate.reason,
+            "groundedness": gate.groundedness,
+            "citation_precision": gate.citation_precision,
+            "citation_recall": gate.citation_recall,
+            "coverage": gate.coverage,
+        },
+    }
+    if answer:
+        yield ("token", {"t": answer})
     cache[key] = {"meta": meta, "answer": answer}
-    yield ("done", {"first_token_ms": first, "answer": answer, "request_id": request_id})
+    yield (
+        "done",
+        {
+            "first_token_ms": first,
+            "answer": answer,
+            "request_id": request_id,
+            "verification": meta["verification"],
+        },
+    )
 
 
 def sse(event: str, data: dict) -> str:
