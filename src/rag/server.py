@@ -81,6 +81,7 @@ app.add_middleware(
 
 class QueryBody(BaseModel):
     q: str
+    doc_id: str | None = None
 
 
 class IngestBody(BaseModel):
@@ -418,8 +419,8 @@ def _verdict(report: dict) -> str:
     return " ".join(parts)
 
 
-def _search(text, mode):
-    return query(text, index_dir(), mode=mode)
+def _search(text, mode, doc_id=None):
+    return query(text, index_dir(), doc_id=doc_id, mode=mode)
 
 
 @app.get("/api/health")
@@ -458,13 +459,16 @@ def ask(body: QueryBody, request: Request):
             headers={"Retry-After": str(exc.retry_after)},
         ) from exc
 
+    def search(text, mode_name):
+        return _search(text, mode_name, doc_id=body.doc_id)
+
     def gen():
         try:
             if await_disconnected(request):
                 return
             for event, data in iter_query(
                 body.q,
-                _search,
+                search,
                 stream_answer,
                 mode,
                 cache=_answers,
