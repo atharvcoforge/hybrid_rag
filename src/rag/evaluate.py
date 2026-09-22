@@ -224,3 +224,21 @@ def format_scores(lines: list[Score], fitted) -> str:
     rendered.append("tau unset" if fitted is None else f"tau={fitted:.4f}")
     rendered.append(f"live={pick_live(lines)}")
     return "\n".join(rendered)
+
+
+# Warm retrieve budget from §08. Eval asserts these; CI fails a regression.
+RETRIEVE_P95_MS = 400.0
+TTFT_P95_MS = 1200.0
+
+
+def check_slos(lines: list[Score], *, ttft_p95: float | None = None) -> list[str]:
+    """Return human-readable SLO failures. Empty list means green."""
+    failures = []
+    for line in lines:
+        if line.mode in ("cascade", "rrf", "rerank") and line.kind == "all" and line.p95 > RETRIEVE_P95_MS:
+            failures.append(
+                f"retrieve p95 {line.p95:.0f}ms exceeds {RETRIEVE_P95_MS:.0f}ms ({line.mode})"
+            )
+    if ttft_p95 is not None and ttft_p95 > TTFT_P95_MS:
+        failures.append(f"ttft p95 {ttft_p95:.0f}ms exceeds {TTFT_P95_MS:.0f}ms")
+    return failures

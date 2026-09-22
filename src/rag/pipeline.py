@@ -9,7 +9,17 @@ from rag.retrieve import retrieve
 from rag.store import Index
 
 
-def ingest(path, index_dir, encode=None, count_tokens=None, model_id=None, model_revision=None) -> list[Ingested]:
+def ingest(
+    path,
+    index_dir,
+    encode=None,
+    count_tokens=None,
+    model_id=None,
+    model_revision=None,
+    *,
+    contextual: bool = False,
+    context_fn=None,
+) -> list[Ingested]:
     path = Path(path)
     index_dir = Path(index_dir)
     model_id = model_id or EMBED_MODEL
@@ -29,7 +39,17 @@ def ingest(path, index_dir, encode=None, count_tokens=None, model_id=None, model
     try:
         files = _files(path, index_dir)
         results = [
-            _ingest_one(file, root, index, encode, count_tokens, model_id, model_revision)
+            _ingest_one(
+                file,
+                root,
+                index,
+                encode,
+                count_tokens,
+                model_id,
+                model_revision,
+                contextual=contextual,
+                context_fn=context_fn,
+            )
             for file, root in files
         ]
         if path.is_dir():
@@ -60,7 +80,18 @@ def query(text, index_dir, doc_id=None, embed_query=None, rerank=None, model_id=
         index.close()
 
 
-def _ingest_one(file, root, index, encode, count_tokens, model_id, model_revision) -> Ingested:
+def _ingest_one(
+    file,
+    root,
+    index,
+    encode,
+    count_tokens,
+    model_id,
+    model_revision,
+    *,
+    contextual: bool = False,
+    context_fn=None,
+) -> Ingested:
     resolved = _inside(root, file)
     if resolved.stat().st_size > MAX_FILE_BYTES:
         raise IngestError(str(file), "file exceeds 50 MB")
@@ -75,7 +106,8 @@ def _ingest_one(file, root, index, encode, count_tokens, model_id, model_revisio
             warnings.append(f"flagged {block.kind} on page {block.page}")
         if block.text.startswith("[page error]"):
             warnings.append(block.text)
-    _parents, children = chunk_document(doc_id, blocks, count_tokens)
+    ctx = context_fn if contextual else None
+    _parents, children = chunk_document(doc_id, blocks, count_tokens, context_fn=ctx)
     if not children:
         raise IngestError(str(file), "no chunks")
     if len(children) > MAX_CHUNKS:

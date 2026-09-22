@@ -88,11 +88,9 @@ def load_embedder():
 
 
 def rerank_scores(query: str, texts: list[str]) -> list[float]:
-    if not texts:
-        return []
-    model = load_reranker()
-    scores = model.predict([(query, text) for text in texts], show_progress_bar=False)
-    return [float(score) for score in scores]
+    from rag.rerank import CrossEncoderReranker
+
+    return CrossEncoderReranker().score(query, texts)
 
 
 def load_reranker():

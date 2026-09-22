@@ -18,14 +18,19 @@ from rag.models import (
 _SENTENCE = re.compile(r"[.!?]\s+|\n+")
 
 
-def chunk_document(doc_id: str, blocks: list[Block], count_tokens) -> tuple[list[Parent], list[Child]]:
+def chunk_document(
+    doc_id: str, blocks: list[Block], count_tokens, *, context_fn=None
+) -> tuple[list[Parent], list[Child]]:
     parents: list[Parent] = []
     children: list[Child] = []
     for section in _sections(blocks):
         for parent in _pack_section(doc_id, section, count_tokens, len(parents)):
             parents.append(parent[0])
             children.extend(parent[1])
+    children = _merge_tiny(children, count_tokens)
     children = _dedupe(children)
+    if context_fn is not None:
+        _apply_context(children, parents, context_fn, count_tokens)
     kept_parents = {child.parent_id for child in children}
     parents = [parent for parent in parents if parent.parent_id in kept_parents]
     for index, parent in enumerate(parents):
@@ -170,10 +175,12 @@ def _parents_from_windows(
 
 def _children_for(parent: Parent, kind: str, count_tokens) -> list[Child]:
     if kind == "table":
-        return [
+        pieces = [
             _child(parent, body, parent.start_char + row_start, parent.start_char + row_end, count_tokens)
             for body, row_start, row_end in _table_pieces(parent.text, count_tokens)
         ]
+        summary = _table_summary_child(parent, count_tokens)
+        return ([summary] if summary else []) + pieces
     if kind == "figure":
         return [_child(parent, parent.text, parent.start_char, parent.end_char, count_tokens)]
     if kind in ("code", "row"):
@@ -208,6 +215,43 @@ def _children_for(parent: Parent, kind: str, count_tokens) -> list[Child]:
         start = parent.start_char + local_start + lead
         children.append(_child(parent, body, start, start + len(body), count_tokens))
     return children
+
+
+def _table_summary_child(parent: Parent, count_tokens) -> Child | None:
+    lines = [line.strip() for line in parent.text.splitlines() if line.strip()]
+    if not lines:
+        return None
+    header = lines[0]
+    cols = [part.strip() for part in header.split("|") if part.strip()]
+    units = [col for col in cols if _looks_like_unit(col)]
+    parts = []
+    if parent.heading_path:
+        parts.append(parent.heading_path)
+    parts.append("columns: " + ", ".join(cols))
+    if units:
+        parts.append("units: " + ", ".join(units))
+    body = ". ".join(parts)
+    child = _child(parent, body, parent.start_char, parent.start_char + len(body), count_tokens)
+    child.block_type = "table_summary"
+    return child
+
+
+def _looks_like_unit(header: str) -> bool:
+    lower = header.casefold()
+    return any(marker in lower for marker in ("tco2", "kwp", "%", "fy", "scope"))
+
+
+def _label_row(header: str, row: str) -> str:
+    heads = [part.strip() for part in header.split("|")]
+    cells = [part.strip() for part in row.split("|")]
+    parts = []
+    for name, cell in zip(heads, cells):
+        if cell:
+            label = name or "col"
+            parts.append(f"{label}: {cell}")
+    if len(cells) > len(heads):
+        parts.extend(cell for cell in cells[len(heads) :] if cell)
+    return "; ".join(parts)
 
 
 def _child(parent: Parent, body: str, start: int, end: int, count_tokens) -> Child:
@@ -258,16 +302,77 @@ def _table_pieces(text: str, count_tokens) -> list[tuple[str, int, int]]:
     for group in groups:
         row_start = group[0][0]
         row_end = group[-1][1]
+        row_lines = [text[start:end].strip() for start, end in group]
+        labeled = [_label_row(header, row) for row in row_lines if row]
+        labeled_block = "\n".join(part for part in labeled if part)
         if row_start == data[0][0]:
-            raw = text[:row_end]
-            body = raw.strip()
-            lead = len(raw) - len(raw.lstrip())
-            pieces.append((body, lead, lead + len(body)))
+            body = f"{header.strip()}\n{labeled_block}".strip()
+            pieces.append((body, 0, len(body)))
             continue
-        rows = text[row_start:row_end].strip()
-        body = f"{header}\n{rows}" if rows else header
+        body = f"{header.strip()}\n{labeled_block}".strip() if labeled_block else header.strip()
         pieces.append((body, row_start, row_end))
     return pieces
+
+
+_IDENT = re.compile(r"\d|[A-Za-z]+-\d|\b[A-Z]{2,}-\d")
+_MIN_CHILD_TOKENS = 24
+
+
+def _merge_tiny(children: list[Child], count_tokens) -> list[Child]:
+    if len(children) < 2:
+        return children
+    out: list[Child] = []
+    for child in children:
+        if (
+            out
+            and child.parent_id == out[-1].parent_id
+            and child.block_type == out[-1].block_type
+            and child.block_type not in ("table", "table_summary", "code", "figure")
+            and count_tokens(child.text) < _MIN_CHILD_TOKENS
+            and not _IDENT.search(child.text)
+        ):
+            prev = out[-1]
+            merged_text = f"{prev.text}\n{child.text}".strip()
+            embed = make_embed_text(prev.heading_path, merged_text)
+            out[-1] = Child(
+                chunk_id=_content_id(str(PIPELINE_VERSION), prev.doc_id, embed),
+                parent_id=prev.parent_id,
+                doc_id=prev.doc_id,
+                text=merged_text,
+                embed_text=embed,
+                heading_path=prev.heading_path,
+                block_type=prev.block_type,
+                start_char=prev.start_char,
+                end_char=child.end_char,
+                page_start=prev.page_start,
+                page_end=child.page_end,
+                child_index=prev.child_index,
+                parent_index=prev.parent_index,
+                token_count=count_tokens(embed),
+                derived=prev.derived or child.derived,
+                context_prefix=prev.context_prefix,
+            )
+        else:
+            out.append(child)
+    return out
+
+
+def _apply_context(children, parents, context_fn, count_tokens) -> None:
+    by_id = {parent.parent_id: parent for parent in parents}
+    for child in children:
+        parent = by_id.get(child.parent_id)
+        if parent is None:
+            continue
+        try:
+            prefix = (context_fn(parent.text, child.text) or "").strip()
+        except Exception:
+            prefix = ""
+        if not prefix:
+            continue
+        child.context_prefix = prefix
+        child.embed_text = f"{prefix}\n{child.embed_text}"
+        child.token_count = count_tokens(child.embed_text)
+        child.chunk_id = _content_id(str(PIPELINE_VERSION), child.doc_id, child.embed_text)
 
 
 def _make_parent(doc_id, text, start, heading, kind, pages, parent_index, count_tokens, *, derived=False):

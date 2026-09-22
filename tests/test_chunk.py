@@ -47,10 +47,11 @@ def test_table_rows_stay_whole_and_keep_the_header(monkeypatch):
     monkeypatch.setattr("rag.chunk.CHILD_TARGET", 6)
     blocks = _blocks(("table", "sku | name\nSKU-1 | alpha one\nSKU-2 | gamma two", "Parts", 0))
     _parents, children = chunk_document("doc", blocks, fake_tokens)
-    assert len(children) == 2
-    assert all(child.text.startswith("sku | name") for child in children)
-    assert any("SKU-1" in child.text and "SKU-2" not in child.text for child in children)
-    assert any("SKU-2" in child.text and "SKU-1" not in child.text for child in children)
+    row_kids = [c for c in children if c.block_type == "table"]
+    assert len(row_kids) == 2
+    assert all(child.text.startswith("sku | name") for child in row_kids)
+    assert any("SKU-1" in child.text and "SKU-2" not in child.text for child in row_kids)
+    assert any("SKU-2" in child.text and "SKU-1" not in child.text for child in row_kids)
 
 
 def test_code_splits_on_lines(monkeypatch):

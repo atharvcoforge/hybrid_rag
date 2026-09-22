@@ -88,6 +88,7 @@ class Child:
     parent_index: int
     token_count: int
     derived: bool = False
+    context_prefix: str = ""
 
 
 @dataclass
