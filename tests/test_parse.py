@@ -44,11 +44,17 @@ def test_html_drops_script_and_keeps_the_heading(tmp_path):
     assert blocks[0].text == "Take 5 mg."
 
 
-def test_html_with_only_a_script_is_refused(tmp_path):
-    path = tmp_path / "empty.html"
-    path.write_text("<html><script>secret()</script></html>", encoding="utf-8")
-    with pytest.raises(IngestError, match="no text"):
-        parse_file(path)
+def test_html_div_only_page_keeps_text(tmp_path):
+    path = tmp_path / "modern.html"
+    path.write_text(
+        "<html><body><div><h4>Scope</h4><section>Applies to all campuses.</section>"
+        '<img alt="Campus map"></div></body></html>',
+        encoding="utf-8",
+    )
+    _mime, blocks = parse_file(path)
+    assert any(block.heading_path == "Scope" for block in blocks)
+    assert any("Applies to all campuses." in block.text for block in blocks)
+    assert any(block.kind == "caption" and "Campus map" in block.text for block in blocks)
 
 
 def test_csv_repeats_the_column_name(tmp_path):

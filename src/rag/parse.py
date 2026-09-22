@@ -1,7 +1,6 @@
 import csv
 import io
 import re
-from html.parser import HTMLParser
 from pathlib import Path
 
 from rag.models import Block, IngestError
@@ -132,7 +131,9 @@ def parse_md(text: str, filename: str) -> list[Block]:
 
 def parse_html(text: str, filename: str) -> list[Block]:
     del filename
-    parser = _HTMLText()
+    from rag.html_parse import HTMLText
+
+    parser = HTMLText()
     parser.feed(text)
     parser.close()
     return [_block(kind, body, path, 0) for kind, body, path in parser.blocks]
@@ -304,79 +305,3 @@ def _pdf_table(table: list) -> str:
         if any(cells):
             rows.append(" | ".join(cells))
     return "\n".join(rows).strip()
-
-
-class _HTMLText(HTMLParser):
-    def __init__(self):
-        super().__init__(convert_charrefs=True)
-        self.skip = 0
-        self.stack: list[str] = []
-        self.capture = ""
-        self.buf: list[str] = []
-        self.blocks: list[tuple[str, str, str]] = []
-        self.rows: list[str] | None = None
-        self.row: list[str] | None = None
-        self.cell: list[str] | None = None
-
-    def handle_starttag(self, tag, attrs):
-        tag = tag.lower()
-        if tag in ("script", "style", "noscript"):
-            self.skip += 1
-            return
-        if self.skip:
-            return
-        if tag in ("h1", "h2", "h3", "p", "li", "pre"):
-            self.capture = tag
-            self.buf = []
-        elif tag == "table":
-            self.capture = "table"
-            self.rows = []
-        elif tag == "tr" and self.capture == "table":
-            self.row = []
-        elif tag in ("td", "th") and self.row is not None:
-            self.cell = []
-
-    def handle_endtag(self, tag):
-        tag = tag.lower()
-        if tag in ("script", "style", "noscript"):
-            self.skip = max(0, self.skip - 1)
-            return
-        if self.skip:
-            return
-        if tag in ("td", "th") and self.cell is not None:
-            if self.row is not None:
-                self.row.append("".join(self.cell).strip())
-            self.cell = None
-        elif tag == "tr" and self.row is not None:
-            if any(self.row) and self.rows is not None:
-                self.rows.append(" | ".join(self.row))
-            self.row = None
-        elif tag == "table" and self.capture == "table":
-            text = normalize_text("\n".join(self.rows or []))
-            if text:
-                self.blocks.append(("table", text, _path(self.stack)))
-            self.capture = ""
-            self.rows = None
-        elif tag in ("h1", "h2", "h3") and self.capture == tag:
-            name = normalize_text("".join(self.buf))
-            level = int(tag[1])
-            self.stack = self.stack[: level - 1]
-            if name:
-                self.stack.append(name)
-            self.capture = ""
-            self.buf = []
-        elif tag in ("p", "li", "pre") and self.capture == tag:
-            text = normalize_text("".join(self.buf), code=(tag == "pre"))
-            if text:
-                kind = "code" if tag == "pre" else "list" if tag == "li" else "prose"
-                self.blocks.append((kind, text, _path(self.stack)))
-            self.capture = ""
-            self.buf = []
-
-    def handle_data(self, data):
-        if self.skip:
-            return
-        if self.cell is not None:
-            self.cell.append(data)
-        elif self.capture in ("h1", "h2", "h3", "p", "li", "pre"):
-            self.buf.append(data)
