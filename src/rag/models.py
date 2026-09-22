@@ -49,6 +49,10 @@ class Block:
     page: int
     start_char: int
     end_char: int
+    derived: bool = False
+    ocr: bool = False
+    ocr_confidence: float | None = None
+    flagged: bool = False
 
 
 @dataclass
@@ -64,6 +68,7 @@ class Parent:
     page_end: int
     parent_index: int
     token_count: int
+    derived: bool = False
 
 
 @dataclass
@@ -82,6 +87,7 @@ class Child:
     child_index: int
     parent_index: int
     token_count: int
+    derived: bool = False
 
 
 @dataclass
@@ -98,6 +104,8 @@ class Hit:
     child_id: str
     score: float
     confident: bool
+    derived: bool = False
+    ocr: bool = False
 
 
 @dataclass
@@ -105,6 +113,7 @@ class Retrieval:
     hits: list[Hit]
     reason: str = ""
     stages_ms: dict | None = None
+    warnings: list[str] | None = None
 
 
 @dataclass
@@ -112,6 +121,7 @@ class Ingested:
     doc_id: str
     status: str
     chunks: int
+    warnings: list[str] | None = None
 
 
 def tau_key(embed_model: str, embed_revision: str, mode: str = "cascade") -> str:

@@ -42,12 +42,12 @@ def _sections(blocks: list[Block]) -> list[list[Block]]:
     for block in blocks:
         if not block.text.strip():
             continue
-        if block.kind in ("table", "code"):
+        if block.kind in ("table", "code", "figure"):
             groups.append([block])
             continue
         if (
             groups
-            and groups[-1][0].kind not in ("table", "code")
+            and groups[-1][0].kind not in ("table", "code", "figure")
             and groups[-1][0].heading_path == block.heading_path
             and groups[-1][0].kind != "row"
             and block.kind != "row"
@@ -70,9 +70,18 @@ def _pack_section(doc_id, blocks, count_tokens, parent_index):
     text = "\n".join(block.text for block in blocks)
     start = blocks[0].start_char
     pages = [block.page for block in blocks]
-    if kind in ("table", "code"):
+    derived = any(block.derived or block.kind == "figure" for block in blocks)
+    if kind in ("table", "code", "figure"):
         parent, _kids = _make_parent(
-            doc_id, text, start, blocks[0].heading_path, kind, pages, parent_index, count_tokens
+            doc_id,
+            text,
+            start,
+            blocks[0].heading_path,
+            kind,
+            pages,
+            parent_index,
+            count_tokens,
+            derived=derived,
         )
         return [(parent, _children_for(parent, kind, count_tokens))]
     if kind == "row":
@@ -86,12 +95,29 @@ def _pack_section(doc_id, blocks, count_tokens, parent_index):
             False,
         )
         return _parents_from_windows(
-            doc_id, text, start, blocks[0].heading_path, kind, pages, parent_index, count_tokens, windows
+            doc_id,
+            text,
+            start,
+            blocks[0].heading_path,
+            kind,
+            pages,
+            parent_index,
+            count_tokens,
+            windows,
+            derived=derived,
         )
     total = count_tokens(text)
     if total <= PARENT_MAX:
         parent, _ = _make_parent(
-            doc_id, text, start, blocks[0].heading_path, kind, pages, parent_index, count_tokens
+            doc_id,
+            text,
+            start,
+            blocks[0].heading_path,
+            kind,
+            pages,
+            parent_index,
+            count_tokens,
+            derived=derived,
         )
         return [(parent, _children_for(parent, kind, count_tokens))]
     windows = _windows(
@@ -104,11 +130,22 @@ def _pack_section(doc_id, blocks, count_tokens, parent_index):
         True,
     )
     return _parents_from_windows(
-        doc_id, text, start, blocks[0].heading_path, kind, pages, parent_index, count_tokens, windows
+        doc_id,
+        text,
+        start,
+        blocks[0].heading_path,
+        kind,
+        pages,
+        parent_index,
+        count_tokens,
+        windows,
+        derived=derived,
     )
 
 
-def _parents_from_windows(doc_id, text, start, heading, kind, pages, parent_index, count_tokens, windows):
+def _parents_from_windows(
+    doc_id, text, start, heading, kind, pages, parent_index, count_tokens, windows, *, derived=False
+):
     packed = []
     for offset, (local_start, local_end) in enumerate(windows):
         raw = text[local_start:local_end]
@@ -125,6 +162,7 @@ def _parents_from_windows(doc_id, text, start, heading, kind, pages, parent_inde
             pages,
             parent_index + offset,
             count_tokens,
+            derived=derived,
         )
         packed.append((parent, _children_for(parent, kind, count_tokens)))
     return packed
@@ -136,6 +174,8 @@ def _children_for(parent: Parent, kind: str, count_tokens) -> list[Child]:
             _child(parent, body, parent.start_char + row_start, parent.start_char + row_end, count_tokens)
             for body, row_start, row_end in _table_pieces(parent.text, count_tokens)
         ]
+    if kind == "figure":
+        return [_child(parent, parent.text, parent.start_char, parent.end_char, count_tokens)]
     if kind in ("code", "row"):
         spans = _windows(
             parent.text,
@@ -187,6 +227,7 @@ def _child(parent: Parent, body: str, start: int, end: int, count_tokens) -> Chi
         child_index=0,
         parent_index=parent.parent_index,
         token_count=count_tokens(embed_text),
+        derived=parent.derived,
     )
 
 
@@ -229,7 +270,7 @@ def _table_pieces(text: str, count_tokens) -> list[tuple[str, int, int]]:
     return pieces
 
 
-def _make_parent(doc_id, text, start, heading, kind, pages, parent_index, count_tokens):
+def _make_parent(doc_id, text, start, heading, kind, pages, parent_index, count_tokens, *, derived=False):
     parent = Parent(
         # start keeps two copies of the same paragraph from sharing an id
         parent_id=_content_id(str(PIPELINE_VERSION), doc_id, text, str(start)),
@@ -243,6 +284,7 @@ def _make_parent(doc_id, text, start, heading, kind, pages, parent_index, count_
         page_end=max(pages) if pages else 0,
         parent_index=parent_index,
         token_count=count_tokens(text),
+        derived=derived or kind == "figure",
     )
     return parent, []
 

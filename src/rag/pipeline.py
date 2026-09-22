@@ -69,6 +69,12 @@ def _ingest_one(file, root, index, encode, count_tokens, model_id, model_revisio
     if index.matches(doc_id, digest, PIPELINE_VERSION, model_id, model_revision):
         return Ingested(doc_id, "skipped", 0)
     mime, blocks = parse_file(resolved)
+    warnings = []
+    for block in blocks:
+        if block.flagged:
+            warnings.append(f"flagged {block.kind} on page {block.page}")
+        if block.text.startswith("[page error]"):
+            warnings.append(block.text)
     _parents, children = chunk_document(doc_id, blocks, count_tokens)
     if not children:
         raise IngestError(str(file), "no chunks")
@@ -93,7 +99,7 @@ def _ingest_one(file, root, index, encode, count_tokens, model_id, model_revisio
     index.delete_orphans(doc_id, [child.chunk_id for child in children], [parent.parent_id for parent in _parents])
     index.replace_fts(doc_id, children)
     index.save_file(doc_id, doc_id, digest)
-    return Ingested(doc_id, "indexed", len(children))
+    return Ingested(doc_id, "indexed", len(children), warnings=warnings or None)
 
 
 def _files(path: Path, index_dir: Path) -> list[tuple[Path, Path]]:

@@ -58,7 +58,18 @@ def assign_offsets(blocks: list[Block]) -> list[Block]:
         start = pos
         pos += len(block.text)
         placed.append(
-            Block(block.kind, block.text, block.heading_path, block.page, start, pos)
+            Block(
+                block.kind,
+                block.text,
+                block.heading_path,
+                block.page,
+                start,
+                pos,
+                derived=block.derived,
+                ocr=block.ocr,
+                ocr_confidence=block.ocr_confidence,
+                flagged=block.flagged,
+            )
         )
     return placed
 
@@ -169,40 +180,100 @@ def parse_pdf(path: Path) -> list[Block]:
         import pdfplumber
     except ImportError as exc:
         raise IngestError(str(path), "pdfplumber is not installed") from exc
-    blocks: list[Block] = []
     try:
         with pdfplumber.open(path) as pdf:
-            page_texts = []
-            page_tables: list[list[str]] = []
-            for page in pdf.pages:
-                found = list(page.find_tables() or [])
-                bboxes = [table.bbox for table in found]
-                rendered_tables = []
-                for table in found:
-                    body = _pdf_table(table.extract())
-                    if body:
-                        rendered_tables.append(body)
-                if bboxes:
-                    cropped = page.filter(_outside_tables(bboxes))
-                    text = cropped.extract_text() or ""
-                else:
-                    text = page.extract_text() or ""
-                page_texts.append(text)
-                page_tables.append(rendered_tables)
-            cleaned = drop_page_chrome(page_texts)
-            for number, (text, tables) in enumerate(zip(cleaned, page_tables), start=1):
-                norm = normalize_text(text)
-                for paragraph in [part.strip() for part in re.split(r"\n\s*\n", norm) if part.strip()]:
-                    blocks.append(_block("prose", paragraph, "", number))
-                for rendered in tables:
-                    blocks.append(_block("table", rendered, "", number))
+            blocks, errors = parse_pdf_pages(list(pdf.pages))
     except IngestError:
         raise
     except Exception as exc:
         raise IngestError(str(path), "unreadable file") from exc
     if not blocks:
         raise IngestError(str(path), "no text")
+    for message in errors:
+        blocks.append(_block("prose", f"[page error] {message}", "", 0, flagged=True))
     return blocks
+
+
+def parse_pdf_pages(
+    pages,
+    *,
+    layout_extract=None,
+    ocr_engine=None,
+    captioner=None,
+    page_image=None,
+    page_images=None,
+) -> tuple[list[Block], list[str]]:
+    """Per-page PDF parse. One broken page becomes an error entry, not a hard fail."""
+    from rag.layout import extract_page_tables
+    from rag.ocr import caption_figure, is_image_only, ocr_page
+    from rag.ocr import page_image as default_page_image
+
+    if page_image is None:
+        page_image = default_page_image
+    if layout_extract is None:
+        layout_extract = _docling_extract
+
+    page_texts: list[str] = []
+    page_tables: list[list] = []
+    page_extras: list[list[Block]] = []
+    errors: list[str] = []
+
+    for number, page in enumerate(pages, start=1):
+        try:
+            tables = extract_page_tables(page, layout_extract=layout_extract)
+            bboxes = [t.bbox for t in tables if t.bbox]
+            if bboxes:
+                cropped = page.filter(_outside_tables(bboxes))
+                text = cropped.extract_text() or ""
+            else:
+                text = page.extract_text() or ""
+
+            extras: list[Block] = []
+            if is_image_only(page) and not (text or "").strip() and not tables:
+                image = page_image(page)
+                if image is not None or ocr_engine is not None:
+                    result = ocr_page(image if image is not None else page, engine=ocr_engine)
+                    if result.text:
+                        extras.append(
+                            _block(
+                                "prose",
+                                normalize_text(result.text),
+                                "",
+                                number,
+                                ocr=True,
+                                ocr_confidence=result.confidence,
+                            )
+                        )
+
+            images = page_images(page) if page_images is not None else _embedded_images(page)
+            for image in images or []:
+                caption = caption_figure(image, captioner=captioner)
+                if caption:
+                    extras.append(
+                        _block("figure", normalize_text(caption), "", number, derived=True)
+                    )
+
+            page_texts.append(text)
+            page_tables.append(tables)
+            page_extras.append(extras)
+        except Exception as exc:
+            page_texts.append("")
+            page_tables.append([])
+            page_extras.append([])
+            errors.append(f"page {number}: {exc}")
+
+    cleaned = drop_page_chrome(page_texts)
+    blocks: list[Block] = []
+    for number, (text, tables, extras) in enumerate(
+        zip(cleaned, page_tables, page_extras), start=1
+    ):
+        norm = normalize_text(text)
+        for paragraph in [part.strip() for part in re.split(r"\n\s*\n", norm) if part.strip()]:
+            blocks.append(_block("prose", paragraph, "", number))
+        for table in tables:
+            blocks.append(_block("table", table.text, "", number, flagged=table.flagged))
+        blocks.extend(extras)
+    return blocks, errors
 
 
 def _outside_tables(bboxes: list[tuple[float, float, float, float]]):
@@ -219,6 +290,23 @@ def _outside_tables(bboxes: list[tuple[float, float, float, float]]):
         return True
 
     return keep
+
+
+def _docling_extract(page):
+    """Optional Docling rung. Absent package ⇒ no escalation."""
+    try:
+        import docling  # noqa: F401
+    except ImportError:
+        return None
+    del page
+    return None
+
+
+def _embedded_images(page) -> list:
+    try:
+        return list(getattr(page, "images", []) or [])
+    except Exception:
+        return []
 
 
 def parse_docx(path: Path) -> list[Block]:
@@ -239,33 +327,149 @@ def parse_docx(path: Path) -> list[Block]:
         if child.tag == qn("w:p"):
             paragraph = Paragraph(child, document)
             style = paragraph.style.name if paragraph.style is not None else ""
+            for box_text in _textbox_texts(child):
+                body = normalize_text(box_text)
+                if body:
+                    blocks.append(_block("prose", body, _path(heading), 0))
             if style.startswith("Heading"):
                 digits = re.findall(r"\d+", style)
                 level = int(digits[0]) if digits else 1
-                name = normalize_text(paragraph.text)
+                name = normalize_text(_docx_text(child))
                 heading = heading[: level - 1]
                 if name:
                     heading.append(name)
                 continue
             kind = "list" if style.startswith("List") else "prose"
-            body = normalize_text(paragraph.text)
+            body = normalize_text(_docx_text(child))
             if body:
                 blocks.append(_block(kind, body, _path(heading), 0))
         elif child.tag == qn("w:tbl"):
             table = Table(child, document)
             rows = []
             for row in table.rows:
-                cells = [normalize_text(cell.text) for cell in row.cells]
+                cells = [normalize_text(_docx_text(cell._tc)) for cell in row.cells]
                 if any(cells):
                     rows.append(" | ".join(cells))
             body = "\n".join(rows).strip()
             if body:
                 blocks.append(_block("table", body, _path(heading), 0))
+    for note in _footnote_texts(document):
+        body = normalize_text(note)
+        if body:
+            blocks.append(_block("prose", body, _path(heading) or "Footnotes", 0))
     return blocks
 
 
-def _block(kind: str, text: str, heading_path: str, page: int) -> Block:
-    return Block(kind, text, heading_path, page, 0, 0)
+def _docx_text(element, *, include_textboxes: bool = False) -> str:
+    """Keep insertions, drop tracked deletions."""
+    from docx.oxml.ns import qn
+
+    parts: list[str] = []
+    for node in element.iter():
+        tag = node.tag
+        if tag in (qn("w:del"), qn("w:delText")):
+            continue
+        if tag == qn("w:t") and _inside_deletion(node):
+            continue
+        if tag == qn("w:t") and not include_textboxes and _inside_textbox(node):
+            continue
+        if tag == qn("w:t") and node.text:
+            parts.append(node.text)
+        if tag == qn("w:tab"):
+            parts.append("\t")
+    return "".join(parts)
+
+
+def _inside_deletion(node) -> bool:
+    from docx.oxml.ns import qn
+
+    parent = node.getparent()
+    while parent is not None:
+        if parent.tag == qn("w:del"):
+            return True
+        parent = parent.getparent()
+    return False
+
+
+def _inside_textbox(node) -> bool:
+    from docx.oxml.ns import qn
+
+    parent = node.getparent()
+    while parent is not None:
+        if parent.tag == qn("w:txbxContent"):
+            return True
+        parent = parent.getparent()
+    return False
+
+
+def _textbox_texts(element) -> list[str]:
+    from docx.oxml.ns import qn
+
+    out = []
+    for node in element.iter():
+        if node.tag == qn("w:txbxContent"):
+            text = _docx_text(node, include_textboxes=True)
+            if text.strip():
+                out.append(text)
+    return out
+
+
+def _footnote_texts(document) -> list[str]:
+    from docx.oxml.ns import qn
+    from lxml import etree
+
+    out = []
+    try:
+        package = document.part.package
+    except Exception:
+        return out
+    for other in package.parts:
+        name = getattr(other, "partname", None)
+        if name is None or "footnotes" not in str(name):
+            continue
+        root = getattr(other, "element", None)
+        if root is None:
+            blob = getattr(other, "blob", None)
+            if not blob:
+                continue
+            root = etree.fromstring(blob)
+        for footnote in root.iter():
+            if footnote.tag != qn("w:footnote"):
+                continue
+            fid = footnote.get(qn("w:id"))
+            if fid in ("-1", "0"):
+                continue
+            text = _docx_text(footnote, include_textboxes=True)
+            if text.strip():
+                out.append(text)
+    return out
+
+
+def _block(
+    kind: str,
+    text: str,
+    heading_path: str,
+    page: int,
+    *,
+    derived: bool = False,
+    ocr: bool = False,
+    ocr_confidence: float | None = None,
+    flagged: bool = False,
+) -> Block:
+    if kind == "figure":
+        derived = True
+    return Block(
+        kind,
+        text,
+        heading_path,
+        page,
+        0,
+        0,
+        derived=derived,
+        ocr=ocr,
+        ocr_confidence=ocr_confidence,
+        flagged=flagged,
+    )
 
 
 def _path(heading: list[str]) -> str:

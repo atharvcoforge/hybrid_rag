@@ -225,6 +225,7 @@ def _emit(index, parent_ids, scores, child_for, confident: bool) -> Retrieval:
                 child_id=child_for[parent_id],
                 score=float(scores[parent_id]),
                 confident=confident,
+                derived=bool(record.get("derived")),
             )
         )
     return Retrieval(hits=hits)

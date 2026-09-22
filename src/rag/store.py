@@ -80,6 +80,7 @@ class SqliteStore:
         self.db.execute("PRAGMA synchronous=NORMAL")
         self.db.execute("PRAGMA busy_timeout=5000")
         self._schema()
+        self._migrate()
         self._check_saved_identity()
         self._load_matrix()
 
@@ -220,8 +221,8 @@ class SqliteStore:
                 """
                 INSERT INTO parents (
                     parent_id, doc_id, text, heading_path, block_type,
-                    page_start, page_end, norm_start, norm_end, parent_index, token_count
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    page_start, page_end, norm_start, norm_end, parent_index, token_count, derived
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 """,
                 [
                     (
@@ -236,6 +237,7 @@ class SqliteStore:
                         int(parent.end_char),
                         int(parent.parent_index),
                         int(parent.token_count),
+                        1 if getattr(parent, "derived", False) else 0,
                     )
                     for parent in parents
                 ],
@@ -485,6 +487,7 @@ class SqliteStore:
                 "page_end": int(row["page_end"] or 0),
                 "parent_index": int(row["parent_index"] or 0),
                 "token_count": int(row["token_count"] or 0),
+                "derived": bool(row["derived"]) if "derived" in row.keys() else False,
             }
         return records
 
@@ -529,7 +532,8 @@ class SqliteStore:
                 norm_start INTEGER NOT NULL,
                 norm_end INTEGER NOT NULL,
                 parent_index INTEGER NOT NULL,
-                token_count INTEGER NOT NULL
+                token_count INTEGER NOT NULL,
+                derived INTEGER NOT NULL DEFAULT 0
             );
             CREATE TABLE IF NOT EXISTS children (
                 chunk_id TEXT PRIMARY KEY,
@@ -578,6 +582,12 @@ class SqliteStore:
             );
             """
         )
+
+    def _migrate(self):
+        cols = {row[1] for row in self.db.execute("PRAGMA table_info(parents)").fetchall()}
+        if "derived" not in cols:
+            self.db.execute("ALTER TABLE parents ADD COLUMN derived INTEGER NOT NULL DEFAULT 0")
+            self.db.commit()
 
     def _check_saved_identity(self):
         saved = self._meta("model_id")
