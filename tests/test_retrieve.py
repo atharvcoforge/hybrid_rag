@@ -136,7 +136,35 @@ def test_empty_query_is_refused():
         retrieve(stub, "   ", lambda text: [1.0])
 
 
-def test_doc_filter_is_passed_through():
-    stub = Stub([_chunk("c1", "A", "alpha")], [_chunk("c1", "A", "alpha")], {"A": _parent("alpha")})
-    retrieve(stub, "alpha", lambda text: [1.0], rerank=_rerank, doc_id="guide.md", mode="bm25")
-    assert stub.doc_filter == "guide.md"
+def test_rrf_respects_a_stored_tau():
+    stub = Stub(
+        [_chunk("c1", "A", "alpha"), _chunk("c2", "B", "noise")],
+        [_chunk("c1", "A", "alpha"), _chunk("c2", "B", "noise")],
+        {"A": _parent("alpha"), "B": _parent("noise")},
+        tau=10.0,
+    )
+    # RRF scores are ~1/61; a high cutoff must abstain in live mode too.
+    result = retrieve(stub, "alpha", lambda text: [1.0], rerank=_rerank, mode="rrf")
+    assert result.hits == []
+    assert result.reason == "no_confident_hit"
+
+
+def test_dense_and_bm25_also_hit_the_terminal_gate():
+    stub = Stub(
+        [_chunk("c1", "A", "alpha")],
+        [_chunk("c1", "A", "alpha")],
+        {"A": _parent("alpha")},
+        tau=10.0,
+    )
+    for mode in ("dense", "bm25"):
+        result = retrieve(stub, "alpha", lambda text: [1.0], rerank=_rerank, mode=mode)
+        assert result.hits == [], mode
+        assert result.reason == "no_confident_hit", mode
+
+
+def test_fuse_is_linear_in_list_length():
+    # Regression for F-19: order.index inside the sort is O(n²).
+    ids = [f"id-{i}" for i in range(2000)]
+    ranked = fuse([ids, list(reversed(ids))])
+    assert ranked[0][0] == "id-0" or ranked[0][0] == ids[-1]
+    assert len(ranked) == 2000

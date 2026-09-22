@@ -22,7 +22,7 @@ from rag.telemetry import StageTimer
 def fuse(id_lists: list[list[str]], k: int = RRF_K) -> list[tuple[str, float]]:
     # k=60 is Cormack's constant. A hit from only one list still stays in the running.
     scores: dict[str, float] = {}
-    order: list[str] = []
+    first_seen: dict[str, int] = {}
     for ids in id_lists:
         seen = set()
         rank = 0
@@ -32,10 +32,10 @@ def fuse(id_lists: list[list[str]], k: int = RRF_K) -> list[tuple[str, float]]:
             seen.add(id_)
             rank += 1
             if id_ not in scores:
-                order.append(id_)
+                first_seen[id_] = len(first_seen)
                 scores[id_] = 0.0
             scores[id_] += 1.0 / (k + rank)
-    ranked = sorted(scores, key=lambda id_: (-scores[id_], order.index(id_)))
+    ranked = sorted(scores, key=lambda id_: (-scores[id_], first_seen[id_]))
     return [(id_, scores[id_]) for id_ in ranked]
 
 
@@ -56,10 +56,29 @@ def retrieve(index, query: str, embed_query, rerank=None, doc_id: str | None = N
     timer = StageTimer()
     wall = time.perf_counter()
     result = _retrieve(index, query, embed_query, rerank, doc_id, mode, timer)
+    with timer.measure("gate"):
+        result = _gate(result, index, mode)
     stages = timer.as_ms()
     stages["total"] = (time.perf_counter() - wall) * 1000.0
     result.stages_ms = stages
     return result
+
+
+def _gate(result: Retrieval, index, mode: str) -> Retrieval:
+    if not result.hits or result.reason:
+        return result
+    top = result.hits[0].score
+    cutoff = index.get_tau(_stored_tau_key(index, mode))
+    if cutoff is not None and top < cutoff:
+        return Retrieval(hits=[], reason="no_confident_hit")
+    kept = [hit for hit in result.hits if _in_band(hit.score, top)]
+    kept = kept[:MAX_PARENTS]
+    if len(kept) == 1:
+        kept[0].confident = True
+    elif kept:
+        for hit in kept:
+            hit.confident = False
+    return Retrieval(hits=kept)
 
 
 def _retrieve(index, query, embed_query, rerank, doc_id, mode, timer: StageTimer) -> Retrieval:
@@ -130,22 +149,16 @@ def _retrieve(index, query, embed_query, rerank, doc_id, mode, timer: StageTimer
     if mode == "rerank":
         return _emit(index, parent_ids[:MAX_PARENTS], parent_scores, child_for, False)
 
-    with timer.measure("gate"):
-        if not parent_ids:
-            return Retrieval(hits=[])
-        top_score = parent_scores[parent_ids[0]]
-        cutoff = index.get_tau(_stored_tau_key(index))
-        if cutoff is not None and top_score < cutoff:
-            return Retrieval(hits=[], reason="no_confident_hit")
-        kept = [parent_id for parent_id in parent_ids if _in_band(parent_scores[parent_id], top_score)]
-        kept = kept[:MAX_PARENTS]
-    return _emit(index, kept, parent_scores, child_for, len(kept) == 1)
+    if not parent_ids:
+        return Retrieval(hits=[])
+    return _emit(index, parent_ids[:MAX_PARENTS], parent_scores, child_for, False)
 
 
-def _stored_tau_key(index) -> str:
+def _stored_tau_key(index, mode: str = "cascade") -> str:
     return tau_key(
         getattr(index, "model_id", EMBED_MODEL),
         getattr(index, "model_revision", EMBED_REVISION),
+        mode,
     )
 
 
@@ -170,18 +183,20 @@ def _rank_scores(parent_ids: list[str]) -> dict[str, float]:
 
 
 def _from_parent_ids(index, parent_ids, chunks, child_scores, scores, confident) -> Retrieval:
+    by_parent: dict[str, list] = {}
+    for chunk in chunks.values():
+        by_parent.setdefault(chunk["parent_id"], []).append(chunk)
     child_for = {}
     for parent_id in parent_ids[:MAX_PARENTS]:
-        child_for[parent_id] = _best_child(parent_id, chunks, child_scores)
+        child_for[parent_id] = _best_child(parent_id, by_parent.get(parent_id, []), child_scores)
     return _emit(index, parent_ids[:MAX_PARENTS], scores, child_for, confident)
 
 
-def _best_child(parent_id: str, chunks: dict, child_scores: dict) -> str:
+def _best_child(parent_id: str, parent_chunks: list, child_scores: dict) -> str:
+    del parent_id
     best_id = ""
     best_score = None
-    for chunk in chunks.values():
-        if chunk["parent_id"] != parent_id:
-            continue
+    for chunk in parent_chunks:
         score = child_scores.get(chunk["chunk_id"], 0.0)
         if best_score is None or score > best_score:
             best_id = chunk["chunk_id"]

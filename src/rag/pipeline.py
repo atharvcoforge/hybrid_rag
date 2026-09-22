@@ -28,10 +28,15 @@ def ingest(path, index_dir, encode=None, count_tokens=None, model_id=None, model
     index.open()
     try:
         files = _files(path, index_dir)
-        return [
+        results = [
             _ingest_one(file, root, index, encode, count_tokens, model_id, model_revision)
             for file, root in files
         ]
+        if path.is_dir():
+            seen = {item.doc_id for item in results}
+            for doc_id in index.purge_missing(seen):
+                results.append(Ingested(doc_id, "purged", 0))
+        return results
     finally:
         index.close()
 

@@ -94,6 +94,38 @@ def test_replacing_a_file_drops_the_old_chunks(tmp_path):
     assert before
     assert after
     assert before.isdisjoint(after)
+    result = query(
+        "alpha unique phrase",
+        index_dir,
+        embed_query=_encode_query,
+        rerank=_keyword,
+        model_id="test-embed",
+        model_revision="rev",
+    )
+    assert not any("alpha unique phrase" in hit.parent_text for hit in result.hits)
+
+
+def test_removing_a_file_purges_it_from_the_index(tmp_path):
+    folder = tmp_path / "docs"
+    folder.mkdir()
+    keep = folder / "keep.md"
+    drop = folder / "drop.md"
+    keep.write_text("# Keep\n\nkeep phrase unique\n", encoding="utf-8")
+    drop.write_text("# Drop\n\ndrop phrase unique\n", encoding="utf-8")
+    index_dir = tmp_path / "index"
+    _ingest(folder, index_dir)
+    drop.unlink()
+    items = _ingest(folder, index_dir)
+    assert any(item.status == "purged" and item.doc_id == "drop.md" for item in items)
+    result = query(
+        "drop phrase unique",
+        index_dir,
+        embed_query=_encode_query,
+        rerank=_keyword,
+        model_id="test-embed",
+        model_revision="rev",
+    )
+    assert not any("drop phrase unique" in hit.parent_text for hit in result.hits)
 
 
 def test_a_different_model_refuses_the_index(tmp_path):

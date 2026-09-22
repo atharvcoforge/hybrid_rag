@@ -160,6 +160,32 @@ class Index:
         found = self.children.get(where={"doc_id": doc_id}, include=["metadatas"])
         return list(found["ids"])
 
+    def list_docs(self) -> list[str]:
+        rows = self.db.execute("SELECT doc_id FROM files ORDER BY doc_id").fetchall()
+        return [row["doc_id"] for row in rows]
+
+    def purge_doc(self, doc_id: str) -> None:
+        if self.children is not None:
+            found = self.children.get(where={"doc_id": doc_id}, include=[])
+            if found["ids"]:
+                self.children.delete(ids=found["ids"])
+        if self.parents is not None:
+            found = self.parents.get(where={"doc_id": doc_id}, include=[])
+            if found["ids"]:
+                self.parents.delete(ids=found["ids"])
+        self.db.execute("DELETE FROM chunks_fts WHERE doc_id = ?", (doc_id,))
+        self.db.execute("DELETE FROM files WHERE doc_id = ?", (doc_id,))
+        self.db.commit()
+
+    def purge_missing(self, keep_doc_ids) -> list[str]:
+        keep = set(keep_doc_ids)
+        removed = []
+        for doc_id in self.list_docs():
+            if doc_id not in keep:
+                self.purge_doc(doc_id)
+                removed.append(doc_id)
+        return removed
+
     def dense_search(self, vector, k, doc_id=None):
         if self.children is None or self.children.count() == 0:
             return []

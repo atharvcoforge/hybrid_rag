@@ -171,16 +171,30 @@ def parse_pdf(path: Path) -> list[Block]:
     blocks: list[Block] = []
     try:
         with pdfplumber.open(path) as pdf:
-            raw_pages = [(page.extract_text() or "") for page in pdf.pages]
-            cleaned = drop_page_chrome(raw_pages)
-            for number, (page, text) in enumerate(zip(pdf.pages, cleaned), start=1):
+            page_texts = []
+            page_tables: list[list[str]] = []
+            for page in pdf.pages:
+                found = list(page.find_tables() or [])
+                bboxes = [table.bbox for table in found]
+                rendered_tables = []
+                for table in found:
+                    body = _pdf_table(table.extract())
+                    if body:
+                        rendered_tables.append(body)
+                if bboxes:
+                    cropped = page.filter(_outside_tables(bboxes))
+                    text = cropped.extract_text() or ""
+                else:
+                    text = page.extract_text() or ""
+                page_texts.append(text)
+                page_tables.append(rendered_tables)
+            cleaned = drop_page_chrome(page_texts)
+            for number, (text, tables) in enumerate(zip(cleaned, page_tables), start=1):
                 norm = normalize_text(text)
                 for paragraph in [part.strip() for part in re.split(r"\n\s*\n", norm) if part.strip()]:
                     blocks.append(_block("prose", paragraph, "", number))
-                for table in page.extract_tables() or []:
-                    rendered = _pdf_table(table)
-                    if rendered:
-                        blocks.append(_block("table", rendered, "", number))
+                for rendered in tables:
+                    blocks.append(_block("table", rendered, "", number))
     except IngestError:
         raise
     except Exception as exc:
@@ -188,6 +202,22 @@ def parse_pdf(path: Path) -> list[Block]:
     if not blocks:
         raise IngestError(str(path), "no text")
     return blocks
+
+
+def _outside_tables(bboxes: list[tuple[float, float, float, float]]):
+    def keep(obj):
+        x0 = obj.get("x0")
+        x1 = obj.get("x1")
+        top = obj.get("top")
+        bottom = obj.get("bottom")
+        if None in (x0, x1, top, bottom):
+            return True
+        for bx0, btop, bx1, bbottom in bboxes:
+            if x0 >= bx0 - 1 and x1 <= bx1 + 1 and top >= btop - 1 and bottom <= bbottom + 1:
+                return False
+        return True
+
+    return keep
 
 
 def parse_docx(path: Path) -> list[Block]:

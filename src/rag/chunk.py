@@ -30,9 +30,10 @@ def chunk_document(doc_id: str, blocks: list[Block], count_tokens) -> tuple[list
     parents = [parent for parent in parents if parent.parent_id in kept_parents]
     for index, parent in enumerate(parents):
         parent.parent_index = index
+    by_id = {parent.parent_id: parent.parent_index for parent in parents}
     for index, child in enumerate(children):
         child.child_index = index
-        child.parent_index = next(p.parent_index for p in parents if p.parent_id == child.parent_id)
+        child.parent_index = by_id[child.parent_id]
     return parents, children
 
 

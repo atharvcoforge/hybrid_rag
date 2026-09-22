@@ -1,10 +1,11 @@
 import json
 import os
+import secrets
 import time
 import urllib.error
 from pathlib import Path
 
-from fastapi import FastAPI
+from fastapi import Depends, FastAPI, Header, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
@@ -19,11 +20,18 @@ from rag.telemetry import log_event, new_request_id
 _answers = {}
 
 app = FastAPI()
+
+
+def _cors_origins() -> list[str]:
+    raw = os.environ.get("CORS_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173")
+    return [part.strip() for part in raw.split(",") if part.strip()]
+
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_origins=_cors_origins(),
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["Authorization", "Content-Type"],
 )
 
 
@@ -32,11 +40,16 @@ class QueryBody(BaseModel):
 
 
 class IngestBody(BaseModel):
-    path: str | None = None
+    # path is intentionally absent — ingest only the configured corpus root (F-03).
+    pass
 
 
 def index_dir() -> Path:
     return Path(os.environ.get("INDEX_DIR", "index"))
+
+
+def corpus_root() -> Path:
+    return Path(os.environ.get("CORPUS", "documents"))
 
 
 def eval_path() -> Path:
@@ -58,6 +71,17 @@ def live_mode() -> str:
     return "cascade"
 
 
+def require_token(authorization: str | None = Header(default=None)) -> None:
+    expected = os.environ.get("API_TOKEN", "").strip()
+    if not expected:
+        return
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(status_code=401, detail="missing bearer token")
+    got = authorization.removeprefix("Bearer ").strip()
+    if len(got) != len(expected) or not secrets.compare_digest(got, expected):
+        raise HTTPException(status_code=401, detail="invalid bearer token")
+
+
 TITLES = {
     "Carbon_New_2040.pdf": "Carbon Reduction Plan",
     "Envi_2040-1.pdf": "Environmental Sustainability Policy",
@@ -77,6 +101,8 @@ def hit_dict(hit, cite: int) -> dict:
         "cite": cite,
         "page_start": hit.page_start,
         "page_end": hit.page_end,
+        "norm_start": hit.start_char,
+        "norm_end": hit.end_char,
         "score": hit.score,
         "confident": hit.confident,
     }
@@ -215,23 +241,45 @@ def build_report(index_dir_path, golden, search, finish=None) -> dict:
 
 
 def _verdict(report: dict) -> str:
-    scores = {(row["mode"], row["kind"]): row for row in report["scores"]}
-    live = report["live_mode"]
-    chosen = scores[(live, "all")]
-    rerank = scores[("rerank", "all")]
-    parts = [
-        f"Live retrieval is {live}: recall@5 {chosen['recall']:.2f}, MRR {chosen['mrr']:.2f}, abstain {chosen['abstain']:.2f}, retrieve p50 {chosen['p50']:.0f} ms.",
-        f"Full rerank recall@5 is {rerank['recall']:.2f} at p50 {rerank['p50']:.0f} ms.",
-        f"{live} is the fastest mode within 0.05 recall of the best score on this set.",
-    ]
-    span = report["span_hit"]
+    # F-27: never raise on a partial report — say what is missing.
+    scores = {(row["mode"], row["kind"]): row for row in report.get("scores") or []}
+    live = report.get("live_mode") or "cascade"
+    chosen = scores.get((live, "all"))
+    rerank = scores.get(("rerank", "all"))
+    parts = []
+    if chosen is None:
+        parts.append(f"Live mode {live} has no overall score row yet.")
+    else:
+        parts.append(
+            f"Live retrieval is {live}: recall@5 {chosen['recall']:.2f}, MRR {chosen['mrr']:.2f}, "
+            f"abstain {chosen['abstain']:.2f}, retrieve p50 {chosen['p50']:.0f} ms"
+            + (
+                f", p95 {chosen['p95']:.0f} ms."
+                if chosen.get("p95") is not None
+                else "."
+            )
+        )
+        parts.append(f"{live} is the fastest mode within 0.05 recall of the best score on this set.")
+    if rerank is None:
+        parts.append("Rerank scores are missing from this report.")
+    else:
+        parts.append(f"Full rerank recall@5 is {rerank['recall']:.2f} at p50 {rerank['p50']:.0f} ms.")
+    span = report.get("span_hit")
     if span is None:
         parts.append("The writer was not scored.")
     elif span < 0.5:
-        parts.append(f"Answer span-hit is {span:.2f} on {report['span_n']} rows. That is weak for the 3B model; the next step is the 7B Q4 of the same family.")
+        parts.append(
+            f"Answer span-hit is {span:.2f} on {report.get('span_n', 0)} rows. "
+            "That is weak for the 3B model; the next step is the 7B Q4 of the same family."
+        )
     else:
-        parts.append(f"Answer span-hit is {span:.2f} on {report['span_n']} rows, so the 3B model stays.")
-    parts.append("Still not a production service: one machine, no auth, and the golden set was written by hand against three policies.")
+        parts.append(
+            f"Answer span-hit is {span:.2f} on {report.get('span_n', 0)} rows, so the 3B model stays."
+        )
+    parts.append(
+        "Still not a production service: one machine, a showcase corpus of four policies, "
+        "and the golden set was written by hand."
+    )
     return " ".join(parts)
 
 
@@ -256,9 +304,9 @@ def ask(body: QueryBody):
 
 
 @app.post("/api/ingest")
-def ingest_route(body: IngestBody | None = None):
-    path = (body.path if body and body.path else None) or os.environ.get("CORPUS", "documents")
-    items = ingest(path, index_dir())
+def ingest_route(_auth: None = Depends(require_token), body: IngestBody | None = None):
+    del body
+    items = ingest(corpus_root(), index_dir())
     return {"items": [{"doc_id": item.doc_id, "status": item.status, "chunks": item.chunks} for item in items]}
 
 
@@ -271,7 +319,7 @@ def eval_get():
 
 
 @app.post("/api/eval")
-def eval_post():
+def eval_post(_auth: None = Depends(require_token)):
     report = build_report(index_dir(), golden_path(), _search, complete)
     path = eval_path()
     path.parent.mkdir(parents=True, exist_ok=True)

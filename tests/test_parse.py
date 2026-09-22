@@ -1,4 +1,5 @@
 import pytest
+from pathlib import Path
 
 from rag.models import IngestError
 from rag.parse import parse_file
@@ -65,6 +66,21 @@ def test_pdf_round_trip(tmp_path):
     _mime, blocks = parse_file(path)
     assert any("Hello PDF" in block.text for block in blocks)
     assert blocks[0].page == 1
+
+
+def test_pdf_tables_are_not_also_kept_as_prose():
+    # F-02: distinctive table figures must not also sit in prose on the same page.
+    path = Path("documents/Carbon_New_2040.pdf")
+    if not path.exists():
+        pytest.skip("corpus PDF missing")
+    _mime, blocks = parse_file(path)
+    markers = ("14,644", "914.38", "8,688", "5,543", "37,445", "852.95")
+    for marker in markers:
+        homes = [(block.page, block.kind) for block in blocks if marker in block.text]
+        assert homes, f"missing {marker}"
+        kinds = {kind for _page, kind in homes}
+        assert "prose" not in kinds, f"{marker} still indexed as prose: {homes}"
+        assert "table" in kinds, f"{marker} not in a table block: {homes}"
 
 
 def test_pdf_without_a_text_layer_is_refused(tmp_path):

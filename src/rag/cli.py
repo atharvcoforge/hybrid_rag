@@ -23,6 +23,11 @@ def main(argv=None) -> int:
     eval_cmd.add_argument("--index", required=True)
     eval_cmd.add_argument("--golden", required=True)
 
+    purge_cmd = sub.add_parser("purge", help="drop docs missing from a folder")
+    purge_cmd.add_argument("path")
+    purge_cmd.add_argument("--index", required=True)
+    purge_cmd.add_argument("--missing", action="store_true", required=True)
+
     args = parser.parse_args(argv)
     try:
         if args.cmd == "ingest":
@@ -36,6 +41,10 @@ def main(argv=None) -> int:
                 print("no hits")
             else:
                 print("\n\n".join(_format_hit(hit) for hit in result.hits))
+        elif args.cmd == "purge":
+            for item in ingest(args.path, args.index):
+                if item.status == "purged":
+                    print(f"purged  {item.doc_id}")
         else:
             print(_run_eval(args.index, args.golden))
     except (IngestError, QueryError) as exc:

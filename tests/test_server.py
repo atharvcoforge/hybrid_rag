@@ -36,7 +36,14 @@ def _hit():
     )
 
 
-def test_repeat_skips_retrieve_and_writer():
+def test_verdict_survives_a_partial_report():
+    from rag.server import _verdict
+
+    text = _verdict({"live_mode": "rrf", "scores": [], "span_hit": None, "span_n": 0})
+    assert "no overall score row" in text
+    assert "Rerank scores are missing" in text
+    assert "Still not a production service" in text
+
     calls = {"search": 0, "write": 0}
     seen = []
 

@@ -36,10 +36,10 @@ class _Tau:
     def __init__(self):
         self.model_id = "test-embed"
         self.model_revision = "rev"
-        self.saved = None
+        self.saved = {}
 
     def set_tau(self, key, value):
-        self.saved = (key, value)
+        self.saved[key] = value
 
 
 def test_evaluate_writes_tau_from_rank_one_rerank_scores():
@@ -55,7 +55,7 @@ def test_evaluate_writes_tau_from_rank_one_rerank_scores():
 
     lines, fitted = evaluate(box, [row], ask)
     assert fitted == 0.8
-    assert box.saved == (tau_key("test-embed", "rev"), 0.8)
+    assert box.saved[tau_key("test-embed", "rev", "rerank")] == 0.8
     cascade = next(line for line in lines if line.mode == "cascade" and line.kind == "all")
     assert cascade.recall == 0
     assert cascade.abstain == 1

@@ -114,8 +114,8 @@ class Ingested:
     chunks: int
 
 
-def tau_key(embed_model: str, embed_revision: str) -> str:
-    return "|".join((embed_model, embed_revision, RERANK_MODEL, RERANK_REVISION))
+def tau_key(embed_model: str, embed_revision: str, mode: str = "cascade") -> str:
+    return "|".join((embed_model, embed_revision, RERANK_MODEL, RERANK_REVISION, mode))
 
 
 def make_embed_text(heading_path: str, body: str) -> str:

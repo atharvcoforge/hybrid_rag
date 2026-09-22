@@ -116,14 +116,26 @@ def evaluate(index, rows, ask, verify=None) -> tuple[list[Score], float | None]:
         if mode == "cascade":
             continue
         results[mode] = [clocked(mode, row) for row in rows]
-    rank1 = []
-    for row, result in zip(rows, results["rerank"]):
-        if result.hits and row_hit(result.hits[:1], row, k=1):
-            rank1.append(result.hits[0].score)
-    fitted = fit_tau(rank1)
-    if fitted is not None:
-        index.set_tau(tau_key(index.model_id, index.model_revision), fitted)
+    fitted_by_mode = {}
+    for mode in ("dense", "bm25", "rrf", "rerank"):
+        rank1 = []
+        for row, result in zip(rows, results[mode]):
+            if result.hits and row_hit(result.hits[:1], row, k=1):
+                rank1.append(result.hits[0].score)
+        fitted = fit_tau(rank1)
+        if fitted is not None:
+            index.set_tau(tau_key(index.model_id, index.model_revision, mode), fitted)
+            fitted_by_mode[mode] = fitted
     results["cascade"] = [clocked("cascade", row) for row in rows]
+    cascade_rank1 = []
+    for row, result in zip(rows, results["cascade"]):
+        if result.hits and row_hit(result.hits[:1], row, k=1):
+            cascade_rank1.append(result.hits[0].score)
+    cascade_fitted = fit_tau(cascade_rank1)
+    if cascade_fitted is not None:
+        index.set_tau(tau_key(index.model_id, index.model_revision, "cascade"), cascade_fitted)
+        fitted_by_mode["cascade"] = cascade_fitted
+    fitted = fitted_by_mode.get("rerank")
     lines = []
     kinds = ["all", *sorted({row["kind"] for row in rows})]
     for mode in MODES:
