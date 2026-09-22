@@ -5,7 +5,12 @@ from pathlib import Path
 
 from rag.models import IngestError, make_embed_text
 
-_WORD = re.compile(r"\w+", re.UNICODE)
+# Quoted compounds force FTS5 adjacency of the unicode61 parts (SKU-7842-XL,
+# 14,644), so OR over split tokens cannot rank a distractor that only shares pieces.
+_TOKEN = re.compile(
+    r"\d{1,3}(?:,\d{3})+(?:\.\d+)?|\w+(?:[-/]\w+)+|\w+",
+    re.UNICODE,
+)
 
 
 class Index:
@@ -339,7 +344,7 @@ class Index:
 
 
 def fts_query(text: str) -> str:
-    words = _WORD.findall(text)
+    words = _TOKEN.findall(text)
     if not words:
         return ""
     return " OR ".join('"' + word.replace('"', "") + '"' for word in words)
