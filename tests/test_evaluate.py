@@ -66,3 +66,39 @@ def test_evaluate_writes_tau_from_rank_one_rerank_scores():
 def test_golden_file_has_both_kinds():
     rows = load_rows("evals/golden.jsonl")
     assert {row["kind"] for row in rows} == {"lexical", "semantic"}
+
+
+def test_unanswerable_rows_do_not_dilute_recall():
+    from rag.evaluate import evaluate
+
+    answerable = {"q": "sku", "doc_id": "guide.md", "must_contain": "SKU-1", "kind": "lexical"}
+    blank = {"q": "salary", "kind": "unanswerable"}
+    box = _Tau()
+
+    def ask(mode, _row):
+        return Retrieval(hits=[_hit("SKU-1 is here", 0.8)])
+
+    lines, _fitted = evaluate(box, [answerable, blank], ask)
+    overall = next(line for line in lines if line.mode == "bm25" and line.kind == "all")
+    assert overall.recall == 1
+    withheld = next(line for line in lines if line.mode == "bm25" and line.kind == "unanswerable")
+    assert withheld.n == 1
+    assert withheld.recall == 0
+
+
+def test_pick_live_keeps_the_fast_mode_that_still_recalls():
+    from rag.evaluate import Score, pick_live
+
+    def line(mode, recall, p50, mrr=0.5):
+        return Score(mode, "all", recall, mrr, 0.0, 4, p50)
+
+    assert pick_live([line("cascade", 0.9, 10), line("rerank", 0.92, 40)]) == "cascade"
+    assert pick_live([line("cascade", 0.8, 10), line("rerank", 0.92, 40)]) == "rerank"
+    assert pick_live([line("cascade", 0.9, 40), line("rerank", 0.9, 40)]) == "rerank"
+    assert pick_live([
+        line("dense", 1, 240, 0.77),
+        line("rrf", 1, 250, 0.93),
+        line("rerank", 1, 5000, 0.94),
+        line("cascade", 0.88, 5000, 0.88),
+        line("bm25", 0.94, 1, 0.81),
+    ]) == "rrf"

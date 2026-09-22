@@ -1,0 +1,10 @@
+.venv
+.git
+.cursor
+index
+models
+web/node_modules
+**/__pycache__
+*.egg-info
+.pytest_cache
+evals/latest.json

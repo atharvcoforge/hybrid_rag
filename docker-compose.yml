@@ -1,0 +1,29 @@
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      INDEX_DIR: /index
+      CORPUS: /app/documents
+      GOLDEN: /app/evals/policy.jsonl
+      EVAL_OUT: /app/evals/latest.json
+      GENERATOR_URL: http://host.docker.internal:8081/v1
+      HF_HOME: /cache/hf
+    volumes:
+      - index:/index
+      - hf:/cache/hf
+      - ./evals:/app/evals
+      - ./documents:/app/documents
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+  web:
+    build: ./web
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+
+volumes:
+  index:
+  hf:

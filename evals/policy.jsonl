@@ -1,0 +1,20 @@
+{"q": "What is the publication date of the Carbon Reduction Plan?", "doc_id": "Carbon_New_2040.pdf", "must_contain": "10 October 2025", "expect": "10 October 2025", "kind": "lexical"}
+{"q": "What were India baseline total emissions in tCO2e for FY24?", "doc_id": "Carbon_New_2040.pdf", "must_contain": "14,644", "expect": "14,644", "kind": "lexical"}
+{"q": "What were UK baseline total emissions in tCO2e?", "doc_id": "Carbon_New_2040.pdf", "must_contain": "914.38", "expect": "914.38", "kind": "lexical"}
+{"q": "What is the capacity of the rooftop solar system at the India campus?", "doc_id": "Carbon_New_2040.pdf", "must_contain": "75 KWp", "expect": "75 KWp", "kind": "lexical"}
+{"q": "Who signed the Carbon Reduction Plan?", "doc_id": "Carbon_New_2040.pdf", "must_contain": "John Speight", "expect": "John Speight", "kind": "lexical"}
+{"q": "Which PPN does the Carbon Reduction Plan follow?", "doc_id": "Carbon_New_2040.pdf", "must_contain": "PPN 06/21", "expect": "PPN 06/21", "kind": "lexical"}
+{"q": "When was the Environmental Sustainability Policy last reviewed?", "doc_id": "Envi_2040-1.pdf", "must_contain": "1st April 2025", "expect": "1st April 2025", "kind": "lexical"}
+{"q": "What share of Pan India operations does the ISO 14001 certification cover?", "doc_id": "Envi_2040-1.pdf", "must_contain": "covering 60%", "expect": "60%", "kind": "lexical"}
+{"q": "What is the review date of the Water Management Policy?", "doc_id": "Water-Management-Policy.pdf", "must_contain": "10th August 2026", "expect": "10th August 2026", "kind": "lexical"}
+{"q": "Which atlas does Coforge name for water risk?", "doc_id": "Water-Management-Policy.pdf", "must_contain": "WRI Aqueduct", "expect": "WRI Aqueduct", "kind": "lexical"}
+{"q": "By when does the carbon plan say Coforge will reach net zero?", "doc_id": "Carbon_New_2040.pdf", "must_contain": "Net Zero emission by 2040", "expect": "2040", "kind": "semantic"}
+{"q": "What fuel are company cabs and buses being converted to?", "doc_id": "Carbon_New_2040.pdf", "must_contain": "Compressed Natural Gas", "expect": "Compressed Natural Gas", "kind": "semantic"}
+{"q": "In the carbon plan, when should electric vehicles reach about half the employee transport fleet?", "doc_id": "Carbon_New_2040.pdf", "must_contain": "50% by 2032", "expect": "2032", "kind": "semantic"}
+{"q": "What year-on-year greenhouse gas reduction does the environmental policy set?", "doc_id": "Envi_2040-1.pdf", "must_contain": "5% year-on-year", "expect": "5%", "kind": "semantic"}
+{"q": "What waste goal does the environmental policy set for 2040?", "doc_id": "Envi_2040-1.pdf", "must_contain": "Zero Waste by 2040", "expect": "Zero Waste", "kind": "semantic"}
+{"q": "What non-potable water share does the environmental policy want by 2040?", "doc_id": "Envi_2040-1.pdf", "must_contain": "75% by 2040", "expect": "75%", "kind": "semantic"}
+{"q": "How does the water policy define being water positive?", "doc_id": "Water-Management-Policy.pdf", "must_contain": "replenishing more water than is consumed", "expect": "replenishing more water than is consumed", "kind": "semantic"}
+{"q": "What were Coforge's Scope 1 emissions in Germany in FY24?", "kind": "unanswerable"}
+{"q": "What is John Speight's annual salary?", "kind": "unanswerable"}
+{"q": "How many litres of water did the Bengaluru campus withdraw in FY24?", "kind": "unanswerable"}
