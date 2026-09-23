@@ -20,6 +20,8 @@ def ingest(
     contextual: bool = False,
     context_fn=None,
 ) -> list[Ingested]:
+    from rag.telemetry import bind_trace, log_event, mint_trace_id
+
     path = Path(path)
     index_dir = Path(index_dir)
     model_id = model_id or EMBED_MODEL
@@ -38,24 +40,39 @@ def ingest(
     index.open()
     try:
         files = _files(path, index_dir)
-        results = [
-            _ingest_one(
-                file,
-                root,
-                index,
-                encode,
-                count_tokens,
-                model_id,
-                model_revision,
-                contextual=contextual,
-                context_fn=context_fn,
-            )
-            for file, root in files
-        ]
-        if path.is_dir():
-            seen = {item.doc_id for item in results}
-            for doc_id in index.purge_missing(seen):
-                results.append(Ingested(doc_id, "purged", 0))
+        results = []
+        with bind_trace(mint_trace_id()):
+            log_event("ingest_start", file_total=len(files))
+            for file_index, (file, root) in enumerate(files, start=1):
+                log_event(
+                    "ingest_progress",
+                    file=str(file.name),
+                    file_index=file_index,
+                    file_total=len(files),
+                )
+                results.append(
+                    _ingest_one(
+                        file,
+                        root,
+                        index,
+                        encode,
+                        count_tokens,
+                        model_id,
+                        model_revision,
+                        contextual=contextual,
+                        context_fn=context_fn,
+                        file_index=file_index,
+                        file_total=len(files),
+                    )
+                )
+            if path.is_dir():
+                seen = {item.doc_id for item in results}
+                for doc_id in index.purge_missing(seen):
+                    results.append(Ingested(doc_id, "purged", 0))
+            from rag.versions import reconcile_versions
+
+            reconcile_versions(index)
+            log_event("ingest_done", files=len(results))
         return results
     finally:
         index.close()
@@ -91,15 +108,50 @@ def _ingest_one(
     *,
     contextual: bool = False,
     context_fn=None,
+    file_index: int = 1,
+    file_total: int = 1,
 ) -> Ingested:
+    from rag.normalize import normalize_text
+    from rag.telemetry import log_event, span
+
     resolved = _inside(root, file)
     if resolved.stat().st_size > MAX_FILE_BYTES:
         raise IngestError(str(file), "file exceeds 50 MB")
     digest = _sha256(resolved)
     doc_id = resolved.relative_to(root.resolve()).as_posix()
     if index.matches(doc_id, digest, PIPELINE_VERSION, model_id, model_revision):
+        log_event(
+            "ingest_skip",
+            file=doc_id,
+            file_index=file_index,
+            file_total=file_total,
+            cache_hit=True,
+        )
         return Ingested(doc_id, "skipped", 0)
-    mime, blocks = parse_file(resolved)
+    with span("parse", file=doc_id, file_index=file_index, file_total=file_total) as parse_span:
+        mime, blocks = parse_file(resolved)
+        pages = {block.page for block in blocks if getattr(block, "page", None)}
+        parse_span["page_total"] = len(pages) or 1
+        layout_escalations = sum(1 for block in blocks if block.flagged and block.kind == "layout")
+        ocr_pages = sum(1 for block in blocks if getattr(block, "ocr", False) or block.kind == "ocr")
+        parse_span["layout_escalations"] = layout_escalations
+        parse_span["ocr_pages"] = ocr_pages
+        for page in sorted(pages) if pages else [1]:
+            log_event(
+                "ingest_page",
+                file=doc_id,
+                file_index=file_index,
+                file_total=file_total,
+                page=page,
+                page_total=parse_span["page_total"],
+            )
+    with span("normalize", file=doc_id):
+        from dataclasses import replace
+
+        blocks = [
+            replace(block, text=normalize_text(block.text, code=block.kind == "code"))
+            for block in blocks
+        ]
     warnings = []
     for block in blocks:
         if block.flagged:
@@ -107,19 +159,31 @@ def _ingest_one(
         if block.text.startswith("[page error]"):
             warnings.append(block.text)
     ctx = context_fn if contextual else None
-    _parents, children = chunk_document(doc_id, blocks, count_tokens, context_fn=ctx)
+    with span("chunk", file=doc_id) as chunk_span:
+        _parents, children = chunk_document(doc_id, blocks, count_tokens, context_fn=None)
+        chunk_span["chunks"] = len(children)
+    with span("contextualize", file=doc_id, skipped=not bool(contextual)) as ctx_span:
+        if contextual:
+            _parents, children = chunk_document(doc_id, blocks, count_tokens, context_fn=ctx)
+            ctx_span["chunks"] = len(children)
+        else:
+            ctx_span["reason"] = "contextual_disabled"
     if not children:
         raise IngestError(str(file), "no chunks")
     if len(children) > MAX_CHUNKS:
         raise IngestError(str(file), "parser produced too many chunks")
-    vectors = embed_texts(
-        [child.embed_text for child in children],
-        encode,
-        cache_get=index.cache_get,
-        cache_put=index.cache_put,
-        model_id=model_id,
-        revision=model_revision,
-    )
+    with span("embed", file=doc_id, model=model_id, candidates_in=len(children)) as embed_span:
+        vectors = embed_texts(
+            [child.embed_text for child in children],
+            encode,
+            cache_get=index.cache_get,
+            cache_put=index.cache_put,
+            model_id=model_id,
+            revision=model_revision,
+        )
+        embed_span["candidates_out"] = len(vectors)
+        # cache hit rate when embed_texts reports via cache — approximate from sizes
+        embed_span["cache_hit_rate"] = None
     source = {
         "source_path": doc_id,
         "filename": resolved.name,
@@ -131,6 +195,15 @@ def _ingest_one(
     index.delete_orphans(doc_id, [child.chunk_id for child in children], [parent.parent_id for parent in _parents])
     index.replace_fts(doc_id, children)
     index.save_file(doc_id, doc_id, digest)
+    log_event(
+        "ingest_file_done",
+        file=doc_id,
+        file_index=file_index,
+        file_total=file_total,
+        chunks=len(children),
+        layout_escalations=layout_escalations,
+        ocr_pages=ocr_pages,
+    )
     return Ingested(doc_id, "indexed", len(children), warnings=warnings or None)
 
 

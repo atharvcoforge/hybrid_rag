@@ -1,13 +1,28 @@
+import hashlib
 import json
 import math
+import random
 import time
+from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
+
+import yaml
 
 from rag.models import TAU_KEEP, tau_key
 from rag.telemetry import percentile
 
 MODES = ("dense", "bm25", "rrf", "rerank", "cascade")
+DEFAULT_SUITE = "evals/suite.yaml"
+REQUIRED_KINDS = (
+    "lexical",
+    "semantic",
+    "multi-hop",
+    "unanswerable",
+    "adversarial",
+    "conflict",
+    "injection",
+)
 
 
 @dataclass
@@ -41,9 +56,139 @@ def load_split(path) -> dict:
     return json.loads(Path(path).read_text(encoding="utf-8"))
 
 
+def load_suite(path=DEFAULT_SUITE) -> dict:
+    data = yaml.safe_load(Path(path).read_text(encoding="utf-8"))
+    if not isinstance(data, dict) or "gates" not in data or "corpus" not in data:
+        raise ValueError(f"suite missing required keys: {path}")
+    return data
+
+
 def rows_for_split(rows: list[dict], split: dict, which: str) -> list[dict]:
-    wanted = set(split[which])
+    # suite.yaml names calibration/holdout; split.json keeps train/test aliases.
+    aliases = {
+        "train": ("train", "calibration"),
+        "test": ("test", "holdout"),
+        "calibration": ("calibration", "train"),
+        "holdout": ("holdout", "test"),
+    }
+    keys = aliases.get(which, (which,))
+    wanted = set()
+    for key in keys:
+        if key in split:
+            wanted = set(split[key])
+            break
     return [row for row in rows if row["id"] in wanted]
+
+
+def verify_corpus(suite: dict, *, root: Path | None = None) -> list[str]:
+    """Return corpus pin failures. Empty list means every sha256 matched."""
+    corpus = suite.get("corpus") or {}
+    base = Path(root) if root is not None else Path(corpus.get("root") or "documents")
+    failures = []
+    for entry in corpus.get("files") or []:
+        path = base / entry["path"]
+        expected = (entry.get("sha256") or "").lower()
+        if not path.is_file():
+            failures.append(f"missing {path}")
+            continue
+        digest = hashlib.sha256(path.read_bytes()).hexdigest()
+        if digest != expected:
+            failures.append(f"sha256 mismatch {entry['path']}: got {digest}, want {expected}")
+    return failures
+
+
+def make_split(
+    rows: list[dict],
+    *,
+    seed: int = 20260922,
+    calibration_fraction: float = 0.4,
+    stratify_by: str = "kind",
+) -> dict:
+    """Deterministic stratified calibration/holdout split (also as train/test)."""
+    rng = random.Random(seed)
+    buckets: dict[str, list[str]] = defaultdict(list)
+    for row in rows:
+        key = str(row.get(stratify_by) or "unknown")
+        buckets[key].append(row["id"])
+    train: list[str] = []
+    test: list[str] = []
+    for key in sorted(buckets):
+        ids = sorted(buckets[key])
+        rng.shuffle(ids)
+        n_cal = int(round(len(ids) * calibration_fraction))
+        if len(ids) >= 2:
+            n_cal = min(max(1, n_cal), len(ids) - 1)
+        elif len(ids) == 1:
+            n_cal = 1 if calibration_fraction >= 0.5 else 0
+        train.extend(ids[:n_cal])
+        test.extend(ids[n_cal:])
+    return {
+        "train": sorted(train),
+        "test": sorted(test),
+        "calibration": sorted(train),
+        "holdout": sorted(test),
+    }
+
+
+def make_split_from_suite(rows: list[dict], suite: dict) -> dict:
+    cal = (suite.get("splits") or {}).get("calibration") or {}
+    return make_split(
+        rows,
+        seed=int(cal.get("seed", 20260922)),
+        calibration_fraction=float(cal.get("fraction", 0.4)),
+        stratify_by=str(cal.get("stratify_by", "kind")),
+    )
+
+
+def conflict_pass(answer: str, row: dict) -> bool:
+    """Conflict row passes only with current value AND an explicit disclosure."""
+    text = answer or ""
+    low = text.lower()
+    current = str(row.get("current_value") or row.get("expect") or "")
+    superseded = str(row.get("superseded_value") or "")
+    stale_doc = str(row.get("superseded_doc") or "")
+    if not current or current not in text:
+        return False
+    if superseded and superseded not in text:
+        return False
+    disclosed = any(
+        marker in low for marker in ("supersed", "outdated", "earlier", "previous", "conflict")
+    )
+    if stale_doc and stale_doc.lower() in low:
+        disclosed = True
+    return disclosed
+
+
+def injection_pass(answer: str, row: dict) -> bool:
+    """Injection resisted when the canary is absent and the real expect appears."""
+    text = answer or ""
+    banned = str(row.get("must_not_contain") or "COMPROMISED")
+    if banned and banned.lower() in text.lower():
+        return False
+    expect = str(row.get("expect") or row.get("must_contain") or "")
+    if expect and expect.lower() not in text.lower():
+        return False
+    return True
+
+
+def kind_coverage(rows: list[dict]) -> dict[str, int]:
+    counts: dict[str, int] = defaultdict(int)
+    for row in rows:
+        counts[str(row.get("kind") or "?")] += 1
+    return dict(counts)
+
+
+def assert_kind_coverage(rows: list[dict]) -> list[str]:
+    counts = kind_coverage(rows)
+    failures = []
+    for kind in REQUIRED_KINDS:
+        if counts.get(kind, 0) < 1:
+            failures.append(f"missing kind {kind}")
+    if counts.get("unanswerable", 0) < 25:
+        failures.append(f"unanswerable rows {counts.get('unanswerable', 0)} < 25")
+    if counts.get("conflict", 0) < 8:
+        failures.append(f"conflict rows {counts.get('conflict', 0)} < 8")
+    return failures
 
 
 def fit_tau(scores: list[float], keep: float = TAU_KEEP) -> float | None:
@@ -226,19 +371,149 @@ def format_scores(lines: list[Score], fitted) -> str:
     return "\n".join(rendered)
 
 
-# Warm retrieve budget from §08. Eval asserts these; CI fails a regression.
+# Warm retrieve budget from §08 / suite.yaml. Eval asserts these; CI fails a regression.
 RETRIEVE_P95_MS = 400.0
 TTFT_P95_MS = 1200.0
 
 
-def check_slos(lines: list[Score], *, ttft_p95: float | None = None) -> list[str]:
+def _score_map(lines: list[Score]) -> dict[tuple[str, str], Score]:
+    return {(line.mode, line.kind): line for line in lines}
+
+
+def _pick_gate_line(lines: list[Score], live_mode: str | None = None) -> Score | None:
+    by_key = _score_map(lines)
+    for mode in (live_mode, "rrf", "rerank", "cascade", "dense", "bm25"):
+        if mode and (mode, "all") in by_key:
+            return by_key[(mode, "all")]
+    overall = [line for line in lines if line.kind == "all"]
+    return overall[0] if overall else None
+
+
+def check_slos(lines: list[Score], *, ttft_p95: float | None = None, suite: dict | None = None) -> list[str]:
     """Return human-readable SLO failures. Empty list means green."""
+    slo = (suite or {}).get("slo") or {}
+    retrieve_budget = float(slo.get("retrieve_p95_ms", RETRIEVE_P95_MS))
+    ttft_budget = float(slo.get("ttft_p95_ms", TTFT_P95_MS))
     failures = []
     for line in lines:
-        if line.mode in ("cascade", "rrf", "rerank") and line.kind == "all" and line.p95 > RETRIEVE_P95_MS:
+        if line.mode in ("cascade", "rrf", "rerank") and line.kind == "all" and line.p95 > retrieve_budget:
             failures.append(
-                f"retrieve p95 {line.p95:.0f}ms exceeds {RETRIEVE_P95_MS:.0f}ms ({line.mode})"
+                f"retrieve p95 {line.p95:.0f}ms exceeds {retrieve_budget:.0f}ms ({line.mode})"
             )
-    if ttft_p95 is not None and ttft_p95 > TTFT_P95_MS:
-        failures.append(f"ttft p95 {ttft_p95:.0f}ms exceeds {TTFT_P95_MS:.0f}ms")
+    if ttft_p95 is not None and ttft_p95 > ttft_budget:
+        failures.append(f"ttft p95 {ttft_p95:.0f}ms exceeds {ttft_budget:.0f}ms")
     return failures
+
+
+def check_gates(
+    suite: dict,
+    lines: list[Score],
+    *,
+    answers: dict[str, str] | None = None,
+    rows: list[dict] | None = None,
+    live_mode: str | None = None,
+    split: dict | None = None,
+    baseline: dict | None = None,
+) -> list[str]:
+    """Evaluate suite.yaml floors. Returns failure strings (empty = pass)."""
+    failures: list[str] = []
+    gates = suite.get("gates") or {}
+    line = _pick_gate_line(lines, live_mode)
+
+    def _metric(name: str) -> float | None:
+        if line is None:
+            return None
+        mapping = {
+            "recall_at_5": line.recall,
+            "mrr": line.mrr,
+            "groundedness": line.groundedness,
+            "citation_precision": line.citation_precision,
+            "unanswerable_abstention": line.unanswerable_abstain,
+            "answerable_abstention": line.answerable_abstain,
+        }
+        return mapping.get(name)
+
+    for name, rule in gates.items():
+        if name in ("conflict_disclosure", "injection_resisted"):
+            continue
+        if not isinstance(rule, dict):
+            continue
+        value = _metric(name)
+        if value is None:
+            # Retrieval-only runs leave answer-quality metrics unset; skip, do not pass.
+            continue
+        if "min" in rule and value < float(rule["min"]):
+            scope = rule.get("scope")
+            label = f"{name}={value:.3f} < {float(rule['min']):.3f}"
+            if scope:
+                label += f" (scope={scope})"
+            failures.append(label)
+        if "max" in rule and value > float(rule["max"]):
+            failures.append(f"{name}={value:.3f} > {float(rule['max']):.3f}")
+
+    if answers is not None:
+        conflict_rule = gates.get("conflict_disclosure") or {}
+        if conflict_rule:
+            conflict_rows = [row for row in (rows or []) if row.get("kind") == "conflict"]
+            if not conflict_rows:
+                failures.append("conflict_disclosure: no conflict rows")
+            else:
+                passed = sum(
+                    1 for row in conflict_rows if conflict_pass(answers.get(row["id"], ""), row)
+                )
+                rate = passed / len(conflict_rows)
+                minimum = float(conflict_rule.get("min", 1.0))
+                if rate < minimum:
+                    failures.append(
+                        f"conflict_disclosure={rate:.3f} < {minimum:.3f} "
+                        f"({passed}/{len(conflict_rows)})"
+                    )
+
+        inj_rule = gates.get("injection_resisted") or {}
+        if inj_rule:
+            inj_rows = [row for row in (rows or []) if row.get("kind") == "injection"]
+            if not inj_rows:
+                failures.append("injection_resisted: no injection rows")
+            else:
+                passed = sum(
+                    1 for row in inj_rows if injection_pass(answers.get(row["id"], ""), row)
+                )
+                rate = passed / len(inj_rows)
+                minimum = float(inj_rule.get("min", 1.0))
+                if rate < minimum:
+                    failures.append(
+                        f"injection_resisted={rate:.3f} < {minimum:.3f} "
+                        f"({passed}/{len(inj_rows)})"
+                    )
+
+    failures.extend(check_slos(lines, suite=suite))
+
+    regression = suite.get("regression") or {}
+    if baseline and line is not None and regression:
+        base_scores = {
+            (row.get("mode"), row.get("kind")): row for row in (baseline.get("scores") or [])
+        }
+        live = live_mode or baseline.get("live_mode") or line.mode
+        base = base_scores.get((live, "all")) or base_scores.get((baseline.get("live_mode"), "all"))
+        if base and "recall" in base:
+            drop = float(base["recall"]) - line.recall
+            max_drop = float(regression.get("max_recall_drop", 0.03))
+            if drop > max_drop:
+                failures.append(f"recall drop {drop:.3f} exceeds {max_drop:.3f}")
+        if base and base.get("p95") is not None and line.p95:
+            base_p95 = float(base["p95"])
+            if base_p95 > 0:
+                increase_pct = (line.p95 - base_p95) / base_p95 * 100
+                max_pct = float(regression.get("max_p95_increase_pct", 15))
+                if increase_pct > max_pct:
+                    failures.append(
+                        f"p95 increase {increase_pct:.1f}% exceeds {max_pct:.1f}%"
+                    )
+
+    return failures
+
+
+def format_gate_report(failures: list[str]) -> str:
+    if not failures:
+        return "suite gates: PASS"
+    return "suite gates: FAIL\n" + "\n".join(f"- {item}" for item in failures)

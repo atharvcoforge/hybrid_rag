@@ -7,9 +7,10 @@ This is still one machine and four documents. Auth, calibration, and the golden 
 ## Quick start
 
 ```bash
-python -m venv .venv && source .venv/bin/activate
-pip install -e ".[dev]"
-# optional: pip install -e ".[ocr,layout]"
+# needs Python >=3.11 (uv works when system Python is older)
+uv venv --python 3.11 .venv && source .venv/bin/activate
+uv pip install -e ".[dev]"
+# optional: uv pip install -e ".[ocr,layout]"
 
 rag ingest documents --index index
 rag calibrate   # writes thresholds; eval is read-only after that
@@ -18,13 +19,20 @@ rag eval
 # API
 INDEX_DIR=index CORPUS=documents uvicorn rag.server:app --port 8000
 
-# UI
+# UI (requires Node/npm on the host)
 cd web && npm install && npm run dev
+
+# query body field is `q`
+curl -sS -N -X POST http://127.0.0.1:8000/api/query \
+  -H 'Content-Type: application/json' \
+  -d '{"q":"By when does Coforge reach net zero?"}'
 ```
 
-Clone to first answered query should be under ten minutes if the embedder weights are already cached in `HF_HOME`.
+Clone to first answered query should be under ten minutes if the embedder weights are already cached in `HF_HOME`. See `docs/BRINGUP.md` for a measured run and known footguns.
 
 Docker: `docker compose up --build` (API on `:8000`, web on `:80`). Point `GENERATOR_URL` at a local llama.cpp OpenAI-compatible server.
+
+**Entrypoint footgun:** `docker/entrypoint.sh` still only runs ingest when `$INDEX_DIR/side.sqlite` is absent. A leftover `side.sqlite` skips ingest (including new files under `documents/`). Workaround: `docker exec <api> python -m rag ingest /app/documents --index /index` then restart the API.
 
 ## What is gated
 

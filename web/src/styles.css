@@ -305,6 +305,17 @@ button, input { font: inherit; color: inherit; }
   margin-left: 2px;
   background: var(--ink);
   vertical-align: -2px;
+  animation: caret-blink 0.9s linear infinite;
+}
+
+.caret.static {
+  animation: none;
+  opacity: 1;
+}
+
+@keyframes caret-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.15; }
 }
 
 .error {
@@ -480,6 +491,29 @@ th {
   font-size: 13px;
 }
 
+.conflict-banner {
+  margin: 0 0 12px;
+  border: 1px solid rgba(229, 160, 13, 0.45);
+  border-radius: 4px;
+  border-bottom: 1px solid rgba(229, 160, 13, 0.45);
+}
+
+.passage.superseded {
+  opacity: 0.78;
+  border-style: dashed;
+}
+
+.chip-superseded {
+  font-size: 9px;
+  border-color: rgba(229, 160, 13, 0.55);
+  color: #e5a00d;
+}
+
+.chip-conflict {
+  border-color: rgba(229, 160, 13, 0.55);
+  color: #e5a00d;
+}
+
 .sr-status {
   position: absolute;
   width: 1px;
@@ -493,7 +527,8 @@ th {
 
 .stage-rail {
   display: flex;
-  gap: 12px;
+  flex-wrap: wrap;
+  gap: 6px 10px;
   list-style: none;
   margin: 10px 0 0;
   padding: 0;
@@ -501,14 +536,149 @@ th {
   color: var(--ink-faint);
 }
 
-.stage-rail li {
-  display: flex;
-  gap: 6px;
-  align-items: baseline;
+.stage-rail .stage-btn {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  margin: 0;
+  padding: 4px 6px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: default;
 }
 
-.stage-rail li.done { color: var(--ink-dim); }
-.stage-rail li.wait { opacity: 0.55; }
+button.stage-btn {
+  cursor: pointer;
+}
+
+.stage-name {
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-size: 10px;
+}
+
+.stage-ms,
+.stage-note {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+  font-size: 10px;
+}
+
+.stage-pending { opacity: 0.4; }
+.stage-running { color: var(--ink); border-color: var(--hairline) !important; }
+.stage-slow,
+.stage-slow .stage-btn {
+  color: #d4a017;
+  border-color: rgba(212, 160, 23, 0.35) !important;
+}
+.stage-done { color: var(--ink-dim); }
+.stage-failed,
+.stage-failed .stage-btn {
+  color: #e85d5d;
+  border-color: rgba(232, 93, 93, 0.4) !important;
+}
+.stage-skipped {
+  color: var(--ink-faint);
+  font-style: italic;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage-running .stage-btn,
+  .caret:not(.static) {
+    animation: none !important;
+  }
+}
+
+.trace-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin-top: 10px;
+}
+
+.trace-id {
+  font-size: 11px;
+  color: var(--ink-dim);
+  max-width: 28ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.copy-trace,
+.dev-toggle {
+  margin: 0;
+  padding: 2px 8px;
+  border: 1px solid var(--hairline);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--ink-dim);
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.dev-toggle.on {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.dev-drawer {
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid var(--hairline);
+  border-radius: 6px;
+  background: var(--raised);
+  overflow-x: auto;
+}
+
+.dev-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.dev-drawer table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+
+.dev-drawer th,
+.dev-drawer td {
+  padding: 4px 6px;
+  border-bottom: 1px solid var(--hairline);
+  text-align: left;
+}
+
+.fail-panel {
+  margin-top: 10px;
+  padding: 12px;
+  border: 1px solid rgba(232, 93, 93, 0.4);
+  border-radius: 6px;
+  background: rgba(232, 93, 93, 0.08);
+}
+
+.fail-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.fail-head button {
+  border: 1px solid var(--hairline);
+  background: transparent;
+  padding: 2px 8px;
+  cursor: pointer;
+}
 
 .chip {
   display: inline-block;
@@ -524,6 +694,7 @@ th {
 .chip-verified { border-color: rgba(72, 187, 120, 0.5); color: #7dcea0; }
 .chip-partly_verified { border-color: rgba(229, 160, 13, 0.55); color: #e5a00d; }
 .chip-withheld { border-color: rgba(220, 80, 80, 0.5); color: #e08080; }
+.chip-conflict { border-color: rgba(229, 160, 13, 0.55); color: #e5a00d; }
 .chip-derived, .chip-ocr { font-size: 9px; opacity: 0.85; }
 
 .panel-meta {

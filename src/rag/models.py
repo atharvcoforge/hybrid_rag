@@ -107,6 +107,13 @@ class Hit:
     confident: bool
     derived: bool = False
     ocr: bool = False
+    superseded: bool = False
+    version_group: str | None = None
+    status: str = "current"
+    superseded_by: str | None = None
+    supersedes: str | None = None
+    review_date: str | None = None
+    title: str | None = None
 
 
 @dataclass

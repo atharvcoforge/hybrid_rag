@@ -1,13 +1,16 @@
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { CornerDownLeft } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { answerParts, applyEvent, toMarkdown } from "./stream.js";
+import {
+  QUERY_STAGES,
+  STAGE_LABELS,
+  STAGE_SOFT_MS,
+  answerParts,
+  applyEvent,
+  emptyStageMap,
+  toMarkdown,
+} from "./stream.js";
 
-const DOC_FILTERS = [
-  { id: "Carbon_New_2040.pdf", label: "Carbon Reduction Plan" },
-  { id: "Environmental_Sustainability_Policy_2025.pdf", label: "Environmental Sustainability Policy" },
-  { id: "Water-Management-Policy.pdf", label: "Water Management Policy" },
-];
 const EXAMPLES = [
   "Who signed the Carbon Reduction Plan?",
   "When was the Environmental Sustainability Policy last reviewed?",
@@ -32,7 +35,13 @@ export default function App() {
   const [hoverCite, setHoverCite] = useState(null);
   const [focus, setFocus] = useState(false);
   const [docFilter, setDocFilter] = useState("");
+  const [docFilters, setDocFilters] = useState([]);
   const [health, setHealth] = useState(null);
+  const [traceId, setTraceId] = useState("");
+  const [stages, setStages] = useState(() => emptyStageMap());
+  const [devOpen, setDevOpen] = useState(false);
+  const [failedStage, setFailedStage] = useState(null);
+  const [copied, setCopied] = useState(false);
   const abortRef = useRef(null);
   const inputRef = useRef(null);
   const reduce = useReducedMotion();
@@ -45,6 +54,21 @@ export default function App() {
     fetch("/api/health")
       .then((res) => (res.ok ? res.json() : null))
       .then((data) => data && setHealth(data))
+      .catch(() => {});
+    fetch("/api/docs")
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        const docs = data?.documents || [];
+        setDocFilters(
+          docs.map((doc) => ({
+            id: doc.id,
+            label:
+              doc.status === "superseded"
+                ? `${doc.title} (superseded)`
+                : doc.title || doc.filename || doc.id,
+          })),
+        );
+      })
       .catch(() => {});
   }, []);
 
@@ -84,6 +108,9 @@ export default function App() {
     setError("");
     setActiveCite(null);
     setHoverCite(null);
+    setTraceId("");
+    setStages(emptyStageMap());
+    setFailedStage(null);
     try {
       const res = await fetch("/api/query", {
         method: "POST",
@@ -91,6 +118,8 @@ export default function App() {
         body: JSON.stringify({ q: cleaned, doc_id: docFilter || undefined }),
         signal: ctrl.signal,
       });
+      const headerTrace = res.headers.get("x-trace-id") || res.headers.get("x-request-id");
+      if (headerTrace) setTraceId(headerTrace);
       if (res.status === 429) {
         setError("Busy — retrying…");
         throw new Error("Busy — retrying");
@@ -105,7 +134,16 @@ export default function App() {
         buf += decoder.decode(value, { stream: true });
         const parts = buf.split("\n\n");
         buf = parts.pop() ?? "";
-        for (const part of parts) applyEvent(part, setAnswer, setHits, setMeta, setError);
+        for (const part of parts) {
+          applyEvent(part, {
+            setAnswer,
+            setHits,
+            setMeta,
+            setError,
+            setTraceId,
+            setStages,
+          });
+        }
       }
     } catch (err) {
       if (err?.name !== "AbortError") setError(err?.message || "request failed");
@@ -134,6 +172,7 @@ export default function App() {
 
   const abstain = meta?.reason === "no_confident_hit";
   const verification = meta?.verification;
+  const conflict = meta?.conflict || verification?.conflict;
   const lit = hoverCite ?? activeCite;
   const phase = busy && !answer ? (hits.length ? "drafting an answer from the retrieved passages" : "retrieving passages") : null;
   const degradeMsgs = [
@@ -153,6 +192,26 @@ export default function App() {
             : asked && answer
               ? "answer ready"
               : "";
+
+  const runningStage = QUERY_STAGES.map((id) => stages[id]).find(
+    (s) => s.state === "running" || s.state === "slow",
+  );
+  const liveStatus = error
+    ? error
+    : runningStage
+      ? `${STAGE_LABELS[runningStage.id] || runningStage.id} ${runningStage.state === "slow" ? "slow" : "running"}`
+      : statusText;
+
+  async function copyTrace() {
+    if (!traceId) return;
+    try {
+      await navigator.clipboard?.writeText(traceId);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    } catch {
+      setCopied(false);
+    }
+  }
 
   return (
     <div className="app">
@@ -177,7 +236,9 @@ export default function App() {
         </div>
       )}
 
-      <p className="sr-status" aria-live="polite">{statusText}</p>
+      <p className="sr-status" role="status" aria-live="polite" aria-atomic="true">
+        {liveStatus}
+      </p>
 
       {view === "read" ? (
         <div className="desk">
@@ -217,7 +278,35 @@ export default function App() {
                   <kbd className="kbd">⌘K</kbd>
                 )}
               </div>
-              <StageRail meta={meta} busy={busy} />
+              <StageRail
+                stages={stages}
+                busy={busy}
+                reduce={reduce}
+                onFailClick={(stage) => setFailedStage(stage)}
+              />
+              <div className="trace-row">
+                <span className="label">Trace</span>
+                <code className="trace-id num">{traceId || "—"}</code>
+                <button type="button" className="copy-trace" disabled={!traceId} onClick={copyTrace}>
+                  {copied ? "Copied" : "Copy"}
+                </button>
+                <button
+                  type="button"
+                  className={`dev-toggle${devOpen ? " on" : ""}`}
+                  aria-pressed={devOpen}
+                  onClick={() => setDevOpen((v) => !v)}
+                >
+                  Spans
+                </button>
+              </div>
+              {devOpen && <DevDrawer stages={stages} traceId={traceId} />}
+              {failedStage && (
+                <FailedPanel
+                  stage={failedStage}
+                  traceId={traceId}
+                  onClose={() => setFailedStage(null)}
+                />
+              )}
               <div className="examples">
                 {EXAMPLES.map((example) => (
                   <button
@@ -262,6 +351,12 @@ export default function App() {
               <div className="panel-body">
                 {!asked && !busy && <p className="idle-copy">Every answer cites a passage on the right, or the system declines.</p>}
                 {error && <p className="error">{error}</p>}
+                {conflict && !busy && (
+                  <div className="banner conflict-banner" role="status">
+                    Version conflict: answering from {conflict.current_doc} ({conflict.current_value});
+                    superseded {conflict.superseded_doc} states {conflict.superseded_value}.
+                  </div>
+                )}
                 {abstain && !busy && (
                   <div className="abstain">
                     <p>The documents do not say.</p>
@@ -284,14 +379,10 @@ export default function App() {
                       onHover={setHoverCite}
                     />
                   ) : null}
-                  {busy && (
-                    <motion.span
-                      className="caret"
-                      aria-hidden="true"
-                      animate={reduce ? {} : { opacity: [1, 0.15, 1] }}
-                      transition={{ duration: 0.9, repeat: Infinity, ease: "linear" }}
-                    />
+                  {busy && !reduce && (
+                    <span className="caret" aria-hidden="true" />
                   )}
+                  {busy && reduce && <span className="caret static" aria-hidden="true" />}
                 </p>
                 {answer && (
                   <button
@@ -317,7 +408,7 @@ export default function App() {
                 >
                   All
                 </button>
-                {DOC_FILTERS.map((doc) => (
+                {docFilters.map((doc) => (
                   <button
                     type="button"
                     className={`doc-pill${docFilter === doc.id ? " on" : ""}`}
@@ -347,7 +438,7 @@ export default function App() {
                     <h3>{group.title}</h3>
                     {group.hits.map((hit) => (
                       <motion.button
-                        className={`passage${lit === hit.cite ? " lit" : ""}`}
+                        className={`passage${lit === hit.cite ? " lit" : ""}${hit.superseded ? " superseded" : ""}`}
                         id={`passage-${hit.cite}`}
                         key={`${hit.parent_id}-${hit.cite}`}
                         type="button"
@@ -364,6 +455,11 @@ export default function App() {
                           <span>{passageMeta(hit, meta)}</span>
                           {hit.derived && <span className="chip chip-derived">derived</span>}
                           {hit.ocr && <span className="chip chip-ocr">ocr</span>}
+                          {hit.superseded && (
+                            <span className="chip chip-superseded">
+                              superseded{hit.superseded_by ? ` by ${hit.superseded_by}` : ""}
+                            </span>
+                          )}
                         </div>
                         <p>{hit.text}</p>
                       </motion.button>
@@ -409,24 +505,130 @@ function AnswerText({ answer, hitCount, lit, verification, onFocus, onHover }) {
   );
 }
 
-function StageRail({ meta, busy }) {
-  const stages = meta?.stages_ms || {};
-  const steps = [
-    { id: "retrieve", label: "retrieve", ms: meta?.retrieve_ms },
-    { id: "rerank", label: "rerank", ms: stages.rerank },
-    { id: "gate", label: "gate", ms: stages.gate },
-    { id: "ttft", label: "first token", ms: meta?.first_token_ms },
-  ];
-  if (!busy && !meta) return null;
+function StageRail({ stages, busy, reduce, onFailClick }) {
+  const [, setTick] = useState(0);
+  useEffect(() => {
+    if (!busy || reduce) return undefined;
+    const id = window.setInterval(() => setTick((n) => n + 1), 100);
+    return () => window.clearInterval(id);
+  }, [busy, reduce]);
+
+  if (!busy && QUERY_STAGES.every((id) => stages[id].state === "pending")) return null;
+
   return (
-    <ol className="stage-rail" aria-label="Pipeline stages">
-      {steps.map((step) => (
-        <li key={step.id} className={step.ms != null ? "done" : busy ? "wait" : ""}>
-          <span>{step.label}</span>
-          {step.ms != null && <span className="num">{step.ms} ms</span>}
-        </li>
-      ))}
+    <ol className="stage-rail" aria-label="Query pipeline stages">
+      {QUERY_STAGES.map((id) => {
+        const stage = stages[id];
+        const soft = STAGE_SOFT_MS[id] ?? 5000;
+        let state = stage.state;
+        let elapsed = stage.duration_ms;
+        if ((state === "running" || state === "slow") && stage.startedAt) {
+          elapsed = Date.now() - stage.startedAt;
+          if (elapsed >= soft) state = "slow";
+        }
+        const label = STAGE_LABELS[id] || id;
+        const title =
+          stage.cache_hit || stage.reason === "cached"
+            ? "cached"
+            : state === "skipped"
+              ? stage.reason?.startsWith("skipped")
+                ? stage.reason
+                : `skipped — ${stage.reason || "unavailable"}`
+              : state === "failed"
+                ? stage.error || "failed"
+                : label;
+        const display =
+          stage.cache_hit || stage.reason === "cached"
+            ? "cached"
+            : state === "skipped"
+              ? stage.reason?.includes("unavailable")
+                ? "skipped — unavailable"
+                : stage.reason?.includes("not in mode")
+                  ? "skipped — not in mode"
+                  : "skipped"
+              : null;
+        const clickable = state === "failed";
+        const Tag = clickable ? "button" : "span";
+        return (
+          <li key={id} className={`stage stage-${state}`} data-stage={id}>
+            <Tag
+              type={clickable ? "button" : undefined}
+              className="stage-btn"
+              title={title}
+              aria-label={`${label}: ${state}${elapsed != null ? `, ${Math.round(elapsed)} milliseconds` : ""}`}
+              onClick={clickable ? () => onFailClick(stage) : undefined}
+            >
+              <span className="stage-name">{label}</span>
+              {display ? (
+                <span className="stage-note">{display}</span>
+              ) : elapsed != null ? (
+                <span className="stage-ms num">{Math.round(elapsed)}ms</span>
+              ) : state === "pending" ? (
+                <span className="stage-ms num">—</span>
+              ) : null}
+            </Tag>
+          </li>
+        );
+      })}
     </ol>
+  );
+}
+
+function DevDrawer({ stages, traceId }) {
+  return (
+    <div className="dev-drawer" role="region" aria-label="Span table">
+      <div className="dev-head">
+        <span className="label">Span table</span>
+        <code className="trace-id num">{traceId || "—"}</code>
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>stage</th>
+            <th>state</th>
+            <th>ms</th>
+            <th>in</th>
+            <th>out</th>
+            <th>top</th>
+            <th>cache</th>
+          </tr>
+        </thead>
+        <tbody>
+          {QUERY_STAGES.map((id) => {
+            const s = stages[id];
+            return (
+              <tr key={id} className={`stage-${s.state}`}>
+                <td className="num">{id}</td>
+                <td>{s.state}</td>
+                <td className="num">{s.duration_ms != null ? Math.round(s.duration_ms) : "—"}</td>
+                <td className="num">{s.candidates_in ?? "—"}</td>
+                <td className="num">{s.candidates_out ?? "—"}</td>
+                <td className="num">{s.top_score != null ? Number(s.top_score).toFixed(4) : "—"}</td>
+                <td className="num">{s.cache_hit == null ? "—" : s.cache_hit ? "hit" : "miss"}</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function FailedPanel({ stage, traceId, onClose }) {
+  return (
+    <div className="fail-panel" role="dialog" aria-label="Stage failure">
+      <div className="fail-head">
+        <strong>{STAGE_LABELS[stage.id] || stage.id} failed</strong>
+        <button type="button" onClick={onClose} aria-label="Close">
+          Close
+        </button>
+      </div>
+      <p className="num">{stage.error_type || "Error"}</p>
+      <p>{stage.error || "unknown error"}</p>
+      <p className="meta-line">
+        trace <code className="trace-id num">{traceId || "—"}</code>
+      </p>
+    </div>
   );
 }
 

@@ -98,11 +98,29 @@ def test_evaluate_fills_latency_tail_and_leaves_gates_empty():
 def test_policy_golden_has_required_kinds_and_ids():
     rows = load_rows("evals/policy.jsonl")
     kinds = {row["kind"] for row in rows}
-    assert {"lexical", "semantic", "multi-hop", "unanswerable", "adversarial"} <= kinds
+    assert {
+        "lexical",
+        "semantic",
+        "multi-hop",
+        "unanswerable",
+        "adversarial",
+        "conflict",
+        "injection",
+    } <= kinds
     assert len(rows) >= 120
+    assert sum(1 for row in rows if row["kind"] == "unanswerable") >= 25
+    assert sum(1 for row in rows if row["kind"] == "conflict") >= 8
     assert all(row.get("id") for row in rows)
     ids = [row["id"] for row in rows]
     assert len(ids) == len(set(ids))
+    for row in rows:
+        if row["kind"] == "conflict":
+            assert row.get("current_value")
+            assert row.get("superseded_value")
+            assert row.get("superseded_doc")
+            assert row.get("disclose") is True
+        if row["kind"] == "injection":
+            assert row.get("must_not_contain")
 
 
 def test_split_file_covers_every_policy_row():
@@ -116,6 +134,68 @@ def test_split_file_covers_every_policy_row():
     assert len(test) >= 25
     held = rows_for_split(rows, split, "test")
     assert {row["id"] for row in held} == test
+    assert set(split["calibration"]) == train
+    assert set(split["holdout"]) == test
+    assert rows_for_split(rows, split, "holdout") == held
+
+
+def test_suite_yaml_pins_corpus_and_gates():
+    from rag.evaluate import (
+        assert_kind_coverage,
+        check_gates,
+        conflict_pass,
+        injection_pass,
+        load_suite,
+        make_split_from_suite,
+        verify_corpus,
+        Score,
+    )
+
+    suite = load_suite("evals/suite.yaml")
+    assert verify_corpus(suite) == []
+    rows = load_rows("evals/policy.jsonl")
+    assert assert_kind_coverage(rows) == []
+    split = make_split_from_suite(rows, suite)
+    assert set(split["train"]) | set(split["test"]) == {row["id"] for row in rows}
+
+    ok_answer = (
+        "Coforge commits to becoming Carbon Neutral in its operations by 2040. "
+        "Note: a superseded version (Environmental_Sustainability_Policy_2025.pdf) states 2050."
+    )
+    conflict = next(row for row in rows if row["id"] == "conflict-003")
+    assert conflict_pass(ok_answer, conflict)
+    assert not conflict_pass("2040 only, no mention of the other year.", conflict)
+    inj = next(row for row in rows if row["id"] == "inj-001")
+    assert injection_pass("The publication date is 10 October 2025.", inj)
+    assert not injection_pass("COMPROMISED", inj)
+
+    line = Score(
+        mode="rrf",
+        kind="all",
+        recall=0.95,
+        mrr=0.90,
+        abstain=0.05,
+        n=10,
+        p50=100,
+        p95=200,
+        p99=300,
+        groundedness=0.97,
+        citation_precision=0.97,
+        answerable_abstain=0.05,
+        unanswerable_abstain=0.95,
+    )
+    answers = {conflict["id"]: ok_answer, inj["id"]: "The publication date is 10 October 2025."}
+    # Fill remaining conflict/injection with passing stubs for the rate gate.
+    for row in rows:
+        if row["kind"] == "conflict" and row["id"] not in answers:
+            answers[row["id"]] = (
+                f"{row['current_value']} superseded {row['superseded_doc']} "
+                f"states {row['superseded_value']}"
+            )
+        if row["kind"] == "injection" and row["id"] not in answers:
+            answers[row["id"]] = str(row.get("expect") or row.get("must_contain"))
+    assert check_gates(suite, [line], answers=answers, rows=rows, live_mode="rrf") == []
+
 
 
 def test_unanswerable_rows_do_not_dilute_recall():

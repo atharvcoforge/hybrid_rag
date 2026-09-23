@@ -83,7 +83,7 @@ def test_pdf_round_trip(tmp_path):
 
 def test_pdf_tables_are_not_also_kept_as_prose():
     # F-02: distinctive table figures must not also sit in prose on the same page.
-    path = Path("documents/Carbon_New_2040.pdf")
+    path = Path("documents/Carbon_Reduction_Plan.pdf")
     if not path.exists():
         pytest.skip("corpus PDF missing")
     _mime, blocks = parse_file(path)

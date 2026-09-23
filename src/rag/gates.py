@@ -1,7 +1,8 @@
 """Post-generation citation gates.
 
 Cheapest first. Each gate can stop the answer. Derived (OCR/VLM) blocks
-cannot be the sole support for a factual claim.
+cannot be the sole support for a factual claim. Conflict disclosure runs
+before form/literal so a planted version clash is never silent.
 """
 
 from __future__ import annotations
@@ -38,7 +39,9 @@ class GateResult:
     citation_precision: float | None = None
     citation_recall: float | None = None
     unsupported: list[str] = field(default_factory=list)
-    state: str = "verified"  # verified | partly_verified | withheld
+    state: str = "verified"  # verified | partly_verified | withheld | conflict
+    conflict: dict | None = None
+    answer: str | None = None
 
 
 def check_form(answer: str, n_hits: int, finish_reason: str | None = None) -> GateResult:
@@ -100,22 +103,83 @@ def coverage_state(coverage: float) -> str:
     return "withheld"
 
 
+def check_conflict(answer: str, hits) -> GateResult:
+    from rag.versions import disclose_conflict
+
+    note = disclose_conflict(answer, hits)
+    if not note.fired:
+        return GateResult(True, "", state="verified")
+    return GateResult(
+        True,
+        "version_conflict",
+        state="conflict",
+        conflict={
+            "current_doc": note.current_doc,
+            "superseded_doc": note.superseded_doc,
+            "current_value": note.current_value,
+            "superseded_value": note.superseded_value,
+            "cite": note.cite,
+            "version_group": note.version_group,
+        },
+        answer=note.answer,
+    )
+
+
 def check_all(answer: str, hits, finish_reason: str | None = None, entailment=None) -> GateResult:
-    form = check_form(answer, len(hits), finish_reason)
+    from rag.telemetry import span
+
+    with span("gate_form"):
+        form = check_form(answer, len(hits), finish_reason)
+    grounded = GateResult(True, "")
+    if form.ok:
+        with span("gate_literal"):
+            grounded = check_grounding(answer, hits)
+    else:
+        with span("gate_literal", skipped=True, reason="form_failed"):
+            pass
+
+    result: GateResult
     if not form.ok:
-        return form
-    grounded = check_grounding(answer, hits)
-    if not grounded.ok:
-        return grounded
-    if entailment is None:
-        return GateResult(
-            True,
-            "",
-            coverage=1.0,
-            groundedness=1.0,
-            citation_precision=1.0,
-            citation_recall=1.0,
-            state="verified",
-        )
-    # entailment(answer, hits) → GateResult with coverage / groundedness filled in.
-    return entailment(answer, hits)
+        result = form
+    elif not grounded.ok:
+        result = grounded
+    elif entailment is None:
+        with span("gate_entail", skipped=True, reason="no_entailment_model") as entail_span:
+            entail_span["degraded"] = True
+        with span("gate_coverage", coverage=1.0):
+            result = GateResult(
+                True,
+                "",
+                coverage=1.0,
+                groundedness=1.0,
+                citation_precision=1.0,
+                citation_recall=1.0,
+                state="verified",
+            )
+    else:
+        with span("gate_entail"):
+            result = entailment(answer, hits)
+        with span(
+            "gate_coverage",
+            coverage=getattr(result, "coverage", None),
+        ):
+            pass
+
+    with span("gate_conflict") as conflict_span:
+        conflict = check_conflict(answer if result.ok else (result.answer or answer), hits)
+        if conflict.conflict:
+            conflict_span["reason"] = "version_conflict"
+            return GateResult(
+                True,
+                "version_conflict",
+                coverage=getattr(result, "coverage", 1.0) or 1.0,
+                groundedness=1.0,
+                citation_precision=1.0,
+                citation_recall=1.0,
+                state="conflict",
+                conflict=conflict.conflict,
+                answer=conflict.answer,
+            )
+        conflict_span["skipped"] = True
+        conflict_span["reason"] = "no_conflict"
+    return result

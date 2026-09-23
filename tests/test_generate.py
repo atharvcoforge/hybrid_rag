@@ -7,7 +7,7 @@ def _hit(text="India baseline was 14,644 tCO2e"):
         parent_id="p",
         parent_text=text,
         heading_path="H",
-        source_path="Carbon_New_2040.pdf",
+        source_path="Carbon_Reduction_Plan.pdf",
         file_sha256="abc",
         page_start=1,
         page_end=1,
@@ -23,7 +23,7 @@ def test_pack_wraps_passages_in_a_sentinel():
     body = pack("What is the baseline?", [_hit()])
     assert "Question: What is the baseline?" in body
     assert body.count("<<PASSAGE_") >= 2
-    assert "[1] Carbon_New_2040.pdf" in body
+    assert "[1] Carbon_Reduction_Plan.pdf" in body
 
 
 def test_fence_strips_sentinel_lookalikes_from_passage_text():

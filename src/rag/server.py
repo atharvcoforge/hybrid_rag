@@ -1,6 +1,9 @@
 import json
 import os
+import queue
 import secrets
+import sys
+import threading
 import time
 import urllib.error
 from contextlib import asynccontextmanager
@@ -20,7 +23,19 @@ from rag.models import EMBED_MODEL, EMBED_REVISION, PIPELINE_VERSION
 from rag.normalize import normalize_text
 from rag.pipeline import ingest, query
 from rag.queue import BusyError, InferenceQueue
-from rag.telemetry import log_event, new_request_id
+from rag.telemetry import (
+    StageBudgetExceeded,
+    bind_trace,
+    clear_stage_bus,
+    configure_logging,
+    log_event,
+    mint_trace_id,
+    set_stage_bus,
+    set_trace_id,
+    span,
+)
+
+configure_logging()
 
 _answers = AnswerCache()
 _health = HealthState()
@@ -75,7 +90,8 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=_cors_origins(),
     allow_methods=["GET", "POST", "OPTIONS"],
-    allow_headers=["Authorization", "Content-Type"],
+    allow_headers=["Authorization", "Content-Type", "X-Request-ID", "X-Trace-ID"],
+    expose_headers=["X-Request-ID", "X-Trace-ID"],
 )
 
 
@@ -127,22 +143,20 @@ def require_token(authorization: str | None = Header(default=None)) -> None:
         raise HTTPException(status_code=401, detail="invalid bearer token")
 
 
-TITLES = {
-    "Carbon_New_2040.pdf": "Carbon Reduction Plan",
-    "Envi_2040-1.pdf": "Environmental Sustainability Policy",
-    "Environmental_Sustainability_Policy_2025.pdf": "Environmental Sustainability Policy (2025)",
-    "Water-Management-Policy.pdf": "Water Management Policy",
-}
+TITLES = {}  # kept empty; titles come from the index (documents.title)
 
 
 def hit_dict(hit, cite: int) -> dict:
     source = hit.source_path
+    name = Path(source).name
+    title = getattr(hit, "title", None) or TITLES.get(name) or name
+    superseded = bool(getattr(hit, "superseded", False))
     return {
         "parent_id": hit.parent_id,
         "text": hit.parent_text,
         "heading": hit.heading_path,
         "source": source,
-        "title": TITLES.get(Path(source).name, Path(source).name),
+        "title": title,
         "cite": cite,
         "page_start": hit.page_start,
         "page_end": hit.page_end,
@@ -152,6 +166,12 @@ def hit_dict(hit, cite: int) -> dict:
         "confident": hit.confident,
         "derived": bool(getattr(hit, "derived", False)),
         "ocr": bool(getattr(hit, "ocr", False)),
+        "superseded": superseded,
+        "status": getattr(hit, "status", None) or ("superseded" if superseded else "current"),
+        "version_group": getattr(hit, "version_group", None),
+        "superseded_by": getattr(hit, "superseded_by", None),
+        "supersedes": getattr(hit, "supersedes", None),
+        "review_date": getattr(hit, "review_date", None),
     }
 
 
@@ -165,6 +185,7 @@ def iter_query(
     generation: int = 0,
     circuit: CircuitBreaker | None = None,
     health: HealthState | None = None,
+    trace_id: str | None = None,
 ):
     if cache is None:
         cache = _answers
@@ -173,20 +194,85 @@ def iter_query(
     if health is None:
         health = _health
     cleaned = normalize_text(text or "")
-    request_id = new_request_id()
+    request_id = mint_trace_id(trace_id)
+    with bind_trace(request_id):
+        yield from _iter_query_traced(
+            cleaned,
+            search,
+            write,
+            mode,
+            cache,
+            generation=generation,
+            circuit=circuit,
+            health=health,
+            request_id=request_id,
+            raw_text=text or "",
+        )
+
+
+def _iter_query_traced(
+    cleaned,
+    search,
+    write,
+    mode,
+    cache,
+    *,
+    generation,
+    circuit,
+    health,
+    request_id,
+    raw_text,
+):
+    # First SSE event: trace id for the browser.
+    yield ("trace", {"trace_id": request_id, "request_id": request_id})
     if not cleaned:
-        yield ("error", {"message": "empty query", "request_id": request_id})
+        yield ("error", {"message": "empty query", "request_id": request_id, "trace_id": request_id})
         return
+    # Never log the query at INFO unless LOG_CONTENT=1.
+    log_event("query_start", mode=mode, query=raw_text)
     key = AnswerCache.make_key(cleaned, generation, mode)
     saved = cache.get(key) if hasattr(cache, "get") else cache.get(key)
     if saved is not None:
-        yield ("meta", {**saved["meta"], "retrieve_ms": 0, "cached": True, "request_id": request_id})
+        yield (
+            "meta",
+            {
+                **saved["meta"],
+                "retrieve_ms": 0,
+                "cached": True,
+                "request_id": request_id,
+                "trace_id": request_id,
+            },
+        )
         if saved["answer"]:
             yield ("token", {"t": saved["answer"]})
-        yield ("done", {"first_token_ms": 0, "answer": saved["answer"], "cached": True, "request_id": request_id})
+        yield (
+            "done",
+            {
+                "first_token_ms": 0,
+                "answer": saved["answer"],
+                "cached": True,
+                "request_id": request_id,
+                "trace_id": request_id,
+            },
+        )
         return
     started = time.perf_counter()
-    result = search(cleaned, mode)
+    try:
+        result = search(cleaned, mode)
+    except StageBudgetExceeded as exc:
+        circuit.record_failure()
+        health.note(f"Stage {exc.stage} budget exceeded — degraded")
+        yield (
+            "error",
+            {
+                "message": f"stage {exc.stage} timed out",
+                "request_id": request_id,
+                "trace_id": request_id,
+                "detail": type(exc).__name__,
+                "stage": exc.stage,
+            },
+        )
+        return
     retrieve_ms = round((time.perf_counter() - started) * 1000)
     stages = dict(result.stages_ms or {})
     degrade = list(health.messages) if health else []
@@ -200,12 +286,14 @@ def iter_query(
         "stages_ms": stages,
         "cached": False,
         "request_id": request_id,
+        "trace_id": request_id,
         "degraded": degrade,
         "index_generation": generation,
     }
     log_event(
         "retrieve",
         request_id=request_id,
+        trace_id=request_id,
         mode=mode,
         retrieve_ms=retrieve_ms,
         hits=len(result.hits),
@@ -215,7 +303,7 @@ def iter_query(
     yield ("meta", meta)
     if result.reason == "no_confident_hit" or not result.hits:
         cache[key] = {"meta": meta, "answer": ""}
-        yield ("done", {"first_token_ms": None, "answer": "", "request_id": request_id})
+        yield ("done", {"first_token_ms": None, "answer": "", "request_id": request_id, "trace_id": request_id})
         return
     # Circuit open or writer down → extractive: passages only, honest banner.
     if not circuit.allow() or not health.writer_ok:
@@ -223,22 +311,49 @@ def iter_query(
         meta = {**meta, "extractive": True, "degraded": degrade + [banner]}
         cache[key] = {"meta": meta, "answer": ""}
         yield ("meta", meta)
-        yield ("done", {"first_token_ms": None, "answer": "", "request_id": request_id, "extractive": True})
+        yield (
+            "done",
+            {
+                "first_token_ms": None,
+                "answer": "",
+                "request_id": request_id,
+                "trace_id": request_id,
+                "extractive": True,
+            },
+        )
         return
     first = None
     write_started = time.perf_counter()
     parts = []
+    model = os.environ.get("GENERATOR_MODEL", "qwen2.5-3b-instruct")
     try:
-        for piece in write(cleaned, result.hits):
-            if not piece:
-                continue
-            if first is None:
-                first = round((time.perf_counter() - write_started) * 1000)
-            parts.append(piece)
+        with span("generate_complete", model=model) as gen_span:
+            first_cm = span("generate_first_token", model=model)
+            first_handle = first_cm.__enter__()
+            first_open = True
+            try:
+                for piece in write(cleaned, result.hits):
+                    if not piece:
+                        continue
+                    if first is None:
+                        first = round((time.perf_counter() - write_started) * 1000)
+                        first_handle["cache_hit"] = False
+                        first_cm.__exit__(None, None, None)
+                        first_open = False
+                    parts.append(piece)
+            except BaseException:
+                if first_open:
+                    first_cm.__exit__(*sys.exc_info())
+                    first_open = False
+                raise
+            finally:
+                if first_open:
+                    first_cm.__exit__(None, None, None)
+            gen_span["candidates_out"] = len(parts)
         circuit.record_success()
-    except Exception as exc:
+    except StageBudgetExceeded as exc:
         circuit.record_failure()
-        health.note("Generator stalled or failed")
+        health.note(f"Generator stage {exc.stage} budget exceeded")
         partial = "".join(parts)
         yield (
             "error",
@@ -246,12 +361,40 @@ def iter_query(
                 "message": "writer unavailable" if not partial else "Answer incomplete",
                 "partial": partial,
                 "request_id": request_id,
+                "trace_id": request_id,
+                "detail": type(exc).__name__,
+                "stage": exc.stage,
+            },
+        )
+        return
+    except Exception as exc:
+        circuit.record_failure()
+        health.note("Generator stalled or failed")
+        partial = "".join(parts)
+        # Ensure generate spans recorded the failure via span() if we were inside;
+        # outer catch covers URL errors before/without span finish.
+        log_event(
+            "generate_failed",
+            request_id=request_id,
+            error_type=type(exc).__name__,
+            error=str(exc),
+            stage="generate_complete",
+        )
+        yield (
+            "error",
+            {
+                "message": "writer unavailable" if not partial else "Answer incomplete",
+                "partial": partial,
+                "request_id": request_id,
+                "trace_id": request_id,
                 "detail": type(exc).__name__,
             },
         )
         return
     answer = "".join(parts)
     gate = check_all(answer, result.hits)
+    if gate.answer:
+        answer = gate.answer
     if not gate.ok:
         log_event(
             "gate_fail",
@@ -277,6 +420,7 @@ def iter_query(
                 "first_token_ms": first,
                 "answer": withheld,
                 "request_id": request_id,
+                "trace_id": request_id,
                 "verification": meta["verification"],
             },
         )
@@ -290,8 +434,12 @@ def iter_query(
             "citation_precision": gate.citation_precision,
             "citation_recall": gate.citation_recall,
             "coverage": gate.coverage,
+            "conflict": gate.conflict,
         },
     }
+    if gate.conflict:
+        meta["conflict"] = gate.conflict
+        yield ("meta", meta)
     if answer:
         yield ("token", {"t": answer})
     cache[key] = {"meta": meta, "answer": answer}
@@ -301,7 +449,9 @@ def iter_query(
             "first_token_ms": first,
             "answer": answer,
             "request_id": request_id,
+            "trace_id": request_id,
             "verification": meta["verification"],
+            "conflict": gate.conflict,
         },
     )
 
@@ -447,40 +597,106 @@ def ready():
     return {"ready": True, "index_generation": _health.index_generation}
 
 
+@app.get("/api/docs")
+def docs_list():
+    from rag.store import Index
+
+    index = Index(index_dir(), EMBED_MODEL, EMBED_REVISION, PIPELINE_VERSION)
+    index.open()
+    try:
+        return {"documents": index.list_doc_records()}
+    finally:
+        index.close()
+
+
 @app.post("/api/query")
 def ask(body: QueryBody, request: Request):
     mode = live_mode()
+    inbound = request.headers.get("x-request-id") or request.headers.get("x-trace-id")
+    trace_id = mint_trace_id(inbound)
     try:
         _queue.acquire()
     except BusyError as exc:
         raise HTTPException(
             status_code=429,
             detail="Busy — retrying",
-            headers={"Retry-After": str(exc.retry_after)},
+            headers={"Retry-After": str(exc.retry_after), "X-Request-ID": trace_id, "X-Trace-ID": trace_id},
         ) from exc
 
     def search(text, mode_name):
         return _search(text, mode_name, doc_id=body.doc_id)
 
     def gen():
+        bus: queue.Queue = queue.Queue()
+        out: queue.Queue = queue.Queue()
+
+        def worker() -> None:
+            set_stage_bus(bus)
+            set_trace_id(trace_id)
+            try:
+                for event, data in iter_query(
+                    body.q,
+                    search,
+                    stream_answer,
+                    mode,
+                    cache=_answers,
+                    generation=_health.index_generation,
+                    circuit=_circuit,
+                    health=_health,
+                    trace_id=trace_id,
+                ):
+                    out.put(("sse", event, data))
+            except Exception as exc:
+                out.put(
+                    (
+                        "sse",
+                        "error",
+                        {
+                            "message": str(exc) or type(exc).__name__,
+                            "request_id": trace_id,
+                            "trace_id": trace_id,
+                            "detail": type(exc).__name__,
+                        },
+                    )
+                )
+            finally:
+                clear_stage_bus()
+                out.put(None)
+
+        thread = threading.Thread(target=worker, name=f"query-{trace_id[:8]}", daemon=True)
+        thread.start()
         try:
             if await_disconnected(request):
                 return
-            for event, data in iter_query(
-                body.q,
-                search,
-                stream_answer,
-                mode,
-                cache=_answers,
-                generation=_health.index_generation,
-                circuit=_circuit,
-                health=_health,
-            ):
+            while True:
+                while True:
+                    try:
+                        yield sse("stage", bus.get_nowait())
+                    except queue.Empty:
+                        break
+                try:
+                    item = out.get(timeout=0.05)
+                except queue.Empty:
+                    if await_disconnected(request):
+                        return
+                    continue
+                if item is None:
+                    while True:
+                        try:
+                            yield sse("stage", bus.get_nowait())
+                        except queue.Empty:
+                            break
+                    break
+                _kind, event, data = item
                 yield sse(event, data)
         finally:
             _queue.release()
 
-    return StreamingResponse(gen(), media_type="text/event-stream")
+    return StreamingResponse(
+        gen(),
+        media_type="text/event-stream",
+        headers={"X-Request-ID": trace_id, "X-Trace-ID": trace_id, "Cache-Control": "no-cache"},
+    )
 
 
 def await_disconnected(request: Request) -> bool:

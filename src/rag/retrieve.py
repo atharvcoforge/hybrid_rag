@@ -56,8 +56,13 @@ def retrieve(index, query: str, embed_query, rerank=None, doc_id: str | None = N
     timer = StageTimer()
     wall = time.perf_counter()
     result = _retrieve(index, query, embed_query, rerank, doc_id, mode, timer)
-    with timer.measure("gate"):
+    with timer.measure("gate", candidates_in=len(result.hits)) as gate_span:
         result = _gate(result, index, mode)
+        gate_span["candidates_out"] = len(result.hits)
+        if result.hits:
+            gate_span["top_score"] = float(result.hits[0].score)
+        if result.reason:
+            gate_span["reason"] = result.reason
     stages = timer.as_ms()
     stages["total"] = (time.perf_counter() - wall) * 1000.0
     result.stages_ms = stages
@@ -73,6 +78,7 @@ def _gate(result: Retrieval, index, mode: str) -> Retrieval:
         return Retrieval(hits=[], reason="no_confident_hit")
     kept = [hit for hit in result.hits if _in_band(hit.score, top)]
     kept = kept[:MAX_PARENTS]
+    kept = _retain_superseded_siblings(kept, result.hits)
     if len(kept) == 1:
         kept[0].confident = True
     elif kept:
@@ -81,17 +87,47 @@ def _gate(result: Retrieval, index, mode: str) -> Retrieval:
     return Retrieval(hits=kept)
 
 
+def _retain_superseded_siblings(kept: list, all_hits: list) -> list:
+    """Down-rank must not erase superseded peers — conflict detection needs them."""
+    groups = {
+        getattr(hit, "version_group", None)
+        for hit in kept
+        if getattr(hit, "version_group", None) and not getattr(hit, "superseded", False)
+    }
+    if not groups:
+        return kept
+    present = {hit.parent_id for hit in kept}
+    out = list(kept)
+    for hit in all_hits:
+        group = getattr(hit, "version_group", None)
+        if not group or group not in groups:
+            continue
+        if not getattr(hit, "superseded", False):
+            continue
+        if hit.parent_id in present:
+            continue
+        out.append(hit)
+        present.add(hit.parent_id)
+        # One superseded peer per group is enough to disclose.
+        groups.discard(group)
+        if not groups:
+            break
+    return out
+
+
 def _retrieve(index, query, embed_query, rerank, doc_id, mode, timer: StageTimer) -> Retrieval:
     dense = []
     lexical = []
     if mode != "bm25":
-        with timer.measure("embed"):
+        with timer.measure("embed", model=getattr(index, "model_id", EMBED_MODEL)):
             vector = embed_query(query)
-        with timer.measure("dense"):
+        with timer.measure("dense") as dense_span:
             dense = index.dense_search(vector, DENSE_K, doc_id)
+            dense_span["candidates_out"] = len(dense)
     if mode != "dense":
-        with timer.measure("lexical"):
+        with timer.measure("lexical") as lex_span:
             lexical = index.bm25_search(query, BM25_K, doc_id)
+            lex_span["candidates_out"] = len(lexical)
     if not dense and not lexical:
         return Retrieval(hits=[])
 
@@ -100,11 +136,17 @@ def _retrieve(index, query, embed_query, rerank, doc_id, mode, timer: StageTimer
         chunks.setdefault(chunk["chunk_id"], chunk)
     dense_parents = _parent_order(dense)
     lexical_parents = _parent_order(lexical)
-    with timer.measure("fuse"):
+    with timer.measure(
+        "fuse",
+        candidates_in=len(dense_parents) + len(lexical_parents),
+    ) as fuse_span:
         parent_ranked = fuse([dense_parents, lexical_parents])
         child_ranked = fuse(
             [[chunk["chunk_id"] for chunk in dense], [chunk["chunk_id"] for chunk in lexical]]
         )
+        fuse_span["candidates_out"] = len(parent_ranked)
+        if parent_ranked:
+            fuse_span["top_score"] = float(parent_ranked[0][1])
     child_scores = dict(child_ranked)
 
     if mode == "dense":
@@ -130,11 +172,14 @@ def _retrieve(index, query, embed_query, rerank, doc_id, mode, timer: StageTimer
     top_ids = [chunk_id for chunk_id in top_ids if chunk_id in chunks]
     if rerank is None:
         raise QueryError("reranker is not available")
-    with timer.measure("rerank"):
+    with timer.measure("rerank", candidates_in=len(top_ids)) as rerank_span:
         scores = list(rerank(query, [chunks[chunk_id]["embed_text"] for chunk_id in top_ids]))
-    if len(scores) != len(top_ids):
-        raise QueryError("reranker returned the wrong number of scores")
-    order = sorted(range(len(top_ids)), key=lambda index: -scores[index])
+        if len(scores) != len(top_ids):
+            raise QueryError("reranker returned the wrong number of scores")
+        order = sorted(range(len(top_ids)), key=lambda index: -scores[index])
+        rerank_span["candidates_out"] = len(order)
+        if scores:
+            rerank_span["top_score"] = float(max(scores))
     parent_ids = []
     parent_scores = {}
     child_for = {}
@@ -205,12 +250,15 @@ def _best_child(parent_id: str, parent_chunks: list, child_scores: dict) -> str:
 
 
 def _emit(index, parent_ids, scores, child_for, confident: bool) -> Retrieval:
+    from rag.versions import downrank_superseded
+
     records = index.get_parents(parent_ids)
     hits = []
     for parent_id in parent_ids:
         record = records.get(parent_id)
         if record is None or not child_for.get(parent_id):
             continue
+        status = record.get("status") or "current"
         hits.append(
             Hit(
                 parent_id=parent_id,
@@ -226,6 +274,14 @@ def _emit(index, parent_ids, scores, child_for, confident: bool) -> Retrieval:
                 score=float(scores[parent_id]),
                 confident=confident,
                 derived=bool(record.get("derived")),
+                superseded=bool(record.get("superseded")) or status == "superseded",
+                version_group=record.get("version_group"),
+                status=status,
+                superseded_by=record.get("superseded_by"),
+                supersedes=record.get("supersedes"),
+                review_date=record.get("review_date"),
+                title=record.get("title"),
             )
         )
+    downrank_superseded(hits)
     return Retrieval(hits=hits)

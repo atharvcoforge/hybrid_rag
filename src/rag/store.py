@@ -340,6 +340,34 @@ class SqliteStore:
         rows = self.db.execute("SELECT doc_id FROM documents ORDER BY doc_id").fetchall()
         return [row["doc_id"] for row in rows]
 
+    def list_doc_records(self) -> list[dict]:
+        rows = self.db.execute(
+            """
+            SELECT doc_id, filename, source_path, title, review_date,
+                   version_group, status, supersedes, superseded_by
+            FROM documents
+            ORDER BY filename
+            """
+        ).fetchall()
+        out = []
+        for row in rows:
+            filename = row["filename"] or row["doc_id"]
+            title = row["title"] or filename
+            out.append(
+                {
+                    "id": row["doc_id"],
+                    "filename": filename,
+                    "source_path": row["source_path"] or row["doc_id"],
+                    "title": title,
+                    "review_date": row["review_date"],
+                    "version_group": row["version_group"],
+                    "status": row["status"] or "current",
+                    "supersedes": row["supersedes"],
+                    "superseded_by": row["superseded_by"],
+                }
+            )
+        return out
+
     def purge_doc(self, doc_id: str) -> None:
         self.db.execute("DELETE FROM children_fts WHERE doc_id = ?", (doc_id,))
         self.db.execute(
@@ -462,7 +490,9 @@ class SqliteStore:
         for parent_id in ids:
             row = self.db.execute(
                 """
-                SELECT p.*, d.source_path, d.file_sha256, d.filename, d.mime
+                SELECT p.*, d.source_path, d.file_sha256, d.filename, d.mime,
+                       d.title, d.review_date, d.version_group, d.status,
+                       d.supersedes, d.superseded_by
                 FROM parents p
                 JOIN documents d ON d.doc_id = p.doc_id
                 WHERE p.parent_id = ?
@@ -471,6 +501,8 @@ class SqliteStore:
             ).fetchone()
             if row is None:
                 continue
+            keys = set(row.keys())
+            status = (row["status"] if "status" in keys else None) or "current"
             records[parent_id] = {
                 "text": row["text"],
                 "heading_path": row["heading_path"] or "",
@@ -487,7 +519,14 @@ class SqliteStore:
                 "page_end": int(row["page_end"] or 0),
                 "parent_index": int(row["parent_index"] or 0),
                 "token_count": int(row["token_count"] or 0),
-                "derived": bool(row["derived"]) if "derived" in row.keys() else False,
+                "derived": bool(row["derived"]) if "derived" in keys else False,
+                "title": row["title"] if "title" in keys else None,
+                "review_date": row["review_date"] if "review_date" in keys else None,
+                "version_group": row["version_group"] if "version_group" in keys else None,
+                "status": status,
+                "supersedes": row["supersedes"] if "supersedes" in keys else None,
+                "superseded_by": row["superseded_by"] if "superseded_by" in keys else None,
+                "superseded": status == "superseded",
             }
         return records
 
@@ -588,6 +627,18 @@ class SqliteStore:
         if "derived" not in cols:
             self.db.execute("ALTER TABLE parents ADD COLUMN derived INTEGER NOT NULL DEFAULT 0")
             self.db.commit()
+        doc_cols = {row[1] for row in self.db.execute("PRAGMA table_info(documents)").fetchall()}
+        for name, decl in (
+            ("review_date", "TEXT"),
+            ("title", "TEXT"),
+            ("version_group", "TEXT"),
+            ("status", "TEXT NOT NULL DEFAULT 'current'"),
+            ("supersedes", "TEXT"),
+            ("superseded_by", "TEXT"),
+        ):
+            if name not in doc_cols:
+                self.db.execute(f"ALTER TABLE documents ADD COLUMN {name} {decl}")
+                self.db.commit()
 
     def _check_saved_identity(self):
         saved = self._meta("model_id")
