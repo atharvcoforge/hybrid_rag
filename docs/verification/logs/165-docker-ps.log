@@ -1,0 +1,16 @@
+rag-week6-web-1	Up About an hour	rag-week6-web
+rag-week6-api-1	Up About an hour (healthy)	f07916387371
+ragpolicy-pg	Up 2 days (healthy)	pgvector/pgvector:pg17
+pensive_bohr	Exited (0) 11 days ago	vsc-w02-prompt-lab-d58ce98e0ac9e07aeaa0156af07473ab540a07a429ade38da4a0430ea3bfca18
+claims-day4	Exited (143) 13 days ago	claims-intake:day4
+task-manager-prod	Exited (137) 2 weeks ago	task-manager:1.0
+task-manager-run	Exited (137) 2 weeks ago	6e372369be4e
+claims-intake-devcontainer-1	Exited (137) 4 weeks ago	claims-intake-devcontainer
+claims-intake-postgres-1	Exited (0) 4 weeks ago	pgvector/pgvector:pg16
+claims-intake-local-registry-1	Exited (2) 4 weeks ago	registry:3
+claims-intake-prometheus-1	Exited (0) 4 weeks ago	prom/prometheus
+claims-intake-grafana-1	Exited (0) 4 weeks ago	grafana/grafana
+claims-intake-otel-collector-1	Exited (0) 4 weeks ago	otel/opentelemetry-collector:0.158.0
+status-tracker-nightmare-app-1	Exited (0) 4 weeks ago	2204f18dd6e3
+priceless_kepler	Exited (0) 4 weeks ago	vsc-ticket-tracker-5e7cae0e56d94a332d199bd8c810cd54b054aa8a9cfdbfc9687c1f4e511013c2
+EXIT:0

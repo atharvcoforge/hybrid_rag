@@ -1,5 +1,17 @@
-from rag.evaluate import evaluate, fit_tau, load_rows, load_split, percentile, row_hit, rows_for_split
+from pathlib import Path
+
+from rag.evaluate import (
+    evaluate,
+    fit_tau,
+    load_rows,
+    load_split,
+    percentile,
+    row_hit,
+    rows_for_split,
+)
 from rag.models import Hit, Retrieval, tau_key
+
+ROOT = Path(__file__).resolve().parents[1]
 
 
 def _hit(text, score, doc_id="guide.md"):
@@ -19,12 +31,34 @@ def _hit(text, score, doc_id="guide.md"):
     )
 
 
+def test_threshold_stays_with_the_positives_when_a_negative_scores_higher():
+    from rag.calibrate import fit_mode_threshold
+
+    rows = [
+        {"q": "a", "doc_id": "guide.md", "must_contain": "yes", "kind": "lexical"},
+        {"q": "b", "doc_id": "guide.md", "must_contain": "yes", "kind": "lexical"},
+        {"q": "c", "kind": "unanswerable"},
+    ]
+    results = [
+        Retrieval(hits=[_hit("yes", 0.9)]),
+        Retrieval(hits=[_hit("yes", 0.8)]),
+        Retrieval(hits=[_hit("no", 0.95)]),
+    ]
+    tau = fit_mode_threshold(rows, results, keep=0.95)
+    assert tau is not None
+    assert tau < 0.95
+
+
 def test_fit_tau_drops_only_the_bottom_tail():
     scores = list(range(20))
     tau = fit_tau(scores)
     assert tau == 1
     assert sum(score < tau for score in scores) == 1
     assert sum(score >= tau for score in scores) == 19
+
+
+def test_fit_tau_can_keep_every_confident_score():
+    assert fit_tau([0.032, 0.05, 0.04], keep=1.0) == 0.032
 
 
 def test_abstain_counts_as_a_miss():
@@ -64,7 +98,7 @@ def test_evaluate_writes_tau_from_rank_one_rerank_scores():
 
 
 def test_fixture_file_has_both_kinds():
-    rows = load_rows("evals/fixture.jsonl")
+    rows = load_rows(ROOT / "evals/fixture.jsonl")
     assert {row["kind"] for row in rows} == {"lexical", "semantic"}
 
 
@@ -96,7 +130,7 @@ def test_evaluate_fills_latency_tail_and_leaves_gates_empty():
 
 
 def test_policy_golden_has_required_kinds_and_ids():
-    rows = load_rows("evals/policy.jsonl")
+    rows = load_rows(ROOT / "evals/policy.jsonl")
     kinds = {row["kind"] for row in rows}
     assert {
         "lexical",
@@ -124,8 +158,8 @@ def test_policy_golden_has_required_kinds_and_ids():
 
 
 def test_split_file_covers_every_policy_row():
-    rows = load_rows("evals/policy.jsonl")
-    split = load_split("evals/split.json")
+    rows = load_rows(ROOT / "evals/policy.jsonl")
+    split = load_split(ROOT / "evals/split.json")
     train = set(split["train"])
     test = set(split["test"])
     ids = {row["id"] for row in rows}
@@ -141,6 +175,7 @@ def test_split_file_covers_every_policy_row():
 
 def test_suite_yaml_pins_corpus_and_gates():
     from rag.evaluate import (
+        Score,
         assert_kind_coverage,
         check_gates,
         conflict_pass,
@@ -148,12 +183,11 @@ def test_suite_yaml_pins_corpus_and_gates():
         load_suite,
         make_split_from_suite,
         verify_corpus,
-        Score,
     )
 
-    suite = load_suite("evals/suite.yaml")
+    suite = load_suite(ROOT / "evals/suite.yaml")
     assert verify_corpus(suite) == []
-    rows = load_rows("evals/policy.jsonl")
+    rows = load_rows(ROOT / "evals/policy.jsonl")
     assert assert_kind_coverage(rows) == []
     split = make_split_from_suite(rows, suite)
     assert set(split["train"]) | set(split["test"]) == {row["id"] for row in rows}
@@ -194,7 +228,22 @@ def test_suite_yaml_pins_corpus_and_gates():
             )
         if row["kind"] == "injection" and row["id"] not in answers:
             answers[row["id"]] = str(row.get("expect") or row.get("must_contain"))
-    assert check_gates(suite, [line], answers=answers, rows=rows, live_mode="rrf") == []
+    holdout = Score(
+        mode="rrf",
+        kind="holdout",
+        recall=0.95,
+        mrr=0.90,
+        abstain=0.05,
+        n=10,
+        p50=100,
+        p95=200,
+        p99=300,
+        groundedness=0.97,
+        citation_precision=0.97,
+        answerable_abstain=0.05,
+        unanswerable_abstain=0.95,
+    )
+    assert check_gates(suite, [line, holdout], answers=answers, rows=rows, live_mode="rrf") == []
 
 
 
@@ -216,19 +265,38 @@ def test_unanswerable_rows_do_not_dilute_recall():
     assert withheld.recall == 0
 
 
-def test_pick_live_keeps_the_fast_mode_that_still_recalls():
+def test_pick_live_prefers_holdout_mrr_above_the_recall_floor():
     from rag.evaluate import Score, pick_live
 
     def line(mode, recall, p50, mrr=0.5):
-        return Score(mode, "all", recall, mrr, 0.0, 4, p50)
+        return Score(mode, "holdout", recall, mrr, 0.0, 4, p50)
 
-    assert pick_live([line("cascade", 0.9, 10), line("rerank", 0.92, 40)]) == "cascade"
-    assert pick_live([line("cascade", 0.8, 10), line("rerank", 0.92, 40)]) == "rerank"
-    assert pick_live([line("cascade", 0.9, 40), line("rerank", 0.9, 40)]) == "rerank"
-    assert pick_live([
-        line("dense", 1, 240, 0.77),
-        line("rrf", 1, 250, 0.93),
-        line("rerank", 1, 5000, 0.94),
-        line("cascade", 0.88, 5000, 0.88),
-        line("bm25", 0.94, 1, 0.81),
-    ]) == "rrf"
+    assert pick_live([line("cascade", 0.90, 10, 0.99), line("rerank", 0.92, 40, 0.80)]) == "rerank"
+    assert pick_live([line("bm25", 0.95, 1, 0.80), line("rrf", 0.95, 20, 0.90)]) == "rrf"
+    assert pick_live([line("bm25", 0.95, 1, 0.90), line("rrf", 0.95, 20, 0.90)]) == "bm25"
+
+
+def test_answer_abstention_uses_the_final_text_when_every_row_is_scored():
+    from rag.evaluate import Score, answer_abstained, check_gates
+
+    assert answer_abstained("")
+    assert answer_abstained("The documents do not say.")
+    assert not answer_abstained("India baseline was 14,644 tCO2e [1].")
+    rows = [
+        {"id": "u1", "kind": "unanswerable", "q": "salary"},
+        {"id": "u2", "kind": "unanswerable", "q": "germany"},
+        {"id": "a1", "kind": "lexical", "q": "sku", "must_contain": "SKU-1"},
+    ]
+    suite = {
+        "gates": {
+            "unanswerable_abstention": {"min": 0.90},
+            "answerable_abstention": {"max": 0.10},
+        }
+    }
+    line = Score("bm25", "all", 1.0, 1.0, 0.0, 3, unanswerable_abstain=0.0, answerable_abstain=0.0)
+    answers = {
+        "u1": "The documents do not say.",
+        "u2": "",
+        "a1": "SKU-1 is listed [1].",
+    }
+    assert check_gates(suite, [line], answers=answers, rows=rows, live_mode="bm25") == []

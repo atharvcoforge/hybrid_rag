@@ -1,0 +1,10 @@
+missing from top children 1
+rank hist {1: 54, 2: 37, 3: 15, 4: 8, 5: 3, 6: 1, 7: 1, 8: 2, '>k': 1}
+mrr if full list 0.661143637782982
+recall@5 0.9590163934426229
+('lex-002', 2, 'What were India baseline total emissions in tCO2e for FY24?', '14,644')
+('lex-004', 2, "What is India's baseline Scope 1 figure in tCO2e?", '413')
+('lex-005', 2, "What is India's baseline Scope 2 figure in tCO2e?", '8,688')
+('lex-006', 2, "What is India's baseline Scope 3 figure in tCO2e?", '5,543')
+('lex-011', 2, "What is India's FY25 Scope 1 figure?", '1,265')
+('lex-012', 2, "What is India's FY25 Scope 2 figure?", '6,344')

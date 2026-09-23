@@ -1,0 +1,1178 @@
+{"ts": "2026-09-23T00:55:16.115901+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.116993+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 1.095, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.117040+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 13}
+{"ts": "2026-09-23T00:55:16.117126+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.085, "candidates_in": 13, "candidates_out": 13, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.117709+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.117805+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.095, "candidates_in": 5, "candidates_out": 5, "top_score": 12.417005791932283}
+{"ts": "2026-09-23T00:55:16.117832+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.118113+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.281, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.118146+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 10}
+{"ts": "2026-09-23T00:55:16.118241+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.095, "candidates_in": 10, "candidates_out": 10, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.118448+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.118516+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.068, "candidates_in": 5, "candidates_out": 5, "top_score": 15.445215577117736}
+{"ts": "2026-09-23T00:55:16.118539+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.118793+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.254, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.118813+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 10}
+{"ts": "2026-09-23T00:55:16.118968+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.151, "candidates_in": 10, "candidates_out": 10, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.119230+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.119329+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.096, "candidates_in": 5, "candidates_out": 5, "top_score": 17.546201500150463}
+{"ts": "2026-09-23T00:55:16.119395+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.119816+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.422, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.119841+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 11}
+{"ts": "2026-09-23T00:55:16.119968+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.123, "candidates_in": 11, "candidates_out": 11, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.120408+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.120503+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.095, "candidates_in": 5, "candidates_out": 5, "top_score": 12.115529427458517}
+{"ts": "2026-09-23T00:55:16.120546+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.121322+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.773, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.121367+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 11}
+{"ts": "2026-09-23T00:55:16.121459+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.092, "candidates_in": 11, "candidates_out": 11, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.121688+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.121762+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.074, "candidates_in": 5, "candidates_out": 5, "top_score": 12.484458689722691}
+{"ts": "2026-09-23T00:55:16.121788+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.122056+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.268, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.122078+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 13}
+{"ts": "2026-09-23T00:55:16.122167+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.087, "candidates_in": 13, "candidates_out": 13, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.122440+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.122513+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.071, "candidates_in": 5, "candidates_out": 5, "top_score": 12.248185270436428}
+{"ts": "2026-09-23T00:55:16.122572+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.122840+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.269, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.122861+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.122955+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.091, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.123198+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.123280+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.083, "candidates_in": 5, "candidates_out": 5, "top_score": 14.455054565930197}
+{"ts": "2026-09-23T00:55:16.123309+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.123538+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.229, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.123557+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 13}
+{"ts": "2026-09-23T00:55:16.123656+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.099, "candidates_in": 13, "candidates_out": 13, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.123891+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.123974+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.078, "candidates_in": 5, "candidates_out": 5, "top_score": 14.218781146643934}
+{"ts": "2026-09-23T00:55:16.124052+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.125361+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 1.31, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.125394+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 11}
+{"ts": "2026-09-23T00:55:16.125470+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.075, "candidates_in": 11, "candidates_out": 11, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.125766+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.125836+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.07, "candidates_in": 5, "candidates_out": 5, "top_score": 11.409217186178548}
+{"ts": "2026-09-23T00:55:16.125859+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.126129+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.27, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.126147+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.126253+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.102, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.126559+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.126650+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.091, "candidates_in": 5, "candidates_out": 5, "top_score": 11.702597625571482}
+{"ts": "2026-09-23T00:55:16.126676+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.126984+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.309, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.127004+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.127110+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.106, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.127355+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.127435+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.08, "candidates_in": 5, "candidates_out": 5, "top_score": 8.128209569994453}
+{"ts": "2026-09-23T00:55:16.127457+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.127880+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.422, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.127936+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.128061+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.127, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.128329+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.128417+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.088, "candidates_in": 5, "candidates_out": 5, "top_score": 8.28600082463891}
+{"ts": "2026-09-23T00:55:16.128455+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.128856+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.402, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.128919+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 13}
+{"ts": "2026-09-23T00:55:16.129029+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.112, "candidates_in": 13, "candidates_out": 13, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.129395+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.129461+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.066, "candidates_in": 5, "candidates_out": 5, "top_score": 7.20811876736708}
+{"ts": "2026-09-23T00:55:16.129485+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.129745+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.261, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.129769+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.129844+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.075, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.130105+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.130174+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.069, "candidates_in": 5, "candidates_out": 5, "top_score": 17.287028823830994}
+{"ts": "2026-09-23T00:55:16.130192+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.130421+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.229, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.130478+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.130542+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.065, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.130785+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.130854+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.07, "candidates_in": 5, "candidates_out": 5, "top_score": 14.035713482621015}
+{"ts": "2026-09-23T00:55:16.130875+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.131155+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.281, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.131171+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.131247+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.076, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.131498+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.131578+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.08, "candidates_in": 5, "candidates_out": 5, "top_score": 15.849480213128183}
+{"ts": "2026-09-23T00:55:16.131606+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.131867+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.262, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.131892+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.132001+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.109, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.132473+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.132573+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.1, "candidates_in": 5, "candidates_out": 5, "top_score": 11.934742434024756}
+{"ts": "2026-09-23T00:55:16.132638+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.132858+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.22, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.132894+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 14}
+{"ts": "2026-09-23T00:55:16.132974+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.08, "candidates_in": 14, "candidates_out": 14, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.133210+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.133276+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.066, "candidates_in": 5, "candidates_out": 5, "top_score": 13.56114717068877}
+{"ts": "2026-09-23T00:55:16.133334+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.133593+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.276, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.133609+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 11}
+{"ts": "2026-09-23T00:55:16.133673+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.064, "candidates_in": 11, "candidates_out": 11, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.133900+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.133951+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.051, "candidates_in": 5, "candidates_out": 5, "top_score": 4.25689711025543}
+{"ts": "2026-09-23T00:55:16.133970+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.134189+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.22, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.134203+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.134287+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.084, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.134481+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.134530+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.049, "candidates_in": 5, "candidates_out": 5, "top_score": 7.663455157011908}
+{"ts": "2026-09-23T00:55:16.134548+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.134787+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.239, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.134835+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 13}
+{"ts": "2026-09-23T00:55:16.134895+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.06, "candidates_in": 13, "candidates_out": 13, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.135078+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.135122+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.044, "candidates_in": 5, "candidates_out": 5, "top_score": 12.88573467767779}
+{"ts": "2026-09-23T00:55:16.135145+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.135385+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.241, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.135426+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 11}
+{"ts": "2026-09-23T00:55:16.135485+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.059, "candidates_in": 11, "candidates_out": 11, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.135664+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.135706+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.042, "candidates_in": 5, "candidates_out": 5, "top_score": 13.231535783283292}
+{"ts": "2026-09-23T00:55:16.135728+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.136500+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.771, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.136628+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 9}
+{"ts": "2026-09-23T00:55:16.136790+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.162, "candidates_in": 9, "candidates_out": 9, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.137021+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.137096+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.075, "candidates_in": 5, "candidates_out": 5, "top_score": 6.156928475994294}
+{"ts": "2026-09-23T00:55:16.137126+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.137557+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.431, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.137575+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 10}
+{"ts": "2026-09-23T00:55:16.137687+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.112, "candidates_in": 10, "candidates_out": 10, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.137903+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.137959+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.057, "candidates_in": 5, "candidates_out": 5, "top_score": 4.200800393667516}
+{"ts": "2026-09-23T00:55:16.137978+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.138257+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.279, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.138274+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.138366+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.092, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.138564+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.138618+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.055, "candidates_in": 5, "candidates_out": 5, "top_score": 11.526830621552243}
+{"ts": "2026-09-23T00:55:16.138635+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.138848+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.213, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.138893+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 11}
+{"ts": "2026-09-23T00:55:16.138934+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.041, "candidates_in": 11, "candidates_out": 11, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.139133+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.139181+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.049, "candidates_in": 5, "candidates_out": 5, "top_score": 5.148381936410037}
+{"ts": "2026-09-23T00:55:16.139197+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.139426+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.229, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.139441+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 11}
+{"ts": "2026-09-23T00:55:16.139491+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.051, "candidates_in": 11, "candidates_out": 11, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.139656+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.139696+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.04, "candidates_in": 5, "candidates_out": 5, "top_score": 6.306862330606309}
+{"ts": "2026-09-23T00:55:16.139713+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.139932+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.219, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.139947+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.139996+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.049, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.140192+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.140228+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.037, "candidates_in": 5, "candidates_out": 5, "top_score": 9.844171378344415}
+{"ts": "2026-09-23T00:55:16.140246+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.140501+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.256, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.140517+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.140574+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.056, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.140811+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.140865+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.054, "candidates_in": 5, "candidates_out": 5, "top_score": 11.831310205610768}
+{"ts": "2026-09-23T00:55:16.140883+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.141138+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.255, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.141154+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 14}
+{"ts": "2026-09-23T00:55:16.141227+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.073, "candidates_in": 14, "candidates_out": 14, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.141416+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.141460+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.044, "candidates_in": 5, "candidates_out": 5, "top_score": 9.184292510435554}
+{"ts": "2026-09-23T00:55:16.141479+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.141737+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.258, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.141753+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 10}
+{"ts": "2026-09-23T00:55:16.141817+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.064, "candidates_in": 10, "candidates_out": 10, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.142000+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.142045+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.045, "candidates_in": 5, "candidates_out": 5, "top_score": 5.101599200206108}
+{"ts": "2026-09-23T00:55:16.142071+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.142302+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.23, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.142316+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.142381+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.064, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.142567+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.142616+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.05, "candidates_in": 5, "candidates_out": 5, "top_score": 7.958364886282312}
+{"ts": "2026-09-23T00:55:16.142633+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.142828+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.195, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.142868+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 10}
+{"ts": "2026-09-23T00:55:16.142914+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.046, "candidates_in": 10, "candidates_out": 10, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.143065+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.143121+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.056, "candidates_in": 5, "candidates_out": 5, "top_score": 3.0523797828632526}
+{"ts": "2026-09-23T00:55:16.143140+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.143349+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.209, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.143390+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 11}
+{"ts": "2026-09-23T00:55:16.143436+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.046, "candidates_in": 11, "candidates_out": 11, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.143596+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.143638+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.042, "candidates_in": 5, "candidates_out": 5, "top_score": 7.5113053132186876}
+{"ts": "2026-09-23T00:55:16.143659+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.143854+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.195, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.143900+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.143941+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.04, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.144115+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.144174+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.059, "candidates_in": 5, "candidates_out": 5, "top_score": 7.8520524608928}
+{"ts": "2026-09-23T00:55:16.144195+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.144500+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.305, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.144515+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.144663+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.142, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.144960+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.145042+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.08, "candidates_in": 5, "candidates_out": 5, "top_score": 6.099207750442612}
+{"ts": "2026-09-23T00:55:16.145084+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.145355+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.271, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.145377+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 15}
+{"ts": "2026-09-23T00:55:16.145462+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.085, "candidates_in": 15, "candidates_out": 15, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.145792+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.145844+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.052, "candidates_in": 5, "candidates_out": 5, "top_score": 11.725714447568286}
+{"ts": "2026-09-23T00:55:16.145874+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.146124+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.25, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.146144+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 15}
+{"ts": "2026-09-23T00:55:16.146214+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.07, "candidates_in": 15, "candidates_out": 15, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.146432+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.146474+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.042, "candidates_in": 5, "candidates_out": 5, "top_score": 8.15986950172059}
+{"ts": "2026-09-23T00:55:16.146498+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.146744+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.246, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.146762+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.146832+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.07, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.147011+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.147054+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.042, "candidates_in": 5, "candidates_out": 5, "top_score": 5.747444714882522}
+{"ts": "2026-09-23T00:55:16.147076+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.147306+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.23, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.147324+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 8}
+{"ts": "2026-09-23T00:55:16.147393+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.069, "candidates_in": 8, "candidates_out": 8, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.147555+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.147608+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.053, "candidates_in": 5, "candidates_out": 5, "top_score": 8.475136050434536}
+{"ts": "2026-09-23T00:55:16.147626+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.147852+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.227, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.147868+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 13}
+{"ts": "2026-09-23T00:55:16.147911+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.043, "candidates_in": 13, "candidates_out": 13, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.148114+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.148154+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.04, "candidates_in": 5, "candidates_out": 5, "top_score": 8.696591119827973}
+{"ts": "2026-09-23T00:55:16.148172+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.148384+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.212, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.148402+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.148445+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.043, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.148640+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.148683+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.043, "candidates_in": 5, "candidates_out": 5, "top_score": 8.011126713415715}
+{"ts": "2026-09-23T00:55:16.148698+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.148928+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.23, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.148972+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.149019+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.047, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.149213+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.149250+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.037, "candidates_in": 5, "candidates_out": 5, "top_score": 7.047291276944782}
+{"ts": "2026-09-23T00:55:16.149268+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.149485+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.217, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.149501+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 13}
+{"ts": "2026-09-23T00:55:16.149555+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.054, "candidates_in": 13, "candidates_out": 13, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.149773+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.149834+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.062, "candidates_in": 5, "candidates_out": 5, "top_score": 11.636264032362151}
+{"ts": "2026-09-23T00:55:16.149854+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.150100+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.246, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.150120+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 15}
+{"ts": "2026-09-23T00:55:16.150175+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.056, "candidates_in": 15, "candidates_out": 15, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.150423+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.150471+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.048, "candidates_in": 5, "candidates_out": 5, "top_score": 12.741534164467751}
+{"ts": "2026-09-23T00:55:16.150489+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.150712+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.224, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.150755+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.150839+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.084, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.151028+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.151090+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.062, "candidates_in": 5, "candidates_out": 5, "top_score": 9.813152231715673}
+{"ts": "2026-09-23T00:55:16.151106+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.151322+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.215, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.151338+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 10}
+{"ts": "2026-09-23T00:55:16.151393+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.055, "candidates_in": 10, "candidates_out": 10, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.151599+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.151637+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.038, "candidates_in": 5, "candidates_out": 5, "top_score": 9.261172585476736}
+{"ts": "2026-09-23T00:55:16.151655+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.151853+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.198, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.151869+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.151948+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.079, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.152119+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.152174+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.055, "candidates_in": 5, "candidates_out": 5, "top_score": 4.78331609753024}
+{"ts": "2026-09-23T00:55:16.152193+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.152430+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.237, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.152446+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 11}
+{"ts": "2026-09-23T00:55:16.152505+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.059, "candidates_in": 11, "candidates_out": 11, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.152679+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.152814+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.13, "candidates_in": 5, "candidates_out": 5, "top_score": 8.07720051308653}
+{"ts": "2026-09-23T00:55:16.152885+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.153333+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.439, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.153367+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 8}
+{"ts": "2026-09-23T00:55:16.153447+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.081, "candidates_in": 8, "candidates_out": 8, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.153637+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.153696+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.059, "candidates_in": 5, "candidates_out": 5, "top_score": 13.117480733398322}
+{"ts": "2026-09-23T00:55:16.153716+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.153990+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.274, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.154010+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.154070+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.06, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.154281+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.154342+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.062, "candidates_in": 5, "candidates_out": 5, "top_score": 12.252236188676015}
+{"ts": "2026-09-23T00:55:16.154365+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.154569+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.205, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.154613+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 9}
+{"ts": "2026-09-23T00:55:16.154661+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.048, "candidates_in": 9, "candidates_out": 9, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.154809+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.154857+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.048, "candidates_in": 5, "candidates_out": 5, "top_score": 9.483853009894561}
+{"ts": "2026-09-23T00:55:16.154881+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.155105+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.224, "candidates_out": 18}
+{"ts": "2026-09-23T00:55:16.155122+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 11}
+{"ts": "2026-09-23T00:55:16.155177+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.055, "candidates_in": 11, "candidates_out": 11, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.155384+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.155430+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.047, "candidates_in": 5, "candidates_out": 5, "top_score": 12.571056554866235}
+{"ts": "2026-09-23T00:55:16.155448+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.155630+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.182, "candidates_out": 15}
+{"ts": "2026-09-23T00:55:16.155645+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 10}
+{"ts": "2026-09-23T00:55:16.155702+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.056, "candidates_in": 10, "candidates_out": 10, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.155872+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.155923+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.051, "candidates_in": 5, "candidates_out": 5, "top_score": 19.800952536015423}
+{"ts": "2026-09-23T00:55:16.155951+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.156168+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.217, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.156184+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.156232+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.048, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.156414+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.156451+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.037, "candidates_in": 5, "candidates_out": 5, "top_score": 6.096353213376497}
+{"ts": "2026-09-23T00:55:16.156467+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.156677+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.21, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.156703+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 11}
+{"ts": "2026-09-23T00:55:16.156744+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.041, "candidates_in": 11, "candidates_out": 11, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.156914+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.156962+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.048, "candidates_in": 5, "candidates_out": 5, "top_score": 4.960889167115358}
+{"ts": "2026-09-23T00:55:16.156978+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.157215+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.237, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.157231+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 11}
+{"ts": "2026-09-23T00:55:16.157282+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.051, "candidates_in": 11, "candidates_out": 11, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.157456+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.157489+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.034, "candidates_in": 5, "candidates_out": 5, "top_score": 5.587639623760468}
+{"ts": "2026-09-23T00:55:16.157504+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.157738+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.234, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.157756+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 10}
+{"ts": "2026-09-23T00:55:16.157806+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.05, "candidates_in": 10, "candidates_out": 10, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.157969+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.158018+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.049, "candidates_in": 5, "candidates_out": 5, "top_score": 4.057100615337948}
+{"ts": "2026-09-23T00:55:16.158040+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.158259+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.219, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.158309+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 9}
+{"ts": "2026-09-23T00:55:16.158363+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.054, "candidates_in": 9, "candidates_out": 9, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.158525+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.158571+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.046, "candidates_in": 5, "candidates_out": 5, "top_score": 5.344212147498729}
+{"ts": "2026-09-23T00:55:16.158591+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.158806+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.214, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.158822+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 10}
+{"ts": "2026-09-23T00:55:16.158878+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.055, "candidates_in": 10, "candidates_out": 10, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.159087+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.159139+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.052, "candidates_in": 5, "candidates_out": 5, "top_score": 4.057100615337948}
+{"ts": "2026-09-23T00:55:16.159159+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.159388+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.23, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.159430+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 11}
+{"ts": "2026-09-23T00:55:16.159476+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.046, "candidates_in": 11, "candidates_out": 11, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.159680+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.159723+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.044, "candidates_in": 5, "candidates_out": 5, "top_score": 5.44153730512353}
+{"ts": "2026-09-23T00:55:16.159744+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.159960+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.216, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.159977+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 9}
+{"ts": "2026-09-23T00:55:16.160047+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.069, "candidates_in": 9, "candidates_out": 9, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.160209+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.160247+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.038, "candidates_in": 5, "candidates_out": 5, "top_score": 10.516994484014887}
+{"ts": "2026-09-23T00:55:16.160268+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.160510+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.242, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.160528+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 11}
+{"ts": "2026-09-23T00:55:16.160588+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.06, "candidates_in": 11, "candidates_out": 11, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.160780+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.160815+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.036, "candidates_in": 5, "candidates_out": 5, "top_score": 9.24653720320187}
+{"ts": "2026-09-23T00:55:16.160833+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.161138+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.3, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.161156+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 10}
+{"ts": "2026-09-23T00:55:16.161251+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.089, "candidates_in": 10, "candidates_out": 10, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.161548+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.161626+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.079, "candidates_in": 5, "candidates_out": 5, "top_score": 7.869982378987563}
+{"ts": "2026-09-23T00:55:16.161661+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.161948+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.287, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.161967+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 14}
+{"ts": "2026-09-23T00:55:16.162011+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.045, "candidates_in": 14, "candidates_out": 14, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.162259+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.162306+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.047, "candidates_in": 5, "candidates_out": 5, "top_score": 9.489375173593887}
+{"ts": "2026-09-23T00:55:16.162324+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.162558+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.234, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.162579+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.162621+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.043, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.162822+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.162869+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.047, "candidates_in": 5, "candidates_out": 5, "top_score": 7.105757708648893}
+{"ts": "2026-09-23T00:55:16.162887+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.163109+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.222, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.163126+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.163193+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.067, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.163397+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.163442+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.046, "candidates_in": 5, "candidates_out": 5, "top_score": 13.794807771079064}
+{"ts": "2026-09-23T00:55:16.163458+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.163692+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.234, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.163710+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.163773+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.062, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.163973+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.164027+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.055, "candidates_in": 5, "candidates_out": 5, "top_score": 4.54486108587936}
+{"ts": "2026-09-23T00:55:16.164067+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.164293+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.227, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.164318+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 11}
+{"ts": "2026-09-23T00:55:16.164360+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.041, "candidates_in": 11, "candidates_out": 11, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.164528+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.164563+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.035, "candidates_in": 5, "candidates_out": 5, "top_score": 9.650368195041708}
+{"ts": "2026-09-23T00:55:16.164581+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.164809+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.229, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.164849+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 11}
+{"ts": "2026-09-23T00:55:16.164883+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.034, "candidates_in": 11, "candidates_out": 11, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.165047+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.165080+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.033, "candidates_in": 5, "candidates_out": 5, "top_score": 10.853024028322764}
+{"ts": "2026-09-23T00:55:16.165097+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.165283+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.185, "candidates_out": 18}
+{"ts": "2026-09-23T00:55:16.165329+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 14}
+{"ts": "2026-09-23T00:55:16.165384+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.055, "candidates_in": 14, "candidates_out": 14, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.165586+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.165632+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.046, "candidates_in": 5, "candidates_out": 5, "top_score": 9.60184587015218}
+{"ts": "2026-09-23T00:55:16.165652+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.165880+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.229, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.165895+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 9}
+{"ts": "2026-09-23T00:55:16.165960+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.065, "candidates_in": 9, "candidates_out": 9, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.166142+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.166236+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.087, "candidates_in": 5, "candidates_out": 5, "top_score": 10.558722467113256}
+{"ts": "2026-09-23T00:55:16.166310+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.166551+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.242, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.166571+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 11}
+{"ts": "2026-09-23T00:55:16.166626+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.055, "candidates_in": 11, "candidates_out": 11, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.166817+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.166855+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.038, "candidates_in": 5, "candidates_out": 5, "top_score": 10.71799951886168}
+{"ts": "2026-09-23T00:55:16.166893+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.167099+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.206, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.167117+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 11}
+{"ts": "2026-09-23T00:55:16.167176+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.059, "candidates_in": 11, "candidates_out": 11, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.167370+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.167417+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.047, "candidates_in": 5, "candidates_out": 5, "top_score": 7.63566239214297}
+{"ts": "2026-09-23T00:55:16.167433+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.167679+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.245, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.167696+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.167768+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.072, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.167941+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.167990+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.049, "candidates_in": 5, "candidates_out": 5, "top_score": 10.371207889150117}
+{"ts": "2026-09-23T00:55:16.168011+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.168220+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.209, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.168235+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.168301+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.066, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.168481+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.168532+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.051, "candidates_in": 5, "candidates_out": 5, "top_score": 9.36186003461111}
+{"ts": "2026-09-23T00:55:16.168549+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.168783+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.233, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.168800+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 11}
+{"ts": "2026-09-23T00:55:16.168860+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.06, "candidates_in": 11, "candidates_out": 11, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.169027+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.169061+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.034, "candidates_in": 5, "candidates_out": 5, "top_score": 3.176576694322574}
+{"ts": "2026-09-23T00:55:16.169078+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.169301+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.223, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.169317+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 10}
+{"ts": "2026-09-23T00:55:16.169417+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.097, "candidates_in": 10, "candidates_out": 10, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.169768+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.169876+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.107, "candidates_in": 5, "candidates_out": 5, "top_score": 6.891789532865213}
+{"ts": "2026-09-23T00:55:16.169902+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.170190+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.289, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.170210+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 11}
+{"ts": "2026-09-23T00:55:16.170288+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.077, "candidates_in": 11, "candidates_out": 11, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.170556+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.170609+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.053, "candidates_in": 5, "candidates_out": 5, "top_score": 4.270246426585537}
+{"ts": "2026-09-23T00:55:16.170641+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.170915+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.274, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.170931+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 10}
+{"ts": "2026-09-23T00:55:16.170979+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.048, "candidates_in": 10, "candidates_out": 10, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.171198+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.171232+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.034, "candidates_in": 5, "candidates_out": 5, "top_score": 6.3278820448579465}
+{"ts": "2026-09-23T00:55:16.171265+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.171503+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.238, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.171523+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 14}
+{"ts": "2026-09-23T00:55:16.171614+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.091, "candidates_in": 14, "candidates_out": 14, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.171826+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.171880+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.055, "candidates_in": 5, "candidates_out": 5, "top_score": 7.268379843638691}
+{"ts": "2026-09-23T00:55:16.171897+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.172193+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.297, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.172208+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 10}
+{"ts": "2026-09-23T00:55:16.172288+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.079, "candidates_in": 10, "candidates_out": 10, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.172496+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.172550+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.053, "candidates_in": 5, "candidates_out": 5, "top_score": 21.232075712439006}
+{"ts": "2026-09-23T00:55:16.172568+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.172906+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.337, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.172922+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 14}
+{"ts": "2026-09-23T00:55:16.173011+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.089, "candidates_in": 14, "candidates_out": 14, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.173239+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.173298+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.059, "candidates_in": 5, "candidates_out": 5, "top_score": 10.257815889623512}
+{"ts": "2026-09-23T00:55:16.173314+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.173643+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.329, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.173660+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 14}
+{"ts": "2026-09-23T00:55:16.173744+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.084, "candidates_in": 14, "candidates_out": 14, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.173991+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.174049+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.058, "candidates_in": 5, "candidates_out": 5, "top_score": 11.533861721118301}
+{"ts": "2026-09-23T00:55:16.174122+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.174399+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.282, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.174416+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 11}
+{"ts": "2026-09-23T00:55:16.174728+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.308, "candidates_in": 11, "candidates_out": 11, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.175207+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.175279+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.073, "candidates_in": 5, "candidates_out": 5, "top_score": 8.925311159029587}
+{"ts": "2026-09-23T00:55:16.175351+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.175784+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.435, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.175807+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 14}
+{"ts": "2026-09-23T00:55:16.175882+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.074, "candidates_in": 14, "candidates_out": 14, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.176104+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.176159+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.056, "candidates_in": 5, "candidates_out": 5, "top_score": 6.312329633627332}
+{"ts": "2026-09-23T00:55:16.176183+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.176576+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.393, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.176599+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 13}
+{"ts": "2026-09-23T00:55:16.176745+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.146, "candidates_in": 13, "candidates_out": 13, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.176980+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.177030+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.05, "candidates_in": 5, "candidates_out": 5, "top_score": 9.421106505675828}
+{"ts": "2026-09-23T00:55:16.177049+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.177341+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.291, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.177359+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 10}
+{"ts": "2026-09-23T00:55:16.177421+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.061, "candidates_in": 10, "candidates_out": 10, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.177605+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.177670+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.066, "candidates_in": 5, "candidates_out": 5, "top_score": 23.00494759145757}
+{"ts": "2026-09-23T00:55:16.177731+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.178244+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.514, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.178277+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 10}
+{"ts": "2026-09-23T00:55:16.178400+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.122, "candidates_in": 10, "candidates_out": 10, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.178639+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.178706+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.067, "candidates_in": 5, "candidates_out": 5, "top_score": 13.23153578328329}
+{"ts": "2026-09-23T00:55:16.178737+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.179081+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.344, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.179102+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 11}
+{"ts": "2026-09-23T00:55:16.179171+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.069, "candidates_in": 11, "candidates_out": 11, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.179425+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.179580+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.159, "candidates_in": 5, "candidates_out": 5, "top_score": 9.638538664626491}
+{"ts": "2026-09-23T00:55:16.179606+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.179901+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.295, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.179923+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 13}
+{"ts": "2026-09-23T00:55:16.179980+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.056, "candidates_in": 13, "candidates_out": 13, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.180195+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.180245+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.05, "candidates_in": 5, "candidates_out": 5, "top_score": 9.14821391325902}
+{"ts": "2026-09-23T00:55:16.180263+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.180563+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.299, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.180590+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 14}
+{"ts": "2026-09-23T00:55:16.180661+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.072, "candidates_in": 14, "candidates_out": 14, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.180869+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.180913+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.044, "candidates_in": 5, "candidates_out": 5, "top_score": 15.539115428311709}
+{"ts": "2026-09-23T00:55:16.180933+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.181227+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.294, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.181248+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.181301+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.052, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.181475+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.181519+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.044, "candidates_in": 5, "candidates_out": 5, "top_score": 19.739760755020434}
+{"ts": "2026-09-23T00:55:16.181557+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.181806+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.25, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.181826+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 13}
+{"ts": "2026-09-23T00:55:16.181893+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.067, "candidates_in": 13, "candidates_out": 13, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.182076+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.182117+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.041, "candidates_in": 5, "candidates_out": 5, "top_score": 20.93598892637348}
+{"ts": "2026-09-23T00:55:16.182133+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.182349+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.216, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.182366+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 9}
+{"ts": "2026-09-23T00:55:16.182431+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.064, "candidates_in": 9, "candidates_out": 9, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.182591+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.182636+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.045, "candidates_in": 5, "candidates_out": 5, "top_score": 8.08408396025489}
+{"ts": "2026-09-23T00:55:16.182654+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.182956+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.302, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.183012+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 14}
+{"ts": "2026-09-23T00:55:16.183090+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.078, "candidates_in": 14, "candidates_out": 14, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.183308+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.183373+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.066, "candidates_in": 5, "candidates_out": 5, "top_score": 10.557449019467667}
+{"ts": "2026-09-23T00:55:16.183392+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.183617+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.224, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.183635+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 10}
+{"ts": "2026-09-23T00:55:16.183695+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.059, "candidates_in": 10, "candidates_out": 10, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.184000+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.184063+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.063, "candidates_in": 5, "candidates_out": 5, "top_score": 17.546201500150463}
+{"ts": "2026-09-23T00:55:16.184085+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.184293+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.208, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.184312+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 11}
+{"ts": "2026-09-23T00:55:16.184369+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.057, "candidates_in": 11, "candidates_out": 11, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.184543+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.184586+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.043, "candidates_in": 5, "candidates_out": 5, "top_score": 14.412417840167448}
+{"ts": "2026-09-23T00:55:16.184607+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.184869+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.263, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.184889+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.184945+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.056, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.185133+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.185177+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.044, "candidates_in": 5, "candidates_out": 5, "top_score": 7.344386617793666}
+{"ts": "2026-09-23T00:55:16.185205+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.185429+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.224, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.185448+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.185502+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.054, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.185720+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.185762+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.043, "candidates_in": 5, "candidates_out": 5, "top_score": 7.991690145194549}
+{"ts": "2026-09-23T00:55:16.185789+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.186224+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.434, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.186244+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 11}
+{"ts": "2026-09-23T00:55:16.186358+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.113, "candidates_in": 11, "candidates_out": 11, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.186845+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.186895+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.051, "candidates_in": 5, "candidates_out": 5, "top_score": 12.584649025356487}
+{"ts": "2026-09-23T00:55:16.186913+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.187236+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.323, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.187257+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.187327+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.069, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.187518+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.187565+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.047, "candidates_in": 5, "candidates_out": 5, "top_score": 6.419057346144306}
+{"ts": "2026-09-23T00:55:16.187585+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.187779+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.193, "candidates_out": 13}
+{"ts": "2026-09-23T00:55:16.187799+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 8}
+{"ts": "2026-09-23T00:55:16.187864+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.064, "candidates_in": 8, "candidates_out": 8, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.188029+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.188066+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.037, "candidates_in": 5, "candidates_out": 5, "top_score": 9.972453745491078}
+{"ts": "2026-09-23T00:55:16.188084+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.188300+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.215, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.188318+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 11}
+{"ts": "2026-09-23T00:55:16.188382+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.062, "candidates_in": 11, "candidates_out": 11, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.188551+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.188598+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.047, "candidates_in": 5, "candidates_out": 5, "top_score": 13.62735701279476}
+{"ts": "2026-09-23T00:55:16.188620+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.188822+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.203, "candidates_out": 19}
+{"ts": "2026-09-23T00:55:16.188840+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 11}
+{"ts": "2026-09-23T00:55:16.188902+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.062, "candidates_in": 11, "candidates_out": 11, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.189074+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.189114+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.041, "candidates_in": 5, "candidates_out": 5, "top_score": 24.484240243762954}
+{"ts": "2026-09-23T00:55:16.189135+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.189370+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.234, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.189390+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 13}
+{"ts": "2026-09-23T00:55:16.189441+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.051, "candidates_in": 13, "candidates_out": 13, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.189627+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.189660+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.034, "candidates_in": 5, "candidates_out": 5, "top_score": 10.30671183550616}
+{"ts": "2026-09-23T00:55:16.189677+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.189933+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.256, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.189950+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 11}
+{"ts": "2026-09-23T00:55:16.189989+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.039, "candidates_in": 11, "candidates_out": 11, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.190224+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.190256+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.032, "candidates_in": 5, "candidates_out": 5, "top_score": 17.130528526665696}
+{"ts": "2026-09-23T00:55:16.190270+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.190510+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.24, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.190525+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 14}
+{"ts": "2026-09-23T00:55:16.190575+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.05, "candidates_in": 14, "candidates_out": 14, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.190774+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.190809+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.036, "candidates_in": 5, "candidates_out": 5, "top_score": 10.76022152646457}
+{"ts": "2026-09-23T00:55:16.190825+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.191115+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.29, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.191131+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 14}
+{"ts": "2026-09-23T00:55:16.191226+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.094, "candidates_in": 14, "candidates_out": 14, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.191443+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.191490+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.047, "candidates_in": 5, "candidates_out": 5, "top_score": 13.34762845162547}
+{"ts": "2026-09-23T00:55:16.191509+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.191779+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.27, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.191794+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.191855+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.061, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.192036+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.192076+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.04, "candidates_in": 5, "candidates_out": 5, "top_score": 4.198646377531724}
+{"ts": "2026-09-23T00:55:16.192106+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.192299+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.193, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.192329+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 13}
+{"ts": "2026-09-23T00:55:16.192368+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.039, "candidates_in": 13, "candidates_out": 13, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.192556+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.192591+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.035, "candidates_in": 5, "candidates_out": 5, "top_score": 12.903398636632867}
+{"ts": "2026-09-23T00:55:16.192606+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.192815+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.209, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.192836+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 11}
+{"ts": "2026-09-23T00:55:16.192886+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.049, "candidates_in": 11, "candidates_out": 11, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.193069+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.193124+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.055, "candidates_in": 5, "candidates_out": 5, "top_score": 6.306862330606309}
+{"ts": "2026-09-23T00:55:16.193140+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.193361+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.22, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.193383+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 11}
+{"ts": "2026-09-23T00:55:16.193437+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.054, "candidates_in": 11, "candidates_out": 11, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.193614+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.193655+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.041, "candidates_in": 5, "candidates_out": 5, "top_score": 9.872707276454008}
+{"ts": "2026-09-23T00:55:16.193672+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.193878+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.206, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.193896+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 10}
+{"ts": "2026-09-23T00:55:16.193967+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.071, "candidates_in": 10, "candidates_out": 10, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.194141+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.194220+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.079, "candidates_in": 5, "candidates_out": 5, "top_score": 5.078014640123091}
+{"ts": "2026-09-23T00:55:16.194242+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.194565+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.323, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.194583+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 13}
+{"ts": "2026-09-23T00:55:16.194645+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.061, "candidates_in": 13, "candidates_out": 13, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.194931+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.194995+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.063, "candidates_in": 5, "candidates_out": 5, "top_score": 12.561236873240997}
+{"ts": "2026-09-23T00:55:16.195019+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.195289+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.27, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.195311+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 11}
+{"ts": "2026-09-23T00:55:16.195385+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.074, "candidates_in": 11, "candidates_out": 11, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.195580+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.195634+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.054, "candidates_in": 5, "candidates_out": 5, "top_score": 14.303129532959346}
+{"ts": "2026-09-23T00:55:16.195656+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.195907+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.25, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.195927+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 9}
+{"ts": "2026-09-23T00:55:16.195981+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.054, "candidates_in": 9, "candidates_out": 9, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.196140+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.196183+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.043, "candidates_in": 5, "candidates_out": 5, "top_score": 16.980417158561647}
+{"ts": "2026-09-23T00:55:16.196206+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.196495+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.29, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.196527+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 9}
+{"ts": "2026-09-23T00:55:16.196575+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.049, "candidates_in": 9, "candidates_out": 9, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.196731+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.196775+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.044, "candidates_in": 5, "candidates_out": 5, "top_score": 16.980417158561647}
+{"ts": "2026-09-23T00:55:16.196797+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.197026+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.229, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.197046+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.197085+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.04, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.197264+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.197308+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.044, "candidates_in": 5, "candidates_out": 5, "top_score": 3.774190612433981}
+{"ts": "2026-09-23T00:55:16.197328+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.197572+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.244, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.197590+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.197638+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.047, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.197809+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.197847+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.039, "candidates_in": 5, "candidates_out": 5, "top_score": 12.683234449946534}
+{"ts": "2026-09-23T00:55:16.197864+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.198090+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.226, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.198107+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 11}
+{"ts": "2026-09-23T00:55:16.198148+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.04, "candidates_in": 11, "candidates_out": 11, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.198334+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.198368+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.034, "candidates_in": 5, "candidates_out": 5, "top_score": 15.445215577117736}
+{"ts": "2026-09-23T00:55:16.198384+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.198606+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.222, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.198657+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.198705+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.048, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.198884+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.198929+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.045, "candidates_in": 5, "candidates_out": 5, "top_score": 3.4537563598440033}
+a n=122 recall=0.967 mrr=0.771
+{"ts": "2026-09-23T00:55:16.198963+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.199143+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.18, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.199160+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 13}
+{"ts": "2026-09-23T00:55:16.199212+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.052, "candidates_in": 13, "candidates_out": 13, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.199409+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.199444+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.035, "candidates_in": 5, "candidates_out": 5, "top_score": 12.417005791932283}
+{"ts": "2026-09-23T00:55:16.199489+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.199704+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.215, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.199753+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 10}
+{"ts": "2026-09-23T00:55:16.199803+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.05, "candidates_in": 10, "candidates_out": 10, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.199957+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.199995+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.038, "candidates_in": 5, "candidates_out": 5, "top_score": 17.546201500150463}
+{"ts": "2026-09-23T00:55:16.200015+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.200230+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.216, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.200273+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 11}
+{"ts": "2026-09-23T00:55:16.200331+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.058, "candidates_in": 11, "candidates_out": 11, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.200530+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.200568+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.039, "candidates_in": 5, "candidates_out": 5, "top_score": 12.484458689722691}
+{"ts": "2026-09-23T00:55:16.200589+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.200796+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.207, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.200814+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 13}
+{"ts": "2026-09-23T00:55:16.200858+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.043, "candidates_in": 13, "candidates_out": 13, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.201069+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.201115+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.046, "candidates_in": 5, "candidates_out": 5, "top_score": 12.248185270436428}
+{"ts": "2026-09-23T00:55:16.201135+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.201319+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.184, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.201336+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.201377+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.04, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.201569+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.201630+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.061, "candidates_in": 5, "candidates_out": 5, "top_score": 14.455054565930197}
+{"ts": "2026-09-23T00:55:16.201648+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.201888+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.24, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.201906+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 13}
+{"ts": "2026-09-23T00:55:16.201969+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.064, "candidates_in": 13, "candidates_out": 13, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.202145+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.202190+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.046, "candidates_in": 5, "candidates_out": 5, "top_score": 14.218781146643934}
+{"ts": "2026-09-23T00:55:16.202211+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.202411+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.201, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.202428+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 11}
+{"ts": "2026-09-23T00:55:16.202486+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.057, "candidates_in": 11, "candidates_out": 11, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.202918+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.203014+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.1, "candidates_in": 5, "candidates_out": 5, "top_score": 11.409217186178548}
+{"ts": "2026-09-23T00:55:16.203044+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.203319+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.275, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.203340+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.203427+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.087, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.203647+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.203708+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.062, "candidates_in": 5, "candidates_out": 5, "top_score": 8.128209569994453}
+{"ts": "2026-09-23T00:55:16.203732+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.203998+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.265, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.204014+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.204076+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.062, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.204248+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.204298+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.05, "candidates_in": 5, "candidates_out": 5, "top_score": 17.287028823830994}
+{"ts": "2026-09-23T00:55:16.204319+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.204546+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.228, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.204564+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.204634+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.07, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.204867+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.204916+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.049, "candidates_in": 5, "candidates_out": 5, "top_score": 15.849480213128183}
+{"ts": "2026-09-23T00:55:16.204935+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.205127+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.192, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.205144+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.205207+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.063, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.205403+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.205440+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.037, "candidates_in": 5, "candidates_out": 5, "top_score": 11.934742434024756}
+{"ts": "2026-09-23T00:55:16.205460+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.205663+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.204, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.205679+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 14}
+{"ts": "2026-09-23T00:55:16.205735+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.057, "candidates_in": 14, "candidates_out": 14, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.205938+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.205977+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.039, "candidates_in": 5, "candidates_out": 5, "top_score": 13.56114717068877}
+{"ts": "2026-09-23T00:55:16.205996+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.206181+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.186, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.206197+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 11}
+{"ts": "2026-09-23T00:55:16.206240+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.043, "candidates_in": 11, "candidates_out": 11, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.207536+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.207686+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.154, "candidates_in": 5, "candidates_out": 5, "top_score": 4.25689711025543}
+{"ts": "2026-09-23T00:55:16.207740+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.208272+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.53, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.208322+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.208440+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.118, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.208899+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.208988+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.09, "candidates_in": 5, "candidates_out": 5, "top_score": 7.663455157011908}
+{"ts": "2026-09-23T00:55:16.209043+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.209502+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.458, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.209541+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 13}
+{"ts": "2026-09-23T00:55:16.209638+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.098, "candidates_in": 13, "candidates_out": 13, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.209888+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.209945+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.058, "candidates_in": 5, "candidates_out": 5, "top_score": 12.88573467767779}
+{"ts": "2026-09-23T00:55:16.209971+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.210197+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.227, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.210214+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 10}
+{"ts": "2026-09-23T00:55:16.210279+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.064, "candidates_in": 10, "candidates_out": 10, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.210442+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.210492+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.05, "candidates_in": 5, "candidates_out": 5, "top_score": 4.200800393667516}
+{"ts": "2026-09-23T00:55:16.210511+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.210745+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.234, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.210809+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.210920+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.1, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.211194+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.211244+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.051, "candidates_in": 5, "candidates_out": 5, "top_score": 11.526830621552243}
+{"ts": "2026-09-23T00:55:16.211297+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.211516+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.22, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.211532+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 11}
+{"ts": "2026-09-23T00:55:16.211616+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.082, "candidates_in": 11, "candidates_out": 11, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.211811+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.211877+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.066, "candidates_in": 5, "candidates_out": 5, "top_score": 5.148381936410037}
+{"ts": "2026-09-23T00:55:16.211897+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.212129+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.232, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.212146+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 11}
+{"ts": "2026-09-23T00:55:16.212207+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.061, "candidates_in": 11, "candidates_out": 11, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.212413+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.212460+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.048, "candidates_in": 5, "candidates_out": 5, "top_score": 6.306862330606309}
+{"ts": "2026-09-23T00:55:16.212478+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.212744+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.266, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.212764+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 14}
+{"ts": "2026-09-23T00:55:16.212807+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.043, "candidates_in": 14, "candidates_out": 14, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.213039+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.213091+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.052, "candidates_in": 5, "candidates_out": 5, "top_score": 9.184292510435554}
+{"ts": "2026-09-23T00:55:16.213112+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.213345+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.233, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.213361+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.213421+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.06, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.213593+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.213641+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.048, "candidates_in": 5, "candidates_out": 5, "top_score": 7.958364886282312}
+{"ts": "2026-09-23T00:55:16.213662+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.213856+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.194, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.213873+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.213928+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.055, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.214092+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.214134+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.043, "candidates_in": 5, "candidates_out": 5, "top_score": 7.8520524608928}
+{"ts": "2026-09-23T00:55:16.214155+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.214372+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.218, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.214391+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 15}
+{"ts": "2026-09-23T00:55:16.214438+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.047, "candidates_in": 15, "candidates_out": 15, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.214626+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.214662+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.037, "candidates_in": 5, "candidates_out": 5, "top_score": 8.15986950172059}
+{"ts": "2026-09-23T00:55:16.214681+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.214891+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.21, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.214912+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.214955+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.043, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.215135+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.215173+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.038, "candidates_in": 5, "candidates_out": 5, "top_score": 5.747444714882522}
+{"ts": "2026-09-23T00:55:16.215196+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.215409+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.213, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.215429+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 13}
+{"ts": "2026-09-23T00:55:16.215487+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.058, "candidates_in": 13, "candidates_out": 13, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.215662+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.215708+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.046, "candidates_in": 5, "candidates_out": 5, "top_score": 8.696591119827973}
+{"ts": "2026-09-23T00:55:16.215724+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.215919+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.195, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.215937+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.215989+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.052, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.216154+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.216194+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.04, "candidates_in": 5, "candidates_out": 5, "top_score": 8.011126713415715}
+{"ts": "2026-09-23T00:55:16.216211+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.216429+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.218, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.216450+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 13}
+{"ts": "2026-09-23T00:55:16.216509+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.059, "candidates_in": 13, "candidates_out": 13, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.216696+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.216735+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.039, "candidates_in": 5, "candidates_out": 5, "top_score": 11.636264032362151}
+{"ts": "2026-09-23T00:55:16.216753+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.216939+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.186, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.216957+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 10}
+{"ts": "2026-09-23T00:55:16.217021+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.064, "candidates_in": 10, "candidates_out": 10, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.217192+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.217229+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.037, "candidates_in": 5, "candidates_out": 5, "top_score": 9.261172585476736}
+{"ts": "2026-09-23T00:55:16.217245+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.217428+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.183, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.217446+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.217491+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.045, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.217668+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.217705+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.037, "candidates_in": 5, "candidates_out": 5, "top_score": 4.78331609753024}
+{"ts": "2026-09-23T00:55:16.217725+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.217917+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.193, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.217935+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 8}
+{"ts": "2026-09-23T00:55:16.218001+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.065, "candidates_in": 8, "candidates_out": 8, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.218154+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.218197+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.044, "candidates_in": 5, "candidates_out": 5, "top_score": 13.117480733398322}
+{"ts": "2026-09-23T00:55:16.218217+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.218486+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.269, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.218503+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.218554+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.051, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.218779+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.218824+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.045, "candidates_in": 5, "candidates_out": 5, "top_score": 12.252236188676015}
+{"ts": "2026-09-23T00:55:16.218845+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.219075+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.23, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.219091+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 9}
+{"ts": "2026-09-23T00:55:16.219168+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.077, "candidates_in": 9, "candidates_out": 9, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.219487+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.219549+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.062, "candidates_in": 5, "candidates_out": 5, "top_score": 9.483853009894561}
+{"ts": "2026-09-23T00:55:16.219614+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.219809+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.196, "candidates_out": 15}
+{"ts": "2026-09-23T00:55:16.219828+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 10}
+{"ts": "2026-09-23T00:55:16.219870+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.041, "candidates_in": 10, "candidates_out": 10, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.220054+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.220098+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.043, "candidates_in": 5, "candidates_out": 5, "top_score": 19.800952536015423}
+{"ts": "2026-09-23T00:55:16.220120+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.220333+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.214, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.220348+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.220398+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.05, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.220586+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.220628+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.041, "candidates_in": 5, "candidates_out": 5, "top_score": 6.096353213376497}
+{"ts": "2026-09-23T00:55:16.220645+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.220879+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.234, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.220899+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 11}
+{"ts": "2026-09-23T00:55:16.220940+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.041, "candidates_in": 11, "candidates_out": 11, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.221132+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.221171+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.039, "candidates_in": 5, "candidates_out": 5, "top_score": 5.587639623760468}
+{"ts": "2026-09-23T00:55:16.221188+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.221382+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.194, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.221401+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 10}
+{"ts": "2026-09-23T00:55:16.221444+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.044, "candidates_in": 10, "candidates_out": 10, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.221622+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.221662+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.04, "candidates_in": 5, "candidates_out": 5, "top_score": 4.057100615337948}
+{"ts": "2026-09-23T00:55:16.221683+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.221872+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.19, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.221889+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 10}
+{"ts": "2026-09-23T00:55:16.221929+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.04, "candidates_in": 10, "candidates_out": 10, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.222113+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.222150+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.037, "candidates_in": 5, "candidates_out": 5, "top_score": 4.057100615337948}
+{"ts": "2026-09-23T00:55:16.222169+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.222383+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.213, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.222400+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 11}
+{"ts": "2026-09-23T00:55:16.222458+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.058, "candidates_in": 11, "candidates_out": 11, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.222616+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.222658+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.042, "candidates_in": 5, "candidates_out": 5, "top_score": 5.44153730512353}
+{"ts": "2026-09-23T00:55:16.222681+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.222892+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.211, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.222912+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 9}
+{"ts": "2026-09-23T00:55:16.222964+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.052, "candidates_in": 9, "candidates_out": 9, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.223133+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.223173+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.041, "candidates_in": 5, "candidates_out": 5, "top_score": 10.516994484014887}
+{"ts": "2026-09-23T00:55:16.223192+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.223398+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.207, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.223416+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 10}
+{"ts": "2026-09-23T00:55:16.223462+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.046, "candidates_in": 10, "candidates_out": 10, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.223627+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.223669+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.042, "candidates_in": 5, "candidates_out": 5, "top_score": 7.869982378987563}
+{"ts": "2026-09-23T00:55:16.223686+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.223897+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.211, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.223915+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 14}
+{"ts": "2026-09-23T00:55:16.223953+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.038, "candidates_in": 14, "candidates_out": 14, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.224152+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.224196+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.044, "candidates_in": 5, "candidates_out": 5, "top_score": 9.489375173593887}
+{"ts": "2026-09-23T00:55:16.224214+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.224411+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.198, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.224428+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.224494+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.065, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.224676+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.224718+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.042, "candidates_in": 5, "candidates_out": 5, "top_score": 7.105757708648893}
+{"ts": "2026-09-23T00:55:16.224740+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.224959+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.219, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.224976+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.225018+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.041, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.225214+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.225256+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.043, "candidates_in": 5, "candidates_out": 5, "top_score": 13.794807771079064}
+{"ts": "2026-09-23T00:55:16.225274+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.225475+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.202, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.225491+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.225540+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.049, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.225753+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.225790+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.037, "candidates_in": 5, "candidates_out": 5, "top_score": 4.54486108587936}
+{"ts": "2026-09-23T00:55:16.225856+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.226054+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.198, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.226071+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 11}
+{"ts": "2026-09-23T00:55:16.226124+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.053, "candidates_in": 11, "candidates_out": 11, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.226290+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.226333+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.043, "candidates_in": 5, "candidates_out": 5, "top_score": 9.650368195041708}
+{"ts": "2026-09-23T00:55:16.226353+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.226568+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.215, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.226582+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 9}
+{"ts": "2026-09-23T00:55:16.226627+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.045, "candidates_in": 9, "candidates_out": 9, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.227099+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.227306+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.208, "candidates_in": 5, "candidates_out": 5, "top_score": 10.558722467113256}
+{"ts": "2026-09-23T00:55:16.227359+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.227781+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.422, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.227811+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.227906+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.095, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.228122+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.228174+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.052, "candidates_in": 5, "candidates_out": 5, "top_score": 9.36186003461111}
+{"ts": "2026-09-23T00:55:16.228200+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.228424+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.224, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.228446+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 10}
+{"ts": "2026-09-23T00:55:16.228603+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.156, "candidates_in": 10, "candidates_out": 10, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.228768+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.234700+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 5.928, "candidates_in": 5, "candidates_out": 5, "top_score": 6.891789532865213}
+{"ts": "2026-09-23T00:55:16.234762+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.235649+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.887, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.235977+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 14}
+{"ts": "2026-09-23T00:55:16.236421+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.446, "candidates_in": 14, "candidates_out": 14, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.236965+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.237165+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.2, "candidates_in": 5, "candidates_out": 5, "top_score": 7.268379843638691}
+{"ts": "2026-09-23T00:55:16.237204+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.237626+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.422, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.237645+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 10}
+{"ts": "2026-09-23T00:55:16.237902+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.253, "candidates_in": 10, "candidates_out": 10, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.238379+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.238556+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.178, "candidates_in": 5, "candidates_out": 5, "top_score": 21.232075712439006}
+{"ts": "2026-09-23T00:55:16.238583+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.239059+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.472, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.239122+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 14}
+{"ts": "2026-09-23T00:55:16.240176+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 1.049, "candidates_in": 14, "candidates_out": 14, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.240628+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.240951+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.32, "candidates_in": 5, "candidates_out": 5, "top_score": 10.257815889623512}
+{"ts": "2026-09-23T00:55:16.241019+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.241786+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.767, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.241860+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 11}
+{"ts": "2026-09-23T00:55:16.242289+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.431, "candidates_in": 11, "candidates_out": 11, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.242719+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.244005+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 1.286, "candidates_in": 5, "candidates_out": 5, "top_score": 8.925311159029587}
+{"ts": "2026-09-23T00:55:16.244050+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.244633+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.582, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.244674+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 14}
+{"ts": "2026-09-23T00:55:16.245253+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.576, "candidates_in": 14, "candidates_out": 14, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.245759+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.245998+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.24, "candidates_in": 5, "candidates_out": 5, "top_score": 6.312329633627332}
+{"ts": "2026-09-23T00:55:16.246045+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.246526+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.482, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.246551+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 13}
+{"ts": "2026-09-23T00:55:16.246680+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.125, "candidates_in": 13, "candidates_out": 13, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.247159+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.247266+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.109, "candidates_in": 5, "candidates_out": 5, "top_score": 9.421106505675828}
+{"ts": "2026-09-23T00:55:16.247292+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.247578+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.286, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.247596+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 10}
+{"ts": "2026-09-23T00:55:16.247812+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.215, "candidates_in": 10, "candidates_out": 10, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.247963+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.248245+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.279, "candidates_in": 5, "candidates_out": 5, "top_score": 23.00494759145757}
+{"ts": "2026-09-23T00:55:16.248331+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.248949+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.619, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.248973+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 11}
+{"ts": "2026-09-23T00:55:16.249139+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.162, "candidates_in": 11, "candidates_out": 11, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.249589+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.249705+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.117, "candidates_in": 5, "candidates_out": 5, "top_score": 9.638538664626491}
+{"ts": "2026-09-23T00:55:16.249746+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.250446+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.698, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.250504+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 14}
+{"ts": "2026-09-23T00:55:16.250614+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.11, "candidates_in": 14, "candidates_out": 14, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.251092+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.251198+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.107, "candidates_in": 5, "candidates_out": 5, "top_score": 15.539115428311709}
+{"ts": "2026-09-23T00:55:16.251228+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.251845+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.614, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.251894+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 9}
+{"ts": "2026-09-23T00:55:16.251972+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.078, "candidates_in": 9, "candidates_out": 9, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.252238+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.252297+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.06, "candidates_in": 5, "candidates_out": 5, "top_score": 8.08408396025489}
+{"ts": "2026-09-23T00:55:16.252315+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.252972+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.65, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.252997+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 10}
+{"ts": "2026-09-23T00:55:16.253139+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.141, "candidates_in": 10, "candidates_out": 10, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.253743+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.253877+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.135, "candidates_in": 5, "candidates_out": 5, "top_score": 17.546201500150463}
+{"ts": "2026-09-23T00:55:16.253919+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.254397+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.477, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.254604+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 11}
+{"ts": "2026-09-23T00:55:16.254716+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.113, "candidates_in": 11, "candidates_out": 11, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.255165+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.255257+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.092, "candidates_in": 5, "candidates_out": 5, "top_score": 14.412417840167448}
+{"ts": "2026-09-23T00:55:16.255327+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.255984+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.649, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.256029+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 11}
+{"ts": "2026-09-23T00:55:16.261331+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 5.301, "candidates_in": 11, "candidates_out": 11, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.262363+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.262512+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.152, "candidates_in": 5, "candidates_out": 5, "top_score": 12.584649025356487}
+{"ts": "2026-09-23T00:55:16.262557+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.263187+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.631, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.263214+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.263459+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.241, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.263992+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.264220+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.229, "candidates_in": 5, "candidates_out": 5, "top_score": 6.419057346144306}
+{"ts": "2026-09-23T00:55:16.264251+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.266149+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 1.892, "candidates_out": 19}
+{"ts": "2026-09-23T00:55:16.266220+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 11}
+{"ts": "2026-09-23T00:55:16.267348+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 1.127, "candidates_in": 11, "candidates_out": 11, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.267600+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.267779+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.179, "candidates_in": 5, "candidates_out": 5, "top_score": 24.484240243762954}
+{"ts": "2026-09-23T00:55:16.267807+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.268545+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.735, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.268596+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 11}
+{"ts": "2026-09-23T00:55:16.268685+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.088, "candidates_in": 11, "candidates_out": 11, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.269109+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.269244+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.136, "candidates_in": 5, "candidates_out": 5, "top_score": 17.130528526665696}
+{"ts": "2026-09-23T00:55:16.269265+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.270020+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.752, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.270079+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 14}
+{"ts": "2026-09-23T00:55:16.270167+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.089, "candidates_in": 14, "candidates_out": 14, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.270624+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.270733+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.11, "candidates_in": 5, "candidates_out": 5, "top_score": 10.76022152646457}
+{"ts": "2026-09-23T00:55:16.270764+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.271393+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.627, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.271450+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.271564+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.114, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.271987+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.272102+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.115, "candidates_in": 5, "candidates_out": 5, "top_score": 4.198646377531724}
+{"ts": "2026-09-23T00:55:16.272151+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.272597+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.443, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.272652+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 13}
+{"ts": "2026-09-23T00:55:16.272887+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.235, "candidates_in": 13, "candidates_out": 13, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.273863+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.274355+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.492, "candidates_in": 5, "candidates_out": 5, "top_score": 12.903398636632867}
+{"ts": "2026-09-23T00:55:16.274389+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.274826+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.436, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.274846+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 11}
+{"ts": "2026-09-23T00:55:16.274977+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.127, "candidates_in": 11, "candidates_out": 11, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.275433+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.275555+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.124, "candidates_in": 5, "candidates_out": 5, "top_score": 6.306862330606309}
+{"ts": "2026-09-23T00:55:16.275578+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.275876+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.294, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.275938+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 11}
+{"ts": "2026-09-23T00:55:16.276031+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.095, "candidates_in": 11, "candidates_out": 11, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.276241+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.276279+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.038, "candidates_in": 5, "candidates_out": 5, "top_score": 9.872707276454008}
+{"ts": "2026-09-23T00:55:16.276296+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.277037+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.737, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.277091+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 9}
+{"ts": "2026-09-23T00:55:16.277216+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.125, "candidates_in": 9, "candidates_out": 9, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.277752+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.277857+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.103, "candidates_in": 5, "candidates_out": 5, "top_score": 16.980417158561647}
+{"ts": "2026-09-23T00:55:16.277916+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.278623+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.706, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.278672+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 9}
+{"ts": "2026-09-23T00:55:16.278755+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.083, "candidates_in": 9, "candidates_out": 9, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.279191+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.279307+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.119, "candidates_in": 5, "candidates_out": 5, "top_score": 16.980417158561647}
+{"ts": "2026-09-23T00:55:16.279336+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.280421+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 1.081, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.280476+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.280582+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.105, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.280867+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.280946+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.079, "candidates_in": 5, "candidates_out": 5, "top_score": 3.774190612433981}
+{"ts": "2026-09-23T00:55:16.280975+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.282279+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 1.304, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.282304+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.282354+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.05, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.282606+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.282644+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.039, "candidates_in": 5, "candidates_out": 5, "top_score": 12.683234449946534}
+{"ts": "2026-09-23T00:55:16.282686+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T00:55:16.282996+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.31, "candidates_out": 20}
+{"ts": "2026-09-23T00:55:16.283015+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 12}
+{"ts": "2026-09-23T00:55:16.283060+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.045, "candidates_in": 12, "candidates_out": 12, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T00:55:16.283394+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T00:55:16.283487+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.092, "candidates_in": 5, "candidates_out": 5, "top_score": 3.4537563598440033}
+h n=74 recall=0.946 mrr=0.784

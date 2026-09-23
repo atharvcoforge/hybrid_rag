@@ -1,0 +1,23 @@
+ready={"ready":true,"index_generation":4}
+=== SSE stage events sample ===
+event: trace
+event: stage
+event: meta
+event: stage
+event: stage
+event: stage
+event: stage
+event: stage
+event: stage
+event: stage
+event: stage
+event: stage
+event: stage
+event: stage
+event: stage
+event: stage
+event: meta
+event: stage
+event: stage
+event: stage
+event: done

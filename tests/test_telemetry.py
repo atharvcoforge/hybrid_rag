@@ -1,5 +1,4 @@
 import json
-import os
 import threading
 import time
 import uuid
@@ -84,10 +83,9 @@ def test_log_event_is_one_json_line(capsys):
 
 
 def test_span_emits_start_and_finish(capsys):
-    with bind_trace("trace-span-1"):
-        with span("dense", candidates_in=3) as handle:
-            handle["candidates_out"] = 2
-            handle["top_score"] = 0.5
+    with bind_trace("trace-span-1"), span("dense", candidates_in=3) as handle:
+        handle["candidates_out"] = 2
+        handle["top_score"] = 0.5
     lines = [json.loads(line) for line in capsys.readouterr().out.strip().splitlines()]
     events = [(row["stage"], row["event"]) for row in lines]
     assert ("dense", "start") in events
@@ -100,10 +98,8 @@ def test_span_emits_start_and_finish(capsys):
 
 
 def test_span_error_records_exception_type(capsys):
-    with bind_trace("trace-err"):
-        with pytest.raises(RuntimeError, match="boom"):
-            with span("rerank"):
-                raise RuntimeError("boom")
+    with bind_trace("trace-err"), pytest.raises(RuntimeError, match="boom"), span("rerank"):
+        raise RuntimeError("boom")
     lines = [json.loads(line) for line in capsys.readouterr().out.strip().splitlines()]
     error = next(row for row in lines if row["event"] == "error")
     assert error["error_type"] == "RuntimeError"
@@ -126,7 +122,7 @@ def test_stage_slow_fires_during_hang(capsys, monkeypatch):
     saw_slow = threading.Event()
 
     # Monkeypatch log_span to notice stage_slow while sleep is in progress.
-    import rag.telemetry as telemetry
+    from rag import telemetry
 
     original = telemetry.log_span
 
@@ -137,22 +133,19 @@ def test_stage_slow_fires_during_hang(capsys, monkeypatch):
         return original(stage, event, **kwargs)
 
     monkeypatch.setattr(telemetry, "log_span", wrapped)
-    with bind_trace("trace-slow"):
-        with span("dense"):
-            assert saw_slow.wait(2.0), "stage_slow did not fire during hang"
-            assert slow_at["t"] is not None
-            assert slow_at["t"] - started < 1.5  # fired well before our sleep ends
-            time.sleep(0.15)  # finish after the soft warning
+    with bind_trace("trace-slow"), span("dense"):
+        assert saw_slow.wait(2.0), "stage_slow did not fire during hang"
+        assert slow_at["t"] is not None
+        assert slow_at["t"] - started < 1.5  # fired well before our sleep ends
+        time.sleep(0.15)  # finish after the soft warning
     assert saw_slow.is_set()
 
 
 def test_hard_budget_raises(monkeypatch):
     monkeypatch.setenv("STAGE_SOFT_MS_fuse", "10")
     monkeypatch.setenv("STAGE_HARD_MS_fuse", "40")
-    with bind_trace("trace-hard"):
-        with pytest.raises(StageBudgetExceeded) as raised:
-            with span("fuse"):
-                time.sleep(0.12)
+    with bind_trace("trace-hard"), pytest.raises(StageBudgetExceeded) as raised, span("fuse"):
+        time.sleep(0.12)
     assert raised.value.stage == "fuse"
 
 

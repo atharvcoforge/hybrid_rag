@@ -32,7 +32,7 @@ Clone to first answered query should be under ten minutes if the embedder weight
 
 Docker: `docker compose up --build` (API on `:8000`, web on `:80`). Point `GENERATOR_URL` at a local llama.cpp OpenAI-compatible server.
 
-**Entrypoint footgun:** `docker/entrypoint.sh` still only runs ingest when `$INDEX_DIR/side.sqlite` is absent. A leftover `side.sqlite` skips ingest (including new files under `documents/`). Workaround: `docker exec <api> python -m rag ingest /app/documents --index /index` then restart the API.
+The API entrypoint runs `rag ingest` on every boot. Unchanged files are skipped. A new file under `documents/` is indexed on the next start.
 
 ## What is gated
 

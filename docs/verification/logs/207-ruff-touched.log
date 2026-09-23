@@ -1,0 +1,22 @@
+[1m[91mSIM905[0m [[1m[96m*[0m][1m Consider using a list literal instead of `str.split`[0m
+   [1m[94m--> [0msrc/rag/gates.py:120:5
+    [1m[94m|[0m
+[1m[94m119[0m [1m[94m|[0m   _CONTENT_STOP = frozenset(
+[1m[94m120[0m [1m[94m|[0m [1m[91m/[0m     "the a an of to in on by for and or is was were be been being does do did "
+[1m[94m121[0m [1m[94m|[0m [1m[91m|[0m     "what when which who how from with that this these those has have had its "
+[1m[94m122[0m [1m[94m|[0m [1m[91m|[0m     "it as at about into over after before not no yes are our their than more".split()
+    [1m[94m|[0m [1m[91m|______________________________________________________________________________________^[0m
+[1m[94m123[0m [1m[94m|[0m   )
+    [1m[94m|[0m
+[1m[96mhelp[0m[1m: Replace with list literal[0m
+[1m[94m   [0m [1m[94m|[0m
+[1m[94m119[0m [1m[94m|[0m _CONTENT_STOP = frozenset(
+[1m[94m   [0m [1m[31m-[0m [31m    "the a an of to in on by for and or is was were be been being does do did "
+[0m[1m[94m   [0m [1m[31m-[0m [31m    "what when which who how from with that this these those has have had its "
+[0m[1m[94m   [0m [1m[31m-[0m [31m    "it as at about into over after before not no yes are our their than more".split()
+[0m[1m[94m120[0m [1m[32m+[0m [32m    ["the", "a", "an", "of", "to", "in", "on", "by", "for", "and", "or", "is", "was", "were", "be", "been", "being", "does", "do", "did", "what", "when", "which", "who", "how", "from", "with", "that", "this", "these", "those", "has", "have", "had", "its", "it", "as", "at", "about", "into", "over", "after", "before", "not", "no", "yes", "are", "our", "their", "than", "more"]
+[0m[1m[94m121[0m [1m[94m|[0m )
+[1m[94m   [0m [1m[94m|[0m
+
+Found 1 error.
+[[36m*[0m] 1 fixable with the `--fix` option.

@@ -1,0 +1,17 @@
+.......................F...........                                      [100%]
+=================================== FAILURES ===================================
+E   AssertionError: assert 'uk' == 'india'
+      
+      - india
+      + uk
+----------------------------- Captured stdout call -----------------------------
+{"ts": "2026-09-23T03:09:55.283238+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:09:55.283269+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.032, "candidates_out": 2}
+{"ts": "2026-09-23T03:09:55.283293+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 2}
+{"ts": "2026-09-23T03:09:55.283323+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.03, "candidates_in": 2, "candidates_out": 2, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T03:09:55.283369+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 2}
+{"ts": "2026-09-23T03:09:55.283415+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.046, "candidates_in": 2, "candidates_out": 2, "top_score": 12.0}
+/Users/atharv.raotole/Desktop/RAG-WEEK6/tests/test_retrieve.py:270: AssertionError: assert 'uk' == 'india'
+=========================== short test summary info ============================
+FAILED tests/test_retrieve.py::test_india_query_demotes_a_section_that_opens_on_the_uk
+1 failed, 34 passed in 0.05s

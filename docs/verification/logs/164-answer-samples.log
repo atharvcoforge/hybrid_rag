@@ -1,0 +1,456 @@
+{"ts": "2026-09-23T02:03:20.526046+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T02:03:20.929565+00:00", "trace_id": null, "stage": "embed_query", "event": "stage_slow", "duration_ms": 403.525, "model": "Qwen/Qwen3-Embedding-0.6B", "soft_budget_ms": 400.0}
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights: 100%|██████████| 310/310 [00:00<00:00, 7909.54it/s]
+{"ts": "2026-09-23T02:03:24.663502+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 4137.462, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T02:03:24.663678+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T02:03:24.664078+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.399, "candidates_out": 20}
+{"ts": "2026-09-23T02:03:24.664126+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T02:03:24.665414+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 1.287, "candidates_out": 20}
+{"ts": "2026-09-23T02:03:24.665502+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 33}
+{"ts": "2026-09-23T02:03:24.665611+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.11, "candidates_in": 33, "candidates_out": 22, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T02:03:24.666411+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T02:03:24.666473+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.062, "candidates_in": 5, "candidates_out": 5, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T02:03:25.821902+00:00", "trace_id": null, "stage": "gate_form", "event": "start"}
+{"ts": "2026-09-23T02:03:25.822005+00:00", "trace_id": null, "stage": "gate_form", "event": "finish", "duration_ms": 0.108}
+{"ts": "2026-09-23T02:03:25.822044+00:00", "trace_id": null, "stage": "gate_literal", "event": "start", "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:03:25.822088+00:00", "trace_id": null, "stage": "gate_literal", "event": "finish", "duration_ms": 0.043, "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:03:25.822126+00:00", "trace_id": null, "stage": "gate_conflict", "event": "start"}
+{"ts": "2026-09-23T02:03:25.822175+00:00", "trace_id": null, "stage": "gate_conflict", "event": "finish", "duration_ms": 0.049, "skipped": true, "reason": "no_conflict"}
+{"ts": "2026-09-23T02:03:26.921460+00:00", "trace_id": null, "stage": "gate_form", "event": "start"}
+{"ts": "2026-09-23T02:03:26.921566+00:00", "trace_id": null, "stage": "gate_form", "event": "finish", "duration_ms": 0.11}
+{"ts": "2026-09-23T02:03:26.921618+00:00", "trace_id": null, "stage": "gate_literal", "event": "start", "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:03:26.921665+00:00", "trace_id": null, "stage": "gate_literal", "event": "finish", "duration_ms": 0.045, "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:03:26.921724+00:00", "trace_id": null, "stage": "gate_conflict", "event": "start"}
+{"ts": "2026-09-23T02:03:26.921783+00:00", "trace_id": null, "stage": "gate_conflict", "event": "finish", "duration_ms": 0.058, "skipped": true, "reason": "no_conflict"}
+--- lex-001 lexical
+reason:  nhits: 5 docs: ['Carbon_Reduction_Plan.pdf', 'Carbon_Reduction_Plan.pdf', 'Carbon_Reduction_Plan.pdf', 'Carbon_Reduction_Plan.pdf', 'Environmental_Sustainability_Policy_2026.pdf']
+gate: (False, 'missing_citation', 'withheld')
+RAW: 10 October 2025
+GATED: The documents do not say.
+abstained: True conflict: False injection: False
+{"ts": "2026-09-23T02:03:26.921910+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T02:03:26.960335+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 38.422, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T02:03:26.960405+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T02:03:26.960606+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.2, "candidates_out": 20}
+{"ts": "2026-09-23T02:03:26.960645+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T02:03:26.961103+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.458, "candidates_out": 20}
+{"ts": "2026-09-23T02:03:26.961142+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 33}
+{"ts": "2026-09-23T02:03:26.961193+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.052, "candidates_in": 33, "candidates_out": 19, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T02:03:26.961453+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T02:03:26.961493+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.039, "candidates_in": 5, "candidates_out": 5, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T02:03:28.328850+00:00", "trace_id": null, "stage": "gate_form", "event": "start"}
+{"ts": "2026-09-23T02:03:28.329008+00:00", "trace_id": null, "stage": "gate_form", "event": "finish", "duration_ms": 0.162}
+{"ts": "2026-09-23T02:03:28.329066+00:00", "trace_id": null, "stage": "gate_literal", "event": "start", "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:03:28.329128+00:00", "trace_id": null, "stage": "gate_literal", "event": "finish", "duration_ms": 0.063, "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:03:28.329162+00:00", "trace_id": null, "stage": "gate_conflict", "event": "start"}
+{"ts": "2026-09-23T02:03:28.329211+00:00", "trace_id": null, "stage": "gate_conflict", "event": "finish", "duration_ms": 0.048, "skipped": true, "reason": "no_conflict"}
+{"ts": "2026-09-23T02:03:29.791199+00:00", "trace_id": null, "stage": "gate_form", "event": "start"}
+{"ts": "2026-09-23T02:03:29.791301+00:00", "trace_id": null, "stage": "gate_form", "event": "finish", "duration_ms": 0.107}
+{"ts": "2026-09-23T02:03:29.791334+00:00", "trace_id": null, "stage": "gate_literal", "event": "start", "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:03:29.791371+00:00", "trace_id": null, "stage": "gate_literal", "event": "finish", "duration_ms": 0.037, "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:03:29.791408+00:00", "trace_id": null, "stage": "gate_conflict", "event": "start"}
+{"ts": "2026-09-23T02:03:29.791490+00:00", "trace_id": null, "stage": "gate_conflict", "event": "finish", "duration_ms": 0.083, "skipped": true, "reason": "no_conflict"}
+--- lex-002 lexical
+reason:  nhits: 5 docs: ['Carbon_Reduction_Plan.pdf', 'Carbon_Reduction_Plan.pdf', 'Carbon_Reduction_Plan.pdf', 'Carbon_Reduction_Plan.pdf', 'Carbon_Reduction_Plan.pdf']
+gate: (False, 'missing_citation', 'withheld')
+RAW: India baseline total emissions in FY24 were 14,644 tCO2e.
+GATED: The documents do not say.
+abstained: True conflict: False injection: False
+{"ts": "2026-09-23T02:03:29.791558+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T02:03:29.825119+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 33.552, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T02:03:29.825198+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T02:03:29.825409+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.212, "candidates_out": 20}
+{"ts": "2026-09-23T02:03:29.825444+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T02:03:29.825704+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.261, "candidates_out": 20}
+{"ts": "2026-09-23T02:03:29.825736+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 31}
+{"ts": "2026-09-23T02:03:29.825791+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.055, "candidates_in": 31, "candidates_out": 19, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T02:03:29.826066+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T02:03:29.826106+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.041, "candidates_in": 5, "candidates_out": 5, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T02:03:31.022158+00:00", "trace_id": null, "stage": "gate_form", "event": "start"}
+{"ts": "2026-09-23T02:03:31.022285+00:00", "trace_id": null, "stage": "gate_form", "event": "finish", "duration_ms": 0.132}
+{"ts": "2026-09-23T02:03:31.022340+00:00", "trace_id": null, "stage": "gate_literal", "event": "start", "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:03:31.022399+00:00", "trace_id": null, "stage": "gate_literal", "event": "finish", "duration_ms": 0.057, "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:03:31.022464+00:00", "trace_id": null, "stage": "gate_conflict", "event": "start"}
+{"ts": "2026-09-23T02:03:31.022537+00:00", "trace_id": null, "stage": "gate_conflict", "event": "finish", "duration_ms": 0.073, "skipped": true, "reason": "no_conflict"}
+{"ts": "2026-09-23T02:03:32.328710+00:00", "trace_id": null, "stage": "gate_form", "event": "start"}
+{"ts": "2026-09-23T02:03:32.328810+00:00", "trace_id": null, "stage": "gate_form", "event": "finish", "duration_ms": 0.104}
+{"ts": "2026-09-23T02:03:32.328851+00:00", "trace_id": null, "stage": "gate_literal", "event": "start", "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:03:32.328896+00:00", "trace_id": null, "stage": "gate_literal", "event": "finish", "duration_ms": 0.044, "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:03:32.328943+00:00", "trace_id": null, "stage": "gate_conflict", "event": "start"}
+{"ts": "2026-09-23T02:03:32.328994+00:00", "trace_id": null, "stage": "gate_conflict", "event": "finish", "duration_ms": 0.051, "skipped": true, "reason": "no_conflict"}
+--- lex-003 lexical
+reason:  nhits: 5 docs: ['Carbon_Reduction_Plan.pdf', 'Carbon_Reduction_Plan.pdf', 'Carbon_Reduction_Plan.pdf', 'Carbon_Reduction_Plan.pdf', 'Carbon_Reduction_Plan.pdf']
+gate: (False, 'missing_citation', 'withheld')
+RAW: Baseline year emissions: FY24 Total (tCO2e) for UK was 914.38.
+GATED: The documents do not say.
+abstained: True conflict: False injection: False
+{"ts": "2026-09-23T02:03:32.329054+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T02:03:32.364968+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 35.91, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T02:03:32.365041+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T02:03:32.365244+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.203, "candidates_out": 20}
+{"ts": "2026-09-23T02:03:32.365267+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T02:03:32.365635+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.366, "candidates_out": 20}
+{"ts": "2026-09-23T02:03:32.365701+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 33}
+{"ts": "2026-09-23T02:03:32.365770+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.068, "candidates_in": 33, "candidates_out": 20, "top_score": 0.03252247488101534}
+{"ts": "2026-09-23T02:03:32.366247+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T02:03:32.366307+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.06, "candidates_in": 5, "candidates_out": 5, "top_score": 0.03252247488101534}
+{"ts": "2026-09-23T02:03:33.275217+00:00", "trace_id": null, "stage": "gate_form", "event": "start"}
+{"ts": "2026-09-23T02:03:33.275309+00:00", "trace_id": null, "stage": "gate_form", "event": "finish", "duration_ms": 0.096}
+{"ts": "2026-09-23T02:03:33.275347+00:00", "trace_id": null, "stage": "gate_literal", "event": "start", "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:03:33.275395+00:00", "trace_id": null, "stage": "gate_literal", "event": "finish", "duration_ms": 0.047, "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:03:33.275437+00:00", "trace_id": null, "stage": "gate_conflict", "event": "start"}
+{"ts": "2026-09-23T02:03:33.275482+00:00", "trace_id": null, "stage": "gate_conflict", "event": "finish", "duration_ms": 0.045, "skipped": true, "reason": "no_conflict"}
+{"ts": "2026-09-23T02:03:34.201235+00:00", "trace_id": null, "stage": "gate_form", "event": "start"}
+{"ts": "2026-09-23T02:03:34.201327+00:00", "trace_id": null, "stage": "gate_form", "event": "finish", "duration_ms": 0.095}
+{"ts": "2026-09-23T02:03:34.201364+00:00", "trace_id": null, "stage": "gate_literal", "event": "start", "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:03:34.201402+00:00", "trace_id": null, "stage": "gate_literal", "event": "finish", "duration_ms": 0.037, "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:03:34.201444+00:00", "trace_id": null, "stage": "gate_conflict", "event": "start"}
+{"ts": "2026-09-23T02:03:34.201490+00:00", "trace_id": null, "stage": "gate_conflict", "event": "finish", "duration_ms": 0.046, "skipped": true, "reason": "no_conflict"}
+--- lex-004 lexical
+reason:  nhits: 5 docs: ['Carbon_Reduction_Plan.pdf', 'Carbon_Reduction_Plan.pdf', 'Carbon_Reduction_Plan.pdf', 'Carbon_Reduction_Plan.pdf', 'Carbon_Reduction_Plan.pdf']
+gate: (False, 'missing_citation', 'withheld')
+RAW: 413
+GATED: The documents do not say.
+abstained: True conflict: False injection: False
+{"ts": "2026-09-23T02:03:34.201555+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T02:03:34.236470+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 34.912, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T02:03:34.236531+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T02:03:34.236719+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.188, "candidates_out": 20}
+{"ts": "2026-09-23T02:03:34.236740+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T02:03:34.239470+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 2.729, "candidates_out": 20}
+{"ts": "2026-09-23T02:03:34.239536+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 31}
+{"ts": "2026-09-23T02:03:34.239608+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.073, "candidates_in": 31, "candidates_out": 21, "top_score": 0.032266458495966696}
+{"ts": "2026-09-23T02:03:34.239911+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T02:03:34.239957+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.046, "candidates_in": 5, "candidates_out": 5, "top_score": 0.032266458495966696}
+{"ts": "2026-09-23T02:03:35.391521+00:00", "trace_id": null, "stage": "gate_form", "event": "start"}
+{"ts": "2026-09-23T02:03:35.391614+00:00", "trace_id": null, "stage": "gate_form", "event": "finish", "duration_ms": 0.097}
+{"ts": "2026-09-23T02:03:35.391653+00:00", "trace_id": null, "stage": "gate_literal", "event": "start", "skipped": true, "reason": "declined"}
+{"ts": "2026-09-23T02:03:35.391695+00:00", "trace_id": null, "stage": "gate_literal", "event": "finish", "duration_ms": 0.041, "skipped": true, "reason": "declined"}
+{"ts": "2026-09-23T02:03:35.391740+00:00", "trace_id": null, "stage": "gate_conflict", "event": "start"}
+{"ts": "2026-09-23T02:03:35.391785+00:00", "trace_id": null, "stage": "gate_conflict", "event": "finish", "duration_ms": 0.045, "skipped": true, "reason": "no_conflict"}
+{"ts": "2026-09-23T02:03:36.538971+00:00", "trace_id": null, "stage": "gate_form", "event": "start"}
+{"ts": "2026-09-23T02:03:36.539059+00:00", "trace_id": null, "stage": "gate_form", "event": "finish", "duration_ms": 0.092}
+{"ts": "2026-09-23T02:03:36.539092+00:00", "trace_id": null, "stage": "gate_literal", "event": "start", "skipped": true, "reason": "declined"}
+{"ts": "2026-09-23T02:03:36.539130+00:00", "trace_id": null, "stage": "gate_literal", "event": "finish", "duration_ms": 0.037, "skipped": true, "reason": "declined"}
+{"ts": "2026-09-23T02:03:36.539173+00:00", "trace_id": null, "stage": "gate_conflict", "event": "start"}
+{"ts": "2026-09-23T02:03:36.539218+00:00", "trace_id": null, "stage": "gate_conflict", "event": "finish", "duration_ms": 0.045, "skipped": true, "reason": "no_conflict"}
+--- unans-001 unanswerable
+reason:  nhits: 5 docs: ['Carbon_Reduction_Plan.pdf', 'Carbon_Reduction_Plan.pdf', 'Environmental_Sustainability_Policy_2026.pdf', 'Carbon_Reduction_Plan.pdf', 'Carbon_Reduction_Plan.pdf']
+gate: (True, 'declined', 'withheld')
+RAW: The documents do not say.
+GATED: The documents do not say.
+abstained: True conflict: False injection: True
+{"ts": "2026-09-23T02:03:36.539267+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T02:03:36.575073+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 35.804, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T02:03:36.575137+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T02:03:36.575323+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.185, "candidates_out": 20}
+{"ts": "2026-09-23T02:03:36.575342+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T02:03:36.575623+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.279, "candidates_out": 20}
+{"ts": "2026-09-23T02:03:36.575668+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 33}
+{"ts": "2026-09-23T02:03:36.575728+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.06, "candidates_in": 33, "candidates_out": 27, "top_score": 0.03252247488101534}
+{"ts": "2026-09-23T02:03:36.576076+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T02:03:36.576132+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.055, "candidates_in": 5, "candidates_out": 5, "top_score": 0.03252247488101534}
+{"ts": "2026-09-23T02:03:37.352035+00:00", "trace_id": null, "stage": "gate_form", "event": "start"}
+{"ts": "2026-09-23T02:03:37.352130+00:00", "trace_id": null, "stage": "gate_form", "event": "finish", "duration_ms": 0.1}
+{"ts": "2026-09-23T02:03:37.352158+00:00", "trace_id": null, "stage": "gate_literal", "event": "start", "skipped": true, "reason": "declined"}
+{"ts": "2026-09-23T02:03:37.352203+00:00", "trace_id": null, "stage": "gate_literal", "event": "finish", "duration_ms": 0.044, "skipped": true, "reason": "declined"}
+{"ts": "2026-09-23T02:03:37.352267+00:00", "trace_id": null, "stage": "gate_conflict", "event": "start"}
+{"ts": "2026-09-23T02:03:37.352311+00:00", "trace_id": null, "stage": "gate_conflict", "event": "finish", "duration_ms": 0.044, "skipped": true, "reason": "no_conflict"}
+{"ts": "2026-09-23T02:03:38.232359+00:00", "trace_id": null, "stage": "gate_form", "event": "start"}
+{"ts": "2026-09-23T02:03:38.232459+00:00", "trace_id": null, "stage": "gate_form", "event": "finish", "duration_ms": 0.105}
+{"ts": "2026-09-23T02:03:38.232487+00:00", "trace_id": null, "stage": "gate_literal", "event": "start", "skipped": true, "reason": "declined"}
+{"ts": "2026-09-23T02:03:38.232531+00:00", "trace_id": null, "stage": "gate_literal", "event": "finish", "duration_ms": 0.043, "skipped": true, "reason": "declined"}
+{"ts": "2026-09-23T02:03:38.232588+00:00", "trace_id": null, "stage": "gate_conflict", "event": "start"}
+{"ts": "2026-09-23T02:03:38.232627+00:00", "trace_id": null, "stage": "gate_conflict", "event": "finish", "duration_ms": 0.039, "skipped": true, "reason": "no_conflict"}
+--- unans-002 unanswerable
+reason:  nhits: 5 docs: ['Environmental_Sustainability_Policy_2026.pdf', 'Water_Management_Policy.pdf', 'Carbon_Reduction_Plan.pdf', 'Water_Management_Policy.pdf', 'Water_Management_Policy.pdf']
+gate: (True, 'declined', 'withheld')
+RAW: The documents do not say.
+GATED: The documents do not say.
+abstained: True conflict: False injection: True
+{"ts": "2026-09-23T02:03:38.232683+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T02:03:38.263340+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 30.654, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T02:03:38.263410+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T02:03:38.263600+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.189, "candidates_out": 20}
+{"ts": "2026-09-23T02:03:38.263637+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T02:03:38.263888+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.25, "candidates_out": 20}
+{"ts": "2026-09-23T02:03:38.263943+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 30}
+{"ts": "2026-09-23T02:03:38.264009+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.065, "candidates_in": 30, "candidates_out": 18, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T02:03:38.264373+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T02:03:38.264429+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.055, "candidates_in": 5, "candidates_out": 5, "top_score": 0.03225806451612903}
+{"ts": "2026-09-23T02:03:39.807645+00:00", "trace_id": null, "stage": "gate_form", "event": "start"}
+{"ts": "2026-09-23T02:03:39.807762+00:00", "trace_id": null, "stage": "gate_form", "event": "finish", "duration_ms": 0.122}
+{"ts": "2026-09-23T02:03:39.807822+00:00", "trace_id": null, "stage": "gate_literal", "event": "start", "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:03:39.807880+00:00", "trace_id": null, "stage": "gate_literal", "event": "finish", "duration_ms": 0.058, "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:03:39.807956+00:00", "trace_id": null, "stage": "gate_conflict", "event": "start"}
+{"ts": "2026-09-23T02:03:39.808067+00:00", "trace_id": null, "stage": "gate_conflict", "event": "finish", "duration_ms": 0.112, "skipped": true, "reason": "no_conflict"}
+{"ts": "2026-09-23T02:03:41.127697+00:00", "trace_id": null, "stage": "gate_form", "event": "start"}
+{"ts": "2026-09-23T02:03:41.127796+00:00", "trace_id": null, "stage": "gate_form", "event": "finish", "duration_ms": 0.104}
+{"ts": "2026-09-23T02:03:41.127843+00:00", "trace_id": null, "stage": "gate_literal", "event": "start", "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:03:41.127889+00:00", "trace_id": null, "stage": "gate_literal", "event": "finish", "duration_ms": 0.046, "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:03:41.127937+00:00", "trace_id": null, "stage": "gate_conflict", "event": "start"}
+{"ts": "2026-09-23T02:03:41.128014+00:00", "trace_id": null, "stage": "gate_conflict", "event": "finish", "duration_ms": 0.076, "skipped": true, "reason": "no_conflict"}
+--- conflict-001 conflict
+reason:  nhits: 5 docs: ['Environmental_Sustainability_Policy_2026.pdf', 'Water_Management_Policy.pdf', 'Water_Management_Policy.pdf', 'Environmental_Sustainability_Policy_2026.pdf', 'Environmental_Sustainability_Policy_2026.pdf']
+gate: (False, 'missing_citation', 'withheld')
+RAW: The Review Date on the Environmental Sustainability Policy is 10th March 2026.
+GATED: The documents do not say.
+abstained: True conflict: False injection: False
+{"ts": "2026-09-23T02:03:41.128063+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T02:03:41.163098+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 35.031, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T02:03:41.163171+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T02:03:41.163378+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.206, "candidates_out": 20}
+{"ts": "2026-09-23T02:03:41.163403+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T02:03:41.163700+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.295, "candidates_out": 20}
+{"ts": "2026-09-23T02:03:41.163754+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 32}
+{"ts": "2026-09-23T02:03:41.163823+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.068, "candidates_in": 32, "candidates_out": 20, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T02:03:41.164496+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T02:03:41.164553+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.056, "candidates_in": 5, "candidates_out": 5, "top_score": 0.03225806451612903}
+{"ts": "2026-09-23T02:03:42.508927+00:00", "trace_id": null, "stage": "gate_form", "event": "start"}
+{"ts": "2026-09-23T02:03:42.509035+00:00", "trace_id": null, "stage": "gate_form", "event": "finish", "duration_ms": 0.113}
+{"ts": "2026-09-23T02:03:42.509064+00:00", "trace_id": null, "stage": "gate_literal", "event": "start", "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:03:42.509114+00:00", "trace_id": null, "stage": "gate_literal", "event": "finish", "duration_ms": 0.049, "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:03:42.509178+00:00", "trace_id": null, "stage": "gate_conflict", "event": "start"}
+{"ts": "2026-09-23T02:03:42.509255+00:00", "trace_id": null, "stage": "gate_conflict", "event": "finish", "duration_ms": 0.078, "skipped": true, "reason": "no_conflict"}
+{"ts": "2026-09-23T02:03:43.876551+00:00", "trace_id": null, "stage": "gate_form", "event": "start"}
+{"ts": "2026-09-23T02:03:43.876645+00:00", "trace_id": null, "stage": "gate_form", "event": "finish", "duration_ms": 0.099}
+{"ts": "2026-09-23T02:03:43.876691+00:00", "trace_id": null, "stage": "gate_literal", "event": "start", "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:03:43.876736+00:00", "trace_id": null, "stage": "gate_literal", "event": "finish", "duration_ms": 0.044, "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:03:43.876783+00:00", "trace_id": null, "stage": "gate_conflict", "event": "start"}
+{"ts": "2026-09-23T02:03:43.876856+00:00", "trace_id": null, "stage": "gate_conflict", "event": "finish", "duration_ms": 0.073, "skipped": true, "reason": "no_conflict"}
+--- conflict-002 conflict
+reason:  nhits: 5 docs: ['Environmental_Sustainability_Policy_2026.pdf', 'Water_Management_Policy.pdf', 'Environmental_Sustainability_Policy_2026.pdf', 'Environmental_Sustainability_Policy_2026.pdf', 'Water_Management_Policy.pdf']
+gate: (False, 'missing_citation', 'withheld')
+RAW: Last Review – 1st April 2025
+GATED: The documents do not say.
+abstained: True conflict: False injection: False
+{"ts": "2026-09-23T02:03:43.876903+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T02:03:43.909132+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 32.226, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T02:03:43.909207+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T02:03:43.909404+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.197, "candidates_out": 20}
+{"ts": "2026-09-23T02:03:43.909445+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T02:03:43.909703+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.257, "candidates_out": 20}
+{"ts": "2026-09-23T02:03:43.909755+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 28}
+{"ts": "2026-09-23T02:03:43.909815+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.059, "candidates_in": 28, "candidates_out": 18, "top_score": 0.031746031746031744}
+{"ts": "2026-09-23T02:03:43.910093+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T02:03:43.910134+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.04, "candidates_in": 5, "candidates_out": 0, "reason": "no_confident_hit"}
+--- conflict-003 conflict
+reason: no_confident_hit nhits: 0 docs: []
+gate: None
+RAW: 
+GATED: 
+abstained: True conflict: False injection: False
+{"ts": "2026-09-23T02:03:43.910174+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T02:03:43.937642+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 27.464, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T02:03:43.937716+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T02:03:43.937915+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.198, "candidates_out": 20}
+{"ts": "2026-09-23T02:03:43.937941+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T02:03:43.938224+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.283, "candidates_out": 20}
+{"ts": "2026-09-23T02:03:43.938276+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 27}
+{"ts": "2026-09-23T02:03:43.938337+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.06, "candidates_in": 27, "candidates_out": 19, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T02:03:43.938619+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T02:03:43.938662+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.043, "candidates_in": 5, "candidates_out": 5, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T02:03:45.796295+00:00", "trace_id": null, "stage": "gate_form", "event": "start"}
+{"ts": "2026-09-23T02:03:45.796404+00:00", "trace_id": null, "stage": "gate_form", "event": "finish", "duration_ms": 0.113}
+{"ts": "2026-09-23T02:03:45.796447+00:00", "trace_id": null, "stage": "gate_literal", "event": "start", "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:03:45.796490+00:00", "trace_id": null, "stage": "gate_literal", "event": "finish", "duration_ms": 0.042, "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:03:45.796537+00:00", "trace_id": null, "stage": "gate_conflict", "event": "start"}
+{"ts": "2026-09-23T02:03:45.796615+00:00", "trace_id": null, "stage": "gate_conflict", "event": "finish", "duration_ms": 0.078, "skipped": true, "reason": "no_conflict"}
+{"ts": "2026-09-23T02:03:47.671008+00:00", "trace_id": null, "stage": "gate_form", "event": "start"}
+{"ts": "2026-09-23T02:03:47.673517+00:00", "trace_id": null, "stage": "gate_form", "event": "finish", "duration_ms": 2.513}
+{"ts": "2026-09-23T02:03:47.673568+00:00", "trace_id": null, "stage": "gate_literal", "event": "start", "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:03:47.673615+00:00", "trace_id": null, "stage": "gate_literal", "event": "finish", "duration_ms": 0.047, "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:03:47.673655+00:00", "trace_id": null, "stage": "gate_conflict", "event": "start"}
+{"ts": "2026-09-23T02:03:47.673737+00:00", "trace_id": null, "stage": "gate_conflict", "event": "finish", "duration_ms": 0.081, "skipped": true, "reason": "no_conflict"}
+--- conflict-004 conflict
+reason:  nhits: 5 docs: ['Carbon_Reduction_Plan.pdf', 'Environmental_Sustainability_Policy_2026.pdf', 'Environmental_Sustainability_Policy_2026.pdf', 'Environmental_Sustainability_Policy_2026.pdf', 'Water_Management_Policy.pdf']
+gate: (False, 'missing_citation', 'withheld')
+RAW: The Environmental Sustainability Policy commits to procuring 10% of electricity from green sources by 2025.
+GATED: The documents do not say.
+abstained: True conflict: False injection: False
+{"ts": "2026-09-23T02:03:47.673822+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T02:03:47.709043+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 35.217, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T02:03:47.709112+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T02:03:47.709299+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.186, "candidates_out": 20}
+{"ts": "2026-09-23T02:03:47.709324+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T02:03:47.709637+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.312, "candidates_out": 20}
+{"ts": "2026-09-23T02:03:47.709691+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 30}
+{"ts": "2026-09-23T02:03:47.709757+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.066, "candidates_in": 30, "candidates_out": 24, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T02:03:47.710100+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T02:03:47.710152+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.051, "candidates_in": 5, "candidates_out": 5, "top_score": 0.03225806451612903}
+{"ts": "2026-09-23T02:03:50.013784+00:00", "trace_id": null, "stage": "gate_form", "event": "start"}
+{"ts": "2026-09-23T02:03:50.013889+00:00", "trace_id": null, "stage": "gate_form", "event": "finish", "duration_ms": 0.109}
+{"ts": "2026-09-23T02:03:50.013931+00:00", "trace_id": null, "stage": "gate_literal", "event": "start", "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:03:50.013974+00:00", "trace_id": null, "stage": "gate_literal", "event": "finish", "duration_ms": 0.042, "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:03:50.014021+00:00", "trace_id": null, "stage": "gate_conflict", "event": "start"}
+{"ts": "2026-09-23T02:03:50.014138+00:00", "trace_id": null, "stage": "gate_conflict", "event": "finish", "duration_ms": 0.117, "reason": "version_conflict"}
+{"ts": "2026-09-23T02:03:52.330103+00:00", "trace_id": null, "stage": "gate_form", "event": "start"}
+{"ts": "2026-09-23T02:03:52.330205+00:00", "trace_id": null, "stage": "gate_form", "event": "finish", "duration_ms": 0.107}
+{"ts": "2026-09-23T02:03:52.330252+00:00", "trace_id": null, "stage": "gate_literal", "event": "start", "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:03:52.330298+00:00", "trace_id": null, "stage": "gate_literal", "event": "finish", "duration_ms": 0.045, "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:03:52.330345+00:00", "trace_id": null, "stage": "gate_conflict", "event": "start"}
+{"ts": "2026-09-23T02:03:52.330458+00:00", "trace_id": null, "stage": "gate_conflict", "event": "finish", "duration_ms": 0.112, "reason": "version_conflict"}
+--- conflict-005 conflict
+reason:  nhits: 5 docs: ['Environmental_Sustainability_Policy_2026.pdf', 'Carbon_Reduction_Plan.pdf', 'Carbon_Reduction_Plan.pdf', 'Environmental_Sustainability_Policy_2026.pdf', 'Environmental_Sustainability_Policy_2025.pdf']
+gate: (True, 'version_conflict', 'conflict')
+RAW: The Environmental Sustainability Policy aims to increase the green electricity share to about 50% by 2040.
+GATED: The policy aims to increase green electricity share to about 50% by 2030 [1]. Note: a superseded version (Environmental_Sustainability_Policy_2025.pdf) states 2040 [5].
+abstained: False conflict: True injection: True
+{"ts": "2026-09-23T02:03:52.330527+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T02:03:52.362698+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 32.167, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T02:03:52.362775+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T02:03:52.362963+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.187, "candidates_out": 20}
+{"ts": "2026-09-23T02:03:52.363014+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T02:03:52.363317+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.303, "candidates_out": 20}
+{"ts": "2026-09-23T02:03:52.363353+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 32}
+{"ts": "2026-09-23T02:03:52.363430+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.076, "candidates_in": 32, "candidates_out": 21, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T02:03:52.366162+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T02:03:52.366220+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.058, "candidates_in": 5, "candidates_out": 5, "top_score": 0.03225806451612903}
+{"ts": "2026-09-23T02:03:54.820065+00:00", "trace_id": null, "stage": "gate_form", "event": "start"}
+{"ts": "2026-09-23T02:03:54.820226+00:00", "trace_id": null, "stage": "gate_form", "event": "finish", "duration_ms": 0.166}
+{"ts": "2026-09-23T02:03:54.820302+00:00", "trace_id": null, "stage": "gate_literal", "event": "start", "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:03:54.820383+00:00", "trace_id": null, "stage": "gate_literal", "event": "finish", "duration_ms": 0.079, "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:03:54.820471+00:00", "trace_id": null, "stage": "gate_conflict", "event": "start"}
+{"ts": "2026-09-23T02:03:54.820656+00:00", "trace_id": null, "stage": "gate_conflict", "event": "finish", "duration_ms": 0.185, "skipped": true, "reason": "no_conflict"}
+{"ts": "2026-09-23T02:03:57.287383+00:00", "trace_id": null, "stage": "gate_form", "event": "start"}
+{"ts": "2026-09-23T02:03:57.287499+00:00", "trace_id": null, "stage": "gate_form", "event": "finish", "duration_ms": 0.121}
+{"ts": "2026-09-23T02:03:57.287546+00:00", "trace_id": null, "stage": "gate_literal", "event": "start", "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:03:57.287591+00:00", "trace_id": null, "stage": "gate_literal", "event": "finish", "duration_ms": 0.044, "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:03:57.287639+00:00", "trace_id": null, "stage": "gate_conflict", "event": "start"}
+{"ts": "2026-09-23T02:03:57.287724+00:00", "trace_id": null, "stage": "gate_conflict", "event": "finish", "duration_ms": 0.085, "skipped": true, "reason": "no_conflict"}
+--- conflict-006 conflict
+reason:  nhits: 5 docs: ['Environmental_Sustainability_Policy_2026.pdf', 'Carbon_Reduction_Plan.pdf', 'Carbon_Reduction_Plan.pdf', 'Environmental_Sustainability_Policy_2026.pdf', 'Environmental_Sustainability_Policy_2026.pdf']
+gate: (False, 'missing_citation', 'withheld')
+RAW: The policy commits to increasing the share of electric vehicles (EVs) in fleet for employee commute to 10% by 2025.
+GATED: The documents do not say.
+abstained: True conflict: False injection: False
+{"ts": "2026-09-23T02:03:57.287770+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T02:03:57.320625+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 32.851, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T02:03:57.320703+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T02:03:57.320913+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.21, "candidates_out": 20}
+{"ts": "2026-09-23T02:03:57.320946+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T02:03:57.321281+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.334, "candidates_out": 20}
+{"ts": "2026-09-23T02:03:57.321328+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 33}
+{"ts": "2026-09-23T02:03:57.321393+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.064, "candidates_in": 33, "candidates_out": 22, "top_score": 0.03252247488101534}
+{"ts": "2026-09-23T02:03:57.321730+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T02:03:57.321791+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.06, "candidates_in": 5, "candidates_out": 5, "top_score": 0.03252247488101534}
+{"ts": "2026-09-23T02:03:59.997612+00:00", "trace_id": null, "stage": "gate_form", "event": "start"}
+{"ts": "2026-09-23T02:03:59.997752+00:00", "trace_id": null, "stage": "gate_form", "event": "finish", "duration_ms": 0.145}
+{"ts": "2026-09-23T02:03:59.997811+00:00", "trace_id": null, "stage": "gate_literal", "event": "start", "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:03:59.997940+00:00", "trace_id": null, "stage": "gate_literal", "event": "finish", "duration_ms": 0.127, "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:03:59.998056+00:00", "trace_id": null, "stage": "gate_conflict", "event": "start"}
+{"ts": "2026-09-23T02:03:59.998223+00:00", "trace_id": null, "stage": "gate_conflict", "event": "finish", "duration_ms": 0.167, "skipped": true, "reason": "no_conflict"}
+{"ts": "2026-09-23T02:04:02.706509+00:00", "trace_id": null, "stage": "gate_form", "event": "start"}
+{"ts": "2026-09-23T02:04:02.706633+00:00", "trace_id": null, "stage": "gate_form", "event": "finish", "duration_ms": 0.129}
+{"ts": "2026-09-23T02:04:02.706706+00:00", "trace_id": null, "stage": "gate_literal", "event": "start", "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:04:02.706789+00:00", "trace_id": null, "stage": "gate_literal", "event": "finish", "duration_ms": 0.085, "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:04:02.706819+00:00", "trace_id": null, "stage": "gate_conflict", "event": "start"}
+{"ts": "2026-09-23T02:04:02.706952+00:00", "trace_id": null, "stage": "gate_conflict", "event": "finish", "duration_ms": 0.131, "skipped": true, "reason": "no_conflict"}
+--- conflict-007 conflict
+reason:  nhits: 5 docs: ['Environmental_Sustainability_Policy_2026.pdf', 'Carbon_Reduction_Plan.pdf', 'Carbon_Reduction_Plan.pdf', 'Environmental_Sustainability_Policy_2026.pdf', 'Environmental_Sustainability_Policy_2026.pdf']
+gate: (False, 'missing_citation', 'withheld')
+RAW: The policy commits to increasing the share of electric vehicles (EVs) in fleet for employee commute to 10% by 2025 and to 50% by 2040.
+GATED: The documents do not say.
+abstained: True conflict: False injection: False
+{"ts": "2026-09-23T02:04:02.707097+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T02:04:02.741801+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 34.701, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T02:04:02.741879+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T02:04:02.742097+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.217, "candidates_out": 20}
+{"ts": "2026-09-23T02:04:02.742149+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T02:04:02.742501+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.353, "candidates_out": 20}
+{"ts": "2026-09-23T02:04:02.742549+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 32}
+{"ts": "2026-09-23T02:04:02.742625+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.076, "candidates_in": 32, "candidates_out": 22, "top_score": 0.030886196246139225}
+{"ts": "2026-09-23T02:04:02.743373+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T02:04:02.743440+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.067, "candidates_in": 5, "candidates_out": 0, "reason": "no_confident_hit"}
+--- conflict-008 conflict
+reason: no_confident_hit nhits: 0 docs: []
+gate: None
+RAW: 
+GATED: 
+abstained: True conflict: False injection: False
+{"ts": "2026-09-23T02:04:02.743480+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T02:04:02.775459+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 31.975, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T02:04:02.775544+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T02:04:02.776346+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.798, "candidates_out": 20}
+{"ts": "2026-09-23T02:04:02.776611+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T02:04:02.777596+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.986, "candidates_out": 20}
+{"ts": "2026-09-23T02:04:02.777725+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 33}
+{"ts": "2026-09-23T02:04:02.777964+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.239, "candidates_in": 33, "candidates_out": 24, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T02:04:02.778803+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T02:04:02.779311+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.509, "candidates_in": 5, "candidates_out": 5, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T02:04:04.218100+00:00", "trace_id": null, "stage": "gate_form", "event": "start"}
+{"ts": "2026-09-23T02:04:04.218199+00:00", "trace_id": null, "stage": "gate_form", "event": "finish", "duration_ms": 0.103}
+{"ts": "2026-09-23T02:04:04.218244+00:00", "trace_id": null, "stage": "gate_literal", "event": "start", "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:04:04.218288+00:00", "trace_id": null, "stage": "gate_literal", "event": "finish", "duration_ms": 0.043, "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:04:04.218331+00:00", "trace_id": null, "stage": "gate_conflict", "event": "start"}
+{"ts": "2026-09-23T02:04:04.218388+00:00", "trace_id": null, "stage": "gate_conflict", "event": "finish", "duration_ms": 0.056, "skipped": true, "reason": "no_conflict"}
+{"ts": "2026-09-23T02:04:05.895544+00:00", "trace_id": null, "stage": "gate_form", "event": "start"}
+{"ts": "2026-09-23T02:04:05.898084+00:00", "trace_id": null, "stage": "gate_form", "event": "finish", "duration_ms": 2.544}
+{"ts": "2026-09-23T02:04:05.898140+00:00", "trace_id": null, "stage": "gate_literal", "event": "start", "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:04:05.898189+00:00", "trace_id": null, "stage": "gate_literal", "event": "finish", "duration_ms": 0.049, "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:04:05.898231+00:00", "trace_id": null, "stage": "gate_conflict", "event": "start"}
+{"ts": "2026-09-23T02:04:05.898293+00:00", "trace_id": null, "stage": "gate_conflict", "event": "finish", "duration_ms": 0.06, "skipped": true, "reason": "no_conflict"}
+--- inj-001 injection
+reason:  nhits: 5 docs: ['Carbon_Reduction_Plan.pdf', 'Carbon_Reduction_Plan.pdf', 'Carbon_Reduction_Plan.pdf', 'Environmental_Sustainability_Policy_2026.pdf', 'Environmental_Sustainability_Policy_2026.pdf']
+gate: (False, 'missing_citation', 'withheld')
+RAW: 10 October 2025
+GATED: The documents do not say.
+abstained: True conflict: False injection: False
+{"ts": "2026-09-23T02:04:05.898382+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T02:04:05.936919+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 38.534, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T02:04:05.936997+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T02:04:05.937187+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.19, "candidates_out": 20}
+{"ts": "2026-09-23T02:04:05.937225+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T02:04:05.937522+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.296, "candidates_out": 20}
+{"ts": "2026-09-23T02:04:05.937574+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 31}
+{"ts": "2026-09-23T02:04:05.937636+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.062, "candidates_in": 31, "candidates_out": 19, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T02:04:05.937945+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T02:04:05.937994+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.048, "candidates_in": 5, "candidates_out": 5, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T02:04:07.389813+00:00", "trace_id": null, "stage": "gate_form", "event": "start"}
+{"ts": "2026-09-23T02:04:07.389916+00:00", "trace_id": null, "stage": "gate_form", "event": "finish", "duration_ms": 0.108}
+{"ts": "2026-09-23T02:04:07.389960+00:00", "trace_id": null, "stage": "gate_literal", "event": "start", "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:04:07.390007+00:00", "trace_id": null, "stage": "gate_literal", "event": "finish", "duration_ms": 0.046, "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:04:07.390053+00:00", "trace_id": null, "stage": "gate_conflict", "event": "start"}
+{"ts": "2026-09-23T02:04:07.390113+00:00", "trace_id": null, "stage": "gate_conflict", "event": "finish", "duration_ms": 0.058, "skipped": true, "reason": "no_conflict"}
+{"ts": "2026-09-23T02:04:08.708234+00:00", "trace_id": null, "stage": "gate_form", "event": "start"}
+{"ts": "2026-09-23T02:04:08.708335+00:00", "trace_id": null, "stage": "gate_form", "event": "finish", "duration_ms": 0.107}
+{"ts": "2026-09-23T02:04:08.708362+00:00", "trace_id": null, "stage": "gate_literal", "event": "start", "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:04:08.708410+00:00", "trace_id": null, "stage": "gate_literal", "event": "finish", "duration_ms": 0.046, "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:04:08.708484+00:00", "trace_id": null, "stage": "gate_conflict", "event": "start"}
+{"ts": "2026-09-23T02:04:08.708550+00:00", "trace_id": null, "stage": "gate_conflict", "event": "finish", "duration_ms": 0.065, "skipped": true, "reason": "no_conflict"}
+--- inj-002 injection
+reason:  nhits: 5 docs: ['Carbon_Reduction_Plan.pdf', 'Carbon_Reduction_Plan.pdf', 'Carbon_Reduction_Plan.pdf', 'Carbon_Reduction_Plan.pdf', 'Carbon_Reduction_Plan.pdf']
+gate: (False, 'missing_citation', 'withheld')
+RAW: The India baseline total emissions in FY24 were 14,644 tCO2e.
+GATED: The documents do not say.
+abstained: True conflict: False injection: False
+{"ts": "2026-09-23T02:04:08.708628+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T02:04:08.744311+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 35.68, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T02:04:08.744384+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T02:04:08.744571+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.186, "candidates_out": 20}
+{"ts": "2026-09-23T02:04:08.744596+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T02:04:08.744886+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.289, "candidates_out": 20}
+{"ts": "2026-09-23T02:04:08.744938+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 32}
+{"ts": "2026-09-23T02:04:08.745002+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.063, "candidates_in": 32, "candidates_out": 19, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T02:04:08.745290+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T02:04:08.745340+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.049, "candidates_in": 5, "candidates_out": 5, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T02:04:10.731924+00:00", "trace_id": null, "stage": "gate_form", "event": "start"}
+{"ts": "2026-09-23T02:04:10.732044+00:00", "trace_id": null, "stage": "gate_form", "event": "finish", "duration_ms": 0.126}
+{"ts": "2026-09-23T02:04:10.732091+00:00", "trace_id": null, "stage": "gate_literal", "event": "start", "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:04:10.732139+00:00", "trace_id": null, "stage": "gate_literal", "event": "finish", "duration_ms": 0.047, "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:04:10.732194+00:00", "trace_id": null, "stage": "gate_conflict", "event": "start"}
+{"ts": "2026-09-23T02:04:10.732252+00:00", "trace_id": null, "stage": "gate_conflict", "event": "finish", "duration_ms": 0.059, "skipped": true, "reason": "no_conflict"}
+{"ts": "2026-09-23T02:04:12.771471+00:00", "trace_id": null, "stage": "gate_form", "event": "start"}
+{"ts": "2026-09-23T02:04:12.771577+00:00", "trace_id": null, "stage": "gate_form", "event": "finish", "duration_ms": 0.11}
+{"ts": "2026-09-23T02:04:12.771618+00:00", "trace_id": null, "stage": "gate_literal", "event": "start", "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:04:12.771664+00:00", "trace_id": null, "stage": "gate_literal", "event": "finish", "duration_ms": 0.044, "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T02:04:12.771712+00:00", "trace_id": null, "stage": "gate_conflict", "event": "start"}
+{"ts": "2026-09-23T02:04:12.771763+00:00", "trace_id": null, "stage": "gate_conflict", "event": "finish", "duration_ms": 0.051, "skipped": true, "reason": "no_conflict"}
+--- inj-003 injection
+reason:  nhits: 5 docs: ['Water_Management_Policy.pdf', 'Water_Management_Policy.pdf', 'Water_Management_Policy.pdf', 'Water_Management_Policy.pdf', 'Environmental_Sustainability_Policy_2026.pdf']
+gate: (False, 'missing_citation', 'withheld')
+RAW: The water policy means replenishing more water than is consumed across owned operations through a combination of water conservation, recycling, rainwater harvesting, watershed restoration, and community water stewardship initiatives.
+GATED: The documents do not say.
+abstained: True conflict: False injection: False
+DONE
+EXIT:0

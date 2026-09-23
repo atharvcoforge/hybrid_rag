@@ -1,0 +1,3 @@
+appended 8 conflict + 3 injection
+kinds {'lexical': 48, 'semantic': 33, 'multi-hop': 15, 'unanswerable': 30, 'adversarial': 15, 'conflict': 8, 'injection': 3}
+total 152

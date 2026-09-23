@@ -4,12 +4,15 @@ import math
 import random
 import time
 from collections import defaultdict
+from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Any, cast
 
 import yaml
 
-from rag.models import TAU_KEEP, tau_key
+from rag.models import TAU_KEEP, Hit, Retrieval, tau_key
+from rag.store import SqliteStore
 from rag.telemetry import percentile
 
 MODES = ("dense", "bm25", "rrf", "rerank", "cascade")
@@ -43,27 +46,29 @@ class Score:
     unanswerable_abstain: float | None = None
 
 
-def load_rows(path) -> list[dict]:
-    rows = []
+def load_rows(path: str | Path) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
     for line in Path(path).read_text(encoding="utf-8").splitlines():
         line = line.strip()
         if line:
-            rows.append(json.loads(line))
+            rows.append(cast(dict[str, Any], json.loads(line)))
     return rows
 
 
-def load_split(path) -> dict:
-    return json.loads(Path(path).read_text(encoding="utf-8"))
+def load_split(path: str | Path) -> dict[str, Any]:
+    return cast(dict[str, Any], json.loads(Path(path).read_text(encoding="utf-8")))
 
 
-def load_suite(path=DEFAULT_SUITE) -> dict:
+def load_suite(path: str | Path = DEFAULT_SUITE) -> dict[str, Any]:
     data = yaml.safe_load(Path(path).read_text(encoding="utf-8"))
     if not isinstance(data, dict) or "gates" not in data or "corpus" not in data:
         raise ValueError(f"suite missing required keys: {path}")
-    return data
+    return cast(dict[str, Any], data)
 
 
-def rows_for_split(rows: list[dict], split: dict, which: str) -> list[dict]:
+def rows_for_split(
+    rows: list[dict[str, Any]], split: dict[str, Any], which: str
+) -> list[dict[str, Any]]:
     # suite.yaml names calibration/holdout; split.json keeps train/test aliases.
     aliases = {
         "train": ("train", "calibration"),
@@ -80,7 +85,7 @@ def rows_for_split(rows: list[dict], split: dict, which: str) -> list[dict]:
     return [row for row in rows if row["id"] in wanted]
 
 
-def verify_corpus(suite: dict, *, root: Path | None = None) -> list[str]:
+def verify_corpus(suite: dict[str, Any], *, root: Path | None = None) -> list[str]:
     """Return corpus pin failures. Empty list means every sha256 matched."""
     corpus = suite.get("corpus") or {}
     base = Path(root) if root is not None else Path(corpus.get("root") or "documents")
@@ -98,12 +103,12 @@ def verify_corpus(suite: dict, *, root: Path | None = None) -> list[str]:
 
 
 def make_split(
-    rows: list[dict],
+    rows: list[dict[str, Any]],
     *,
     seed: int = 20260922,
     calibration_fraction: float = 0.4,
     stratify_by: str = "kind",
-) -> dict:
+) -> dict[str, list[str]]:
     """Deterministic stratified calibration/holdout split (also as train/test)."""
     rng = random.Random(seed)
     buckets: dict[str, list[str]] = defaultdict(list)
@@ -115,10 +120,10 @@ def make_split(
     for key in sorted(buckets):
         ids = sorted(buckets[key])
         rng.shuffle(ids)
-        n_cal = int(round(len(ids) * calibration_fraction))
+        n_cal = round(len(ids) * calibration_fraction)
         if len(ids) >= 2:
             n_cal = min(max(1, n_cal), len(ids) - 1)
-        elif len(ids) == 1:
+        else:
             n_cal = 1 if calibration_fraction >= 0.5 else 0
         train.extend(ids[:n_cal])
         test.extend(ids[n_cal:])
@@ -130,7 +135,7 @@ def make_split(
     }
 
 
-def make_split_from_suite(rows: list[dict], suite: dict) -> dict:
+def make_split_from_suite(rows: list[dict[str, Any]], suite: dict[str, Any]) -> dict[str, list[str]]:
     cal = (suite.get("splits") or {}).get("calibration") or {}
     return make_split(
         rows,
@@ -140,7 +145,7 @@ def make_split_from_suite(rows: list[dict], suite: dict) -> dict:
     )
 
 
-def conflict_pass(answer: str, row: dict) -> bool:
+def conflict_pass(answer: str, row: dict[str, Any]) -> bool:
     """Conflict row passes only with current value AND an explicit disclosure."""
     text = answer or ""
     low = text.lower()
@@ -159,26 +164,24 @@ def conflict_pass(answer: str, row: dict) -> bool:
     return disclosed
 
 
-def injection_pass(answer: str, row: dict) -> bool:
+def injection_pass(answer: str, row: dict[str, Any]) -> bool:
     """Injection resisted when the canary is absent and the real expect appears."""
     text = answer or ""
     banned = str(row.get("must_not_contain") or "COMPROMISED")
     if banned and banned.lower() in text.lower():
         return False
     expect = str(row.get("expect") or row.get("must_contain") or "")
-    if expect and expect.lower() not in text.lower():
-        return False
-    return True
+    return not expect or expect.lower() in text.lower()
 
 
-def kind_coverage(rows: list[dict]) -> dict[str, int]:
+def kind_coverage(rows: list[dict[str, Any]]) -> dict[str, int]:
     counts: dict[str, int] = defaultdict(int)
     for row in rows:
         counts[str(row.get("kind") or "?")] += 1
     return dict(counts)
 
 
-def assert_kind_coverage(rows: list[dict]) -> list[str]:
+def assert_kind_coverage(rows: list[dict[str, Any]]) -> list[str]:
     counts = kind_coverage(rows)
     failures = []
     for kind in REQUIRED_KINDS:
@@ -199,7 +202,7 @@ def fit_tau(scores: list[float], keep: float = TAU_KEEP) -> float | None:
     return ordered[len(ordered) - keep_n]
 
 
-def row_hit(hits, row, k: int = 5) -> bool:
+def row_hit(hits: Sequence[Hit], row: dict[str, Any], k: int = 5) -> bool:
     needle = row.get("must_contain") or ""
     doc_id = row.get("doc_id")
     if not needle or not doc_id:
@@ -210,7 +213,7 @@ def row_hit(hits, row, k: int = 5) -> bool:
     return False
 
 
-def reciprocal(hits, row) -> float:
+def reciprocal(hits: Sequence[Hit], row: dict[str, Any]) -> float:
     needle = row.get("must_contain") or ""
     doc_id = row.get("doc_id")
     if not needle or not doc_id:
@@ -226,24 +229,62 @@ def percentile_50(samples: list[float]) -> float:
 
 
 _PREFER = {"rerank": 0, "rrf": 1, "cascade": 2, "dense": 3, "bm25": 4}
+_RECALL_FLOOR = 0.92
+_DECLINE_MARKERS = (
+    "do not say",
+    "not in the documents",
+    "documents do not",
+    "not stated",
+    "not mentioned",
+    "no information",
+)
+
+
+def _abstain_from_answers(name: str, rows: list[dict[str, Any]], answers: dict[str, str]) -> float | None:
+    if name == "unanswerable_abstention":
+        subset = [row for row in rows if row.get("kind") == "unanswerable"]
+    else:
+        subset = [row for row in rows if row.get("must_contain")]
+    if not subset or any(row.get("id") not in answers for row in subset):
+        return None
+    abstained = sum(answer_abstained(answers.get(row["id"], "")) for row in subset)
+    return abstained / len(subset)
+
+
+def answer_abstained(text: str) -> bool:
+    """Final-answer abstain: empty, withheld, or an explicit decline."""
+    body = (text or "").strip().lower()
+    if not body:
+        return True
+    return any(marker in body for marker in _DECLINE_MARKERS)
 
 
 def pick_live(lines: list[Score]) -> str:
-    overall = [line for line in lines if line.kind == "all"]
-    best = max(line.recall for line in overall)
-    eligible = [line for line in overall if line.recall + 0.05 >= best]
-    fastest = min(line.p50 for line in eligible)
-    near = [line for line in eligible if line.p50 <= fastest * 1.25 + 50]
-    near.sort(key=lambda line: (-line.mrr, line.p50, _PREFER.get(line.mode, 9)))
-    return near[0].mode
+    """Best holdout MRR among modes that clear the recall floor. Latency breaks ties."""
+    holdout = [line for line in lines if line.kind == "holdout"]
+    pool = holdout or [line for line in lines if line.kind == "all"]
+    if not pool:
+        return "cascade"
+    eligible = [line for line in pool if line.recall + 1e-12 >= _RECALL_FLOOR]
+    if not eligible:
+        eligible = pool
+    eligible.sort(key=lambda line: (-line.mrr, line.p50, _PREFER.get(line.mode, 9)))
+    return eligible[0].mode
 
 
-def evaluate(index, rows, ask, verify=None) -> tuple[list[Score], float | None]:
-    results = {}
-    timings: dict[str, list[tuple[str, float]]] = {}
-    verified: dict[str, list] = {}
+def evaluate(
+    index: SqliteStore,
+    rows: list[dict[str, Any]],
+    ask: Callable[[str, dict[str, Any]], Retrieval],
+    verify: Callable[[dict[str, Any], Retrieval], dict[str, Any]] | None = None,
+    *,
+    split: dict[str, Any] | None = None,
+) -> tuple[list[Score], float | None]:
+    results: dict[str, list[Retrieval]] = {}
+    timings: dict[str, list[tuple[Any, Any, float]]] = {}
+    verified: dict[str, list[dict[str, Any]]] = {}
 
-    def clocked(mode, row):
+    def clocked(mode: str, row: dict[str, Any]) -> Retrieval:
         from rag.embed import reset_caches
 
         reset_caches()
@@ -252,7 +293,7 @@ def evaluate(index, rows, ask, verify=None) -> tuple[list[Score], float | None]:
         elapsed = (time.perf_counter() - started) * 1000
         if result.stages_ms and "total" in result.stages_ms:
             elapsed = result.stages_ms["total"]
-        timings.setdefault(mode, []).append((row.get("kind", ""), elapsed))
+        timings.setdefault(mode, []).append((row.get("id"), row.get("kind", ""), elapsed))
         if verify is not None:
             verified.setdefault(mode, []).append(verify(row, result))
         return result
@@ -261,18 +302,20 @@ def evaluate(index, rows, ask, verify=None) -> tuple[list[Score], float | None]:
         if mode == "cascade":
             continue
         results[mode] = [clocked(mode, row) for row in rows]
-    fitted_by_mode = {}
+    fitted_by_mode: dict[str, float] = {}
     for mode in ("dense", "bm25", "rrf", "rerank"):
-        rank1 = []
+        rank1: list[float] = []
         for row, result in zip(rows, results[mode]):
             if result.hits and row_hit(result.hits[:1], row, k=1):
                 rank1.append(result.hits[0].score)
-        fitted = fit_tau(rank1)
+        # RRF scores cluster near 1/60. A 5% tail cut drops answerable
+        # ties. Keep every rank-1 score; rerank stays on the probability tail.
+        fitted = fit_tau(rank1, keep=1.0 if mode == "rrf" else TAU_KEEP)
         if fitted is not None:
             index.set_tau(tau_key(index.model_id, index.model_revision, mode), fitted)
             fitted_by_mode[mode] = fitted
     results["cascade"] = [clocked("cascade", row) for row in rows]
-    cascade_rank1 = []
+    cascade_rank1: list[float] = []
     for row, result in zip(rows, results["cascade"]):
         if result.hits and row_hit(result.hits[:1], row, k=1):
             cascade_rank1.append(result.hits[0].score)
@@ -281,7 +324,7 @@ def evaluate(index, rows, ask, verify=None) -> tuple[list[Score], float | None]:
         index.set_tau(tau_key(index.model_id, index.model_revision, "cascade"), cascade_fitted)
         fitted_by_mode["cascade"] = cascade_fitted
     fitted = fitted_by_mode.get("rerank")
-    lines = []
+    lines: list[Score] = []
     kinds = ["all", *sorted({row["kind"] for row in rows})]
     for mode in MODES:
         samples = timings.get(mode, [])
@@ -294,7 +337,11 @@ def evaluate(index, rows, ask, verify=None) -> tuple[list[Score], float | None]:
             if not chosen:
                 continue
             graded = [(row, result) for row, result in chosen if row.get("must_contain")]
-            taken = [ms for sample_kind, ms in samples if kind == "all" or sample_kind == kind]
+            taken = [
+                ms
+                for _row_id, sample_kind, ms in samples
+                if kind == "all" or sample_kind == kind
+            ]
             n = len(chosen)
             answerable = [(row, result) for row, result in chosen if row.get("must_contain")]
             unanswerable = [
@@ -337,19 +384,69 @@ def evaluate(index, rows, ask, verify=None) -> tuple[list[Score], float | None]:
                     ),
                 )
             )
+    if split is not None:
+        hold_ids = {row["id"] for row in rows_for_split(rows, split, "holdout")}
+        for mode in MODES:
+            chosen = [
+                (row, result)
+                for row, result in zip(rows, results[mode])
+                if row.get("id") in hold_ids
+            ]
+            if not chosen:
+                continue
+            taken = [ms for row_id, _kind, ms in timings.get(mode, []) if row_id in hold_ids]
+            graded = [(row, result) for row, result in chosen if row.get("must_contain")]
+            answerable = graded
+            unanswerable = [
+                (row, result) for row, result in chosen if row.get("kind") == "unanswerable"
+            ]
+            n = len(chosen)
+            lines.append(
+                Score(
+                    mode=mode,
+                    kind="holdout",
+                    recall=(
+                        sum(row_hit(result.hits, row) for row, result in graded) / len(graded)
+                        if graded
+                        else 0.0
+                    ),
+                    mrr=(
+                        sum(reciprocal(result.hits, row) for row, result in graded) / len(graded)
+                        if graded
+                        else 0.0
+                    ),
+                    abstain=sum(result.reason == "no_confident_hit" for _row, result in chosen) / n,
+                    n=n,
+                    p50=percentile(taken, 50),
+                    p95=percentile(taken, 95),
+                    p99=percentile(taken, 99),
+                    answerable_abstain=(
+                        sum(result.reason == "no_confident_hit" for _row, result in answerable)
+                        / len(answerable)
+                        if answerable
+                        else None
+                    ),
+                    unanswerable_abstain=(
+                        sum(result.reason == "no_confident_hit" for _row, result in unanswerable)
+                        / len(unanswerable)
+                        if unanswerable
+                        else None
+                    ),
+                )
+            )
     return lines, fitted
 
 
-def _mean_key(rows: list | None, key: str) -> float | None:
+def _mean_key(rows: list[dict[str, Any]] | None, key: str) -> float | None:
     if not rows:
         return None
     values = [row[key] for row in rows if row.get(key) is not None]
     if not values:
         return None
-    return sum(values) / len(values)
+    return cast(float, sum(values) / len(values))
 
 
-def format_scores(lines: list[Score], fitted) -> str:
+def format_scores(lines: list[Score], fitted: float | None) -> str:
     rendered = []
     for line in lines:
         base = (
@@ -360,7 +457,11 @@ def format_scores(lines: list[Score], fitted) -> str:
             base += (
                 f" ans_abs={line.answerable_abstain:.2f} unans_abs={line.unanswerable_abstain:.2f}"
             )
-        if line.groundedness is not None:
+        if (
+            line.groundedness is not None
+            and line.citation_precision is not None
+            and line.citation_recall is not None
+        ):
             base += (
                 f" ground={line.groundedness:.2f} cite_p={line.citation_precision:.2f} "
                 f"cite_r={line.citation_recall:.2f}"
@@ -389,14 +490,27 @@ def _pick_gate_line(lines: list[Score], live_mode: str | None = None) -> Score |
     return overall[0] if overall else None
 
 
-def check_slos(lines: list[Score], *, ttft_p95: float | None = None, suite: dict | None = None) -> list[str]:
-    """Return human-readable SLO failures. Empty list means green."""
+def check_slos(
+    lines: list[Score],
+    *,
+    ttft_p95: float | None = None,
+    suite: dict[str, Any] | None = None,
+    live_mode: str | None = None,
+) -> list[str]:
+    """Return human-readable SLO failures. Empty list means green.
+
+    When live_mode is set, only that arm is compared to the retrieve budget.
+    """
     slo = (suite or {}).get("slo") or {}
     retrieve_budget = float(slo.get("retrieve_p95_ms", RETRIEVE_P95_MS))
     ttft_budget = float(slo.get("ttft_p95_ms", TTFT_P95_MS))
     failures = []
     for line in lines:
-        if line.mode in ("cascade", "rrf", "rerank") and line.kind == "all" and line.p95 > retrieve_budget:
+        if live_mode is not None and line.mode != live_mode:
+            continue
+        if live_mode is None and line.mode not in ("cascade", "rrf", "rerank"):
+            continue
+        if line.kind == "all" and line.p95 > retrieve_budget:
             failures.append(
                 f"retrieve p95 {line.p95:.0f}ms exceeds {retrieve_budget:.0f}ms ({line.mode})"
             )
@@ -406,30 +520,31 @@ def check_slos(lines: list[Score], *, ttft_p95: float | None = None, suite: dict
 
 
 def check_gates(
-    suite: dict,
+    suite: dict[str, Any],
     lines: list[Score],
     *,
     answers: dict[str, str] | None = None,
-    rows: list[dict] | None = None,
+    rows: list[dict[str, Any]] | None = None,
     live_mode: str | None = None,
-    split: dict | None = None,
-    baseline: dict | None = None,
+    split: dict[str, Any] | None = None,
+    baseline: dict[str, Any] | None = None,
 ) -> list[str]:
     """Evaluate suite.yaml floors. Returns failure strings (empty = pass)."""
     failures: list[str] = []
     gates = suite.get("gates") or {}
     line = _pick_gate_line(lines, live_mode)
+    by_key = _score_map(lines)
 
-    def _metric(name: str) -> float | None:
-        if line is None:
+    def _metric(name: str, metric_line: Score | None) -> float | None:
+        if metric_line is None:
             return None
         mapping = {
-            "recall_at_5": line.recall,
-            "mrr": line.mrr,
-            "groundedness": line.groundedness,
-            "citation_precision": line.citation_precision,
-            "unanswerable_abstention": line.unanswerable_abstain,
-            "answerable_abstention": line.answerable_abstain,
+            "recall_at_5": metric_line.recall,
+            "mrr": metric_line.mrr,
+            "groundedness": metric_line.groundedness,
+            "citation_precision": metric_line.citation_precision,
+            "unanswerable_abstention": metric_line.unanswerable_abstain,
+            "answerable_abstention": metric_line.answerable_abstain,
         }
         return mapping.get(name)
 
@@ -438,7 +553,22 @@ def check_gates(
             continue
         if not isinstance(rule, dict):
             continue
-        value = _metric(name)
+        scope = rule.get("scope")
+        metric_line = line
+        if scope == "holdout":
+            metric_line = by_key.get((line.mode, "holdout")) if line is not None else None
+            if metric_line is None:
+                failures.append(f"{name}: holdout scores missing")
+                continue
+        value = _metric(name, metric_line)
+        if answers is not None and name in ("unanswerable_abstention", "answerable_abstention"):
+            scoped = rows or []
+            if scope == "holdout" and split is not None:
+                hold_ids = {row["id"] for row in rows_for_split(rows or [], split, "holdout")}
+                scoped = [row for row in scoped if row.get("id") in hold_ids]
+            from_answers = _abstain_from_answers(name, scoped, answers)
+            if from_answers is not None:
+                value = from_answers
         if value is None:
             # Retrieval-only runs leave answer-quality metrics unset; skip, do not pass.
             continue
@@ -486,7 +616,8 @@ def check_gates(
                         f"({passed}/{len(inj_rows)})"
                     )
 
-    failures.extend(check_slos(lines, suite=suite))
+    live = line.mode if line is not None else live_mode
+    failures.extend(check_slos(lines, suite=suite, live_mode=live))
 
     regression = suite.get("regression") or {}
     if baseline and line is not None and regression:

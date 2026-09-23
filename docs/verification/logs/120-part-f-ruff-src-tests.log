@@ -1,0 +1,417 @@
+[1m[91mBLE001[0m[1m Do not catch blind exception: `Exception`[0m
+   [1m[94m--> [0msrc/rag/chunk.py:366:16
+    [1m[94m|[0m
+[1m[94m364[0m [1m[94m|[0m         try:
+[1m[94m365[0m [1m[94m|[0m             prefix = (context_fn(parent.text, child.text) or "").strip()
+[1m[94m366[0m [1m[94m|[0m         except Exception:
+    [1m[94m|[0m                [1m[91m^^^^^^^^^[0m
+[1m[94m367[0m [1m[94m|[0m             prefix = ""
+[1m[94m368[0m [1m[94m|[0m         if not prefix:
+    [1m[94m|[0m
+
+[1m[91mBLE001[0m[1m Do not catch blind exception: `Exception`[0m
+   [1m[94m--> [0msrc/rag/embed.py:118:12
+    [1m[94m|[0m
+[1m[94m116[0m [1m[94m|[0m         if torch.backends.mps.is_available():
+[1m[94m117[0m [1m[94m|[0m             return "mps"
+[1m[94m118[0m [1m[94m|[0m     except Exception:
+    [1m[94m|[0m            [1m[91m^^^^^^^^^[0m
+[1m[94m119[0m [1m[94m|[0m         return "cpu"
+[1m[94m120[0m [1m[94m|[0m     return "cpu"
+    [1m[94m|[0m
+
+[1m[91mRUF046[0m[1m Value being cast to `int` is already an integer[0m
+   [1m[94m--> [0msrc/rag/evaluate.py:118:17
+    [1m[94m|[0m
+[1m[94m116[0m [1m[94m|[0m         ids = sorted(buckets[key])
+[1m[94m117[0m [1m[94m|[0m         rng.shuffle(ids)
+[1m[94m118[0m [1m[94m|[0m         n_cal = int(round(len(ids) * calibration_fraction))
+    [1m[94m|[0m                 [1m[91m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[1m[94m119[0m [1m[94m|[0m         if len(ids) >= 2:
+[1m[94m120[0m [1m[94m|[0m             n_cal = min(max(1, n_cal), len(ids) - 1)
+    [1m[94m|[0m
+[1m[96mhelp[0m[1m: Remove unnecessary `int` call[0m
+
+[1m[91mSIM103[0m[1m Return the negated condition directly[0m
+   [1m[94m--> [0msrc/rag/evaluate.py:169:5
+    [1m[94m|[0m
+[1m[94m167[0m [1m[94m|[0m           return False
+[1m[94m168[0m [1m[94m|[0m       expect = str(row.get("expect") or row.get("must_contain") or "")
+[1m[94m169[0m [1m[94m|[0m [1m[91m/[0m     if expect and expect.lower() not in text.lower():
+[1m[94m170[0m [1m[94m|[0m [1m[91m|[0m         return False
+[1m[94m171[0m [1m[94m|[0m [1m[91m|[0m     return True
+    [1m[94m|[0m [1m[91m|_______________^[0m
+[1m[96mhelp[0m[1m: Inline condition[0m
+
+[1m[91mSIM103[0m[1m Return the condition directly[0m
+  [1m[94m--> [0msrc/rag/health.py:58:13
+   [1m[94m|[0m
+[1m[94m56[0m [1m[94m|[0m               if self.opened_at is None:
+[1m[94m57[0m [1m[94m|[0m                   return True
+[1m[94m58[0m [1m[94m|[0m [1m[91m/[0m             if time.monotonic() - self.opened_at >= self.reset_s:
+[1m[94m59[0m [1m[94m|[0m [1m[91m|[0m                 return True  # half-open probe
+[1m[94m60[0m [1m[94m|[0m [1m[91m|[0m             return False
+   [1m[94m|[0m [1m[91m|________________________^[0m
+[1m[94m61[0m [1m[94m|[0m
+[1m[94m62[0m [1m[94m|[0m       def record_success(self) -> None:
+   [1m[94m|[0m
+[1m[96mhelp[0m[1m: Inline condition[0m
+
+[1m[91mBLE001[0m[1m Do not catch blind exception: `Exception`[0m
+  [1m[94m--> [0msrc/rag/layout.py:93:12
+   [1m[94m|[0m
+[1m[94m91[0m [1m[94m|[0m     try:
+[1m[94m92[0m [1m[94m|[0m         text = page.extract_text() or ""
+[1m[94m93[0m [1m[94m|[0m     except Exception:
+   [1m[94m|[0m            [1m[91m^^^^^^^^^[0m
+[1m[94m94[0m [1m[94m|[0m         text = ""
+[1m[94m95[0m [1m[94m|[0m     if not looks_borderless(text):
+   [1m[94m|[0m
+
+[1m[91mBLE001[0m[1m Do not catch blind exception: `Exception`[0m
+   [1m[94m--> [0msrc/rag/layout.py:143:12
+    [1m[94m|[0m
+[1m[94m141[0m [1m[94m|[0m     try:
+[1m[94m142[0m [1m[94m|[0m         raw = layout_extract(page) or []
+[1m[94m143[0m [1m[94m|[0m     except Exception:
+    [1m[94m|[0m            [1m[91m^^^^^^^^^[0m
+[1m[94m144[0m [1m[94m|[0m         return []
+[1m[94m145[0m [1m[94m|[0m     tables = []
+    [1m[94m|[0m
+
+[1m[91mBLE001[0m[1m Do not catch blind exception: `Exception`[0m
+   [1m[94m--> [0msrc/rag/layout.py:173:12
+    [1m[94m|[0m
+[1m[94m171[0m [1m[94m|[0m             return []
+[1m[94m172[0m [1m[94m|[0m         found = list(page.find_tables() or [])
+[1m[94m173[0m [1m[94m|[0m     except Exception:
+    [1m[94m|[0m            [1m[91m^^^^^^^^^[0m
+[1m[94m174[0m [1m[94m|[0m         return []
+[1m[94m175[0m [1m[94m|[0m     tables = []
+    [1m[94m|[0m
+
+[1m[91mS112[0m[1m `try`-`except`-`continue` detected, consider logging the exception[0m
+   [1m[94m--> [0msrc/rag/layout.py:179:9
+    [1m[94m|[0m
+[1m[94m177[0m [1m[94m|[0m           try:
+[1m[94m178[0m [1m[94m|[0m               rows = item.extract()
+[1m[94m179[0m [1m[94m|[0m [1m[91m/[0m         except Exception:
+[1m[94m180[0m [1m[94m|[0m [1m[91m|[0m             continue
+    [1m[94m|[0m [1m[91m|____________________^[0m
+[1m[94m181[0m [1m[94m|[0m           if not rows:
+[1m[94m182[0m [1m[94m|[0m               continue
+    [1m[94m|[0m
+
+[1m[91mBLE001[0m[1m Do not catch blind exception: `Exception`[0m
+   [1m[94m--> [0msrc/rag/layout.py:179:16
+    [1m[94m|[0m
+[1m[94m177[0m [1m[94m|[0m         try:
+[1m[94m178[0m [1m[94m|[0m             rows = item.extract()
+[1m[94m179[0m [1m[94m|[0m         except Exception:
+    [1m[94m|[0m                [1m[91m^^^^^^^^^[0m
+[1m[94m180[0m [1m[94m|[0m             continue
+[1m[94m181[0m [1m[94m|[0m         if not rows:
+    [1m[94m|[0m
+
+[1m[91mFLY002[0m[1m Consider f-string instead of string join[0m
+   [1m[94m--> [0msrc/rag/models.py:136:12
+    [1m[94m|[0m
+[1m[94m135[0m [1m[94m|[0m def tau_key(embed_model: str, embed_revision: str, mode: str = "cascade") -> str:
+[1m[94m136[0m [1m[94m|[0m     return "|".join((embed_model, embed_revision, RERANK_MODEL, RERANK_REVISION, mode))
+    [1m[94m|[0m            [1m[91m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[1m[96mhelp[0m[1m: Replace with f-string[0m
+
+[1m[91mBLE001[0m[1m Do not catch blind exception: `Exception`[0m
+  [1m[94m--> [0msrc/rag/ocr.py:25:12
+   [1m[94m|[0m
+[1m[94m23[0m [1m[94m|[0m     try:
+[1m[94m24[0m [1m[94m|[0m         text = page.extract_text() or ""
+[1m[94m25[0m [1m[94m|[0m     except Exception:
+   [1m[94m|[0m            [1m[91m^^^^^^^^^[0m
+[1m[94m26[0m [1m[94m|[0m         text = ""
+[1m[94m27[0m [1m[94m|[0m     width = float(getattr(page, "width", 0) or 0)
+   [1m[94m|[0m
+
+[1m[91mBLE001[0m[1m Do not catch blind exception: `Exception`[0m
+  [1m[94m--> [0msrc/rag/ocr.py:57:12
+   [1m[94m|[0m
+[1m[94m55[0m [1m[94m|[0m     try:
+[1m[94m56[0m [1m[94m|[0m         return (captioner(image) or "").strip()
+[1m[94m57[0m [1m[94m|[0m     except Exception:
+   [1m[94m|[0m            [1m[91m^^^^^^^^^[0m
+[1m[94m58[0m [1m[94m|[0m         return ""
+   [1m[94m|[0m
+
+[1m[91mBLE001[0m[1m Do not catch blind exception: `Exception`[0m
+  [1m[94m--> [0msrc/rag/ocr.py:66:12
+   [1m[94m|[0m
+[1m[94m64[0m [1m[94m|[0m         if hasattr(page, "to_image"):
+[1m[94m65[0m [1m[94m|[0m             return page.to_image(resolution=150).original
+[1m[94m66[0m [1m[94m|[0m     except Exception:
+   [1m[94m|[0m            [1m[91m^^^^^^^^^[0m
+[1m[94m67[0m [1m[94m|[0m         return None
+[1m[94m68[0m [1m[94m|[0m     return None
+   [1m[94m|[0m
+
+[1m[91mBLE001[0m[1m Do not catch blind exception: `Exception`[0m
+   [1m[94m--> [0msrc/rag/parse.py:259:16
+    [1m[94m|[0m
+[1m[94m257[0m [1m[94m|[0m             page_tables.append(tables)
+[1m[94m258[0m [1m[94m|[0m             page_extras.append(extras)
+[1m[94m259[0m [1m[94m|[0m         except Exception as exc:
+    [1m[94m|[0m                [1m[91m^^^^^^^^^[0m
+[1m[94m260[0m [1m[94m|[0m             page_texts.append("")
+[1m[94m261[0m [1m[94m|[0m             page_tables.append([])
+    [1m[94m|[0m
+
+[1m[91mBLE001[0m[1m Do not catch blind exception: `Exception`[0m
+   [1m[94m--> [0msrc/rag/parse.py:308:12
+    [1m[94m|[0m
+[1m[94m306[0m [1m[94m|[0m     try:
+[1m[94m307[0m [1m[94m|[0m         return list(getattr(page, "images", []) or [])
+[1m[94m308[0m [1m[94m|[0m     except Exception:
+    [1m[94m|[0m            [1m[91m^^^^^^^^^[0m
+[1m[94m309[0m [1m[94m|[0m         return []
+    [1m[94m|[0m
+
+[1m[91mBLE001[0m[1m Do not catch blind exception: `Exception`[0m
+   [1m[94m--> [0msrc/rag/parse.py:424:12
+    [1m[94m|[0m
+[1m[94m422[0m [1m[94m|[0m     try:
+[1m[94m423[0m [1m[94m|[0m         package = document.part.package
+[1m[94m424[0m [1m[94m|[0m     except Exception:
+    [1m[94m|[0m            [1m[91m^^^^^^^^^[0m
+[1m[94m425[0m [1m[94m|[0m         return out
+[1m[94m426[0m [1m[94m|[0m     for other in package.parts:
+    [1m[94m|[0m
+
+[1m[91mPLC0414[0m[1m Import alias does not rename original package[0m
+  [1m[94m--> [0msrc/rag/pipeline.py:42:31
+   [1m[94m|[0m
+[1m[94m40[0m [1m[94m|[0m         encode = encode_documents
+[1m[94m41[0m [1m[94m|[0m     if count_tokens is None:
+[1m[94m42[0m [1m[94m|[0m         from rag.embed import count_tokens as count_tokens
+   [1m[94m|[0m                               [1m[91m^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[1m[94m43[0m [1m[94m|[0m     if not path.exists():
+[1m[94m44[0m [1m[94m|[0m         raise IngestError(str(path), "file not found")
+   [1m[94m|[0m
+[1m[96mhelp[0m[1m: Remove import alias[0m
+
+[1m[91mBLE001[0m[1m Do not catch blind exception: `Exception`[0m
+  [1m[94m--> [0msrc/rag/server.py:62:16
+   [1m[94m|[0m
+[1m[94m61[0m [1m[94m|[0m             load_embedder()
+[1m[94m62[0m [1m[94m|[0m         except Exception as exc:
+   [1m[94m|[0m                [1m[91m^^^^^^^^^[0m
+[1m[94m63[0m [1m[94m|[0m             _health.note(f"embedder warmup skipped: {exc}")
+[1m[94m64[0m [1m[94m|[0m         _health.warmed = True
+   [1m[94m|[0m
+
+[1m[91mBLE001[0m[1m Do not catch blind exception: `Exception`[0m
+  [1m[94m--> [0msrc/rag/server.py:68:12
+   [1m[94m|[0m
+[1m[94m66[0m [1m[94m|[0m         if not _health.writer_ok:
+[1m[94m67[0m [1m[94m|[0m             _health.note("Generator down — extractive mode only")
+[1m[94m68[0m [1m[94m|[0m     except Exception as exc:
+   [1m[94m|[0m            [1m[91m^^^^^^^^^[0m
+[1m[94m69[0m [1m[94m|[0m         _health.note(f"index open failed: {exc}")
+[1m[94m70[0m [1m[94m|[0m         _health.warmed = True  # ready to serve degraded responses
+   [1m[94m|[0m
+
+[1m[91mS110[0m[1m `try`-`except`-`pass` detected, consider logging the exception[0m
+  [1m[94m--> [0msrc/rag/server.py:75:9
+   [1m[94m|[0m
+[1m[94m73[0m [1m[94m|[0m           try:
+[1m[94m74[0m [1m[94m|[0m               _index.close()
+[1m[94m75[0m [1m[94m|[0m [1m[91m/[0m         except Exception:
+[1m[94m76[0m [1m[94m|[0m [1m[91m|[0m             pass
+   [1m[94m|[0m [1m[91m|________________^[0m
+[1m[94m77[0m [1m[94m|[0m           _index = None
+   [1m[94m|[0m
+
+[1m[91mBLE001[0m[1m Do not catch blind exception: `Exception`[0m
+  [1m[94m--> [0msrc/rag/server.py:75:16
+   [1m[94m|[0m
+[1m[94m73[0m [1m[94m|[0m         try:
+[1m[94m74[0m [1m[94m|[0m             _index.close()
+[1m[94m75[0m [1m[94m|[0m         except Exception:
+   [1m[94m|[0m                [1m[91m^^^^^^^^^[0m
+[1m[94m76[0m [1m[94m|[0m             pass
+[1m[94m77[0m [1m[94m|[0m         _index = None
+   [1m[94m|[0m
+
+[1m[91mRUF034[0m[1m Useless `if`-`else` condition[0m
+   [1m[94m--> [0msrc/rag/server.py:233:13
+    [1m[94m|[0m
+[1m[94m231[0m [1m[94m|[0m     log_event("query_start", mode=mode, query=raw_text)
+[1m[94m232[0m [1m[94m|[0m     key = AnswerCache.make_key(cleaned, generation, mode)
+[1m[94m233[0m [1m[94m|[0m     saved = cache.get(key) if hasattr(cache, "get") else cache.get(key)
+    [1m[94m|[0m             [1m[91m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[1m[94m234[0m [1m[94m|[0m     if saved is not None:
+[1m[94m235[0m [1m[94m|[0m         yield (
+    [1m[94m|[0m
+
+[1m[91mBLE001[0m[1m Do not catch blind exception: `Exception`[0m
+   [1m[94m--> [0msrc/rag/server.py:369:12
+    [1m[94m|[0m
+[1m[94m367[0m [1m[94m|[0m         )
+[1m[94m368[0m [1m[94m|[0m         return
+[1m[94m369[0m [1m[94m|[0m     except Exception as exc:
+    [1m[94m|[0m            [1m[91m^^^^^^^^^[0m
+[1m[94m370[0m [1m[94m|[0m         circuit.record_failure()
+[1m[94m371[0m [1m[94m|[0m         health.note("Generator stalled or failed")
+    [1m[94m|[0m
+
+[1m[91mBLE001[0m[1m Do not catch blind exception: `Exception`[0m
+   [1m[94m--> [0msrc/rag/server.py:648:20
+    [1m[94m|[0m
+[1m[94m646[0m [1m[94m|[0m                 ):
+[1m[94m647[0m [1m[94m|[0m                     out.put(("sse", event, data))
+[1m[94m648[0m [1m[94m|[0m             except Exception as exc:
+    [1m[94m|[0m                    [1m[91m^^^^^^^^^[0m
+[1m[94m649[0m [1m[94m|[0m                 out.put(
+[1m[94m650[0m [1m[94m|[0m                     (
+    [1m[94m|[0m
+
+[1m[91mBLE001[0m[1m Do not catch blind exception: `Exception`[0m
+   [1m[94m--> [0msrc/rag/server.py:717:12
+    [1m[94m|[0m
+[1m[94m715[0m [1m[94m|[0m         with Index(index_dir(), EMBED_MODEL, EMBED_REVISION, PIPELINE_VERSION) as store:
+[1m[94m716[0m [1m[94m|[0m             _health.index_generation = store.index_generation()
+[1m[94m717[0m [1m[94m|[0m     except Exception:
+    [1m[94m|[0m            [1m[91m^^^^^^^^^[0m
+[1m[94m718[0m [1m[94m|[0m         _health.index_generation += 1
+[1m[94m719[0m [1m[94m|[0m     return {
+    [1m[94m|[0m
+
+[1m[91mS110[0m[1m `try`-`except`-`pass` detected, consider logging the exception[0m
+   [1m[94m--> [0msrc/rag/telemetry.py:145:5
+    [1m[94m|[0m
+[1m[94m143[0m [1m[94m|[0m       try:
+[1m[94m144[0m [1m[94m|[0m           bus.put(payload)
+[1m[94m145[0m [1m[94m|[0m [1m[91m/[0m     except Exception:
+[1m[94m146[0m [1m[94m|[0m [1m[91m|[0m         pass
+    [1m[94m|[0m [1m[91m|____________^[0m
+
+[1m[91mBLE001[0m[1m Do not catch blind exception: `Exception`[0m
+   [1m[94m--> [0msrc/rag/telemetry.py:145:12
+    [1m[94m|[0m
+[1m[94m143[0m [1m[94m|[0m     try:
+[1m[94m144[0m [1m[94m|[0m         bus.put(payload)
+[1m[94m145[0m [1m[94m|[0m     except Exception:
+    [1m[94m|[0m            [1m[91m^^^^^^^^^[0m
+[1m[94m146[0m [1m[94m|[0m         pass
+    [1m[94m|[0m
+
+[1m[91mRUF046[0m[1m Value being cast to `int` is already an integer[0m
+   [1m[94m--> [0msrc/rag/telemetry.py:214:37
+    [1m[94m|[0m
+[1m[94m212[0m [1m[94m|[0m         return float(samples[0])
+[1m[94m213[0m [1m[94m|[0m     ordered = sorted(samples)
+[1m[94m214[0m [1m[94m|[0m     rank = max(1, min(len(ordered), int(round(p / 100.0 * len(ordered)))))
+    [1m[94m|[0m                                     [1m[91m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[1m[94m215[0m [1m[94m|[0m     return float(ordered[rank - 1])
+    [1m[94m|[0m
+[1m[96mhelp[0m[1m: Remove unnecessary `int` call[0m
+
+[1m[91mPIE810[0m[1m Call `startswith` once with a `tuple`[0m
+   [1m[94m--> [0msrc/rag/versions.py:108:12
+    [1m[94m|[0m
+[1m[94m106[0m [1m[94m|[0m             continue
+[1m[94m107[0m [1m[94m|[0m         low = cleaned.casefold()
+[1m[94m108[0m [1m[94m|[0m         if low.startswith("review date") or low.startswith("last review"):
+    [1m[94m|[0m            [1m[91m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[1m[94m109[0m [1m[94m|[0m             continue
+[1m[94m110[0m [1m[94m|[0m         if low.startswith("contents") or low.startswith("©"):
+    [1m[94m|[0m
+[1m[96mhelp[0m[1m: Merge into a single `startswith` call[0m
+
+[1m[91mPIE810[0m[1m Call `startswith` once with a `tuple`[0m
+   [1m[94m--> [0msrc/rag/versions.py:110:12
+    [1m[94m|[0m
+[1m[94m108[0m [1m[94m|[0m         if low.startswith("review date") or low.startswith("last review"):
+[1m[94m109[0m [1m[94m|[0m             continue
+[1m[94m110[0m [1m[94m|[0m         if low.startswith("contents") or low.startswith("©"):
+    [1m[94m|[0m            [1m[91m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+[1m[94m111[0m [1m[94m|[0m             break
+[1m[94m112[0m [1m[94m|[0m         if len(cleaned) < 8 or len(cleaned) > 120:
+    [1m[94m|[0m
+[1m[96mhelp[0m[1m: Merge into a single `startswith` call[0m
+
+[1m[91mRUF059[0m[1m Unpacked variable `a_name` is never used[0m
+   [1m[94m--> [0msrc/rag/versions.py:287:13
+    [1m[94m|[0m
+[1m[94m285[0m [1m[94m|[0m     for i, a in enumerate(hits):
+[1m[94m286[0m [1m[94m|[0m         for b in hits[i + 1 :]:
+[1m[94m287[0m [1m[94m|[0m             a_name, a_group, a_sup, _ = _doc_meta(a)
+    [1m[94m|[0m             [1m[91m^^^^^^[0m
+[1m[94m288[0m [1m[94m|[0m             b_name, b_group, b_sup, _ = _doc_meta(b)
+[1m[94m289[0m [1m[94m|[0m             if not a_group or a_group != b_group:
+    [1m[94m|[0m
+[1m[96mhelp[0m[1m: Prefix it with an underscore or any other dummy variable pattern[0m
+
+[1m[91mRUF059[0m[1m Unpacked variable `b_name` is never used[0m
+   [1m[94m--> [0msrc/rag/versions.py:288:13
+    [1m[94m|[0m
+[1m[94m286[0m [1m[94m|[0m         for b in hits[i + 1 :]:
+[1m[94m287[0m [1m[94m|[0m             a_name, a_group, a_sup, _ = _doc_meta(a)
+[1m[94m288[0m [1m[94m|[0m             b_name, b_group, b_sup, _ = _doc_meta(b)
+    [1m[94m|[0m             [1m[91m^^^^^^[0m
+[1m[94m289[0m [1m[94m|[0m             if not a_group or a_group != b_group:
+[1m[94m290[0m [1m[94m|[0m                 continue
+    [1m[94m|[0m
+[1m[96mhelp[0m[1m: Prefix it with an underscore or any other dummy variable pattern[0m
+
+[1m[91mF841[0m[1m Local variable `W` is assigned to but never used[0m
+  [1m[94m--> [0mtests/test_docx_edges.py:82:5
+   [1m[94m|[0m
+[1m[94m80[0m [1m[94m|[0m def _write_docx_with_footnote(path: Path, body: str, note: str) -> None:
+[1m[94m81[0m [1m[94m|[0m     """Minimal OOXML package with a footnotes part python-docx can open."""
+[1m[94m82[0m [1m[94m|[0m     W = "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}"
+   [1m[94m|[0m     [1m[91m^[0m
+[1m[94m83[0m [1m[94m|[0m     document_xml = f"""<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+[1m[94m84[0m [1m[94m|[0m <w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
+   [1m[94m|[0m
+[1m[96mhelp[0m[1m: Remove assignment to unused variable `W`[0m
+
+[1m[91mISC004[0m[1m Unparenthesized implicit string concatenation in collection[0m
+   [1m[94m--> [0mtests/test_parse.py:135:9
+    [1m[94m|[0m
+[1m[94m133[0m [1m[94m|[0m           b"<< /Type /Catalog /Pages 2 0 R >>",
+[1m[94m134[0m [1m[94m|[0m           b"<< /Type /Pages /Count 1 /Kids [3 0 R] >>",
+[1m[94m135[0m [1m[94m|[0m [1m[91m/[0m         b"<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] "
+[1m[94m136[0m [1m[94m|[0m [1m[91m|[0m         b"/Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>",
+    [1m[94m|[0m [1m[91m|____________________________________________________________________^[0m
+[1m[94m137[0m [1m[94m|[0m           stream,
+[1m[94m138[0m [1m[94m|[0m           b"<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>",
+    [1m[94m|[0m
+[1m[96mhelp[0m[1m: Did you forget a comma?[0m
+[1m[96mhelp[0m[1m: Wrap implicitly concatenated strings in parentheses[0m
+
+[1m[91mSIM117[0m[1m Use a single `with` statement with multiple contexts instead of nested `with` statements[0m
+   [1m[94m--> [0mtests/test_telemetry.py:101:5
+    [1m[94m|[0m
+[1m[94m100[0m [1m[94m|[0m   def test_span_error_records_exception_type(capsys):
+[1m[94m101[0m [1m[94m|[0m [1m[91m/[0m     with bind_trace("trace-err"), pytest.raises(RuntimeError, match="boom"):
+[1m[94m102[0m [1m[94m|[0m [1m[91m|[0m         with span("rerank"):
+    [1m[94m|[0m [1m[91m|____________________________^[0m
+[1m[94m103[0m [1m[94m|[0m               raise RuntimeError("boom")
+[1m[94m104[0m [1m[94m|[0m       lines = [json.loads(line) for line in capsys.readouterr().out.strip().splitlines()]
+    [1m[94m|[0m
+[1m[96mhelp[0m[1m: Combine `with` statements[0m
+
+[1m[91mSIM117[0m[1m Use a single `with` statement with multiple contexts instead of nested `with` statements[0m
+   [1m[94m--> [0mtests/test_telemetry.py:148:5
+    [1m[94m|[0m
+[1m[94m146[0m [1m[94m|[0m       monkeypatch.setenv("STAGE_SOFT_MS_fuse", "10")
+[1m[94m147[0m [1m[94m|[0m       monkeypatch.setenv("STAGE_HARD_MS_fuse", "40")
+[1m[94m148[0m [1m[94m|[0m [1m[91m/[0m     with bind_trace("trace-hard"), pytest.raises(StageBudgetExceeded) as raised:
+[1m[94m149[0m [1m[94m|[0m [1m[91m|[0m         with span("fuse"):
+    [1m[94m|[0m [1m[91m|__________________________^[0m
+[1m[94m150[0m [1m[94m|[0m               time.sleep(0.12)
+[1m[94m151[0m [1m[94m|[0m       assert raised.value.stage == "fuse"
+    [1m[94m|[0m
+[1m[96mhelp[0m[1m: Combine `with` statements[0m
+
+Found 37 errors.
+No fixes available (11 hidden fixes can be enabled with the `--unsafe-fixes` option).

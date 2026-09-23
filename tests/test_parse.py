@@ -1,5 +1,6 @@
-import pytest
 from pathlib import Path
+
+import pytest
 
 from rag.models import IngestError
 from rag.parse import parse_file
@@ -83,7 +84,7 @@ def test_pdf_round_trip(tmp_path):
 
 def test_pdf_tables_are_not_also_kept_as_prose():
     # F-02: distinctive table figures must not also sit in prose on the same page.
-    path = Path("documents/Carbon_Reduction_Plan.pdf")
+    path = Path(__file__).resolve().parents[1] / "documents" / "Carbon_Reduction_Plan.pdf"
     if not path.exists():
         pytest.skip("corpus PDF missing")
     _mime, blocks = parse_file(path)
@@ -131,8 +132,10 @@ def _pdf(text: str) -> bytes:
     objects = [
         b"<< /Type /Catalog /Pages 2 0 R >>",
         b"<< /Type /Pages /Count 1 /Kids [3 0 R] >>",
-        b"<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] "
-        b"/Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>",
+        (
+            b"<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 792] "
+            b"/Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>"
+        ),
         stream,
         b"<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>",
     ]

@@ -1,5 +1,6 @@
 import hashlib
 import re
+from collections.abc import Callable
 
 from rag.models import (
     CHILD_MAX,
@@ -19,14 +20,18 @@ _SENTENCE = re.compile(r"[.!?]\s+|\n+")
 
 
 def chunk_document(
-    doc_id: str, blocks: list[Block], count_tokens, *, context_fn=None
+    doc_id: str,
+    blocks: list[Block],
+    count_tokens: Callable[[str], int],
+    *,
+    context_fn: Callable[[str, str], str] | None = None,
 ) -> tuple[list[Parent], list[Child]]:
     parents: list[Parent] = []
     children: list[Child] = []
     for section in _sections(blocks):
-        for parent in _pack_section(doc_id, section, count_tokens, len(parents)):
-            parents.append(parent[0])
-            children.extend(parent[1])
+        for packed in _pack_section(doc_id, section, count_tokens, len(parents)):
+            parents.append(packed[0])
+            children.extend(packed[1])
     children = _merge_tiny(children, count_tokens)
     children = _dedupe(children)
     if context_fn is not None:
@@ -56,9 +61,7 @@ def _sections(blocks: list[Block]) -> list[list[Block]]:
             and groups[-1][0].heading_path == block.heading_path
             and groups[-1][0].kind != "row"
             and block.kind != "row"
-        ):
-            groups[-1].append(block)
-        elif (
+        ) or (
             groups
             and block.kind == "row"
             and groups[-1][0].kind == "row"
@@ -70,7 +73,12 @@ def _sections(blocks: list[Block]) -> list[list[Block]]:
     return groups
 
 
-def _pack_section(doc_id, blocks, count_tokens, parent_index):
+def _pack_section(
+    doc_id: str,
+    blocks: list[Block],
+    count_tokens: Callable[[str], int],
+    parent_index: int,
+) -> list[tuple[Parent, list[Child]]]:
     kind = _section_kind(blocks)
     text = "\n".join(block.text for block in blocks)
     start = blocks[0].start_char
@@ -149,9 +157,19 @@ def _pack_section(doc_id, blocks, count_tokens, parent_index):
 
 
 def _parents_from_windows(
-    doc_id, text, start, heading, kind, pages, parent_index, count_tokens, windows, *, derived=False
-):
-    packed = []
+    doc_id: str,
+    text: str,
+    start: int,
+    heading: str,
+    kind: str,
+    pages: list[int],
+    parent_index: int,
+    count_tokens: Callable[[str], int],
+    windows: list[tuple[int, int]],
+    *,
+    derived: bool = False,
+) -> list[tuple[Parent, list[Child]]]:
+    packed: list[tuple[Parent, list[Child]]] = []
     for offset, (local_start, local_end) in enumerate(windows):
         raw = text[local_start:local_end]
         body = raw.strip()
@@ -173,7 +191,9 @@ def _parents_from_windows(
     return packed
 
 
-def _children_for(parent: Parent, kind: str, count_tokens) -> list[Child]:
+def _children_for(
+    parent: Parent, kind: str, count_tokens: Callable[[str], int]
+) -> list[Child]:
     if kind == "table":
         pieces = [
             _child(parent, body, parent.start_char + row_start, parent.start_char + row_end, count_tokens)
@@ -205,7 +225,7 @@ def _children_for(parent: Parent, kind: str, count_tokens) -> list[Child]:
             CHILD_OVERLAP,
             True,
         )
-    children = []
+    children: list[Child] = []
     for local_start, local_end in spans:
         raw = parent.text[local_start:local_end]
         body = raw.strip()
@@ -217,14 +237,16 @@ def _children_for(parent: Parent, kind: str, count_tokens) -> list[Child]:
     return children
 
 
-def _table_summary_child(parent: Parent, count_tokens) -> Child | None:
+def _table_summary_child(
+    parent: Parent, count_tokens: Callable[[str], int]
+) -> Child | None:
     lines = [line.strip() for line in parent.text.splitlines() if line.strip()]
     if not lines:
         return None
     header = lines[0]
     cols = [part.strip() for part in header.split("|") if part.strip()]
     units = [col for col in cols if _looks_like_unit(col)]
-    parts = []
+    parts: list[str] = []
     if parent.heading_path:
         parts.append(parent.heading_path)
     parts.append("columns: " + ", ".join(cols))
@@ -254,7 +276,13 @@ def _label_row(header: str, row: str) -> str:
     return "; ".join(parts)
 
 
-def _child(parent: Parent, body: str, start: int, end: int, count_tokens) -> Child:
+def _child(
+    parent: Parent,
+    body: str,
+    start: int,
+    end: int,
+    count_tokens: Callable[[str], int],
+) -> Child:
     embed_text = make_embed_text(parent.heading_path, body)
     return Child(
         chunk_id=_content_id(str(PIPELINE_VERSION), parent.doc_id, embed_text),
@@ -275,7 +303,9 @@ def _child(parent: Parent, body: str, start: int, end: int, count_tokens) -> Chi
     )
 
 
-def _table_pieces(text: str, count_tokens) -> list[tuple[str, int, int]]:
+def _table_pieces(
+    text: str, count_tokens: Callable[[str], int]
+) -> list[tuple[str, int, int]]:
     lines = _line_spans(text)
     if not lines:
         return []
@@ -296,9 +326,8 @@ def _table_pieces(text: str, count_tokens) -> list[tuple[str, int, int]]:
             tokens = count_tokens(header)
         current.append(line)
         tokens += n
-    if current:
-        groups.append(current)
-    pieces = []
+    groups.append(current)
+    pieces: list[tuple[str, int, int]] = []
     for group in groups:
         row_start = group[0][0]
         row_end = group[-1][1]
@@ -318,7 +347,9 @@ _IDENT = re.compile(r"\d|[A-Za-z]+-\d|\b[A-Z]{2,}-\d")
 _MIN_CHILD_TOKENS = 24
 
 
-def _merge_tiny(children: list[Child], count_tokens) -> list[Child]:
+def _merge_tiny(
+    children: list[Child], count_tokens: Callable[[str], int]
+) -> list[Child]:
     if len(children) < 2:
         return children
     out: list[Child] = []
@@ -357,7 +388,12 @@ def _merge_tiny(children: list[Child], count_tokens) -> list[Child]:
     return out
 
 
-def _apply_context(children, parents, context_fn, count_tokens) -> None:
+def _apply_context(
+    children: list[Child],
+    parents: list[Parent],
+    context_fn: Callable[[str, str], str],
+    count_tokens: Callable[[str], int],
+) -> None:
     by_id = {parent.parent_id: parent for parent in parents}
     for child in children:
         parent = by_id.get(child.parent_id)
@@ -365,7 +401,7 @@ def _apply_context(children, parents, context_fn, count_tokens) -> None:
             continue
         try:
             prefix = (context_fn(parent.text, child.text) or "").strip()
-        except Exception:
+        except Exception:  # noqa: BLE001 — caller-supplied context_fn has no closed error set
             prefix = ""
         if not prefix:
             continue
@@ -375,7 +411,18 @@ def _apply_context(children, parents, context_fn, count_tokens) -> None:
         child.chunk_id = _content_id(str(PIPELINE_VERSION), child.doc_id, child.embed_text)
 
 
-def _make_parent(doc_id, text, start, heading, kind, pages, parent_index, count_tokens, *, derived=False):
+def _make_parent(
+    doc_id: str,
+    text: str,
+    start: int,
+    heading: str,
+    kind: str,
+    pages: list[int],
+    parent_index: int,
+    count_tokens: Callable[[str], int],
+    *,
+    derived: bool = False,
+) -> tuple[Parent, list[Child]]:
     parent = Parent(
         # start keeps two copies of the same paragraph from sharing an id
         parent_id=_content_id(str(PIPELINE_VERSION), doc_id, text, str(start)),
@@ -407,8 +454,10 @@ def _section_kind(blocks: list[Block]) -> str:
     return "prose"
 
 
-def _piece_spans(text: str, count_tokens, hard_max: int) -> list[tuple[int, int]]:
-    pieces = []
+def _piece_spans(
+    text: str, count_tokens: Callable[[str], int], hard_max: int
+) -> list[tuple[int, int]]:
+    pieces: list[tuple[int, int]] = []
     for start, end in _paragraph_spans(text):
         if count_tokens(text[start:end]) <= hard_max:
             pieces.append((start, end))
@@ -417,9 +466,15 @@ def _piece_spans(text: str, count_tokens, hard_max: int) -> list[tuple[int, int]
     return pieces or [(0, len(text))]
 
 
-def _split_long(text, start, end, count_tokens, hard_max):
+def _split_long(
+    text: str,
+    start: int,
+    end: int,
+    count_tokens: Callable[[str], int],
+    hard_max: int,
+) -> list[tuple[int, int]]:
     sentences = [span for span in _sentence_spans(text[start:end])]
-    units = []
+    units: list[tuple[int, int]] = []
     for local_start, local_end in sentences:
         abs_start = start + local_start
         abs_end = start + local_end
@@ -454,18 +509,22 @@ def _sentence_spans(text: str) -> list[tuple[int, int]]:
         start = match.end()
     if start < len(text) and text[start:].strip():
         spans.append((start, len(text)))
-    if not spans and text.strip():
-        spans.append((0, len(text)))
     return spans
 
 
-def _word_spans(text, start, end, count_tokens, hard_max):
-    spans = []
+def _word_spans(
+    text: str,
+    start: int,
+    end: int,
+    count_tokens: Callable[[str], int],
+    hard_max: int,
+) -> list[tuple[int, int]]:
+    spans: list[tuple[int, int]] = []
     cursor = start
     while cursor < end:
         window_end = cursor
         last = cursor
-        while window_end < end:
+        while True:
             nxt = text.find(" ", window_end + 1)
             if nxt < 0 or nxt > end:
                 nxt = end
@@ -475,11 +534,7 @@ def _word_spans(text, start, end, count_tokens, hard_max):
             window_end = nxt
             if nxt == end:
                 break
-        if last == cursor:
-            last = end
         spans.append((cursor, last))
-        if last <= cursor:
-            break
         cursor = last
         while cursor < end and text[cursor] == " ":
             cursor += 1
@@ -489,7 +544,7 @@ def _word_spans(text, start, end, count_tokens, hard_max):
 def _line_spans(text: str) -> list[tuple[int, int]]:
     spans = []
     cursor = 0
-    while cursor <= len(text):
+    while True:
         found = text.find("\n", cursor)
         if found < 0:
             if cursor < len(text):
@@ -501,12 +556,20 @@ def _line_spans(text: str) -> list[tuple[int, int]]:
     return spans or ([(0, len(text))] if text else [])
 
 
-def _windows(text, spans, count_tokens, target, hard_max, overlap, use_overlap):
+def _windows(
+    text: str,
+    spans: list[tuple[int, int]],
+    count_tokens: Callable[[str], int],
+    target: int,
+    hard_max: int,
+    overlap: int,
+    use_overlap: bool,
+) -> list[tuple[int, int]]:
     if not spans:
         return []
     if not use_overlap and count_tokens(text[spans[0][0] : spans[-1][1]]) <= hard_max:
         return [(spans[0][0], spans[-1][1])]
-    windows = []
+    windows: list[tuple[int, int]] = []
     start_i = 0
     while start_i < len(spans):
         end_i = start_i
@@ -521,8 +584,6 @@ def _windows(text, spans, count_tokens, target, hard_max, overlap, use_overlap):
                 break
             tokens += n
             end_i += 1
-        if end_i == start_i:
-            end_i = start_i + 1
         windows.append((spans[start_i][0], spans[end_i - 1][1]))
         if end_i >= len(spans):
             break
@@ -536,7 +597,13 @@ def _windows(text, spans, count_tokens, target, hard_max, overlap, use_overlap):
     return windows
 
 
-def _retreat(text, spans, end_i, count_tokens, overlap):
+def _retreat(
+    text: str,
+    spans: list[tuple[int, int]],
+    end_i: int,
+    count_tokens: Callable[[str], int],
+    overlap: int,
+) -> int:
     tokens = 0
     index = end_i
     while index > 0:

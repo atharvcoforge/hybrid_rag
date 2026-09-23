@@ -1,0 +1,40 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+___________________ test_a_different_model_refuses_the_index ___________________
+tests/test_pipeline.py:159: in test_a_different_model_refuses_the_index
+    with pytest.raises(IngestError, match="delete the index directory"):
+E   Failed: DID NOT RAISE IngestError
+----------------------------- Captured stdout call -----------------------------
+{"ts": "2026-09-23T11:58:31.337146+00:00", "event": "ingest_start", "file_total": 1, "trace_id": "01a0ce21-b7a9-7398-8e23-a7971b016244"}
+{"ts": "2026-09-23T11:58:31.337530+00:00", "event": "ingest_progress", "file": "note.md", "file_index": 1, "file_total": 1, "trace_id": "01a0ce21-b7a9-7398-8e23-a7971b016244"}
+{"ts": "2026-09-23T11:58:31.337720+00:00", "trace_id": "01a0ce21-b7a9-7398-8e23-a7971b016244", "stage": "parse", "event": "start", "file": "note.md", "file_index": 1, "file_total": 1}
+{"ts": "2026-09-23T11:58:31.338073+00:00", "event": "ingest_page", "file": "note.md", "file_index": 1, "file_total": 1, "page": 1, "page_total": 1, "trace_id": "01a0ce21-b7a9-7398-8e23-a7971b016244"}
+{"ts": "2026-09-23T11:58:31.338091+00:00", "trace_id": "01a0ce21-b7a9-7398-8e23-a7971b016244", "stage": "parse", "event": "finish", "duration_ms": 0.371, "file": "note.md", "file_index": 1, "file_total": 1, "page_total": 1, "layout_escalations": 0, "ocr_pages": 0}
+{"ts": "2026-09-23T11:58:31.338113+00:00", "trace_id": "01a0ce21-b7a9-7398-8e23-a7971b016244", "stage": "normalize", "event": "start", "file": "note.md"}
+{"ts": "2026-09-23T11:58:31.338187+00:00", "trace_id": "01a0ce21-b7a9-7398-8e23-a7971b016244", "stage": "normalize", "event": "finish", "duration_ms": 0.073, "file": "note.md"}
+{"ts": "2026-09-23T11:58:31.338229+00:00", "trace_id": "01a0ce21-b7a9-7398-8e23-a7971b016244", "stage": "chunk", "event": "start", "file": "note.md"}
+{"ts": "2026-09-23T11:58:31.338305+00:00", "trace_id": "01a0ce21-b7a9-7398-8e23-a7971b016244", "stage": "chunk", "event": "finish", "duration_ms": 0.075, "file": "note.md", "chunks": 1}
+{"ts": "2026-09-23T11:58:31.338347+00:00", "trace_id": "01a0ce21-b7a9-7398-8e23-a7971b016244", "stage": "contextualize", "event": "start", "file": "note.md", "skipped": true}
+{"ts": "2026-09-23T11:58:31.338395+00:00", "trace_id": "01a0ce21-b7a9-7398-8e23-a7971b016244", "stage": "contextualize", "event": "finish", "duration_ms": 0.048, "file": "note.md", "skipped": true, "reason": "contextual_disabled"}
+{"ts": "2026-09-23T11:58:31.338416+00:00", "trace_id": "01a0ce21-b7a9-7398-8e23-a7971b016244", "stage": "embed", "event": "start", "candidates_in": 1, "model": "test-embed", "file": "note.md"}
+{"ts": "2026-09-23T11:58:31.338512+00:00", "trace_id": "01a0ce21-b7a9-7398-8e23-a7971b016244", "stage": "embed", "event": "finish", "duration_ms": 0.095, "candidates_in": 1, "candidates_out": 1, "model": "test-embed", "file": "note.md", "cache_hit_rate": null}
+{"ts": "2026-09-23T11:58:31.338772+00:00", "event": "ingest_file_done", "file": "note.md", "file_index": 1, "file_total": 1, "chunks": 1, "layout_escalations": 0, "ocr_pages": 0, "trace_id": "01a0ce21-b7a9-7398-8e23-a7971b016244"}
+{"ts": "2026-09-23T11:58:31.338833+00:00", "event": "ingest_done", "files": 1, "trace_id": "01a0ce21-b7a9-7398-8e23-a7971b016244"}
+{"ts": "2026-09-23T11:58:31.342134+00:00", "event": "ingest_start", "file_total": 1, "trace_id": "01a0ce21-b7ae-75c4-b7e0-53c039bb0b3b"}
+{"ts": "2026-09-23T11:58:31.342146+00:00", "event": "ingest_progress", "file": "note.md", "file_index": 1, "file_total": 1, "trace_id": "01a0ce21-b7ae-75c4-b7e0-53c039bb0b3b"}
+{"ts": "2026-09-23T11:58:31.342310+00:00", "trace_id": "01a0ce21-b7ae-75c4-b7e0-53c039bb0b3b", "stage": "parse", "event": "start", "file": "note.md", "file_index": 1, "file_total": 1}
+{"ts": "2026-09-23T11:58:31.342441+00:00", "event": "ingest_page", "file": "note.md", "file_index": 1, "file_total": 1, "page": 1, "page_total": 1, "trace_id": "01a0ce21-b7ae-75c4-b7e0-53c039bb0b3b"}
+{"ts": "2026-09-23T11:58:31.342459+00:00", "trace_id": "01a0ce21-b7ae-75c4-b7e0-53c039bb0b3b", "stage": "parse", "event": "finish", "duration_ms": 0.149, "file": "note.md", "file_index": 1, "file_total": 1, "page_total": 1, "layout_escalations": 0, "ocr_pages": 0}
+{"ts": "2026-09-23T11:58:31.342477+00:00", "trace_id": "01a0ce21-b7ae-75c4-b7e0-53c039bb0b3b", "stage": "normalize", "event": "start", "file": "note.md"}
+{"ts": "2026-09-23T11:58:31.342534+00:00", "trace_id": "01a0ce21-b7ae-75c4-b7e0-53c039bb0b3b", "stage": "normalize", "event": "finish", "duration_ms": 0.056, "file": "note.md"}
+{"ts": "2026-09-23T11:58:31.342568+00:00", "trace_id": "01a0ce21-b7ae-75c4-b7e0-53c039bb0b3b", "stage": "chunk", "event": "start", "file": "note.md"}
+{"ts": "2026-09-23T11:58:31.342633+00:00", "trace_id": "01a0ce21-b7ae-75c4-b7e0-53c039bb0b3b", "stage": "chunk", "event": "finish", "duration_ms": 0.065, "file": "note.md", "chunks": 1}
+{"ts": "2026-09-23T11:58:31.342652+00:00", "trace_id": "01a0ce21-b7ae-75c4-b7e0-53c039bb0b3b", "stage": "contextualize", "event": "start", "file": "note.md", "skipped": true}
+{"ts": "2026-09-23T11:58:31.342717+00:00", "trace_id": "01a0ce21-b7ae-75c4-b7e0-53c039bb0b3b", "stage": "contextualize", "event": "finish", "duration_ms": 0.065, "file": "note.md", "skipped": true, "reason": "contextual_disabled"}
+{"ts": "2026-09-23T11:58:31.342739+00:00", "trace_id": "01a0ce21-b7ae-75c4-b7e0-53c039bb0b3b", "stage": "embed", "event": "start", "candidates_in": 1, "model": "other-embed", "file": "note.md"}
+{"ts": "2026-09-23T11:58:31.342851+00:00", "trace_id": "01a0ce21-b7ae-75c4-b7e0-53c039bb0b3b", "stage": "embed", "event": "finish", "duration_ms": 0.111, "candidates_in": 1, "candidates_out": 1, "model": "other-embed", "file": "note.md", "cache_hit_rate": null}
+{"ts": "2026-09-23T11:58:31.343125+00:00", "event": "ingest_file_done", "file": "note.md", "file_index": 1, "file_total": 1, "chunks": 1, "layout_escalations": 0, "ocr_pages": 0, "trace_id": "01a0ce21-b7ae-75c4-b7e0-53c039bb0b3b"}
+{"ts": "2026-09-23T11:58:31.343187+00:00", "event": "ingest_done", "files": 1, "trace_id": "01a0ce21-b7ae-75c4-b7e0-53c039bb0b3b"}
+=========================== short test summary info ============================
+FAILED tests/test_pipeline.py::test_a_different_model_refuses_the_index - Fai...
+1 failed in 0.05s

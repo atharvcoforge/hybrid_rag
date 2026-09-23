@@ -1,0 +1,92 @@
+
+lex-002 needle='14,644'
+ Q What were India baseline total emissions in tCO2e for FY24?
+ WIN baseline year: 2023–2024 (uk operations) | | | | | additional details relating to the baseline emissions calculations | | | | | coforge is c
+ GOOD | baseline year: 2023–2024 (india operations) | | | | | additional details relating to the baseline emissions calculations | | | | the basel
+ only_good [] only_good_header ['india'] scores 15.45 15.35
+
+lex-004 needle='413'
+ Q What is India's baseline Scope 1 figure in tCO2e?
+ WIN baseline year: 2023–2024 (uk operations) | | | | | additional details relating to the baseline emissions calculations | | | | | coforge is c
+ GOOD | baseline year: 2023–2024 (india operations) | | | | | additional details relating to the baseline emissions calculations | | | | the basel
+ only_good [] only_good_header ['india'] scores 12.12 11.07
+
+lex-005 needle='8,688'
+ Q What is India's baseline Scope 2 figure in tCO2e?
+ WIN baseline year: 2023–2024 (uk operations) | | | | | additional details relating to the baseline emissions calculations | | | | | coforge is c
+ GOOD | baseline year: 2023–2024 (india operations) | | | | | additional details relating to the baseline emissions calculations | | | | the basel
+ only_good [] only_good_header ['india'] scores 12.48 12.33
+
+lex-006 needle='5,543'
+ Q What is India's baseline Scope 3 figure in tCO2e?
+ WIN baseline year: 2023–2024 (uk operations) | | | | | additional details relating to the baseline emissions calculations | | | | | coforge is c
+ GOOD | baseline year: 2023–2024 (india operations) | | | | | additional details relating to the baseline emissions calculations | | | | the basel
+ only_good [] only_good_header ['india'] scores 12.25 11.26
+
+lex-011 needle='1,265'
+ Q What is India's FY25 Scope 1 figure?
+ WIN current year emissions: fy25 *there is no scope 1 (direct) related emission in the uk as no offices in these locations use natural gas, oil,
+ GOOD | reporting year: 1 april 2024 – 31 march 2025 | | | | | | | current year emissions – total (tco e) 2 | | | | | | | | emissions | | | india 
+ only_good [] only_good_header ['india'] scores 8.13 7.17
+
+lex-012 needle='6,344'
+ Q What is India's FY25 Scope 2 figure?
+ WIN | baseline year: 2023–2024 (india operations) | | | | | additional details relating to the baseline emissions calculations | | | | the basel
+ GOOD | reporting year: 1 april 2024 – 31 march 2025 | | | | | | | current year emissions – total (tco e) 2 | | | | | | | | emissions | | | india 
+ only_good [] only_good_header ['scope'] scores 8.29 7.88
+
+lex-018 needle='Greenhouse Gas Protocol'
+ Q Which GHG protocol does the carbon plan cite for reporting?
+ WIN • engage in community programs to generate renewable energy. 3. coforge has also committed to interventions with relation to sustainable bui
+ GOOD baseline year: 2023–2024 (uk operations) | | | | | additional details relating to the baseline emissions calculations | | | | | coforge is c
+ only_good [] only_good_header [] scores 13.56 5.7
+
+lex-019 needle='Carbon Footprint'
+ Q Which partner helps with carbon footprint management?
+ WIN • engage in community programs to generate renewable energy. 3. coforge has also committed to interventions with relation to sustainable bui
+ GOOD baseline year: 2023–2024 (uk operations) | | | | | additional details relating to the baseline emissions calculations | | | | | coforge is c
+ only_good ['partner'] only_good_header [] scores 4.26 3.72
+
+lex-024 needle='WEEE'
+ Q What UK e-waste standard does Coforge adhere to?
+ WIN baseline year: 2023–2024 (uk operations) | | | | | additional details relating to the baseline emissions calculations | | | | | coforge is c
+ GOOD • engage in community programs to generate renewable energy. 3. coforge has also committed to interventions with relation to sustainable bui
+ only_good ['standard', 'adhere'] only_good_header [] scores 4.2 3.41
+
+lex-026 needle='1st April 2025'
+ Q When was the Environmental Sustainability Policy last reviewed?
+ WIN environmental sustainability policy review date – 10th march 2025 last review – 1st april 2024 contents scope ..............................
+ GOOD environmental sustainability policy review date – 10th march 2026 last review – 1st april 2025 contents scope ..............................
+ only_good [] only_good_header [] scores 5.15 5.15
+
+lex-027 needle='10th March 2026'
+ Q What is the review date of the Environmental Sustainability Policy?
+ WIN environmental sustainability policy review date – 10th march 2025 last review – 1st april 2024 contents scope ..............................
+ GOOD environmental sustainability policy review date – 10th march 2026 last review – 1st april 2025 contents scope ..............................
+ only_good [] only_good_header [] scores 6.31 6.31
+
+lex-028 needle='covering 60%'
+ Q What share of Pan India operations does ISO 14001 cover?
+ WIN practices and feed to livestock to minimize waste to landfill. • the ‘zero plastic waste’ commitment at coforge is reinforced by eliminating
+ GOOD practices and feed to livestock to minimize waste to landfill. • the ‘zero plastic waste’ commitment at coforge is reinforced by eliminating
+ only_good [] only_good_header [] scores 9.84 9.84
+
+lex-029 needle='100% coverage by the end of 2025'
+ Q By when does the environmental policy plan 100% ISO 14001 coverage?
+ WIN practices and feed to livestock to minimize waste to landfill. • the ‘zero plastic waste’ commitment at coforge is reinforced by eliminating
+ GOOD practices and feed to livestock to minimize waste to landfill. • the ‘zero plastic waste’ commitment at coforge is reinforced by eliminating
+ only_good [] only_good_header [] scores 11.83 11.83
+
+lex-030 needle='5% year-on-year'
+ Q What year-on-year GHG reduction does the environmental policy set?
+ WIN recycle, and reuse) especially for food, plastic, and other recyclable/ bio-degradable waste to minimize waste to landfill. • drive responsi
+ GOOD recycle, and reuse) especially for food, plastic, and other recyclable/ bio-degradable waste to minimize waste to landfill. • drive responsi
+ only_good [] only_good_header [] scores 9.18 9.18
+
+lex-032 needle='baseline of 50%'
+ Q What was the FY2023 non-potable water baseline share?
+ WIN practices and feed to livestock to minimize waste to landfill. • the ‘zero plastic waste’ commitment at coforge is reinforced by eliminating
+ GOOD practices and feed to livestock to minimize waste to landfill. • the ‘zero plastic waste’ commitment at coforge is reinforced by eliminating
+ only_good [] only_good_header [] scores 7.96 7.96
+
+n rank2 37

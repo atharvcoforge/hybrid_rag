@@ -1,0 +1,80 @@
+...................................F..................F..F............F. [ 26%]
+..FFFF.............................F.................................... [ 52%]
+........................................................................ [ 78%]
+............................................................             [100%]
+=================================== FAILURES ===================================
+E   AttributeError: module 'rag.calibrate' has no attribute 'sorted'
+
+The above exception was the direct cause of the following exception:
+E   AttributeError: 'module' object at rag.calibrate has no attribute 'sorted'
+/Users/atharv.raotole/Desktop/RAG-WEEK6/.venv/lib/python3.11/site-packages/_pytest/monkeypatch.py:97: AttributeError: 'module' object at rag.calibrate has no attribute 'sorted'
+E   assert []
+/Users/atharv.raotole/Desktop/RAG-WEEK6/tests/test_cov_evaluate.py:97: assert []
+E   AssertionError: assert (['unanswerabl...ope=holdout)'] == []
+      
+      Left contains one more item: 'unanswerable_abstention=0.000 < 0.500 (scope=holdout)'
+      Use -v to get more diff or False)
+     +  where False = all(<generator object test_check_gates_floors_conflicts_and_regression.<locals>.<genexpr> at 0x10f3b86c0>)
+/Users/atharv.raotole/Desktop/RAG-WEEK6/tests/test_cov_evaluate.py:243: AssertionError: assert (['unanswerabl...ope=holdout)'] == []
+E   AssertionError: assert 'table' in {'code'}
+/Users/atharv.raotole/Desktop/RAG-WEEK6/tests/test_cov_parse.py:72: AssertionError: assert 'table' in {'code'}
+E   assert False
+     +  where False = any(<generator object test_pdf_pages_skip_ocr_when_no_image_and_record_errors.<locals>.<genexpr> at 0x10f3c9fc0>)
+/Users/atharv.raotole/Desktop/RAG-WEEK6/tests/test_cov_parse.py:153: assert False
+E   ModuleNotFoundError: import of pdfplumber halted; None in sys.modules
+/Users/atharv.raotole/Desktop/RAG-WEEK6/tests/test_cov_parse.py:168: ModuleNotFoundError: import of pdfplumber halted; None in sys.modules
+E   ValueError: All strings must be XML compatible: Unicode or ASCII, no NULL bytes or control characters
+src/lxml/apihelpers.pxi:1547: ValueError: All strings must be XML compatible: Unicode or ASCII, no NULL bytes or control characters
+E   ModuleNotFoundError: import of docx halted; None in sys.modules
+/Users/atharv.raotole/Desktop/RAG-WEEK6/tests/test_cov_parse.py:226: ModuleNotFoundError: import of docx halted; None in sys.modules
+E   rag.models.IngestError: /private/var/folders/s5/4_hmsf7j2qx8wnb21t6grg6m0000gp/T/pytest-of-atharv.raotole/pytest-922/test_search_orphans_parents_an0/idx: query vector width does not match the index
+/Users/atharv.raotole/Desktop/RAG-WEEK6/src/rag/store.py:456: rag.models.IngestError: /private/var/folders/s5/4_hmsf7j2qx8wnb21t6grg6m0000gp/T/pytest-of-atharv.raotole/pytest-922/test_search_orphans_parents_an0/idx: query vector width does not match the index
+=============================== warnings summary ===============================
+tests/test_cov_server.py::test_server_main_guard
+  <frozen runpy>:128: RuntimeWarning: 'rag.server' found in sys.modules after import of package 'rag', but prior to execution of 'rag.server'; this may result in unpredictable behaviour
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+================================ tests coverage ================================
+______________ coverage: platform darwin, python 3.11.16-final-0 _______________
+
+Name                      Stmts   Miss Branch BrPart  Cover   Missing
+---------------------------------------------------------------------
+src/rag/__init__.py           0      0      0      0   100%
+src/rag/__main__.py           2      0      0      0   100%
+src/rag/cache.py             43      0      6      0   100%
+src/rag/calibrate.py         68      1     30      1    98%   57
+src/rag/chunk.py            332      0    148      0   100%
+src/rag/cli.py              189      0     64      0   100%
+src/rag/embed.py             74      1     28      1    98%   130
+src/rag/evaluate.py         382     15    180      2    95%   126->128, 624-640
+src/rag/gates.py            204      0     98      0   100%
+src/rag/generate.py          63      1     14      3    95%   51, 91->exit, 100->91
+src/rag/health.py            50      0     10      0   100%
+src/rag/html_parse.py       113      2     66      2    98%   52, 84
+src/rag/layout.py           146      0     62      0   100%
+src/rag/models.py           117      0      2      0   100%
+src/rag/normalize.py         30      0     14      0   100%
+src/rag/ocr.py               66      1     18      2    96%   85, 90->88
+src/rag/onnx_backend.py      24      0      4      0   100%
+src/rag/parse.py            434     20    204     19    93%   112->114, 122->124, 127-131, 138-139, 141->93, 189-192, 196, 216->219, 326-327, 336->334, 343->345, 355->353, 358->330, 362->360, 377, 383, 393, 416->413, 435->440, 552-554, 569->565
+src/rag/pipeline.py         196      0     70      0   100%
+src/rag/queue.py             28      0      2      0   100%
+src/rag/rerank.py            40      0      8      0   100%
+src/rag/retrieve.py         285      0    128      0   100%
+src/rag/server.py           391      0     84      0   100%
+src/rag/store.py            346     34    126     12    89%   336-338, 340, 368-370, 400, 469, 472, 476-477, 486, 500, 531, 545-567, 571, 586
+src/rag/telemetry.py        203      0     56      0   100%
+src/rag/versions.py         412     29    200     32    89%   74, 80, 86, 103, 108, 117, 120, 122, 161->exit, 239-260, 383->388, 385->383, 389, 396->392, 404, 410, 413, 415, 434, 437, 439->431, 442->431, 446, 467, 469, 552, 557, 566, 586, 589, 666->exit, 684->exit
+---------------------------------------------------------------------
+TOTAL                      4238    104   1622     74    97%
+=========================== short test summary info ============================
+FAILED tests/test_cov_calibrate.py::test_fit_falls_through_when_every_threshold_answers_nothing
+FAILED tests/test_cov_evaluate.py::test_loaders_splits_and_corpus_pins - asse...
+FAILED tests/test_cov_evaluate.py::test_check_gates_floors_conflicts_and_regression
+FAILED tests/test_cov_parse.py::test_markdown_fences_headings_tables_lists_and_blank_bodies
+FAILED tests/test_cov_parse.py::test_pdf_pages_skip_ocr_when_no_image_and_record_errors
+FAILED tests/test_cov_parse.py::test_pdf_import_and_open_failures - ModuleNot...
+FAILED tests/test_cov_parse.py::test_docx_empty_heading_table_tab_deletion_and_textbox
+FAILED tests/test_cov_parse.py::test_docx_import_and_unreadable - ModuleNotFo...
+FAILED tests/test_cov_store.py::test_search_orphans_parents_and_records - rag...
+9 failed, 267 passed, 1 warning in 3.10s

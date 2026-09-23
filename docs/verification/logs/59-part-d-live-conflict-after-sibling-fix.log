@@ -1,0 +1,13 @@
+cached: False
+ERROR: None
+ANSWER:
+Coforge commits to becoming Carbon Neutral in its operations by 2040 [1]. Note: a superseded version (Environmental_Sustainability_Policy_2025.pdf) states 2050 [4].
+
+CONFLICT: {'current_doc': 'Envi_2040-1.pdf', 'superseded_doc': 'Environmental_Sustainability_Policy_2025.pdf', 'current_value': '2040', 'superseded_value': '2050', 'cite': 1, 'version_group': 'vg_envi20401_environmentalsustainabil'}
+
+HITS:
+  [1] Envi_2040-1.pdf superseded=False vg=vg_envi20401_environmentalsustainabil
+  [2] Carbon_New_2040.pdf superseded=False vg=None
+  [3] Carbon_New_2040.pdf superseded=False vg=None
+  [4] Environmental_Sustainability_Policy_2025.pdf superseded=True vg=vg_envi20401_environmentalsustainabil
+checks: {'2040': True, '2050': True, 'stale_named': True, 'superseded_word': True, 'not_abstain': True, 'conflict': True}

@@ -1,0 +1,20 @@
+=== llama process ===
+atharv.raotole   32807   0.0  0.1 436851488  19152   ??  S    10Sep26   4:08.91 /Applications/Ollama.app/Contents/Resources/ollama serve
+atharv.raotole   30785   0.0  0.2 442212880  40240   ??  S    10Sep26   1:31.41 /Applications/Ollama.app/Contents/MacOS/Ollama hidden
+atharv.raotole    4993   0.0  0.0 435299504   1152   ??  S     4:39PM   0:00.00 tee docs/verification/logs/43-llama-listen-state.log
+*   Trying 127.0.0.1:8081...
+* connect to 127.0.0.1 port 8081 from 127.0.0.1 port 58872 failed: Connection refused
+* Failed to connect to 127.0.0.1 port 8081 after 0 ms: Couldn't connect to server
+* Closing connection
+=== log tail ===
+0.00.000.105 I srv  llama_server: initializing ...
+0.00.056.830 I cmn  common_param: common_params_print_info: verbosity = 3 (adjust with the `-lv N` CLI arg)
+0.00.056.984 W srv  llama_server: security: no API key is set and CORS allows all origins (see https://github.com/ggml-org/llama.cpp/pull/25655)
+0.00.058.361 I srv    load_model: loading model 'models/qwen2.5-3b-instruct-q4_k_m.gguf'
+0.00.312.876 W load: control-looking token: 128247 '</s>' was not control-type; this is probably a bug in the model. its type will be overridden
+0.00.424.837 W llama_context: n_ctx_seq (131072) > n_ctx_train (32768) -- possible training context overflow
+0.01.027.922 I cmn          init: llama threadpool init, n_threads = 4
+0.01.089.266 W srv    load_model: the slot context (131072) exceeds the training context of the model (32768) - capping
+0.01.177.095 I srv    load_model: initializing, n_slots = 4, n_ctx_slot = 32768, kv_unified = 'true'
+0.01.179.682 I srv  llama_server: model loaded
+0.01.179.684 I srv  llama_server: listening on http://0.0.0.0:8081

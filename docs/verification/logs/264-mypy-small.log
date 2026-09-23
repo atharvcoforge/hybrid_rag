@@ -1,0 +1,6 @@
+src/rag/embed.py:42: error: Incompatible return value type (got "list[list[float] | None]", expected "list[list[float]]")  [return-value]
+src/rag/embed.py:52: error: Incompatible types in assignment (expression has type "list[float] | None", variable has type "Sequence[float]")  [assignment]
+src/rag/embed.py:55: error: Argument 1 to "append" of "list" has incompatible type "Sequence[float]"; expected "list[float]"  [arg-type]
+src/rag/pipeline.py:93: error: Argument 5 to "_ingest_one" has incompatible type "Callable[[str], int] | None"; expected "Callable[[str], int]"  [arg-type]
+src/rag/pipeline.py:104: error: Argument 1 to "purge_missing" of "SqliteStore" has incompatible type "set[str]"; expected "list[str]"  [arg-type]
+Found 5 errors in 2 files (checked 8 source files)

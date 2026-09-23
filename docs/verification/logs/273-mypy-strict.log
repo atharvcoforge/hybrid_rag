@@ -1,0 +1,4 @@
+src/rag/gates.py:244: error: Argument 2 to "disclose_conflict" has incompatible type "Sequence[Hit]"; expected "list[Hit]"  [arg-type]
+src/rag/pipeline.py:137: error: Argument 3 to "retrieve" has incompatible type "Callable[[str], list[float]] | None"; expected "Callable[[str], list[float]]"  [arg-type]
+src/rag/pipeline.py:209: error: Argument "context_fn" to "chunk_document" has incompatible type "Callable[[str], str] | None"; expected "Callable[[str, str], str] | None"  [arg-type]
+Found 3 errors in 2 files (checked 26 source files)

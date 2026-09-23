@@ -1,0 +1,62 @@
+2026-09-23T00:28:30.038687+00:00 01a0cba9-fbd6-7311-abee-6c93bb46197d  ingest_start {"file_total": 3}
+2026-09-23T00:28:30.038910+00:00 01a0cba9-fbd6-7311-abee-6c93bb46197d  ingest_progress {"file": "Carbon_Reduction_Plan.pdf", "file_index": 1, "file_total": 3}
+2026-09-23T00:28:30.039215+00:00 01a0cba9-fbd6-7311-abee-6c93bb46197d  ingest_skip {"file": "Carbon_Reduction_Plan.pdf", "file_index": 1, "file_total": 3, "cache_hit": true}
+2026-09-23T00:28:30.039239+00:00 01a0cba9-fbd6-7311-abee-6c93bb46197d  ingest_progress {"file": "Environmental_Sustainability_Policy_2025.pdf", "file_index": 2, "file_total": 3}
+2026-09-23T00:28:30.039723+00:00 01a0cba9-fbd6-7311-abee-6c93bb46197d  ingest_skip {"file": "Environmental_Sustainability_Policy_2025.pdf", "file_index": 2, "file_total": 3, "cache_hit": true}
+2026-09-23T00:28:30.039744+00:00 01a0cba9-fbd6-7311-abee-6c93bb46197d  ingest_progress {"file": "Environmental_Sustainability_Policy_2026.pdf", "file_index": 3, "file_total": 3}
+2026-09-23T00:28:30.040064+00:00 01a0cba9-fbd6-7311-abee-6c93bb46197d  ingest_skip {"file": "Environmental_Sustainability_Policy_2026.pdf", "file_index": 3, "file_total": 3, "cache_hit": true}
+2026-09-23T00:28:30.064645+00:00 01a0cba9-fbd6-7311-abee-6c93bb46197d  version_group_found {"version_group": "vg_environmentalsustainabil_environmentalsustainabil", "current": "Environmental_Sustainability_Policy_2026.pdf", "superseded": ["Environmental_Sustainability_Policy_2025.pdf"], "review_dates": {"Environmental_Sustainability_Policy_2025.pdf": "2025-03-10", "Environmental_Sustainability_Policy_2026.pdf": "2026-03-10"}, "level": "warning"}
+2026-09-23T00:28:30.064770+00:00 01a0cba9-fbd6-7311-abee-6c93bb46197d  ingest_done {"files": 4}
+purged  Water_Management_Policy.pdf
+docs after purge [('Carbon_Reduction_Plan.pdf',), ('Environmental_Sustainability_Policy_2025.pdf',), ('Environmental_Sustainability_Policy_2026.pdf',)]
+children total 54
+parents [('Carbon_Reduction_Plan.pdf', 6), ('Environmental_Sustainability_Policy_2025.pdf', 4), ('Environmental_Sustainability_Policy_2026.pdf', 4)]
+{"ts": "2026-09-23T00:28:30.150946+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T00:28:30.555876+00:00", "trace_id": null, "stage": "embed_query", "event": "stage_slow", "duration_ms": 404.931, "model": "Qwen/Qwen3-Embedding-0.6B", "soft_budget_ms": 400.0}
+{"ts": "2026-09-23T00:28:32.611886+00:00", "trace_id": null, "stage": "embed_query", "event": "error", "duration_ms": 2460.96, "model": "Qwen/Qwen3-Embedding-0.6B", "error_type": "ProxyError", "error": "403 Forbidden"}
+Traceback (most recent call last):
+  File "/Users/atharv.raotole/Desktop/RAG-WEEK6/.venv/lib/python3.11/site-packages/httpx/_transports/default.py", line 101, in map_httpcore_exceptions
+    yield
+  File "/Users/atharv.raotole/Desktop/RAG-WEEK6/.venv/lib/python3.11/site-packages/httpx/_transports/default.py", line 250, in handle_request
+    resp = self._pool.handle_request(req)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/atharv.raotole/Desktop/RAG-WEEK6/.venv/lib/python3.11/site-packages/httpcore/_sync/connection_pool.py", line 256, in handle_request
+    raise exc from None
+  File "/Users/atharv.raotole/Desktop/RAG-WEEK6/.venv/lib/python3.11/site-packages/httpcore/_sync/connection_pool.py", line 236, in handle_request
+    response = connection.handle_request(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/atharv.raotole/Desktop/RAG-WEEK6/.venv/lib/python3.11/site-packages/httpcore/_sync/http_proxy.py", line 297, in handle_request
+    raise ProxyError(msg)
+httpcore.ProxyError: 403 Forbidden
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/Users/atharv.raotole/Desktop/RAG-WEEK6/src/rag/__main__.py", line 5, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/Users/atharv.raotole/Desktop/RAG-WEEK6/src/rag/cli.py", line 65, in main
+    result = query(args.text, args.index, doc_id=args.doc)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/atharv.raotole/Desktop/RAG-WEEK6/src/rag/pipeline.py", line 95, in query
+    return retrieve(index, text, embed_query, rerank=rerank, doc_id=doc_id, mode=mode)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/atharv.raotole/Desktop/RAG-WEEK6/src/rag/retrieve.py", line 58, in retrieve
+    result = _retrieve(index, query, embed_query, rerank, doc_id, mode, timer)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/atharv.raotole/Desktop/RAG-WEEK6/src/rag/retrieve.py", line 123, in _retrieve
+    vector = embed_query(query)
+             ^^^^^^^^^^^^^^^^^^
+  File "/Users/atharv.raotole/Desktop/RAG-WEEK6/src/rag/embed.py", line 64, in encode_query
+    return list(_cached_query(EMBED_MODEL, EMBED_REVISION, text))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/atharv.raotole/Desktop/RAG-WEEK6/src/rag/embed.py", line 53, in _cached_query
+    model = load_embedder()
+            ^^^^^^^^^^^^^^^
+  File "/Users/atharv.raotole/Desktop/RAG-WEEK6/src/rag/embed.py", line 82, in load_embedder
+    _embedder = SentenceTransformer(
+                ^^^^^^^^^^^^^^^^^^^^
+  File "/Users/atharv.raotole/Desktop/RAG-WEEK6/.venv/lib/python3.11/site-packages/sentence_transformers/util/decorators.py", line 46, in wrapper
+    return func(*args, **kwargs)

@@ -1,0 +1,36 @@
+.F.F..F..F....FFF..F.                                                    [100%]
+=================================== FAILURES ===================================
+E   AttributeError: module 'rag.calibrate' has no attribute 'sorted'
+
+The above exception was the direct cause of the following exception:
+E   AttributeError: 'module' object at rag.calibrate has no attribute 'sorted'
+/Users/atharv.raotole/Desktop/RAG-WEEK6/.venv/lib/python3.11/site-packages/_pytest/monkeypatch.py:97: AttributeError: 'module' object at rag.calibrate has no attribute 'sorted'
+E   assert []
+/Users/atharv.raotole/Desktop/RAG-WEEK6/tests/test_cov_evaluate.py:97: assert []
+E   AssertionError: assert (['unanswerabl...ope=holdout)'] == []
+      
+      Left contains one more item: 'unanswerable_abstention=0.000 < 0.500 (scope=holdout)'
+      Use -v to get more diff or False)
+     +  where False = all(<generator object test_check_gates_floors_conflicts_and_regression.<locals>.<genexpr> at 0x10a484860>)
+/Users/atharv.raotole/Desktop/RAG-WEEK6/tests/test_cov_evaluate.py:243: AssertionError: assert (['unanswerabl...ope=holdout)'] == []
+E   assert False
+     +  where False = any(<generator object test_markdown_fences_headings_tables_lists_and_blank_bodies.<locals>.<genexpr> at 0x10a3c93c0>)
+/Users/atharv.raotole/Desktop/RAG-WEEK6/tests/test_cov_parse.py:75: assert False
+E   ModuleNotFoundError: import of pdfplumber halted; None in sys.modules
+/Users/atharv.raotole/Desktop/RAG-WEEK6/tests/test_cov_parse.py:169: ModuleNotFoundError: import of pdfplumber halted; None in sys.modules
+E   ValueError: All strings must be XML compatible: Unicode or ASCII, no NULL bytes or control characters
+src/lxml/apihelpers.pxi:1547: ValueError: All strings must be XML compatible: Unicode or ASCII, no NULL bytes or control characters
+E   ModuleNotFoundError: import of docx halted; None in sys.modules
+/Users/atharv.raotole/Desktop/RAG-WEEK6/tests/test_cov_parse.py:227: ModuleNotFoundError: import of docx halted; None in sys.modules
+E   rag.models.IngestError: /private/var/folders/s5/4_hmsf7j2qx8wnb21t6grg6m0000gp/T/pytest-of-atharv.raotole/pytest-923/test_search_orphans_parents_an0/idx: query vector width does not match the index
+/Users/atharv.raotole/Desktop/RAG-WEEK6/src/rag/store.py:456: rag.models.IngestError: /private/var/folders/s5/4_hmsf7j2qx8wnb21t6grg6m0000gp/T/pytest-of-atharv.raotole/pytest-923/test_search_orphans_parents_an0/idx: query vector width does not match the index
+=========================== short test summary info ============================
+FAILED tests/test_cov_calibrate.py::test_fit_falls_through_when_every_threshold_answers_nothing
+FAILED tests/test_cov_evaluate.py::test_loaders_splits_and_corpus_pins - asse...
+FAILED tests/test_cov_evaluate.py::test_check_gates_floors_conflicts_and_regression
+FAILED tests/test_cov_parse.py::test_markdown_fences_headings_tables_lists_and_blank_bodies
+FAILED tests/test_cov_parse.py::test_pdf_import_and_open_failures - ModuleNot...
+FAILED tests/test_cov_parse.py::test_docx_empty_heading_table_tab_deletion_and_textbox
+FAILED tests/test_cov_parse.py::test_docx_import_and_unreadable - ModuleNotFo...
+FAILED tests/test_cov_store.py::test_search_orphans_parents_and_records - rag...
+8 failed, 13 passed in 0.22s

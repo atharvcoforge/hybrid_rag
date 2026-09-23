@@ -1,9 +1,9 @@
 """Table ladder and structure gate (F-12, §05)."""
 
 from rag.layout import (
+    extract_page_tables,
     looks_borderless,
     score_table,
-    extract_page_tables,
 )
 
 

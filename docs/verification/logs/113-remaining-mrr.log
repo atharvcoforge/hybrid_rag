@@ -1,0 +1,82 @@
+all n=122 recall=0.967 mrr=0.794 hist={1: 81, 2: 25, 3: 5, 4: 7, 'miss': 4}
+holdout n=74 recall=0.959 mrr=0.814 hist={1: 51, 2: 17, 4: 3, 'miss': 3}
+
+ lex-004 rank 2 train What is India's baseline Scope 1 figure in tCO2e?
+  needle 413 winner Carbon_Reduction_Plan.pdf current
+   Baseline Year: 2023–2024 (UK operations) | | | | | Additional details relating to the base
+
+ lex-006 rank 2 hold What is India's baseline Scope 3 figure in tCO2e?
+  needle 5,543 winner Carbon_Reduction_Plan.pdf current
+   Baseline Year: 2023–2024 (UK operations) | | | | | Additional details relating to the base
+
+ lex-011 rank 2 hold What is India's FY25 Scope 1 figure?
+  needle 1,265 winner Carbon_Reduction_Plan.pdf current
+   Current year emissions: FY25 *There is no Scope 1 (Direct) related emission in the UK as n
+
+ lex-013 rank 2 train What is India's FY25 Scope 3 figure?
+  needle 29,836 winner Carbon_Reduction_Plan.pdf current
+   | Baseline Year: 2023–2024 (India operations) | | | | | Additional details relating to the
+
+ lex-018 rank 2 hold Which GHG protocol does the carbon plan cite for reporting?
+  needle Greenhouse Gas Protocol winner Carbon_Reduction_Plan.pdf current
+   • Engage in community programs to generate renewable energy. 3. Coforge has also committed
+
+ lex-019 rank 2 hold Which partner helps with carbon footprint management?
+  needle Carbon Footprint winner Carbon_Reduction_Plan.pdf current
+   • Engage in community programs to generate renewable energy. 3. Coforge has also committed
+
+ lex-021 rank 2 hold What share of green energy does the carbon plan target by 2025?
+  needle 10% green energy winner Environmental_Sustainability_Policy_2026.pdf current
+   recycle, and reuse) especially for food, plastic, and other recyclable/ bio-degradable was
+
+ lex-022 rank 2 train What green energy share does the carbon plan aim for by 2030?
+  needle 50% by 2030 winner Environmental_Sustainability_Policy_2026.pdf current
+   recycle, and reuse) especially for food, plastic, and other recyclable/ bio-degradable was
+
+ lex-023 rank 3 train Which renewable initiative does the carbon plan commit to?
+  needle RE100 winner Carbon_Reduction_Plan.pdf current
+   • Engage in community programs to generate renewable energy. 3. Coforge has also committed
+
+ lex-024 rank 2 hold What UK e-waste standard does Coforge adhere to?
+  needle WEEE winner Carbon_Reduction_Plan.pdf current
+   Baseline Year: 2023–2024 (UK operations) | | | | | Additional details relating to the base
+
+ lex-031 rank 4 train What non-potable water share does the environmental policy want by 2040?
+  needle 75% by 2040 winner Water_Management_Policy.pdf current
+   | Focus Area | | | Commitment / Target | | | Target Year | Overarching Goal | | | Achieve 
+
+ lex-033 rank 3 train Who approved the Environmental Sustainability Policy?
+  needle John Speight winner Water_Management_Policy.pdf current
+   Monitoring, Reporting and Disclosure This Water Policy will be regularly reviewed and upda
+
+ lex-034 rank 3 train What title does John Speight hold on the environmental policy?
+  needle President, Executive Director winner Carbon_Reduction_Plan.pdf current
+   • Engage in community programs to generate renewable energy. 3. Coforge has also committed
+
+ lex-037 rank 2 train What is the last review date on the 2025 Environmental Sustainability Polic
+  needle 1st April 2024 winner Environmental_Sustainability_Policy_2026.pdf current
+   Environmental Sustainability Policy Review Date – 10th March 2026 Last Review – 1st April 
+
+ lex-038 rank 2 hold What is the review date on the 2025 Environmental Sustainability Policy?
+  needle 10th March 2025 winner Environmental_Sustainability_Policy_2026.pdf current
+   Environmental Sustainability Policy Review Date – 10th March 2026 Last Review – 1st April 
+
+ lex-044 rank 2 hold By when will water risk assessments cover owned facilities?
+  needle 2030 winner Water_Management_Policy.pdf current
+   Water Risk Assessment Coforge recognizes that water-related risk, including physical scarc
+
+ lex-048 rank 4 hold Which ISO standard does the water policy align with?
+  needle ISO 14001:2015 winner Water_Management_Policy.pdf current
+   This Policy is appropriate to the nature and scale of Coforge's operations and reflects th
+
+ sem-003 rank 2 hold In the carbon plan, when should electric vehicles reach about half the empl
+  needle 50% by 2032 winner Environmental_Sustainability_Policy_2026.pdf current
+   recycle, and reuse) especially for food, plastic, and other recyclable/ bio-degradable was
+
+ sem-004 rank 2 hold When does the carbon plan want a tenth of the employee transport fleet to b
+  needle 10% winner Environmental_Sustainability_Policy_2026.pdf current
+   recycle, and reuse) especially for food, plastic, and other recyclable/ bio-degradable was
+
+ sem-014 rank 2 hold When does the environmental policy want full renewable electricity via RE10
+  needle 100% renewable energy by 2050 winner Carbon_Reduction_Plan.pdf current
+   Current year emissions: FY25 *There is no Scope 1 (Direct) related emission in the UK as n

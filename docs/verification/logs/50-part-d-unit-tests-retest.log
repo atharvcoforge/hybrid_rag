@@ -1,0 +1,30 @@
+................F..........                                              [100%]
+=================================== FAILURES ===================================
+E   assert (None or None)
+     +  where None = <built-in method get of dict object at 0x10a016600>('conflict')
+     +    where <built-in method get of dict object at 0x10a016600> = {'hits': [{'parent_id': 'stale', 'text': 'We, at Coforge, are committed to become "Carbon Neutral in our operations by...ions by 2040".', 'heading': '', 'source': 'Envi_2040-1.pdf', ...}], 'reason': '', 'mode': 'rrf', 'retrieve_ms': 0, ...}.get
+     +  and   None = <built-in method get of dict object at 0x10a015b40>('conflict')
+     +    where <built-in method get of dict object at 0x10a015b40> = {}.get
+     +      where {} = <built-in method get of dict object at 0x10a016600>('verification', {})
+     +        where <built-in method get of dict object at 0x10a016600> = {'hits': [{'parent_id': 'stale', 'text': 'We, at Coforge, are committed to become "Carbon Neutral in our operations by...ions by 2040".', 'heading': '', 'source': 'Envi_2040-1.pdf', ...}], 'reason': '', 'mode': 'rrf', 'retrieve_ms': 0, ...}.get
+----------------------------- Captured stdout call -----------------------------
+{"ts": "2026-09-22T20:46:25.219575+00:00", "event": "query_start", "mode": "rrf", "trace_id": "01a0cade-a9c3-77bc-9dee-e20828188715"}
+{"ts": "2026-09-22T20:46:25.219595+00:00", "event": "retrieve", "request_id": "01a0cade-a9c3-77bc-9dee-e20828188715", "trace_id": "01a0cade-a9c3-77bc-9dee-e20828188715", "mode": "rrf", "retrieve_ms": 0, "hits": 2, "reason": ""}
+{"ts": "2026-09-22T20:46:25.219606+00:00", "trace_id": "01a0cade-a9c3-77bc-9dee-e20828188715", "stage": "generate_complete", "event": "start", "model": "qwen2.5-3b-instruct"}
+{"ts": "2026-09-22T20:46:25.219634+00:00", "trace_id": "01a0cade-a9c3-77bc-9dee-e20828188715", "stage": "generate_first_token", "event": "start", "model": "qwen2.5-3b-instruct"}
+{"ts": "2026-09-22T20:46:25.219656+00:00", "trace_id": "01a0cade-a9c3-77bc-9dee-e20828188715", "stage": "generate_first_token", "event": "finish", "duration_ms": 0.023, "model": "qwen2.5-3b-instruct", "cache_hit": false}
+{"ts": "2026-09-22T20:46:25.219678+00:00", "trace_id": "01a0cade-a9c3-77bc-9dee-e20828188715", "stage": "generate_complete", "event": "finish", "duration_ms": 0.072, "candidates_out": 1, "model": "qwen2.5-3b-instruct"}
+{"ts": "2026-09-22T20:46:25.219701+00:00", "trace_id": "01a0cade-a9c3-77bc-9dee-e20828188715", "stage": "gate_conflict", "event": "start"}
+{"ts": "2026-09-22T20:46:25.219747+00:00", "trace_id": "01a0cade-a9c3-77bc-9dee-e20828188715", "stage": "gate_conflict", "event": "finish", "duration_ms": 0.046, "reason": "version_conflict"}
+{"ts": "2026-09-22T20:46:25.219763+00:00", "trace_id": "01a0cade-a9c3-77bc-9dee-e20828188715", "stage": "gate_form", "event": "start"}
+{"ts": "2026-09-22T20:46:25.219804+00:00", "trace_id": "01a0cade-a9c3-77bc-9dee-e20828188715", "stage": "gate_form", "event": "finish", "duration_ms": 0.042}
+{"ts": "2026-09-22T20:46:25.219823+00:00", "trace_id": "01a0cade-a9c3-77bc-9dee-e20828188715", "stage": "gate_literal", "event": "start"}
+{"ts": "2026-09-22T20:46:25.219859+00:00", "trace_id": "01a0cade-a9c3-77bc-9dee-e20828188715", "stage": "gate_literal", "event": "finish", "duration_ms": 0.036}
+{"ts": "2026-09-22T20:46:25.219877+00:00", "trace_id": "01a0cade-a9c3-77bc-9dee-e20828188715", "stage": "gate_entail", "event": "start", "skipped": true, "reason": "no_entailment_model"}
+{"ts": "2026-09-22T20:46:25.219902+00:00", "trace_id": "01a0cade-a9c3-77bc-9dee-e20828188715", "stage": "gate_entail", "event": "finish", "duration_ms": 0.025, "degraded": true, "skipped": true, "reason": "no_entailment_model"}
+{"ts": "2026-09-22T20:46:25.219912+00:00", "trace_id": "01a0cade-a9c3-77bc-9dee-e20828188715", "stage": "gate_coverage", "event": "start", "coverage": 1.0}
+{"ts": "2026-09-22T20:46:25.219950+00:00", "trace_id": "01a0cade-a9c3-77bc-9dee-e20828188715", "stage": "gate_coverage", "event": "finish", "duration_ms": 0.038, "coverage": 1.0}
+/Users/atharv.raotole/Desktop/RAG-WEEK6/tests/test_server.py:223: assert (None or None)
+=========================== short test summary info ============================
+FAILED tests/test_server.py::test_carbon_neutrality_conflict_discloses_2040_and_2050
+1 failed, 26 passed in 0.12s

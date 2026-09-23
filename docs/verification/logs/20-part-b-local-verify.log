@@ -1,0 +1,17 @@
+=== content leak check (default LOG_CONTENT off) ===
+PASS: no query text in default logs
+{"ts": "2026-09-22T19:59:22.372229+00:00", "event": "query_start", "mode": "rrf", "trace_id": "leak-check"}
+{"ts": "2026-09-22T19:59:22.372886+00:00", "trace_id": "leak-check", "stage": "dense", "event": "start"}
+{"ts": "2026-09-22T19:59:22.372953+00:00", "trace_id": "leak-check", "stage": "dense", "event": "finish", "duration_ms": 0.066}
+
+=== dead generator stage error is obvious ===
+SSE events: ['trace', 'meta', 'error']
+last: ('error', {'message': 'writer unavailable', 'partial': '', 'request_id': 'dead-gen-trace', 'trace_id': 'dead-gen-trace', 'detail': 'ConnectionRefusedError'})
+{"trace_id": "dead-gen-trace", "event": "query_start"}
+{"trace_id": "dead-gen-trace", "event": "retrieve"}
+{"trace_id": "dead-gen-trace", "stage": "generate_complete", "event": "start"}
+{"trace_id": "dead-gen-trace", "stage": "generate_first_token", "event": "start"}
+{"trace_id": "dead-gen-trace", "stage": "generate_first_token", "event": "error", "error_type": "ConnectionRefusedError", "error": "connect to 127.0.0.1:1 failed", "duration_ms": 0.051}
+{"trace_id": "dead-gen-trace", "stage": "generate_complete", "event": "error", "error_type": "ConnectionRefusedError", "error": "connect to 127.0.0.1:1 failed", "duration_ms": 0.17}
+{"trace_id": "dead-gen-trace", "stage": "generate_complete", "event": "generate_failed", "error_type": "ConnectionRefusedError", "error": "connect to 127.0.0.1:1 failed"}
+PASS: generate_complete error visible

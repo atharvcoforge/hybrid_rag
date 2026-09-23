@@ -1,19 +1,35 @@
 import hashlib
+from collections.abc import Callable, Sequence
 from functools import lru_cache
+from typing import Any
 
-from rag.models import EMBED_BATCH, EMBED_MODEL, EMBED_REVISION, IngestError, RERANK_MODEL, RERANK_REVISION
+from rag.models import (
+    EMBED_BATCH,
+    EMBED_MODEL,
+    EMBED_REVISION,
+    RERANK_MODEL,
+    RERANK_REVISION,
+    IngestError,
+)
 
-_embedder = None
-_reranker = None
+_embedder: Any = None
+_reranker: Any = None
 
 
 def text_hash(text: str) -> str:
     return hashlib.sha256(text.encode()).hexdigest()
 
 
-def embed_texts(texts, encode, cache_get=None, cache_put=None, model_id="", revision=""):
-    vectors: list = [None] * len(texts)
-    missing = []
+def embed_texts(
+    texts: Sequence[str],
+    encode: Callable[..., Sequence[Sequence[float]]],
+    cache_get: Callable[[str, str, str], list[float] | None] | None = None,
+    cache_put: Callable[[str, str, str, list[float]], None] | None = None,
+    model_id: str = "",
+    revision: str = "",
+) -> list[list[float]]:
+    vectors: list[list[float] | None] = [None] * len(texts)
+    missing: list[int] = []
     for index, text in enumerate(texts):
         cached = None
         if cache_get is not None:
@@ -22,20 +38,24 @@ def embed_texts(texts, encode, cache_get=None, cache_put=None, model_id="", revi
             missing.append(index)
         else:
             vectors[index] = cached
-    if not missing:
-        return vectors
-    fresh = encode([texts[index] for index in missing], query=False)
-    if len(fresh) != len(missing):
-        raise IngestError("", "encoder returned the wrong number of vectors")
-    for index, vector in zip(missing, fresh):
-        stored = [float(value) for value in vector]
-        vectors[index] = stored
-        if cache_put is not None:
-            cache_put(model_id, revision, text_hash(texts[index]), stored)
-    return vectors
+    if missing:
+        fresh = encode([texts[index] for index in missing], query=False)
+        if len(fresh) != len(missing):
+            raise IngestError("", "encoder returned the wrong number of vectors")
+        for index, row in zip(missing, fresh):
+            stored = [float(value) for value in row]
+            vectors[index] = stored
+            if cache_put is not None:
+                cache_put(model_id, revision, text_hash(texts[index]), stored)
+    done: list[list[float]] = []
+    for vector in vectors:
+        if vector is None:
+            raise IngestError("", "encoder left a hole")
+        done.append(vector)
+    return done
 
 
-def encode_documents(texts, *, query=False):
+def encode_documents(texts: Sequence[str], *, query: bool = False) -> list[list[float]]:
     if query:
         return [encode_query(text) for text in texts]
     model = load_embedder()
@@ -49,7 +69,7 @@ def encode_documents(texts, *, query=False):
 
 
 @lru_cache(maxsize=128)
-def _cached_query(model_id: str, revision: str, text: str) -> tuple:
+def _cached_query(model_id: str, revision: str, text: str) -> tuple[float, ...]:
     model = load_embedder()
     encoded = model.encode(
         [text],
@@ -74,7 +94,7 @@ def count_tokens(text: str) -> int:
     return len(load_embedder().tokenizer.encode(text, add_special_tokens=False))
 
 
-def load_embedder():
+def load_embedder() -> Any:
     global _embedder
     if _embedder is None:
         from sentence_transformers import SentenceTransformer
@@ -93,7 +113,7 @@ def rerank_scores(query: str, texts: list[str]) -> list[float]:
     return CrossEncoderReranker().score(query, texts)
 
 
-def load_reranker():
+def load_reranker() -> Any:
     global _reranker
     if _reranker is None:
         from sentence_transformers import CrossEncoder
@@ -108,6 +128,6 @@ def _device() -> str:
 
         if torch.backends.mps.is_available():
             return "mps"
-    except Exception:
+    except Exception:  # noqa: BLE001 — torch import/backend failures are an open set
         return "cpu"
     return "cpu"

@@ -1,0 +1,68 @@
+[1m[91mRUF100[0m [[1m[96m*[0m][1m Unused `noqa` directive (unused: `S112`)[0m
+   [1m[94m--> [0msrc/rag/layout.py:177:15
+    [1m[94m|[0m
+[1m[94m175[0m [1m[94m|[0m     tables = []
+[1m[94m176[0m [1m[94m|[0m     for item in found:
+[1m[94m177[0m [1m[94m|[0m         try:  # noqa: S112 — one bad table must not drop the page
+    [1m[94m|[0m               [1m[91m^^^^^^^^^^^^[0m
+[1m[94m178[0m [1m[94m|[0m             rows = item.extract()
+[1m[94m179[0m [1m[94m|[0m         except Exception:  # noqa: BLE001 — pdfplumber raises an open set
+    [1m[94m|[0m
+[1m[96mhelp[0m[1m: Remove unused `noqa` directive[0m
+[1m[94m   [0m [1m[94m|[0m
+[1m[94m176[0m [1m[94m|[0m     for item in found:
+[1m[94m   [0m [1m[31m-[0m [31m        try:  # noqa: S112 — one bad table must not drop the page
+[0m[1m[94m177[0m [1m[32m+[0m [32m        try:
+[0m[1m[94m178[0m [1m[94m|[0m             rows = item.extract()
+[1m[94m   [0m [1m[94m|[0m
+
+[1m[91mS112[0m[1m `try`-`except`-`continue` detected, consider logging the exception[0m
+   [1m[94m--> [0msrc/rag/layout.py:179:9
+    [1m[94m|[0m
+[1m[94m177[0m [1m[94m|[0m           try:  # noqa: S112 — one bad table must not drop the page
+[1m[94m178[0m [1m[94m|[0m               rows = item.extract()
+[1m[94m179[0m [1m[94m|[0m [1m[91m/[0m         except Exception:  # noqa: BLE001 — pdfplumber raises an open set
+[1m[94m180[0m [1m[94m|[0m [1m[91m|[0m             continue
+    [1m[94m|[0m [1m[91m|____________________^[0m
+[1m[94m181[0m [1m[94m|[0m           if not rows:
+[1m[94m182[0m [1m[94m|[0m               continue
+    [1m[94m|[0m
+
+[1m[91mRUF100[0m [[1m[96m*[0m][1m Unused `noqa` directive (unused: `BLE001`)[0m
+   [1m[94m--> [0msrc/rag/parse.py:188:31
+    [1m[94m|[0m
+[1m[94m186[0m [1m[94m|[0m     except IngestError:
+[1m[94m187[0m [1m[94m|[0m         raise
+[1m[94m188[0m [1m[94m|[0m     except Exception as exc:  # noqa: BLE001 — parser libraries raise an open set
+    [1m[94m|[0m                               [1m[91m^^^^^^^^^^^^^^[0m
+[1m[94m189[0m [1m[94m|[0m         raise IngestError(str(path), "unreadable file") from exc
+[1m[94m190[0m [1m[94m|[0m     if not blocks:
+    [1m[94m|[0m
+[1m[96mhelp[0m[1m: Remove unused `noqa` directive[0m
+[1m[94m   [0m [1m[94m|[0m
+[1m[94m187[0m [1m[94m|[0m         raise
+[1m[94m   [0m [1m[31m-[0m [31m    except Exception as exc:  # noqa: BLE001 — parser libraries raise an open set
+[0m[1m[94m188[0m [1m[32m+[0m [32m    except Exception as exc:
+[0m[1m[94m189[0m [1m[94m|[0m         raise IngestError(str(path), "unreadable file") from exc
+[1m[94m   [0m [1m[94m|[0m
+
+[1m[91mRUF100[0m [[1m[96m*[0m][1m Unused `noqa` directive (unused: `BLE001`)[0m
+   [1m[94m--> [0msrc/rag/parse.py:322:31
+    [1m[94m|[0m
+[1m[94m320[0m [1m[94m|[0m     try:
+[1m[94m321[0m [1m[94m|[0m         document = Document(str(path))
+[1m[94m322[0m [1m[94m|[0m     except Exception as exc:  # noqa: BLE001 — parser libraries raise an open set
+    [1m[94m|[0m                               [1m[91m^^^^^^^^^^^^^^[0m
+[1m[94m323[0m [1m[94m|[0m         raise IngestError(str(path), "unreadable file") from exc
+[1m[94m324[0m [1m[94m|[0m     heading: list[str] = []
+    [1m[94m|[0m
+[1m[96mhelp[0m[1m: Remove unused `noqa` directive[0m
+[1m[94m   [0m [1m[94m|[0m
+[1m[94m321[0m [1m[94m|[0m         document = Document(str(path))
+[1m[94m   [0m [1m[31m-[0m [31m    except Exception as exc:  # noqa: BLE001 — parser libraries raise an open set
+[0m[1m[94m322[0m [1m[32m+[0m [32m    except Exception as exc:
+[0m[1m[94m323[0m [1m[94m|[0m         raise IngestError(str(path), "unreadable file") from exc
+[1m[94m   [0m [1m[94m|[0m
+
+Found 4 errors.
+[[36m*[0m] 3 fixable with the `--fix` option.

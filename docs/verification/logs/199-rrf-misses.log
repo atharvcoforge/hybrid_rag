@@ -1,0 +1,1266 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights: 100%|██████████| 310/310 [00:00<00:00, 16475.35it/s]
+{"ts": "2026-09-23T03:14:47.465751+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:47.493384+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 27.633, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:47.493448+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:47.493760+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.311, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:47.493789+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:47.494931+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 1.14, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:47.494982+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 33}
+{"ts": "2026-09-23T03:14:47.495079+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.095, "candidates_in": 33, "candidates_out": 22, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:47.499489+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:47.499614+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.123, "candidates_in": 5, "candidates_out": 5, "top_score": 0.14065573770491804}
+{"ts": "2026-09-23T03:14:47.499690+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:47.527084+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 27.392, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:47.527135+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:47.527376+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.24, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:47.527409+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:47.527847+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.437, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:47.527887+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 33}
+{"ts": "2026-09-23T03:14:47.527962+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.076, "candidates_in": 33, "candidates_out": 19, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:47.530751+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:47.530890+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.136, "candidates_in": 5, "candidates_out": 5, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:47.530972+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:47.554280+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 23.307, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:47.554329+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:47.554685+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.352, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:47.554739+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:47.555011+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.271, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:47.555037+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 31}
+{"ts": "2026-09-23T03:14:47.555137+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.1, "candidates_in": 31, "candidates_out": 19, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:47.558934+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:47.558994+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.06, "candidates_in": 5, "candidates_out": 5, "top_score": 0.05901639344262295}
+{"ts": "2026-09-23T03:14:47.559021+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:47.586228+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 27.204, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:47.586284+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:47.586675+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.391, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:47.586695+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:47.587015+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.319, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:47.587055+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 33}
+{"ts": "2026-09-23T03:14:47.587120+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.065, "candidates_in": 33, "candidates_out": 20, "top_score": 0.03252247488101534}
+{"ts": "2026-09-23T03:14:47.591227+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:47.591329+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.097, "candidates_in": 5, "candidates_out": 5, "top_score": 0.03252247488101534}
+{"ts": "2026-09-23T03:14:47.591409+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:47.615275+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 23.863, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:47.615324+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:47.615554+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.229, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:47.615583+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:47.615857+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.274, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:47.615891+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 33}
+{"ts": "2026-09-23T03:14:47.615956+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.064, "candidates_in": 33, "candidates_out": 20, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:47.620320+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:47.620407+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.09, "candidates_in": 5, "candidates_out": 5, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:47.620446+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:47.644634+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 24.182, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:47.644706+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:47.645149+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.444, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:47.645180+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:47.645486+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.306, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:47.645518+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 31}
+{"ts": "2026-09-23T03:14:47.645590+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.071, "candidates_in": 31, "candidates_out": 18, "top_score": 0.03252247488101534}
+{"ts": "2026-09-23T03:14:47.649128+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:47.649192+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.064, "candidates_in": 5, "candidates_out": 5, "top_score": 0.03252247488101534}
+{"ts": "2026-09-23T03:14:47.649228+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:47.673897+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 24.665, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:47.673949+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:47.674179+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.229, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:47.674208+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:47.674478+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.269, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:47.674517+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 31}
+{"ts": "2026-09-23T03:14:47.674599+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.082, "candidates_in": 31, "candidates_out": 19, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:47.678769+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:47.678893+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.126, "candidates_in": 5, "candidates_out": 5, "top_score": 0.05901639344262295}
+{"ts": "2026-09-23T03:14:47.678930+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:47.702705+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 23.772, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:47.702773+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:47.703179+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.406, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:47.703201+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:47.703453+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.252, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:47.703478+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 32}
+{"ts": "2026-09-23T03:14:47.703539+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.061, "candidates_in": 32, "candidates_out": 21, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:47.707552+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:47.707616+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.064, "candidates_in": 5, "candidates_out": 5, "top_score": 0.05901639344262295}
+{"ts": "2026-09-23T03:14:47.707706+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:47.734065+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 26.361, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:47.734118+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:47.734340+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.22, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:47.734372+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:47.734619+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.247, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:47.734654+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 30}
+{"ts": "2026-09-23T03:14:47.734797+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.143, "candidates_in": 30, "candidates_out": 19, "top_score": 0.03252247488101534}
+{"ts": "2026-09-23T03:14:47.738493+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:47.738559+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.067, "candidates_in": 5, "candidates_out": 5, "top_score": 0.03252247488101534}
+{"ts": "2026-09-23T03:14:47.738591+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:47.760665+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 22.071, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:47.760712+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:47.760931+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.218, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:47.760959+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:47.761230+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.271, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:47.761254+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 30}
+{"ts": "2026-09-23T03:14:47.761313+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.058, "candidates_in": 30, "candidates_out": 17, "top_score": 0.03252247488101534}
+{"ts": "2026-09-23T03:14:47.764478+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:47.764530+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.052, "candidates_in": 5, "candidates_out": 5, "top_score": 0.05854045478582761}
+T lex-010 r2 gold=Carbon_Reduction_Plan.pdf | Carbon_Reduction_Plan.pd | Current year emissions: FY25 *There is no Scope 1 (Direct) related emi
+{"ts": "2026-09-23T03:14:47.764562+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:47.787156+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 22.59, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:47.787199+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:47.787401+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.202, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:47.787420+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:47.787660+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.24, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:47.787685+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 30}
+{"ts": "2026-09-23T03:14:47.787746+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.06, "candidates_in": 30, "candidates_out": 19, "top_score": 0.03252247488101534}
+{"ts": "2026-09-23T03:14:47.790832+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:47.790893+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.06, "candidates_in": 5, "candidates_out": 5, "top_score": 0.03252247488101534}
+{"ts": "2026-09-23T03:14:47.790932+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:47.813095+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 22.159, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:47.813142+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:47.813361+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.219, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:47.813382+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:47.813639+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.257, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:47.813666+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 31}
+{"ts": "2026-09-23T03:14:47.813732+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.066, "candidates_in": 31, "candidates_out": 21, "top_score": 0.03252247488101534}
+{"ts": "2026-09-23T03:14:47.817426+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:47.817483+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.057, "candidates_in": 5, "candidates_out": 5, "top_score": 0.03252247488101534}
+{"ts": "2026-09-23T03:14:47.817512+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:47.839642+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 22.128, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:47.839690+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:47.839914+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.224, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:47.839936+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:47.840180+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.244, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:47.840209+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 31}
+{"ts": "2026-09-23T03:14:47.840272+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.063, "candidates_in": 31, "candidates_out": 20, "top_score": 0.032266458495966696}
+{"ts": "2026-09-23T03:14:47.843770+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:47.843834+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.064, "candidates_in": 5, "candidates_out": 5, "top_score": 0.032266458495966696}
+{"ts": "2026-09-23T03:14:47.843865+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:47.869597+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 25.729, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:47.869662+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:47.869855+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.193, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:47.869881+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:47.870144+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.263, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:47.870171+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 33}
+{"ts": "2026-09-23T03:14:47.870230+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.059, "candidates_in": 33, "candidates_out": 23, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:47.875008+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:47.875061+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.053, "candidates_in": 5, "candidates_out": 5, "top_score": 0.08524590163934427}
+{"ts": "2026-09-23T03:14:47.875086+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:47.896846+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 21.756, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:47.896893+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:47.897100+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.207, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:47.897120+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:47.897345+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.224, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:47.897380+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 28}
+{"ts": "2026-09-23T03:14:47.897464+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.083, "candidates_in": 28, "candidates_out": 18, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:47.900125+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:47.900180+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.055, "candidates_in": 5, "candidates_out": 5, "top_score": 0.09737704918032787}
+T lex-015 rmiss gold=Carbon_Reduction_Plan.pdf | Carbon_Reduction_Plan.pd | Declaration and Sign Off This Carbon Reduction Plan has been completed
+{"ts": "2026-09-23T03:14:47.900211+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:47.926308+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 26.093, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:47.926362+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:47.926592+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.229, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:47.926623+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:47.926989+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.366, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:47.927018+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 34}
+{"ts": "2026-09-23T03:14:47.927086+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.067, "candidates_in": 34, "candidates_out": 21, "top_score": 0.03252247488101534}
+{"ts": "2026-09-23T03:14:47.930564+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:47.930619+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.055, "candidates_in": 5, "candidates_out": 5, "top_score": 0.13303125000000002}
+{"ts": "2026-09-23T03:14:47.930654+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:47.955678+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 25.021, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:47.955726+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:47.955935+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.208, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:47.955956+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:47.956187+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.23, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:47.956222+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 30}
+{"ts": "2026-09-23T03:14:47.956296+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.073, "candidates_in": 30, "candidates_out": 19, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:47.959580+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:47.959646+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.067, "candidates_in": 5, "candidates_out": 5, "top_score": 0.09737704918032787}
+{"ts": "2026-09-23T03:14:47.959696+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:47.981990+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 22.292, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:47.982034+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:47.982239+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.205, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:47.982266+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:47.982516+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.249, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:47.982548+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 31}
+{"ts": "2026-09-23T03:14:47.982622+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.074, "candidates_in": 31, "candidates_out": 19, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:47.986909+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:47.986976+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.067, "candidates_in": 5, "candidates_out": 5, "top_score": 0.09737704918032787}
+H lex-018 r3 gold=Carbon_Reduction_Plan.pdf | Carbon_Reduction_Plan.pd | Declaration and Sign Off This Carbon Reduction Plan has been completed
+{"ts": "2026-09-23T03:14:47.987014+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.033543+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 46.524, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.033600+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:48.034745+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 1.143, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.035173+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:48.043893+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 8.717, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.043957+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 25}
+{"ts": "2026-09-23T03:14:48.047080+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 3.12, "candidates_in": 25, "candidates_out": 18, "top_score": 0.032266458495966696}
+{"ts": "2026-09-23T03:14:48.050782+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:48.050890+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.111, "candidates_in": 5, "candidates_out": 5, "top_score": 0.032018442622950824}
+H lex-019 r2 gold=Carbon_Reduction_Plan.pdf | Carbon_Reduction_Plan.pd | • Engage in community programs to generate renewable energy. 3. Coforg
+{"ts": "2026-09-23T03:14:48.050936+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.082754+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 31.814, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.082806+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:48.083041+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.234, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.083063+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:48.083341+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.277, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.083380+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 31}
+{"ts": "2026-09-23T03:14:48.083469+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.089, "candidates_in": 31, "candidates_out": 25, "top_score": 0.03252247488101534}
+{"ts": "2026-09-23T03:14:48.089791+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:48.089868+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.077, "candidates_in": 5, "candidates_out": 5, "top_score": 0.03252247488101534}
+{"ts": "2026-09-23T03:14:48.089905+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.116761+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 26.853, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.116814+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:48.117038+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.223, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.117069+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:48.117328+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.26, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.117355+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 30}
+{"ts": "2026-09-23T03:14:48.117417+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.061, "candidates_in": 30, "candidates_out": 21, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:48.121379+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:48.121456+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.078, "candidates_in": 5, "candidates_out": 5, "top_score": 0.051971726190476186}
+{"ts": "2026-09-23T03:14:48.121494+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.145949+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 24.448, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.146082+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:48.146362+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.281, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.146416+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:48.146816+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.409, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.146841+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 30}
+{"ts": "2026-09-23T03:14:48.147011+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.169, "candidates_in": 30, "candidates_out": 20, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:48.150913+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:48.150971+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.057, "candidates_in": 5, "candidates_out": 5, "top_score": 0.09428571428571428}
+{"ts": "2026-09-23T03:14:48.151006+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.173957+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 22.947, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.174006+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:48.174222+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.216, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.174250+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:48.174485+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.234, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.174513+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 29}
+{"ts": "2026-09-23T03:14:48.174581+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.066, "candidates_in": 29, "candidates_out": 20, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:48.178352+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:48.178421+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.069, "candidates_in": 5, "candidates_out": 5, "top_score": 0.054098360655737705}
+T lex-023 r2 gold=Carbon_Reduction_Plan.pdf | Carbon_Reduction_Plan.pd | Carbon Reduction Plan Supplier name: Coforge Limited & All Internation
+{"ts": "2026-09-23T03:14:48.178460+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.203616+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 25.152, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.203669+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:48.203893+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.223, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.203914+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:48.204255+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.341, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.204289+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 31}
+{"ts": "2026-09-23T03:14:48.204358+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.069, "candidates_in": 31, "candidates_out": 22, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:48.208306+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:48.208373+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.068, "candidates_in": 5, "candidates_out": 5, "top_score": 0.08524590163934427}
+{"ts": "2026-09-23T03:14:48.208403+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.232550+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 24.144, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.232596+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:48.232826+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.229, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.232856+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:48.233131+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.275, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.233158+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 30}
+{"ts": "2026-09-23T03:14:48.233219+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.06, "candidates_in": 30, "candidates_out": 20, "top_score": 0.03252247488101534}
+{"ts": "2026-09-23T03:14:48.237391+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:48.237481+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.092, "candidates_in": 5, "candidates_out": 5, "top_score": 0.09583138173302108}
+{"ts": "2026-09-23T03:14:48.237514+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.264894+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 27.377, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.264944+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:48.265159+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.215, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.265178+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:48.265448+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.269, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.265486+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 32}
+{"ts": "2026-09-23T03:14:48.265568+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.082, "candidates_in": 32, "candidates_out": 21, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:48.269427+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:48.269712+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.287, "candidates_in": 5, "candidates_out": 6, "top_score": 0.0532258064516129}
+{"ts": "2026-09-23T03:14:48.269758+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.294722+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 24.962, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.294772+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:48.294980+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.208, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.294998+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:48.295278+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.28, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.295304+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 30}
+{"ts": "2026-09-23T03:14:48.295437+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.133, "candidates_in": 30, "candidates_out": 18, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:48.298116+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:48.298353+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.237, "candidates_in": 5, "candidates_out": 6, "top_score": 0.0532258064516129}
+{"ts": "2026-09-23T03:14:48.298384+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.323638+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 25.25, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.323689+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:48.323912+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.222, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.323942+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:48.324209+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.266, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.324237+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 27}
+{"ts": "2026-09-23T03:14:48.324359+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.121, "candidates_in": 27, "candidates_out": 18, "top_score": 0.03252247488101534}
+{"ts": "2026-09-23T03:14:48.328992+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:48.329082+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.092, "candidates_in": 5, "candidates_out": 5, "top_score": 0.03252247488101534}
+{"ts": "2026-09-23T03:14:48.329113+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.358819+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 29.702, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.358866+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:48.359100+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.233, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.359121+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:48.359414+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.291, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.359469+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 31}
+{"ts": "2026-09-23T03:14:48.359573+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.103, "candidates_in": 31, "candidates_out": 22, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:48.364174+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:48.364265+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.093, "candidates_in": 5, "candidates_out": 5, "top_score": 0.09580645161290322}
+{"ts": "2026-09-23T03:14:48.364299+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.389289+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 24.986, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.389343+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:48.389561+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.218, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.389582+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:48.389877+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.294, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.389903+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 29}
+{"ts": "2026-09-23T03:14:48.389976+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.073, "candidates_in": 29, "candidates_out": 20, "top_score": 0.03131881575727918}
+{"ts": "2026-09-23T03:14:48.394389+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:48.394486+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.111, "candidates_in": 5, "candidates_out": 5, "top_score": 0.09283516483516482}
+{"ts": "2026-09-23T03:14:48.394524+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.423427+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 28.9, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.423481+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:48.423707+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.225, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.423740+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:48.424043+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.304, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.424072+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 32}
+{"ts": "2026-09-23T03:14:48.424152+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.079, "candidates_in": 32, "candidates_out": 26, "top_score": 0.03252247488101534}
+{"ts": "2026-09-23T03:14:48.430377+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:48.430466+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.091, "candidates_in": 5, "candidates_out": 5, "top_score": 0.05377926421404683}
+T lex-031 r2 gold=Environmental_Sustainability | Water_Management_Policy. | Contents Purpose .....................................................
+{"ts": "2026-09-23T03:14:48.430508+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.456117+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 25.605, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.456171+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:48.456401+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.229, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.456425+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:48.456696+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.27, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.456735+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 29}
+{"ts": "2026-09-23T03:14:48.456796+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.061, "candidates_in": 29, "candidates_out": 20, "top_score": 0.03252247488101534}
+{"ts": "2026-09-23T03:14:48.459934+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:48.460013+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.081, "candidates_in": 5, "candidates_out": 5, "top_score": 0.0576036866359447}
+{"ts": "2026-09-23T03:14:48.460054+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.483576+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 23.519, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.483625+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:48.483846+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.22, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.483875+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:48.484129+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.254, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.484156+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 29}
+{"ts": "2026-09-23T03:14:48.484220+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.063, "candidates_in": 29, "candidates_out": 19, "top_score": 0.03252247488101534}
+{"ts": "2026-09-23T03:14:48.487129+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:48.487201+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.073, "candidates_in": 5, "candidates_out": 5, "top_score": 0.05280337941628264}
+T lex-033 rmiss gold=Environmental_Sustainability | Environmental_Sustainabi | Compliance Obligations All provisions of the Environmental Sustainabil
+{"ts": "2026-09-23T03:14:48.487246+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.511505+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 24.256, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.511555+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:48.511774+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.219, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.511799+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:48.512046+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.247, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.512073+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 32}
+{"ts": "2026-09-23T03:14:48.512148+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.074, "candidates_in": 32, "candidates_out": 21, "top_score": 0.03252247488101534}
+{"ts": "2026-09-23T03:14:48.515279+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:48.515341+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.062, "candidates_in": 5, "candidates_out": 5, "top_score": 0.08932835820895522}
+T lex-034 r2 gold=Environmental_Sustainability | Environmental_Sustainabi | Contents Scope .......................................................
+{"ts": "2026-09-23T03:14:48.515381+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.539518+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 24.133, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.539566+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:48.539790+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.223, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.539809+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:48.540064+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.254, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.540094+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 35}
+{"ts": "2026-09-23T03:14:48.540174+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.08, "candidates_in": 35, "candidates_out": 26, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:48.545006+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:48.545084+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.08, "candidates_in": 5, "candidates_out": 5, "top_score": 0.03200204813108039}
+H lex-035 r2 gold=Environmental_Sustainability | Water_Management_Policy. | About Coforge Coforge is a global digital services and solutions provi
+{"ts": "2026-09-23T03:14:48.545146+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.569118+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 23.968, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.569173+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:48.569418+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.243, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.569453+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:48.569734+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.281, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.569763+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 32}
+{"ts": "2026-09-23T03:14:48.569828+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.065, "candidates_in": 32, "candidates_out": 21, "top_score": 0.03252247488101534}
+{"ts": "2026-09-23T03:14:48.573856+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:48.573925+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.07, "candidates_in": 5, "candidates_out": 5, "top_score": 0.05763319672131149}
+T lex-036 r3 gold=Environmental_Sustainability | Water_Management_Policy. | Contents Purpose .....................................................
+{"ts": "2026-09-23T03:14:48.573965+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.599349+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 25.38, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.599398+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:48.599623+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.225, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.599644+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:48.599933+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.289, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.599960+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 33}
+{"ts": "2026-09-23T03:14:48.600027+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.066, "candidates_in": 33, "candidates_out": 22, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:48.604792+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:48.604901+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.111, "candidates_in": 5, "candidates_out": 5, "top_score": 0.054098360655737705}
+{"ts": "2026-09-23T03:14:48.604940+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.630859+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 25.915, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.630959+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:48.631152+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.193, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.631201+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:48.631479+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.278, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.631506+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 33}
+{"ts": "2026-09-23T03:14:48.631582+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.075, "candidates_in": 33, "candidates_out": 22, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:48.635911+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:48.636019+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.109, "candidates_in": 5, "candidates_out": 5, "top_score": 0.054098360655737705}
+{"ts": "2026-09-23T03:14:48.636048+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.660849+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 24.798, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.660917+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:48.661159+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.244, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.661181+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:48.661498+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.317, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.661525+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 33}
+{"ts": "2026-09-23T03:14:48.661634+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.108, "candidates_in": 33, "candidates_out": 22, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:48.665143+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:48.665217+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.076, "candidates_in": 5, "candidates_out": 5, "top_score": 0.054098360655737705}
+{"ts": "2026-09-23T03:14:48.665247+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.690289+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 25.038, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.690343+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:48.690559+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.215, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.690582+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:48.690882+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.299, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.690921+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 32}
+{"ts": "2026-09-23T03:14:48.690992+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.071, "candidates_in": 32, "candidates_out": 22, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:48.694106+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:48.694184+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.08, "candidates_in": 5, "candidates_out": 5, "top_score": 0.05901639344262295}
+{"ts": "2026-09-23T03:14:48.694212+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.719463+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 25.239, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.719546+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:48.719818+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.271, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.719840+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:48.720160+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.32, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.720187+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 31}
+{"ts": "2026-09-23T03:14:48.720360+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.143, "candidates_in": 31, "candidates_out": 22, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:48.725848+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:48.725943+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.099, "candidates_in": 5, "candidates_out": 5, "top_score": 0.14065573770491804}
+{"ts": "2026-09-23T03:14:48.725977+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.749144+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 23.164, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.749200+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:48.749430+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.229, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.749454+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:48.749749+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.295, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.749783+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 34}
+{"ts": "2026-09-23T03:14:48.749858+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.075, "candidates_in": 34, "candidates_out": 23, "top_score": 0.03252247488101534}
+{"ts": "2026-09-23T03:14:48.753711+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:48.753785+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.076, "candidates_in": 5, "candidates_out": 5, "top_score": 0.03252247488101534}
+{"ts": "2026-09-23T03:14:48.753813+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.777889+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 24.072, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.777935+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:48.778159+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.223, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.778185+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:48.778496+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.31, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.778535+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 33}
+{"ts": "2026-09-23T03:14:48.778601+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.066, "candidates_in": 33, "candidates_out": 20, "top_score": 0.03225806451612903}
+{"ts": "2026-09-23T03:14:48.781397+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:48.781457+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.061, "candidates_in": 5, "candidates_out": 5, "top_score": 0.0532258064516129}
+{"ts": "2026-09-23T03:14:48.781485+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.805401+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 23.912, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.805450+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:48.805668+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.218, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.805686+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:48.805975+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.288, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.806012+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 34}
+{"ts": "2026-09-23T03:14:48.806092+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.08, "candidates_in": 34, "candidates_out": 24, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:48.810592+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:48.810673+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.082, "candidates_in": 5, "candidates_out": 5, "top_score": 0.03278688524590164}
+H lex-044 r2 gold=Water_Management_Policy.pdf | Water_Management_Policy. | Water Risk Assessment Coforge recognizes that water-related risk, incl
+{"ts": "2026-09-23T03:14:48.810706+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.833798+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 23.088, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.833847+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:48.834063+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.216, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.834092+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:48.834371+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.278, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.834400+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 34}
+{"ts": "2026-09-23T03:14:48.834462+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.062, "candidates_in": 34, "candidates_out": 26, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:48.839656+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:48.839742+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.087, "candidates_in": 5, "candidates_out": 5, "top_score": 0.08524590163934427}
+{"ts": "2026-09-23T03:14:48.839769+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.863761+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 23.988, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.863814+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:48.864038+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.223, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.864064+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:48.864342+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.278, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.864369+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 34}
+{"ts": "2026-09-23T03:14:48.864442+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.072, "candidates_in": 34, "candidates_out": 26, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:48.870201+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:48.870277+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.079, "candidates_in": 5, "candidates_out": 5, "top_score": 0.05901639344262295}
+{"ts": "2026-09-23T03:14:48.870306+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.893937+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 23.628, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.893979+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:48.894208+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.228, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.894224+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:48.894510+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.285, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.894548+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 32}
+{"ts": "2026-09-23T03:14:48.894614+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.066, "candidates_in": 32, "candidates_out": 20, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:48.898889+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:48.899025+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.14, "candidates_in": 5, "candidates_out": 5, "top_score": 0.09737704918032787}
+{"ts": "2026-09-23T03:14:48.899150+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.923523+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 24.372, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.923570+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:48.923820+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.249, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.923844+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:48.924106+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.262, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.924132+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 33}
+{"ts": "2026-09-23T03:14:48.924195+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.064, "candidates_in": 33, "candidates_out": 25, "top_score": 0.032018442622950824}
+{"ts": "2026-09-23T03:14:48.929122+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:48.929192+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.072, "candidates_in": 5, "candidates_out": 5, "top_score": 0.09509477459016394}
+{"ts": "2026-09-23T03:14:48.929215+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.953860+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 24.642, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.953914+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:48.954183+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.268, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.954243+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:48.954535+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.292, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.954562+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 34}
+{"ts": "2026-09-23T03:14:48.954615+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.053, "candidates_in": 34, "candidates_out": 22, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:48.960654+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:48.960764+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.113, "candidates_in": 5, "candidates_out": 5, "top_score": 0.054098360655737705}
+{"ts": "2026-09-23T03:14:48.960806+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.984201+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 23.392, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:48.984245+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:48.984455+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.209, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.984472+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:48.984725+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.251, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:48.984763+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 30}
+{"ts": "2026-09-23T03:14:48.984830+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.067, "candidates_in": 30, "candidates_out": 25, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:48.991700+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:48.991778+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.079, "candidates_in": 5, "candidates_out": 5, "top_score": 0.11147540983606559}
+{"ts": "2026-09-23T03:14:48.991806+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.016795+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 24.985, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.016848+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:49.017075+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.226, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.017106+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:49.017405+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.298, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.017438+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 30}
+{"ts": "2026-09-23T03:14:49.017514+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.076, "candidates_in": 30, "candidates_out": 22, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:49.023467+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:49.023550+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.084, "candidates_in": 5, "candidates_out": 5, "top_score": 0.09428571428571428}
+{"ts": "2026-09-23T03:14:49.023579+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.048825+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 25.241, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.048874+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:49.049153+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.278, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.049179+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:49.049467+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.287, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.049501+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 30}
+{"ts": "2026-09-23T03:14:49.049565+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.064, "candidates_in": 30, "candidates_out": 21, "top_score": 0.03252247488101534}
+{"ts": "2026-09-23T03:14:49.055333+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:49.055431+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.101, "candidates_in": 5, "candidates_out": 5, "top_score": 0.13842310694769713}
+{"ts": "2026-09-23T03:14:49.055466+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.080178+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 24.708, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.080228+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:49.080503+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.274, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.080528+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:49.080802+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.273, "candidates_out": 19}
+{"ts": "2026-09-23T03:14:49.080861+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 26}
+{"ts": "2026-09-23T03:14:49.080921+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.06, "candidates_in": 26, "candidates_out": 16, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:49.084363+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:49.084421+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.059, "candidates_in": 5, "candidates_out": 5, "top_score": 0.14065573770491804}
+{"ts": "2026-09-23T03:14:49.084445+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.108327+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 23.879, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.108377+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:49.108599+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.221, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.108626+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:49.108874+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.247, "candidates_out": 14}
+{"ts": "2026-09-23T03:14:49.108903+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 26}
+{"ts": "2026-09-23T03:14:49.108965+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.062, "candidates_in": 26, "candidates_out": 16, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:49.111742+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:49.111847+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.107, "candidates_in": 5, "candidates_out": 5, "top_score": 0.11147540983606559}
+{"ts": "2026-09-23T03:14:49.111877+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.136273+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 24.391, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.136322+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:49.136534+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.211, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.136558+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:49.136915+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.357, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.136942+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 28}
+{"ts": "2026-09-23T03:14:49.137013+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.07, "candidates_in": 28, "candidates_out": 22, "top_score": 0.03252247488101534}
+{"ts": "2026-09-23T03:14:49.142388+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:49.142466+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.079, "candidates_in": 5, "candidates_out": 5, "top_score": 0.09659175039661555}
+{"ts": "2026-09-23T03:14:49.142494+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.167306+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 24.808, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.167352+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:49.167560+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.207, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.167586+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:49.167897+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.311, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.167925+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 30}
+{"ts": "2026-09-23T03:14:49.167999+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.074, "candidates_in": 30, "candidates_out": 21, "top_score": 0.032266458495966696}
+{"ts": "2026-09-23T03:14:49.172915+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:49.172995+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.082, "candidates_in": 5, "candidates_out": 5, "top_score": 0.0532258064516129}
+T sem-008 r2 gold=Environmental_Sustainability | Environmental_Sustainabi | Contents Scope .......................................................
+{"ts": "2026-09-23T03:14:49.173039+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.197077+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 24.035, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.197186+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:49.197408+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.222, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.197434+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:49.197718+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.283, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.197744+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 27}
+{"ts": "2026-09-23T03:14:49.197817+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.073, "candidates_in": 27, "candidates_out": 19, "top_score": 0.032266458495966696}
+{"ts": "2026-09-23T03:14:49.202918+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:49.203234+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.318, "candidates_in": 5, "candidates_out": 6, "top_score": 0.0532258064516129}
+H sem-009 r2 gold=Environmental_Sustainability | Environmental_Sustainabi | Contents Scope .......................................................
+{"ts": "2026-09-23T03:14:49.203278+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.227074+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 23.793, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.227119+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:49.227413+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.293, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.227439+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:49.227723+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.285, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.227748+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 25}
+{"ts": "2026-09-23T03:14:49.227813+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.064, "candidates_in": 25, "candidates_out": 19, "top_score": 0.032018442622950824}
+{"ts": "2026-09-23T03:14:49.230846+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:49.230922+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.077, "candidates_in": 5, "candidates_out": 5, "top_score": 0.052830430327868855}
+H sem-010 r2 gold=Environmental_Sustainability | Environmental_Sustainabi | Contents Scope .......................................................
+{"ts": "2026-09-23T03:14:49.230963+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.254872+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 23.905, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.254919+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:49.255138+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.218, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.255157+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:49.255437+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.281, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.255462+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 21}
+{"ts": "2026-09-23T03:14:49.255549+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.086, "candidates_in": 21, "candidates_out": 15, "top_score": 0.032018442622950824}
+{"ts": "2026-09-23T03:14:49.258004+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:49.258062+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.059, "candidates_in": 5, "candidates_out": 5, "top_score": 0.052830430327868855}
+T sem-011 r2 gold=Environmental_Sustainability | Environmental_Sustainabi | Contents Scope .......................................................
+{"ts": "2026-09-23T03:14:49.258093+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.283177+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 25.081, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.283229+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:49.283593+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.356, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.283618+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:49.284215+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.592, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.284302+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 24}
+{"ts": "2026-09-23T03:14:49.284511+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.209, "candidates_in": 24, "candidates_out": 18, "top_score": 0.032018442622950824}
+{"ts": "2026-09-23T03:14:49.288159+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:49.288291+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.135, "candidates_in": 5, "candidates_out": 5, "top_score": 0.052830430327868855}
+H sem-012 r2 gold=Environmental_Sustainability | Environmental_Sustainabi | Contents Scope .......................................................
+{"ts": "2026-09-23T03:14:49.288332+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.316310+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 27.974, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.316364+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:49.316608+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.242, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.316646+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:49.316930+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.284, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.316956+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 36}
+{"ts": "2026-09-23T03:14:49.317040+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.085, "candidates_in": 36, "candidates_out": 27, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:49.323707+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:49.323799+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.094, "candidates_in": 5, "candidates_out": 5, "top_score": 0.050011481056257176}
+H sem-013 r2 gold=Environmental_Sustainability | Environmental_Sustainabi | Contents Scope .......................................................
+{"ts": "2026-09-23T03:14:49.323837+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.348573+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 24.732, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.348655+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:49.348879+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.224, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.348923+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:49.349211+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.288, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.349242+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 29}
+{"ts": "2026-09-23T03:14:49.349321+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.079, "candidates_in": 29, "candidates_out": 19, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:49.354336+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:49.354429+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.095, "candidates_in": 5, "candidates_out": 5, "top_score": 0.052380952380952375}
+{"ts": "2026-09-23T03:14:49.354458+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.379511+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 25.05, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.379557+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:49.379786+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.229, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.379814+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:49.380100+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.286, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.380126+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 31}
+{"ts": "2026-09-23T03:14:49.380209+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.083, "candidates_in": 31, "candidates_out": 20, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:49.383320+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:49.383397+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.078, "candidates_in": 5, "candidates_out": 5, "top_score": 0.08615934412444817}
+T sem-015 r2 gold=Environmental_Sustainability | Environmental_Sustainabi | Waste Management and Circularity Coforge has committed to become “Zero
+{"ts": "2026-09-23T03:14:49.383428+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.408295+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 24.863, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.408346+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:49.408566+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.221, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.408587+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:49.408875+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.287, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.408902+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 27}
+{"ts": "2026-09-23T03:14:49.408964+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.062, "candidates_in": 27, "candidates_out": 20, "top_score": 0.03252247488101534}
+{"ts": "2026-09-23T03:14:49.413361+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:49.413434+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.075, "candidates_in": 5, "candidates_out": 5, "top_score": 0.053662083553675306}
+{"ts": "2026-09-23T03:14:49.413461+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.437018+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 23.554, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.437062+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:49.437290+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.228, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.437315+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:49.437587+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.271, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.437624+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 31}
+{"ts": "2026-09-23T03:14:49.437689+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.065, "candidates_in": 31, "candidates_out": 23, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:49.441871+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:49.441935+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.065, "candidates_in": 5, "candidates_out": 5, "top_score": 0.053839285714285715}
+H sem-017 r2 gold=Environmental_Sustainability | Carbon_Reduction_Plan.pd | Carbon Reduction Initiatives In alignment with our goal to be “net-zer
+{"ts": "2026-09-23T03:14:49.441972+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.464504+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 22.529, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.464549+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:49.464755+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.206, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.464780+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:49.465048+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.268, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.465073+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 30}
+{"ts": "2026-09-23T03:14:49.465134+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.06, "candidates_in": 30, "candidates_out": 20, "top_score": 0.03252247488101534}
+{"ts": "2026-09-23T03:14:49.468528+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:49.468585+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.057, "candidates_in": 5, "candidates_out": 5, "top_score": 0.0559787849566056}
+H sem-018 r2 gold=Environmental_Sustainability | Water_Management_Policy. | | Role | | | Key Responsibilities | Board of Directors | | | Provides 
+{"ts": "2026-09-23T03:14:49.468617+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.491847+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 23.226, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.491895+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:49.492099+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.203, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.492119+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:49.492369+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.25, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.492393+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 32}
+{"ts": "2026-09-23T03:14:49.492447+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.054, "candidates_in": 32, "candidates_out": 22, "top_score": 0.03252247488101534}
+{"ts": "2026-09-23T03:14:49.497917+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:49.497982+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.065, "candidates_in": 5, "candidates_out": 5, "top_score": 0.08455843469063988}
+{"ts": "2026-09-23T03:14:49.498018+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.520442+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 22.422, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.520488+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:49.520703+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.215, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.520725+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:49.520997+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.272, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.521023+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 29}
+{"ts": "2026-09-23T03:14:49.521108+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.085, "candidates_in": 29, "candidates_out": 19, "top_score": 0.032266458495966696}
+{"ts": "2026-09-23T03:14:49.524106+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:49.524149+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.044, "candidates_in": 5, "candidates_out": 5, "top_score": 0.09583138173302108}
+{"ts": "2026-09-23T03:14:49.524199+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.546474+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 22.272, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.546520+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:49.546720+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.199, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.546737+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:49.547009+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.272, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.547036+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 32}
+{"ts": "2026-09-23T03:14:49.547106+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.07, "candidates_in": 32, "candidates_out": 18, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:49.549177+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:49.549235+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.059, "candidates_in": 5, "candidates_out": 5, "top_score": 0.14065573770491804}
+{"ts": "2026-09-23T03:14:49.549257+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.573328+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 24.067, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.573377+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:49.573598+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.22, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.573618+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:49.573904+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.285, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.573932+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 33}
+{"ts": "2026-09-23T03:14:49.573990+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.058, "candidates_in": 33, "candidates_out": 20, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:49.579348+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:49.579421+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.074, "candidates_in": 5, "candidates_out": 5, "top_score": 0.14065573770491804}
+{"ts": "2026-09-23T03:14:49.579458+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.602393+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 22.932, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.602449+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:49.602653+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.204, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.602675+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:49.602892+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.218, "candidates_out": 13}
+{"ts": "2026-09-23T03:14:49.602920+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 25}
+{"ts": "2026-09-23T03:14:49.602987+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.067, "candidates_in": 25, "candidates_out": 19, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:49.607097+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:49.607164+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.068, "candidates_in": 5, "candidates_out": 5, "top_score": 0.05901639344262295}
+{"ts": "2026-09-23T03:14:49.607194+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.630235+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 23.037, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.630287+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:49.630511+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.223, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.630540+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:49.630819+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.279, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.630850+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 32}
+{"ts": "2026-09-23T03:14:49.630918+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.068, "candidates_in": 32, "candidates_out": 20, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:49.634498+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:49.634556+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.059, "candidates_in": 5, "candidates_out": 5, "top_score": 0.09737704918032787}
+{"ts": "2026-09-23T03:14:49.634589+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.657342+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 22.75, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.657393+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:49.657621+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.227, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.657639+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:49.657918+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.279, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.657943+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 33}
+{"ts": "2026-09-23T03:14:49.658009+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.064, "candidates_in": 33, "candidates_out": 22, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:49.662186+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:49.662263+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.079, "candidates_in": 5, "candidates_out": 5, "top_score": 0.05901639344262295}
+{"ts": "2026-09-23T03:14:49.662288+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.685504+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 23.212, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.685550+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:49.685784+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.233, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.685803+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:49.686079+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.275, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.686102+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 35}
+{"ts": "2026-09-23T03:14:49.686190+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.087, "candidates_in": 35, "candidates_out": 22, "top_score": 0.032266458495966696}
+{"ts": "2026-09-23T03:14:49.688737+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:49.688800+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.064, "candidates_in": 5, "candidates_out": 5, "top_score": 0.09583138173302108}
+{"ts": "2026-09-23T03:14:49.688835+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.713176+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 24.337, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.713228+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:49.713461+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.233, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.713482+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:49.713766+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.283, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.713790+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 36}
+{"ts": "2026-09-23T03:14:49.713856+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.065, "candidates_in": 36, "candidates_out": 25, "top_score": 0.03252247488101534}
+{"ts": "2026-09-23T03:14:49.719792+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:49.719874+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.084, "candidates_in": 5, "candidates_out": 5, "top_score": 0.05854045478582761}
+{"ts": "2026-09-23T03:14:49.719906+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.743050+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 23.141, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.743104+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:49.743399+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.295, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.743425+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:49.743714+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.289, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.743743+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 32}
+{"ts": "2026-09-23T03:14:49.743819+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.076, "candidates_in": 32, "candidates_out": 22, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:49.747645+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:49.747697+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.052, "candidates_in": 5, "candidates_out": 5, "top_score": 0.09737704918032787}
+{"ts": "2026-09-23T03:14:49.747727+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.771413+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 23.683, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.771480+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:49.771673+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.193, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.771691+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:49.771959+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.267, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.771996+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 32}
+{"ts": "2026-09-23T03:14:49.772064+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.068, "candidates_in": 32, "candidates_out": 22, "top_score": 0.03252247488101534}
+{"ts": "2026-09-23T03:14:49.776897+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:49.776954+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.057, "candidates_in": 5, "candidates_out": 5, "top_score": 0.09659175039661555}
+{"ts": "2026-09-23T03:14:49.776978+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.799970+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 22.99, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.800024+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:49.800231+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.208, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.800253+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:49.800531+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.279, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.800559+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 23}
+{"ts": "2026-09-23T03:14:49.800625+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.065, "candidates_in": 23, "candidates_out": 18, "top_score": 0.032266458495966696}
+{"ts": "2026-09-23T03:14:49.804362+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:49.804426+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.065, "candidates_in": 5, "candidates_out": 5, "top_score": 0.05239415322580645}
+H sem-030 r2 gold=Environmental_Sustainability | Environmental_Sustainabi | Waste Management and Circularity Coforge has committed to become “Zero
+{"ts": "2026-09-23T03:14:49.804463+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.827950+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 23.484, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.828003+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:49.828231+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.228, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.828258+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:49.828561+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.302, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.828594+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 31}
+{"ts": "2026-09-23T03:14:49.828682+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.087, "candidates_in": 31, "candidates_out": 22, "top_score": 0.03177805800756621}
+{"ts": "2026-09-23T03:14:49.833805+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:49.833870+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.066, "candidates_in": 5, "candidates_out": 5, "top_score": 0.03177805800756621}
+T sem-031 r3 gold=Water_Management_Policy.pdf | Water_Management_Policy. | Policy Commitment At Coforge, we recognize water as a shared and finit
+{"ts": "2026-09-23T03:14:49.833908+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.857965+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 24.054, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.858031+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:49.858223+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.192, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.858243+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:49.858528+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.285, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.858554+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 34}
+{"ts": "2026-09-23T03:14:49.858628+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.073, "candidates_in": 34, "candidates_out": 24, "top_score": 0.03252247488101534}
+{"ts": "2026-09-23T03:14:49.864395+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:49.864463+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.069, "candidates_in": 5, "candidates_out": 5, "top_score": 0.053662083553675306}
+T sem-032 r2 gold=Water_Management_Policy.pdf | Water_Management_Policy. | Objectives and Targets In line with this Policy, Coforge reaffirms its
+{"ts": "2026-09-23T03:14:49.864502+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.887807+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 23.303, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.887851+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:49.888051+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.2, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.888071+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:49.888339+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.268, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.888361+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 32}
+{"ts": "2026-09-23T03:14:49.888425+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.063, "candidates_in": 32, "candidates_out": 25, "top_score": 0.03252247488101534}
+{"ts": "2026-09-23T03:14:49.893476+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:49.893530+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.055, "candidates_in": 5, "candidates_out": 5, "top_score": 0.05854045478582761}
+H sem-033 r3 gold=Water_Management_Policy.pdf | Water_Management_Policy. | Responsible Water Use and Conservation • Drive responsible management 
+{"ts": "2026-09-23T03:14:49.893564+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.917595+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 24.028, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.917642+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:49.917854+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.213, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.917876+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:49.918250+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.363, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.918281+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 30}
+{"ts": "2026-09-23T03:14:49.918387+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.106, "candidates_in": 30, "candidates_out": 20, "top_score": 0.03252247488101534}
+{"ts": "2026-09-23T03:14:49.922095+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:49.922156+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.061, "candidates_in": 5, "candidates_out": 5, "top_score": 0.12808823529411764}
+H multi-001 rmiss gold=Carbon_Reduction_Plan.pdf | Carbon_Reduction_Plan.pd | Emissions Reduction Targets Coforge is a fast-growing IT services firm
+{"ts": "2026-09-23T03:14:49.922191+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.946474+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 24.28, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.946539+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:49.946730+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.19, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.946746+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:49.947099+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.353, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.947133+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 30}
+{"ts": "2026-09-23T03:14:49.947219+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.085, "candidates_in": 30, "candidates_out": 21, "top_score": 0.03131881575727918}
+{"ts": "2026-09-23T03:14:49.951822+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:49.951892+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.072, "candidates_in": 5, "candidates_out": 5, "top_score": 0.08142892096892586}
+H multi-002 rmiss gold=Environmental_Sustainability | Carbon_Reduction_Plan.pd | Baseline Year: 2023–2024 (UK operations) | | | | | Additional details 
+{"ts": "2026-09-23T03:14:49.951931+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.974543+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 22.609, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:49.974595+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:49.974781+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.186, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.974799+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:49.975087+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.287, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:49.975117+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 30}
+{"ts": "2026-09-23T03:14:49.975207+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.089, "candidates_in": 30, "candidates_out": 24, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:49.980283+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:49.980347+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.066, "candidates_in": 5, "candidates_out": 5, "top_score": 0.05901639344262295}
+T multi-003 rmiss gold=Carbon_Reduction_Plan.pdf | Carbon_Reduction_Plan.pd | Declaration and Sign Off This Carbon Reduction Plan has been completed
+{"ts": "2026-09-23T03:14:49.980386+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.008437+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 28.048, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.008483+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:50.008676+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.192, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.008695+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:50.008978+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.283, "candidates_out": 19}
+{"ts": "2026-09-23T03:14:50.009005+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 33}
+{"ts": "2026-09-23T03:14:50.009078+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.073, "candidates_in": 33, "candidates_out": 29, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:50.019069+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:50.019139+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.072, "candidates_in": 5, "candidates_out": 5, "top_score": 0.11147540983606559}
+{"ts": "2026-09-23T03:14:50.019168+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.043706+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 24.534, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.043759+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:50.043984+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.224, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.044015+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:50.044359+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.344, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.044384+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 34}
+{"ts": "2026-09-23T03:14:50.044464+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.08, "candidates_in": 34, "candidates_out": 25, "top_score": 0.032266458495966696}
+{"ts": "2026-09-23T03:14:50.050598+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:50.050673+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.077, "candidates_in": 5, "candidates_out": 5, "top_score": 0.032266458495966696}
+H multi-005 r5 gold=Environmental_Sustainability | Water_Management_Policy. | Objectives and Targets In line with this Policy, Coforge reaffirms its
+{"ts": "2026-09-23T03:14:50.050711+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.074854+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 24.138, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.074908+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:50.075126+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.218, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.075145+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:50.075485+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.339, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.075513+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 33}
+{"ts": "2026-09-23T03:14:50.075575+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.062, "candidates_in": 33, "candidates_out": 23, "top_score": 0.03252247488101534}
+{"ts": "2026-09-23T03:14:50.081810+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:50.081902+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.094, "candidates_in": 5, "candidates_out": 5, "top_score": 0.05854045478582761}
+{"ts": "2026-09-23T03:14:50.081931+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.113209+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 31.275, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.113255+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:50.113480+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.224, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.113511+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:50.113781+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.269, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.113808+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 31}
+{"ts": "2026-09-23T03:14:50.113870+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.061, "candidates_in": 31, "candidates_out": 18, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:50.117122+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:50.117172+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.051, "candidates_in": 5, "candidates_out": 5, "top_score": 0.05901639344262295}
+H multi-007 r2 gold=Carbon_Reduction_Plan.pdf | Carbon_Reduction_Plan.pd | | Baseline Year: 2023–2024 (India operations) | | | | | Additional det
+{"ts": "2026-09-23T03:14:50.117203+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.140645+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 23.438, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.140743+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:50.140939+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.197, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.140960+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:50.141269+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.309, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.141292+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 28}
+{"ts": "2026-09-23T03:14:50.141357+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.064, "candidates_in": 28, "candidates_out": 19, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:50.146393+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:50.146456+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.064, "candidates_in": 5, "candidates_out": 5, "top_score": 0.07576013513513515}
+T multi-008 r3 gold=Carbon_Reduction_Plan.pdf | Environmental_Sustainabi | Contents Scope .......................................................
+{"ts": "2026-09-23T03:14:50.146490+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.173720+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 27.226, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.173777+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:50.174023+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.244, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.174059+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:50.174416+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.358, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.174445+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 34}
+{"ts": "2026-09-23T03:14:50.174529+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.083, "candidates_in": 34, "candidates_out": 23, "top_score": 0.032266458495966696}
+{"ts": "2026-09-23T03:14:50.182522+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:50.182598+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.078, "candidates_in": 5, "candidates_out": 5, "top_score": 0.0563049853372434}
+H multi-009 r2 gold=Environmental_Sustainability | Water_Management_Policy. | Contents Purpose .....................................................
+{"ts": "2026-09-23T03:14:50.182635+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.209773+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 27.134, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.209823+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:50.210083+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.253, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.210135+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:50.210455+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.319, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.210492+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 30}
+{"ts": "2026-09-23T03:14:50.210572+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.08, "candidates_in": 30, "candidates_out": 21, "top_score": 0.03252247488101534}
+{"ts": "2026-09-23T03:14:50.215675+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:50.215733+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.057, "candidates_in": 5, "candidates_out": 5, "top_score": 0.08455843469063988}
+T multi-010 r2 gold=Carbon_Reduction_Plan.pdf | Water_Management_Policy. | Objectives and Targets In line with this Policy, Coforge reaffirms its
+{"ts": "2026-09-23T03:14:50.215773+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.242635+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 26.859, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.242681+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:50.242907+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.225, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.242937+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:50.243330+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.393, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.243367+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 32}
+{"ts": "2026-09-23T03:14:50.243468+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.101, "candidates_in": 32, "candidates_out": 22, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:50.249971+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:50.250077+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.106, "candidates_in": 5, "candidates_out": 5, "top_score": 0.09737704918032787}
+{"ts": "2026-09-23T03:14:50.250104+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.276013+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 25.905, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.276064+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:50.276280+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.216, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.276299+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:50.276667+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.367, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.276708+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 33}
+{"ts": "2026-09-23T03:14:50.276779+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.071, "candidates_in": 33, "candidates_out": 23, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:50.282893+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:50.282950+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.057, "candidates_in": 5, "candidates_out": 5, "top_score": 0.27049180327868855}
+T multi-012 rmiss gold=Water_Management_Policy.pdf | Water_Management_Policy. | Contents Purpose .....................................................
+{"ts": "2026-09-23T03:14:50.282986+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.306281+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 23.291, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.306331+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:50.306545+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.214, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.306567+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:50.306864+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.298, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.306890+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 34}
+{"ts": "2026-09-23T03:14:50.306948+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.058, "candidates_in": 34, "candidates_out": 20, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:50.312475+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:50.312554+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.08, "candidates_in": 5, "candidates_out": 5, "top_score": 0.09737704918032787}
+{"ts": "2026-09-23T03:14:50.312585+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.335344+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 22.756, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.335391+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:50.335596+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.205, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.335614+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:50.335923+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.309, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.335957+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 33}
+{"ts": "2026-09-23T03:14:50.336048+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.091, "candidates_in": 33, "candidates_out": 24, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:50.341418+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:50.341479+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.06, "candidates_in": 5, "candidates_out": 5, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:50.341520+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.365838+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 24.315, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.365884+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:50.366090+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.206, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.366109+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:50.366450+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.34, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.366484+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 33}
+{"ts": "2026-09-23T03:14:50.366573+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.089, "candidates_in": 33, "candidates_out": 24, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:50.373579+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:50.373667+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.091, "candidates_in": 5, "candidates_out": 5, "top_score": 0.08387096774193549}
+T multi-015 r5 gold=Carbon_Reduction_Plan.pdf | Environmental_Sustainabi | Energy Optimization and Emission Management We, at Coforge, are commit
+{"ts": "2026-09-23T03:14:50.373714+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.373757+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 0.043, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.373773+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:50.373959+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.186, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.373977+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:50.374211+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.233, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.374253+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 31}
+{"ts": "2026-09-23T03:14:50.374329+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.078, "candidates_in": 31, "candidates_out": 19, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:50.378106+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:50.378162+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.056, "candidates_in": 5, "candidates_out": 5, "top_score": 0.05901639344262295}
+{"ts": "2026-09-23T03:14:50.378188+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.400210+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 22.019, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.400257+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:50.400451+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.194, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.400470+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:50.400732+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.261, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.400768+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 33}
+{"ts": "2026-09-23T03:14:50.400849+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.08, "candidates_in": 33, "candidates_out": 19, "top_score": 0.03252247488101534}
+{"ts": "2026-09-23T03:14:50.404474+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:50.404534+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.06, "candidates_in": 5, "candidates_out": 5, "top_score": 0.0787878787878788}
+H adv-002 rmiss gold=Carbon_Reduction_Plan.pdf | Carbon_Reduction_Plan.pd | Emissions Reduction Targets Coforge is a fast-growing IT services firm
+{"ts": "2026-09-23T03:14:50.404567+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.431793+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 27.223, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.431841+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:50.432058+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.217, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.432077+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:50.432379+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.302, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.432413+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 32}
+{"ts": "2026-09-23T03:14:50.432474+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.061, "candidates_in": 32, "candidates_out": 24, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:50.439322+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:50.439390+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.069, "candidates_in": 5, "candidates_out": 5, "top_score": 0.07611111111111112}
+T adv-003 r5 gold=Carbon_Reduction_Plan.pdf | Water_Management_Policy. | Objectives and Targets In line with this Policy, Coforge reaffirms its
+{"ts": "2026-09-23T03:14:50.439425+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.466449+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 27.021, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.466496+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:50.466835+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.338, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.466863+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:50.467162+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.298, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.467200+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 32}
+{"ts": "2026-09-23T03:14:50.467276+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.077, "candidates_in": 32, "candidates_out": 22, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:50.470913+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:50.470959+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.046, "candidates_in": 5, "candidates_out": 5, "top_score": 0.09073460820895522}
+{"ts": "2026-09-23T03:14:50.470983+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.495076+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 24.089, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.495126+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:50.495349+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.223, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.495369+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:50.495690+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.32, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.495725+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 34}
+{"ts": "2026-09-23T03:14:50.495796+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.071, "candidates_in": 34, "candidates_out": 24, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:50.502044+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:50.502191+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.15, "candidates_in": 5, "candidates_out": 5, "top_score": 0.09737704918032787}
+{"ts": "2026-09-23T03:14:50.502234+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.528100+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 25.863, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.528146+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:50.528353+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.207, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.528371+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:50.528677+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.306, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.528700+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 31}
+{"ts": "2026-09-23T03:14:50.528772+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.071, "candidates_in": 31, "candidates_out": 22, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:50.533535+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:50.533760+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.226, "candidates_in": 5, "candidates_out": 6, "top_score": 0.080625}
+H adv-006 r2 gold=Water_Management_Policy.pdf | Water_Management_Policy. | Contents Purpose .....................................................
+{"ts": "2026-09-23T03:14:50.533798+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.558529+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 24.728, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.558583+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:50.558813+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.228, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.558910+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:50.559181+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.271, "candidates_out": 11}
+{"ts": "2026-09-23T03:14:50.559211+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 25}
+{"ts": "2026-09-23T03:14:50.559277+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.065, "candidates_in": 25, "candidates_out": 19, "top_score": 0.03252247488101534}
+{"ts": "2026-09-23T03:14:50.564422+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:50.564485+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.064, "candidates_in": 5, "candidates_out": 5, "top_score": 0.08455843469063988}
+{"ts": "2026-09-23T03:14:50.564510+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.588741+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 24.227, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.588795+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:50.589019+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.224, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.589045+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:50.589295+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.25, "candidates_out": 19}
+{"ts": "2026-09-23T03:14:50.589330+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 30}
+{"ts": "2026-09-23T03:14:50.589406+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.076, "candidates_in": 30, "candidates_out": 22, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:50.593262+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:50.593352+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.093, "candidates_in": 5, "candidates_out": 5, "top_score": 0.036571428571428574}
+T adv-008 r3 gold=Carbon_Reduction_Plan.pdf | Carbon_Reduction_Plan.pd | Current year emissions: FY25 *There is no Scope 1 (Direct) related emi
+{"ts": "2026-09-23T03:14:50.593392+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.618867+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 25.471, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.618929+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:50.619280+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.346, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.619373+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:50.619689+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.315, "candidates_out": 16}
+{"ts": "2026-09-23T03:14:50.619725+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 28}
+{"ts": "2026-09-23T03:14:50.619804+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.079, "candidates_in": 28, "candidates_out": 22, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:50.624205+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:50.624296+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.094, "candidates_in": 5, "candidates_out": 5, "top_score": 0.08256048387096775}
+H adv-009 r3 gold=Carbon_Reduction_Plan.pdf | Carbon_Reduction_Plan.pd | Current year emissions: FY25 *There is no Scope 1 (Direct) related emi
+{"ts": "2026-09-23T03:14:50.624362+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.649496+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 25.131, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.649546+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:50.649785+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.237, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.649817+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:50.650170+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.353, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.650200+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 32}
+{"ts": "2026-09-23T03:14:50.650275+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.075, "candidates_in": 32, "candidates_out": 20, "top_score": 0.032266458495966696}
+{"ts": "2026-09-23T03:14:50.653996+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:50.654077+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.084, "candidates_in": 5, "candidates_out": 5, "top_score": 0.05413839891451832}
+{"ts": "2026-09-23T03:14:50.654108+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.683508+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 29.396, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.683555+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:50.683773+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.217, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.683801+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:50.684123+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.322, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.684151+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 33}
+{"ts": "2026-09-23T03:14:50.684216+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.064, "candidates_in": 33, "candidates_out": 20, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:50.691115+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:50.691195+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.084, "candidates_in": 5, "candidates_out": 5, "top_score": 0.054098360655737705}
+{"ts": "2026-09-23T03:14:50.691226+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.716824+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 25.593, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.716880+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:50.717104+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.224, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.717125+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:50.717633+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.507, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.717707+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 34}
+{"ts": "2026-09-23T03:14:50.717874+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.168, "candidates_in": 34, "candidates_out": 22, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:50.725555+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:50.725647+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.096, "candidates_in": 5, "candidates_out": 5, "top_score": 0.13519354838709677}
+H adv-012 r3 gold=Carbon_Reduction_Plan.pdf | Carbon_Reduction_Plan.pd | Carbon Reduction Initiatives In alignment with our goal to be “net-zer
+{"ts": "2026-09-23T03:14:50.725688+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.750235+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 24.543, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.750286+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:50.750495+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.209, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.750515+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:50.750847+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.332, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.750884+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 34}
+{"ts": "2026-09-23T03:14:50.751003+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.118, "candidates_in": 34, "candidates_out": 25, "top_score": 0.03252247488101534}
+{"ts": "2026-09-23T03:14:50.759110+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:50.759200+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.094, "candidates_in": 5, "candidates_out": 5, "top_score": 0.1340625}
+{"ts": "2026-09-23T03:14:50.759232+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.784154+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 24.919, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.784207+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:50.784420+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.213, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.784442+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:50.784805+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.363, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.784870+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 35}
+{"ts": "2026-09-23T03:14:50.785083+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.214, "candidates_in": 35, "candidates_out": 25, "top_score": 0.03252247488101534}
+{"ts": "2026-09-23T03:14:50.793808+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:50.793915+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.112, "candidates_in": 5, "candidates_out": 5, "top_score": 0.09659175039661555}
+{"ts": "2026-09-23T03:14:50.793967+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.818610+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 24.639, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.818719+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:50.818927+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.208, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.818948+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:50.819245+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.296, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.819281+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 33}
+{"ts": "2026-09-23T03:14:50.819378+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.097, "candidates_in": 33, "candidates_out": 22, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:50.825097+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:50.825163+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.066, "candidates_in": 5, "candidates_out": 5, "top_score": 0.14065573770491804}
+{"ts": "2026-09-23T03:14:50.825192+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.849950+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 24.754, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.850010+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:50.850305+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.294, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.850336+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:50.850624+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.288, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.850659+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 30}
+{"ts": "2026-09-23T03:14:50.850740+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.08, "candidates_in": 30, "candidates_out": 18, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:50.853452+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:50.853677+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.225, "candidates_in": 5, "candidates_out": 6, "top_score": 0.0532258064516129}
+{"ts": "2026-09-23T03:14:50.853706+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.878612+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 24.902, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.878668+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:50.878900+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.231, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.878930+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:50.879201+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.271, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.879229+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 32}
+{"ts": "2026-09-23T03:14:50.879294+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.064, "candidates_in": 32, "candidates_out": 20, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:50.882606+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:50.882832+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.227, "candidates_in": 5, "candidates_out": 6, "top_score": 0.0532258064516129}
+{"ts": "2026-09-23T03:14:50.882861+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.907625+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 24.759, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.907679+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:50.907899+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.219, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.907920+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:50.908187+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.267, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.908214+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 28}
+{"ts": "2026-09-23T03:14:50.908295+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.08, "candidates_in": 28, "candidates_out": 18, "top_score": 0.031746031746031744}
+{"ts": "2026-09-23T03:14:50.911794+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:50.912043+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.252, "candidates_in": 5, "candidates_out": 6, "top_score": 0.05550284629981025}
+{"ts": "2026-09-23T03:14:50.912077+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.937447+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 25.365, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.937499+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:50.937724+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.224, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.937755+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:50.938054+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.299, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.938094+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 27}
+{"ts": "2026-09-23T03:14:50.938170+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.076, "candidates_in": 27, "candidates_out": 19, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:50.942404+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:50.942528+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.125, "candidates_in": 5, "candidates_out": 5, "top_score": 0.08547204968944098}
+T conflict-004 r2 gold=Environmental_Sustainability | Environmental_Sustainabi | Contents Scope .......................................................
+{"ts": "2026-09-23T03:14:50.942567+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.966725+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 24.154, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.966777+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:50.967001+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.223, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.967037+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:50.967370+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.332, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.967409+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 30}
+{"ts": "2026-09-23T03:14:50.967489+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.08, "candidates_in": 30, "candidates_out": 24, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:50.974016+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:50.974181+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.167, "candidates_in": 5, "candidates_out": 5, "top_score": 0.08372840976771888}
+T conflict-005 r2 gold=Environmental_Sustainability | Environmental_Sustainabi | Contents Scope .......................................................
+{"ts": "2026-09-23T03:14:50.974224+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.999366+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 25.138, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:50.999440+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:50.999637+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.197, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:50.999657+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:50.999980+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.323, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:51.000008+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 32}
+{"ts": "2026-09-23T03:14:51.000077+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.068, "candidates_in": 32, "candidates_out": 21, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:51.004671+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:51.004944+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.275, "candidates_in": 5, "candidates_out": 6, "top_score": 0.13838709677419356}
+{"ts": "2026-09-23T03:14:51.004976+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:51.030239+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 25.259, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:51.030300+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:51.030575+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.275, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:51.030598+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:51.030968+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.369, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:51.030995+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 33}
+{"ts": "2026-09-23T03:14:51.031073+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.077, "candidates_in": 33, "candidates_out": 22, "top_score": 0.03252247488101534}
+{"ts": "2026-09-23T03:14:51.036027+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:51.036327+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.303, "candidates_in": 5, "candidates_out": 6, "top_score": 0.1395214172395558}
+{"ts": "2026-09-23T03:14:51.036361+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:51.060727+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 24.362, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:51.060786+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:51.061020+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.234, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:51.061044+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:51.061337+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.291, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:51.061376+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 32}
+{"ts": "2026-09-23T03:14:51.061451+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.075, "candidates_in": 32, "candidates_out": 22, "top_score": 0.030886196246139225}
+{"ts": "2026-09-23T03:14:51.065222+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:51.065586+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.365, "candidates_in": 5, "candidates_out": 6, "top_score": 0.052571428571428575}
+H conflict-008 rmiss gold=Environmental_Sustainability | Carbon_Reduction_Plan.pd | | Reporting Year: 1 April 2024 – 31 March 2025 | | | | | | | Current y
+{"ts": "2026-09-23T03:14:51.065633+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:51.090550+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 24.913, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:51.090604+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:51.090830+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.226, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:51.090853+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:51.091162+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.309, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:51.091202+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 33}
+{"ts": "2026-09-23T03:14:51.091284+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.082, "candidates_in": 33, "candidates_out": 24, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:51.097905+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:51.097975+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.071, "candidates_in": 5, "candidates_out": 5, "top_score": 0.14065573770491804}
+{"ts": "2026-09-23T03:14:51.098003+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:51.126484+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 28.477, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:51.126536+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:51.126767+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.23, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:51.126800+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:51.127091+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.291, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:51.127122+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 31}
+{"ts": "2026-09-23T03:14:51.127182+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.06, "candidates_in": 31, "candidates_out": 19, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:51.133072+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:51.133134+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.062, "candidates_in": 5, "candidates_out": 5, "top_score": 0.052941176470588235}
+T inj-002 r2 gold=Carbon_Reduction_Plan.pdf | Environmental_Sustainabi | Environmental Management System Coforge is committed to implementing a
+{"ts": "2026-09-23T03:14:51.133166+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:51.157125+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 23.955, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:14:51.157176+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:14:51.157407+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.231, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:51.157425+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:14:51.157713+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.288, "candidates_out": 20}
+{"ts": "2026-09-23T03:14:51.157739+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 32}
+{"ts": "2026-09-23T03:14:51.157808+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.069, "candidates_in": 32, "candidates_out": 19, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:14:51.162688+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:14:51.162769+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.081, "candidates_in": 5, "candidates_out": 5, "top_score": 0.054098360655737705}

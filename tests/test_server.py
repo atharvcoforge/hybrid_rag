@@ -87,12 +87,24 @@ def test_repeat_skips_retrieve_and_writer():
     assert _meta(third)["cached"] is False
 
 
-def test_gate_withholds_uncited_answer():
+def test_gate_cites_a_supported_uncited_answer():
     def search(_text, _mode):
         return Retrieval(hits=[_hit()])
 
     def write(_text, _hits):
         yield "John Speight"
+
+    events = _events("Who signed?", search, write, "rrf", cache={})
+    assert events[-1][1]["answer"] == "John Speight [1]"
+    assert events[-1][1]["verification"]["state"] == "verified"
+
+
+def test_gate_withholds_an_unsupported_uncited_answer():
+    def search(_text, _mode):
+        return Retrieval(hits=[_hit()])
+
+    def write(_text, _hits):
+        yield "The salary is 999,999."
 
     events = _events("Who signed?", search, write, "rrf", cache={})
     assert events[-1][1]["answer"] == "The documents do not say."

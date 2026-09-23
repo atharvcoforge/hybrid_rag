@@ -1,6 +1,5 @@
 """Reranker protocol: swappable scorers (§09)."""
 
-import os
 
 import pytest
 

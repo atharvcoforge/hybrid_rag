@@ -31,7 +31,7 @@ _SKIP = frozenset({"script", "style", "noscript"})
 
 
 class HTMLText(HTMLParser):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(convert_charrefs=True)
         self.skip = 0
         self.heading: list[str] = []
@@ -43,7 +43,7 @@ class HTMLText(HTMLParser):
         self.cell: list[str] | None = None
         self.in_pre = False
 
-    def handle_starttag(self, tag, attrs):
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         tag = tag.lower()
         if tag in _SKIP:
             self.skip += 1
@@ -75,7 +75,7 @@ class HTMLText(HTMLParser):
             if alt:
                 self.blocks.append(("caption", alt, _path(self.heading)))
 
-    def handle_endtag(self, tag):
+    def handle_endtag(self, tag: str) -> None:
         tag = tag.lower()
         if tag in _SKIP:
             self.skip = max(0, self.skip - 1)
@@ -122,7 +122,7 @@ class HTMLText(HTMLParser):
             if self.stack:
                 self.stack.pop()
 
-    def handle_data(self, data):
+    def handle_data(self, data: str) -> None:
         if self.skip:
             return
         if self.cell is not None:
@@ -132,11 +132,11 @@ class HTMLText(HTMLParser):
         else:
             self.buf.append(data)
 
-    def close(self):
+    def close(self) -> None:
         self._flush_prose()
         super().close()
 
-    def _flush_prose(self):
+    def _flush_prose(self) -> None:
         text = normalize_text("".join(self.buf))
         if text:
             self.blocks.append(("prose", text, _path(self.heading)))

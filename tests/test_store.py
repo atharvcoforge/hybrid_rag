@@ -1,6 +1,11 @@
 import sqlite3
 
-from rag.store import fts_query
+from rag.store import fts_query, repair_extracted_text
+
+
+def test_doubled_copyright_footer_reads_as_2026():
+    raw = "contact information@coforge.com\n© ©20 2260 C2o6fo Crgoef orge. All rights reserved."
+    assert "© 2026 Coforge" in repair_extracted_text(raw)
 
 
 def test_fts_query_keeps_hyphenated_id_as_one_term():
@@ -17,6 +22,14 @@ def test_fts_query_keeps_slash_code_and_surrounding_words():
 
 def test_fts_query_still_ors_plain_words():
     assert fts_query("blue housing") == '"blue" OR "housing"'
+
+
+def test_who_signed_also_searches_the_title_block():
+    query = fts_query("Who signed the Carbon Reduction Plan?")
+    assert '"president"' in query
+    assert '"director"' in query
+    plain = fts_query("What is the review date of the Water Management Policy?")
+    assert "president" not in plain.casefold()
 
 
 def test_fts_query_drops_stopwords_but_keeps_identifiers():

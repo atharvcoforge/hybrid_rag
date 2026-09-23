@@ -31,6 +31,12 @@ def test_answer_cache_keys_include_generation():
     assert AnswerCache.make_key("Q", 1, "rrf") != AnswerCache.make_key("Q", 2, "rrf")
 
 
+def test_answer_cache_keys_include_doc_filter():
+    bare = AnswerCache.make_key("Q", 1, "rrf")
+    filtered = AnswerCache.make_key("Q", 1, "rrf", "Carbon_Reduction_Plan.pdf")
+    assert bare != filtered
+
+
 def test_inference_queue_rejects_when_full():
     q = InferenceQueue(maxsize=1)
     q.acquire()

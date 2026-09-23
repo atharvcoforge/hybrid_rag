@@ -7,7 +7,9 @@ fails is emitted as flagged prose so the ingest report can surface it.
 from __future__ import annotations
 
 import re
+from collections.abc import Callable
 from dataclasses import dataclass
+from typing import Any
 
 _NUMERIC = re.compile(
     r"""^
@@ -81,7 +83,7 @@ def looks_borderless(text: str) -> bool:
     return False
 
 
-def extract_page_tables(page, *, layout_extract=None) -> list[ExtractedTable]:
+def extract_page_tables(page: Any, *, layout_extract: Callable[..., Any] | None = None) -> list[ExtractedTable]:
     """Three-rung ladder. `layout_extract(page) -> list[list[list[str]]]` is Docling."""
     ruled = _from_find(page, rung=1, settings=None)
     if ruled:
@@ -90,7 +92,7 @@ def extract_page_tables(page, *, layout_extract=None) -> list[ExtractedTable]:
     text = ""
     try:
         text = page.extract_text() or ""
-    except Exception:
+    except Exception:  # noqa: BLE001 — pdfplumber raises an open set
         text = ""
     if not looks_borderless(text):
         return []
@@ -114,7 +116,7 @@ def render_rows(rows: list[list[str]]) -> str:
     return "\n".join(lines).strip()
 
 
-def _finalize(candidates: list[ExtractedTable], page, layout_extract) -> list[ExtractedTable]:
+def _finalize(candidates: list[ExtractedTable], page: Any, layout_extract: Callable[..., Any] | None) -> list[ExtractedTable]:
     out: list[ExtractedTable] = []
     for table in candidates:
         ok, reason = score_table(table.rows)
@@ -135,12 +137,12 @@ def _finalize(candidates: list[ExtractedTable], page, layout_extract) -> list[Ex
     return out
 
 
-def _escalate(page, layout_extract, *, bbox) -> list[ExtractedTable]:
+def _escalate(page: Any, layout_extract: Callable[..., Any] | None, *, bbox: Any) -> list[ExtractedTable]:
     if layout_extract is None:
         return []
     try:
         raw = layout_extract(page) or []
-    except Exception:
+    except Exception:  # noqa: BLE001 — pdfplumber raises an open set
         return []
     tables = []
     for rows in raw:
@@ -162,7 +164,7 @@ def _escalate(page, layout_extract, *, bbox) -> list[ExtractedTable]:
     return tables
 
 
-def _from_find(page, *, rung: int, settings) -> list[ExtractedTable]:
+def _from_find(page: Any, *, rung: int, settings: dict[str, str] | None) -> list[ExtractedTable]:
     try:
         found = list(page.find_tables(table_settings=settings) if settings else page.find_tables() or [])
     except TypeError:
@@ -170,13 +172,13 @@ def _from_find(page, *, rung: int, settings) -> list[ExtractedTable]:
         if settings:
             return []
         found = list(page.find_tables() or [])
-    except Exception:
+    except Exception:  # noqa: BLE001 — pdfplumber raises an open set
         return []
     tables = []
     for item in found:
         try:
             rows = item.extract()
-        except Exception:
+        except Exception:  # noqa: BLE001, S112 — one bad table must not drop the page
             continue
         if not rows:
             continue

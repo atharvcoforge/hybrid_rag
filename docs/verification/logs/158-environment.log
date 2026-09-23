@@ -1,0 +1,57 @@
+date: 2026-09-23T01:43:32Z
+uname: Darwin US-MAC-FDE16.local 25.6.0 Darwin Kernel Version 25.6.0: Fri Jul 31 19:16:20 PDT 2026; root:xnu-12377.161.14~5/RELEASE_ARM64_T8142 arm64
+python: Python 3.11.16
+commit: 9d52194ecfb9d92824823531efa6b4d48ea243f2
+branch: harden/reading-room
+status:
+## harden/reading-room...origin/harden/reading-room
+ M .gitignore
+ M Dockerfile
+ M README.md
+ M docker/entrypoint.sh
+ M pyproject.toml
+ M src/rag/cache.py
+ M src/rag/calibrate.py
+ M src/rag/chunk.py
+ M src/rag/cli.py
+ M src/rag/embed.py
+ M src/rag/evaluate.py
+ M src/rag/gates.py
+ M src/rag/generate.py
+ M src/rag/health.py
+ M src/rag/layout.py
+ M src/rag/models.py
+ M src/rag/ocr.py
+ M src/rag/parse.py
+ M src/rag/pipeline.py
+ M src/rag/retrieve.py
+ M src/rag/server.py
+ M src/rag/store.py
+ M src/rag/telemetry.py
+ M src/rag/versions.py
+ M tests/test_chunk.py
+ M tests/test_cli.py
+ M tests/test_docx_edges.py
+ M tests/test_evaluate.py
+ M tests/test_gates.py
+ M tests/test_layout.py
+ M tests/test_parse.py
+ M tests/test_pdf_depth.py
+ M tests/test_pipeline.py
+ M tests/test_rerank.py
+ M tests/test_resilience.py
+ M tests/test_retrieve.py
+ M tests/test_slos.py
+ M tests/test_telemetry.py
+ M tests/test_versions.py
+ M web/package-lock.json
+ M web/package.json
+ M web/vite.config.js
+?? .coverage
+?? .cursor/
+?? VERIFICATION_PROMPT.md
+?? docs/BRINGUP.md
+?? docs/verification/
+?? evals/calibration.json
+?? tests/test_security.py
+EXIT:0

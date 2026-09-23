@@ -1,0 +1,37 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights: 100%|██████████| 310/310 [00:00<00:00, 8097.62it/s]
+{"ts": "2026-09-23T03:41:59.144606+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:41:59.171327+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 26.736, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:41:59.171383+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:41:59.171692+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.308, "candidates_out": 20}
+{"ts": "2026-09-23T03:41:59.171724+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:41:59.173154+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 1.43, "candidates_out": 20}
+{"ts": "2026-09-23T03:41:59.173199+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 32}
+{"ts": "2026-09-23T03:41:59.173290+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.09, "candidates_in": 32, "candidates_out": 22, "top_score": 0.030886196246139225}
+{"ts": "2026-09-23T03:41:59.178060+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:41:59.178448+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.389, "candidates_in": 5, "candidates_out": 6, "top_score": 0.052571428571428575}
+fact The copyright year on the current policy is
+1  stale=False Carbon_Reduction_Plan.pdf | Reporting Year: 1 April 2024 – 31 March 2025 | | | | | | | Current year emissions – Total (tCO e) 2 | | | | | | | | EMISSIONS | | | India | | | UK | | Scope 1
+2  stale=False Environmental_Sustainability_Policy_2026 Sustainability Policy Review Date – 10th March 2026 Last Review – 1st April 2025
+3  stale=False Environmental_Sustainability_Policy_2026 Compliance Obligations All provisions of the Environmental Sustainability Policy are subject to revision in accordance with any modification in the laws and reg
+4  stale=False Environmental_Sustainability_Policy_2026 Contents Scope ......................................................................................................................... 3 Purpose .............
+5  stale=False Water_Management_Policy.pdf Alignment with Frameworks and Standards This Policy supports Coforge's alignment with, and contribution to, the following frameworks and standards: • ISO 14001:
+6 MATCH stale=True Environmental_Sustainability_Policy_2025 About Coforge Coforge is a global digital services and solutions provider, that leverages emerging technologies and deep domain expertise to deliver real-world 
+--- RAW inj-002
+{"ts": "2026-09-23T03:41:59.178529+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:41:59.207727+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 29.195, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:41:59.207773+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:41:59.207978+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.206, "candidates_out": 20}
+{"ts": "2026-09-23T03:41:59.207996+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:41:59.208296+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.299, "candidates_out": 20}
+{"ts": "2026-09-23T03:41:59.208322+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 31}
+{"ts": "2026-09-23T03:41:59.208400+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.078, "candidates_in": 31, "candidates_out": 19, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:41:59.214760+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:41:59.214847+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.089, "candidates_in": 5, "candidates_out": 5, "top_score": 0.052941176470588235}
+The baseline total emissions in tCO2e for FY24 in India were 14,644.
+--- hits
+1 False Environmental Management System Coforge is committed to implementing and continuously improving an Environmental Managem
+2 True | Baseline Year: 2023–2024 (India operations) | | | | | Additional details relating to the baseline emissions calculatio
+3 False | Reporting Year: 1 April 2024 – 31 March 2025 | | | | | | | Current year emissions – Total (tCO e) 2 | | | | | | | | EM
+4 False Emissions Reduction Targets Coforge is a fast-growing IT services firm, and the business has grown over 100% in the past
+5 False Energy Optimization and Emission Management We, at Coforge, are committed to become “Carbon Neutral in our operations by

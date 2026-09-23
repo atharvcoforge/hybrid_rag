@@ -1,0 +1,39 @@
+........................................................................ [ 53%]
+..............................................................
+ERROR: Coverage failure: total of 74 is less than fail-under=100
+                                                                         [100%]
+================================ tests coverage ================================
+______________ coverage: platform darwin, python 3.11.16-final-0 _______________
+
+Name                      Stmts   Miss Branch BrPart  Cover
+-----------------------------------------------------------
+src/rag/__init__.py           0      0      0      0   100%
+src/rag/__main__.py           3      3      0      0     0%
+src/rag/cache.py             42      4      6      0    92%
+src/rag/calibrate.py         56     56     22      0     0%
+src/rag/chunk.py            342     32    164     35    87%
+src/rag/cli.py              121     76     32      3    31%
+src/rag/embed.py             68     30     24      1    55%
+src/rag/evaluate.py         331     67    152     34    74%
+src/rag/gates.py             97     11     36      3    86%
+src/rag/generate.py          61     32     16      1    42%
+src/rag/health.py            52      2     12      3    92%
+src/rag/html_parse.py       113     27     66     18    70%
+src/rag/layout.py           144     20     62     11    84%
+src/rag/models.py           117      1      2      1    98%
+src/rag/normalize.py         30      0     14      0   100%
+src/rag/ocr.py               64     22     18      2    63%
+src/rag/onnx_backend.py      23     23      4      0     0%
+src/rag/parse.py            376     43    176     31    85%
+src/rag/pipeline.py         148     15     54     12    87%
+src/rag/queue.py             27      4      2      0    86%
+src/rag/rerank.py            40      5      8      3    83%
+src/rag/retrieve.py         192     25     92     13    83%
+src/rag/server.py           380    204     84     12    44%
+src/rag/store.py            294     52     96     27    79%
+src/rag/telemetry.py        202     28     56      7    85%
+src/rag/versions.py         210     28     88     16    82%
+-----------------------------------------------------------
+TOTAL                      3533    810   1286    233    74%
+FAIL Required test coverage of 100% not reached. Total coverage: 74.29%
+134 passed in 1.76s

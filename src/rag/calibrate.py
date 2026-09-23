@@ -7,13 +7,19 @@ uses a held-out split when one is provided.
 from __future__ import annotations
 
 import json
+from collections.abc import Callable
 from pathlib import Path
+from typing import Any
 
-from rag.evaluate import fit_tau, load_rows, load_split, row_hit, rows_for_split
-from rag.models import tau_key
+from rag.evaluate import fit_tau, row_hit, rows_for_split
+from rag.models import Retrieval, tau_key
 
 
-def fit_mode_threshold(rows, results, keep: float = 0.95) -> float | None:
+def fit_mode_threshold(
+    rows: list[dict[str, Any]],
+    results: list[Retrieval],
+    keep: float = 0.95,
+) -> float | None:
     """Fit on rank-1 scores of answerable hits and unanswerable tops.
 
     Positives: correct rank-1 scores. Negatives: top score on unanswerable
@@ -22,8 +28,8 @@ def fit_mode_threshold(rows, results, keep: float = 0.95) -> float | None:
     fit_tau on positives only when negatives are empty, otherwise take the
     midpoint between the lowest kept positive and highest negative.
     """
-    positives = []
-    negatives = []
+    positives: list[float] = []
+    negatives: list[float] = []
     for row, result in zip(rows, results):
         if not result.hits:
             continue
@@ -39,23 +45,40 @@ def fit_mode_threshold(rows, results, keep: float = 0.95) -> float | None:
         return None
     if not negatives:
         return fit_tau(positives, keep=keep)
-    # Precision-oriented: threshold just above the highest negative that still
-    # keeps `keep` of the positives.
-    ordered = sorted(positives)
-    keep_n = max(1, int(round(keep * len(ordered))))
-    candidate = ordered[len(ordered) - keep_n]
-    floor = max(negatives)
-    return max(candidate, floor)
+    # Lowest threshold whose answered set still has precision >= keep.
+    # Sitting above every negative (the old max(candidate, floor)) abstains
+    # the positives too when one unanswerable query outscores them.
+    labeled = [(score, True) for score in positives] + [(score, False) for score in negatives]
+    best_tau: float | None = None
+    best_coverage = -1.0
+    for tau in sorted({score for score, _label in labeled}):
+        answered = [label for score, label in labeled if score >= tau]
+        if not answered:
+            continue
+        precision = sum(answered) / len(answered)
+        coverage = sum(score >= tau for score in positives) / len(positives)
+        if precision + 1e-12 >= keep and coverage > best_coverage:
+            best_coverage = coverage
+            best_tau = tau
+    if best_tau is not None:
+        return best_tau
+    return fit_tau(positives, keep=keep)
 
 
-def calibrate(index, rows, ask, split=None, modes=("rrf", "rerank", "cascade")) -> dict:
+def calibrate(
+    index: Any,
+    rows: list[dict[str, Any]],
+    ask: Callable[[str, dict[str, Any]], Retrieval],
+    split: dict[str, Any] | None = None,
+    modes: tuple[str, ...] = ("rrf", "rerank", "cascade"),
+) -> dict[str, Any]:
     if split is not None:
         train_rows = rows_for_split(rows, split, "train")
         held_rows = rows_for_split(rows, split, "test")
     else:
         train_rows = rows
         held_rows = []
-    report = {"modes": {}, "held_out": {}}
+    report: dict[str, Any] = {"modes": {}, "held_out": {}}
     for mode in modes:
         train_results = [ask(mode, row) for row in train_rows]
         fitted = fit_mode_threshold(train_rows, train_results)
@@ -84,7 +107,7 @@ def calibrate(index, rows, ask, split=None, modes=("rrf", "rerank", "cascade")) 
     return report
 
 
-def write_report(path, report: dict) -> None:
+def write_report(path: str | Path, report: dict[str, Any]) -> None:
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")

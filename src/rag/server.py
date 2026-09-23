@@ -5,24 +5,26 @@ import secrets
 import sys
 import threading
 import time
-import urllib.error
+from collections.abc import AsyncIterator, Callable, Iterator, Sequence
 from contextlib import asynccontextmanager
 from pathlib import Path
+from typing import Any, cast
 
 from fastapi import Depends, FastAPI, Header, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import StreamingResponse
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from rag.cache import AnswerCache
 from rag.evaluate import evaluate, load_rows, pick_live, row_hit
 from rag.gates import check_all
 from rag.generate import complete, stream_answer, writer_up
 from rag.health import CircuitBreaker, HealthState
-from rag.models import EMBED_MODEL, EMBED_REVISION, PIPELINE_VERSION
+from rag.models import EMBED_MODEL, EMBED_REVISION, PIPELINE_VERSION, Hit, Retrieval
 from rag.normalize import normalize_text
 from rag.pipeline import ingest, query
 from rag.queue import BusyError, InferenceQueue
+from rag.store import Index
 from rag.telemetry import (
     StageBudgetExceeded,
     bind_trace,
@@ -41,11 +43,11 @@ _answers = AnswerCache()
 _health = HealthState()
 _circuit = CircuitBreaker()
 _queue = InferenceQueue(maxsize=int(os.environ.get("INFERENCE_QUEUE", "8")))
-_index = None
+_index: Index | None = None
 
 
 @asynccontextmanager
-async def lifespan(_app: FastAPI):
+async def lifespan(_app: FastAPI) -> AsyncIterator[None]:
     global _index
     _health.warmed = False
     try:
@@ -60,20 +62,20 @@ async def lifespan(_app: FastAPI):
             from rag.embed import load_embedder
 
             load_embedder()
-        except Exception as exc:
+        except Exception as exc:  # noqa: BLE001 — index open and query failures are an open set
             _health.note(f"embedder warmup skipped: {exc}")
         _health.warmed = True
         _health.writer_ok = writer_up()
         if not _health.writer_ok:
             _health.note("Generator down — extractive mode only")
-    except Exception as exc:
+    except Exception as exc:  # noqa: BLE001 — index open and query failures are an open set
         _health.note(f"index open failed: {exc}")
         _health.warmed = True  # ready to serve degraded responses
     yield
     if _index is not None:
         try:
             _index.close()
-        except Exception:
+        except Exception:  # noqa: BLE001, S110 — close must not mask the response
             pass
         _index = None
 
@@ -102,7 +104,7 @@ class QueryBody(BaseModel):
 
 class IngestBody(BaseModel):
     # path is intentionally absent — ingest only the configured corpus root (F-03).
-    pass
+    model_config = ConfigDict(extra="forbid")
 
 
 def index_dir() -> Path:
@@ -127,26 +129,32 @@ def live_mode() -> str:
         return override
     path = eval_path()
     if path.exists():
-        saved = json.loads(path.read_text(encoding="utf-8"))
-        return saved.get("live_mode") or "cascade"
+        saved = cast(dict[str, Any], json.loads(path.read_text(encoding="utf-8")))
+        return cast(str, saved.get("live_mode") or "cascade")
     return "cascade"
+
+
+_MAX_QUERY_BYTES = 65_536
+
+
+def enforce_query_limit(text: str) -> None:
+    if len((text or "").encode("utf-8")) > _MAX_QUERY_BYTES:
+        raise HTTPException(status_code=413, detail="query too large")
 
 
 def require_token(authorization: str | None = Header(default=None)) -> None:
     expected = os.environ.get("API_TOKEN", "").strip()
-    if not expected:
-        return
-    if not authorization or not authorization.startswith("Bearer "):
+    if not expected or not authorization or not authorization.startswith("Bearer "):
         raise HTTPException(status_code=401, detail="missing bearer token")
     got = authorization.removeprefix("Bearer ").strip()
     if len(got) != len(expected) or not secrets.compare_digest(got, expected):
         raise HTTPException(status_code=401, detail="invalid bearer token")
 
 
-TITLES = {}  # kept empty; titles come from the index (documents.title)
+TITLES: dict[str, str] = {}  # kept empty; titles come from the index (documents.title)
 
 
-def hit_dict(hit, cite: int) -> dict:
+def hit_dict(hit: Hit, cite: int) -> dict[str, Any]:
     source = hit.source_path
     name = Path(source).name
     title = getattr(hit, "title", None) or TITLES.get(name) or name
@@ -176,17 +184,18 @@ def hit_dict(hit, cite: int) -> dict:
 
 
 def iter_query(
-    text,
-    search,
-    write,
-    mode,
-    cache=None,
+    text: str,
+    search: Callable[[str, str], Retrieval],
+    write: Callable[[str, Sequence[Hit]], Iterator[str]],
+    mode: str,
+    cache: Any = None,
     *,
     generation: int = 0,
     circuit: CircuitBreaker | None = None,
     health: HealthState | None = None,
     trace_id: str | None = None,
-):
+    doc_id: str | None = None,
+) -> Iterator[tuple[str, dict[str, Any]]]:
     if cache is None:
         cache = _answers
     if circuit is None:
@@ -207,22 +216,24 @@ def iter_query(
             health=health,
             request_id=request_id,
             raw_text=text or "",
+            doc_id=doc_id,
         )
 
 
 def _iter_query_traced(
-    cleaned,
-    search,
-    write,
-    mode,
-    cache,
+    cleaned: str,
+    search: Callable[[str, str], Retrieval],
+    write: Callable[[str, Sequence[Hit]], Iterator[str]],
+    mode: str,
+    cache: Any,
     *,
-    generation,
-    circuit,
-    health,
-    request_id,
-    raw_text,
-):
+    generation: int,
+    circuit: CircuitBreaker,
+    health: HealthState,
+    request_id: str,
+    raw_text: str,
+    doc_id: str | None = None,
+) -> Iterator[tuple[str, dict[str, Any]]]:
     # First SSE event: trace id for the browser.
     yield ("trace", {"trace_id": request_id, "request_id": request_id})
     if not cleaned:
@@ -230,8 +241,8 @@ def _iter_query_traced(
         return
     # Never log the query at INFO unless LOG_CONTENT=1.
     log_event("query_start", mode=mode, query=raw_text)
-    key = AnswerCache.make_key(cleaned, generation, mode)
-    saved = cache.get(key) if hasattr(cache, "get") else cache.get(key)
+    key = AnswerCache.make_key(cleaned, generation, mode, doc_id)
+    saved = cache.get(key)
     if saved is not None:
         yield (
             "meta",
@@ -277,7 +288,7 @@ def _iter_query_traced(
     stages = dict(result.stages_ms or {})
     degrade = list(health.messages) if health else []
     if getattr(result, "warnings", None):
-        degrade.extend(result.warnings)
+        degrade.extend(cast(list[str], result.warnings))
     meta = {
         "hits": [hit_dict(hit, index) for index, hit in enumerate(result.hits, start=1)],
         "reason": result.reason,
@@ -367,7 +378,7 @@ def _iter_query_traced(
             },
         )
         return
-    except Exception as exc:
+    except Exception as exc:  # noqa: BLE001 — index open and query failures are an open set
         circuit.record_failure()
         health.note("Generator stalled or failed")
         partial = "".join(parts)
@@ -392,7 +403,7 @@ def _iter_query_traced(
         )
         return
     answer = "".join(parts)
-    gate = check_all(answer, result.hits)
+    gate = check_all(answer, result.hits, query=cleaned)
     if gate.answer:
         answer = gate.answer
     if not gate.ok:
@@ -456,11 +467,16 @@ def _iter_query_traced(
     )
 
 
-def sse(event: str, data: dict) -> str:
+def sse(event: str, data: dict[str, Any]) -> str:
     return f"event: {event}\ndata: {json.dumps(data, ensure_ascii=False)}\n\n"
 
 
-def span_rate(rows, search, finish, mode) -> tuple[float | None, int]:
+def span_rate(
+    rows: list[dict[str, Any]],
+    search: Callable[[str, str], Retrieval],
+    finish: Callable[[str, Sequence[Hit]], str],
+    mode: str,
+) -> tuple[float | None, int]:
     graded = [row for row in rows if row.get("expect")]
     if not graded:
         return None, 0
@@ -477,7 +493,12 @@ def span_rate(rows, search, finish, mode) -> tuple[float | None, int]:
     return got / len(graded), len(graded)
 
 
-def build_report(index_dir_path, golden, search, finish=None) -> dict:
+def build_report(
+    index_dir_path: str | Path,
+    golden: str | Path,
+    search: Callable[[str, str], Retrieval],
+    finish: Callable[[str, Sequence[Hit]], str] | None = None,
+) -> dict[str, Any]:
     from rag.embed import encode_query, rerank_scores
     from rag.retrieve import retrieve
     from rag.store import Index
@@ -486,7 +507,7 @@ def build_report(index_dir_path, golden, search, finish=None) -> dict:
     index = Index(index_dir_path, EMBED_MODEL, EMBED_REVISION, PIPELINE_VERSION)
     index.open()
     try:
-        def ask_retrieve(mode, row):
+        def ask_retrieve(mode: str, row: dict[str, Any]) -> Retrieval:
             return retrieve(index, row["q"], encode_query, rerank=rerank_scores, mode=mode)
 
         lines, fitted = evaluate(index, rows, ask_retrieve)
@@ -497,7 +518,7 @@ def build_report(index_dir_path, golden, search, finish=None) -> dict:
     span_n = 0
     if finish is not None and writer_up():
         span, span_n = span_rate(rows, search, finish, mode)
-    report = {
+    report: dict[str, Any] = {
         "tau": fitted,
         "live_mode": mode,
         "scores": [
@@ -526,7 +547,7 @@ def build_report(index_dir_path, golden, search, finish=None) -> dict:
     return report
 
 
-def _verdict(report: dict) -> str:
+def _verdict(report: dict[str, Any]) -> str:
     # F-27: never raise on a partial report — say what is missing.
     scores = {(row["mode"], row["kind"]): row for row in report.get("scores") or []}
     live = report.get("live_mode") or "cascade"
@@ -569,15 +590,15 @@ def _verdict(report: dict) -> str:
     return " ".join(parts)
 
 
-def _search(text, mode, doc_id=None):
+def _search(text: str, mode: str, doc_id: str | None = None) -> Retrieval:
     return query(text, index_dir(), doc_id=doc_id, mode=mode)
 
 
 @app.get("/api/health")
-def health():
+def health() -> dict[str, Any]:
     store = index_dir() / "rag.sqlite"
     legacy = index_dir() / "side.sqlite"
-    snap = _health.snapshot()
+    snap = cast(dict[str, Any], _health.snapshot())
     snap.update(
         {
             "index": store.exists() or legacy.exists(),
@@ -591,14 +612,14 @@ def health():
 
 
 @app.get("/api/ready")
-def ready():
+def ready() -> dict[str, Any]:
     if not _health.warmed:
         raise HTTPException(status_code=503, detail="warming up")
     return {"ready": True, "index_generation": _health.index_generation}
 
 
 @app.get("/api/docs")
-def docs_list():
+def docs_list() -> dict[str, Any]:
     from rag.store import Index
 
     index = Index(index_dir(), EMBED_MODEL, EMBED_REVISION, PIPELINE_VERSION)
@@ -610,7 +631,8 @@ def docs_list():
 
 
 @app.post("/api/query")
-def ask(body: QueryBody, request: Request):
+def ask(body: QueryBody, request: Request) -> StreamingResponse:
+    enforce_query_limit(body.q)
     mode = live_mode()
     inbound = request.headers.get("x-request-id") or request.headers.get("x-trace-id")
     trace_id = mint_trace_id(inbound)
@@ -623,12 +645,12 @@ def ask(body: QueryBody, request: Request):
             headers={"Retry-After": str(exc.retry_after), "X-Request-ID": trace_id, "X-Trace-ID": trace_id},
         ) from exc
 
-    def search(text, mode_name):
+    def search(text: str, mode_name: str) -> Retrieval:
         return _search(text, mode_name, doc_id=body.doc_id)
 
-    def gen():
-        bus: queue.Queue = queue.Queue()
-        out: queue.Queue = queue.Queue()
+    def gen() -> Iterator[str]:
+        bus: queue.Queue[dict[str, Any]] = queue.Queue()
+        out: queue.Queue[tuple[str, str, dict[str, Any]] | None] = queue.Queue()
 
         def worker() -> None:
             set_stage_bus(bus)
@@ -644,9 +666,10 @@ def ask(body: QueryBody, request: Request):
                     circuit=_circuit,
                     health=_health,
                     trace_id=trace_id,
+                    doc_id=body.doc_id,
                 ):
                     out.put(("sse", event, data))
-            except Exception as exc:
+            except Exception as exc:  # noqa: BLE001 — index open and query failures are an open set
                 out.put(
                     (
                         "sse",
@@ -706,7 +729,9 @@ def await_disconnected(request: Request) -> bool:
 
 
 @app.post("/api/ingest")
-def ingest_route(_auth: None = Depends(require_token), body: IngestBody | None = None):
+def ingest_route(
+    _auth: None = Depends(require_token), body: IngestBody | None = None
+) -> dict[str, Any]:
     del body
     items = ingest(corpus_root(), index_dir())
     _answers.clear()
@@ -715,7 +740,7 @@ def ingest_route(_auth: None = Depends(require_token), body: IngestBody | None =
 
         with Index(index_dir(), EMBED_MODEL, EMBED_REVISION, PIPELINE_VERSION) as store:
             _health.index_generation = store.index_generation()
-    except Exception:
+    except Exception:  # noqa: BLE001 — generation bump must survive a closed index
         _health.index_generation += 1
     return {
         "items": [
@@ -732,23 +757,34 @@ def ingest_route(_auth: None = Depends(require_token), body: IngestBody | None =
 
 
 @app.get("/api/eval")
-def eval_get():
+def eval_get() -> dict[str, Any]:
     path = eval_path()
     if not path.exists():
         return {"scores": [], "live_mode": "cascade", "verdict": ""}
-    return json.loads(path.read_text(encoding="utf-8"))
+    return cast(dict[str, Any], json.loads(path.read_text(encoding="utf-8")))
 
 
 @app.post("/api/eval")
-def eval_post(_auth: None = Depends(require_token)):
-    report = build_report(index_dir(), golden_path(), _search, complete)
-    path = eval_path()
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(report, indent=2), encoding="utf-8")
-    return report
+def eval_post(_auth: None = Depends(require_token)) -> dict[str, Any]:
+    try:
+        _queue.acquire()
+    except BusyError as exc:
+        raise HTTPException(
+            status_code=429,
+            detail="Busy — retrying",
+            headers={"Retry-After": str(exc.retry_after)},
+        ) from exc
+    try:
+        report = build_report(index_dir(), golden_path(), _search, complete)
+        path = eval_path()
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(report, indent=2), encoding="utf-8")
+        return report
+    finally:
+        _queue.release()
 
 
-def main():
+def main() -> None:
     import uvicorn
 
     uvicorn.run(app, host="0.0.0.0", port=int(os.environ.get("PORT", "8000")))

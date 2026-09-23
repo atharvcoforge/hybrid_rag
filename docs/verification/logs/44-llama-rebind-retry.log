@@ -1,0 +1,5 @@
+started_pid=5093
+still_alive
+{"status":"ok"}
+still_alive2
+b'{"status":"ok"}'

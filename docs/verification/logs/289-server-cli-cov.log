@@ -1,0 +1,17 @@
+.............................{"ts": "2026-09-23T12:08:08.674088+00:00", "event": "retrieve", "request_id": "01a0ce2a-860e-78ab-a9c9-599e7c7cb582", "trace_id": "01a0ce2a-860e-78ab-a9c9-599e7c7cb582", "mode": "rrf", "retrieve_ms": 212, "hits": 0, "reason": "no_confident_hit"}
+                                            [100%]
+=============================== warnings summary ===============================
+tests/test_cov_server.py::test_server_main_guard
+  <frozen runpy>:128: RuntimeWarning: 'rag.server' found in sys.modules after import of package 'rag', but prior to execution of 'rag.server'; this may result in unpredictable behaviour
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+================================ tests coverage ================================
+______________ coverage: platform darwin, python 3.11.16-final-0 _______________
+
+Name                Stmts   Miss Branch BrPart  Cover   Missing
+---------------------------------------------------------------
+src/rag/cli.py        189      0     64      0   100%
+src/rag/server.py     391      0     84      0   100%
+---------------------------------------------------------------
+TOTAL                 580      0    148      0   100%
+29 passed, 1 warning in 0.54s

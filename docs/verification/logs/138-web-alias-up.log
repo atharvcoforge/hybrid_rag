@@ -1,0 +1,6 @@
+web and api after alias
+NAMES             STATUS                   PORTS
+rag-week6-web-1   Up 8 seconds             0.0.0.0:80->80/tcp, [::]:80->80/tcp
+rag-week6-api-1   Up 2 minutes (healthy)   0.0.0.0:8000->8000/tcp, [::]:8000->8000/tcp
+web:200
+{"ready":true,"index_generation":7}

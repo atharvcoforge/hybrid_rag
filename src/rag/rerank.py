@@ -8,7 +8,7 @@ policy text must not leave the machine by accident.
 from __future__ import annotations
 
 import os
-from typing import Protocol, runtime_checkable
+from typing import Any, Protocol, runtime_checkable
 
 
 @runtime_checkable
@@ -33,11 +33,11 @@ class NullReranker:
 class CrossEncoderReranker:
     calibrated = False
 
-    def __init__(self, model=None, *, max_length: int = 256):
+    def __init__(self, model: Any = None, *, max_length: int = 256) -> None:
         self._model = model
         self.max_length = max_length
 
-    def _load(self):
+    def _load(self) -> Any:
         if self._model is not None:
             return self._model
         from rag.embed import load_reranker

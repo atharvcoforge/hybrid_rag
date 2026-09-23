@@ -1,24 +1,58 @@
 import hashlib
+import os
+import shutil
+from collections.abc import Callable
 from pathlib import Path
 
 from rag.chunk import chunk_document
 from rag.embed import embed_texts
-from rag.models import EMBED_MODEL, EMBED_REVISION, MAX_CHUNKS, MAX_FILE_BYTES, PIPELINE_VERSION, IngestError, Ingested
+from rag.models import (
+    EMBED_MODEL,
+    EMBED_REVISION,
+    MAX_CHUNKS,
+    MAX_FILE_BYTES,
+    PIPELINE_VERSION,
+    Ingested,
+    IngestError,
+    Retrieval,
+)
 from rag.parse import MIMES, parse_file
 from rag.retrieve import retrieve
-from rag.store import Index
+from rag.store import Index, SqliteStore
+
+
+def _open_for_ingest(index: SqliteStore) -> None:
+    """A pipeline mismatch is rebuilt in place. Query still refuses a stale index."""
+    try:
+        index.open()
+    except IngestError as exc:
+        if "pipeline version changed" not in str(exc):
+            raise
+        index.close()
+        _wipe_index(Path(index.path))
+        index.open()
+
+
+def _wipe_index(path: Path) -> None:
+    if not path.exists():
+        return
+    for child in path.iterdir():
+        if child.is_dir() and not child.is_symlink():
+            shutil.rmtree(child)
+        else:
+            child.unlink()
 
 
 def ingest(
-    path,
-    index_dir,
-    encode=None,
-    count_tokens=None,
-    model_id=None,
-    model_revision=None,
+    path: str | Path,
+    index_dir: str | Path,
+    encode: Callable[..., list[list[float]]] | None = None,
+    count_tokens: Callable[[str], int] | None = None,
+    model_id: str | None = None,
+    model_revision: str | None = None,
     *,
     contextual: bool = False,
-    context_fn=None,
+    context_fn: Callable[[str, str], str] | None = None,
 ) -> list[Ingested]:
     from rag.telemetry import bind_trace, log_event, mint_trace_id
 
@@ -26,21 +60,20 @@ def ingest(
     index_dir = Path(index_dir)
     model_id = model_id or EMBED_MODEL
     model_revision = model_revision or EMBED_REVISION
-    if encode is None:
-        from rag.embed import encode_documents
+    from rag.embed import count_tokens as default_tokens
+    from rag.embed import encode_documents as default_encode
 
-        encode = encode_documents
-    if count_tokens is None:
-        from rag.embed import count_tokens as count_tokens
+    encoder: Callable[..., list[list[float]]] = default_encode if encode is None else encode
+    token_fn: Callable[[str], int] = default_tokens if count_tokens is None else count_tokens
     if not path.exists():
         raise IngestError(str(path), "file not found")
     if path.is_file() and path.suffix.lower() not in MIMES:
         raise IngestError(str(path), "unsupported file type")
     index = Index(index_dir, model_id, model_revision, PIPELINE_VERSION)
-    index.open()
+    _open_for_ingest(index)
     try:
         files = _files(path, index_dir)
-        results = []
+        results: list[Ingested] = []
         with bind_trace(mint_trace_id()):
             log_event("ingest_start", file_total=len(files))
             for file_index, (file, root) in enumerate(files, start=1):
@@ -55,8 +88,8 @@ def ingest(
                         file,
                         root,
                         index,
-                        encode,
-                        count_tokens,
+                        encoder,
+                        token_fn,
                         model_id,
                         model_revision,
                         contextual=contextual,
@@ -67,7 +100,7 @@ def ingest(
                 )
             if path.is_dir():
                 seen = {item.doc_id for item in results}
-                for doc_id in index.purge_missing(seen):
+                for doc_id in index.purge_missing(list(seen)):
                     results.append(Ingested(doc_id, "purged", 0))
             from rag.versions import reconcile_versions
 
@@ -78,36 +111,47 @@ def ingest(
         index.close()
 
 
-def query(text, index_dir, doc_id=None, embed_query=None, rerank=None, model_id=None, model_revision=None, mode="cascade"):
+def query(
+    text: str,
+    index_dir: str | Path,
+    doc_id: str | None = None,
+    embed_query: Callable[[str], list[float]] | None = None,
+    rerank: Callable[[str, list[str]], list[float]] | None = None,
+    model_id: str | None = None,
+    model_revision: str | None = None,
+    mode: str = "cascade",
+) -> Retrieval:
     from rag.models import QueryError
 
     if not text or not text.strip():
         raise QueryError("empty query")
     model_id = model_id or EMBED_MODEL
     model_revision = model_revision or EMBED_REVISION
-    if embed_query is None:
-        from rag.embed import encode_query as embed_query
-    if rerank is None:
-        from rag.embed import rerank_scores as rerank
+    from rag.embed import encode_query, rerank_scores
+
+    query_embed: Callable[[str], list[float]] = encode_query if embed_query is None else embed_query
+    query_rerank: Callable[[str, list[str]], list[float]] = (
+        rerank_scores if rerank is None else rerank
+    )
     index = Index(Path(index_dir), model_id, model_revision, PIPELINE_VERSION)
     index.open()
     try:
-        return retrieve(index, text, embed_query, rerank=rerank, doc_id=doc_id, mode=mode)
+        return retrieve(index, text, query_embed, rerank=query_rerank, doc_id=doc_id, mode=mode)
     finally:
         index.close()
 
 
 def _ingest_one(
-    file,
-    root,
-    index,
-    encode,
-    count_tokens,
-    model_id,
-    model_revision,
+    file: Path,
+    root: Path,
+    index: SqliteStore,
+    encode: Callable[..., list[list[float]]],
+    count_tokens: Callable[[str], int],
+    model_id: str,
+    model_revision: str,
     *,
     contextual: bool = False,
-    context_fn=None,
+    context_fn: Callable[[str, str], str] | None = None,
     file_index: int = 1,
     file_total: int = 1,
 ) -> Ingested:
@@ -152,7 +196,7 @@ def _ingest_one(
             replace(block, text=normalize_text(block.text, code=block.kind == "code"))
             for block in blocks
         ]
-    warnings = []
+    warnings: list[str] = []
     for block in blocks:
         if block.flagged:
             warnings.append(f"flagged {block.kind} on page {block.page}")
@@ -210,19 +254,54 @@ def _ingest_one(
 def _files(path: Path, index_dir: Path) -> list[tuple[Path, Path]]:
     if path.is_dir():
         root = path
-        found = []
-        for file in sorted(root.rglob("*")):
-            if not file.is_file() or file.name.startswith("."):
-                continue
-            if file.suffix.lower() not in MIMES:
-                continue
-            if _is_under(index_dir, file):
-                continue
-            found.append(file)
-        return [(file, root) for file in found]
+        found: list[Path] = []
+        for dirpath, dirnames, filenames in os.walk(root, followlinks=False):
+            current = Path(dirpath)
+            kept_dirs = []
+            for name in dirnames:
+                child = current / name
+                if child.is_symlink():
+                    _check_symlink(root, child)
+                    continue
+                kept_dirs.append(name)
+            dirnames[:] = kept_dirs
+            for name in filenames:
+                file = current / name
+                _reject_name(file)
+                if file.is_symlink():
+                    _check_symlink(root, file)
+                if file.name.startswith(".") or not file.is_file():
+                    continue
+                if file.suffix.lower() not in MIMES:
+                    continue
+                if _is_under(index_dir, file):
+                    continue
+                found.append(file)
+        return [(file, root) for file in sorted(found)]
+    _reject_name(path)
     if path.suffix.lower() not in MIMES:
         raise IngestError(str(path), "unsupported file type")
     return [(path, path.parent)]
+
+
+def _reject_name(file: Path) -> None:
+    name = file.name
+    if "\n" in name or "\r" in name:
+        raise IngestError(str(file), f"filename contains a newline: {file}")
+    if ".." in file.parts or "../" in name:
+        raise IngestError(str(file), f"path escapes the ingest folder: {file}")
+
+
+def _check_symlink(root: Path, file: Path) -> None:
+    try:
+        resolved = file.resolve(strict=True)
+    except (OSError, RuntimeError) as exc:
+        raise IngestError(str(file), f"symlink loop: {file}") from exc
+    root_resolved = root.resolve()
+    if resolved != root_resolved and root_resolved not in resolved.parents:
+        raise IngestError(str(file), f"symlink escapes the ingest folder: {file}")
+    if resolved == root_resolved or resolved in file.parents:
+        raise IngestError(str(file), f"symlink loop: {file}")
 
 
 def _inside(root: Path, file: Path) -> Path:

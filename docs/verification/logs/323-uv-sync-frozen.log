@@ -1,0 +1,5 @@
+   Building rag @ file:///Users/atharv.raotole/Desktop/RAG-WEEK6
+      Built rag @ file:///Users/atharv.raotole/Desktop/RAG-WEEK6
+Prepared 1 package in 684ms
+error: failed to remove file `/Users/atharv.raotole/Desktop/RAG-WEEK6/.venv/lib/python3.11/site-packages/../../../bin/rag`: Operation not permitted (os error 1)
+SYNC_EXIT:2

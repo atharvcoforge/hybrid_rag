@@ -1,10 +1,13 @@
 import argparse
 import json
 import sys
+from collections.abc import Callable, Sequence
 from pathlib import Path
+from typing import Any
 
 from rag.evaluate import (
     DEFAULT_SUITE,
+    Score,
     assert_kind_coverage,
     evaluate,
     format_gate_report,
@@ -14,11 +17,12 @@ from rag.evaluate import (
     load_suite,
     verify_corpus,
 )
-from rag.models import IngestError, QueryError
+from rag.gates import GateResult
+from rag.models import Hit, IngestError, QueryError, Retrieval
 from rag.pipeline import ingest, query
 
 
-def main(argv=None) -> int:
+def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="rag")
     parser.add_argument(
         "--log-format",
@@ -53,6 +57,9 @@ def main(argv=None) -> int:
     purge_cmd.add_argument("--index", required=True)
     purge_cmd.add_argument("--missing", action="store_true", required=True)
 
+    verify_cmd = sub.add_parser("verify", help="check index integrity")
+    verify_cmd.add_argument("--index", required=True)
+
     args = parser.parse_args(argv)
     from rag.telemetry import configure_logging
 
@@ -73,6 +80,12 @@ def main(argv=None) -> int:
             for item in ingest(args.path, args.index):
                 if item.status == "purged":
                     print(f"purged  {item.doc_id}")
+        elif args.cmd == "verify":
+            problems = _run_verify(args.index)
+            if problems:
+                print("\n".join(problems), file=sys.stderr)
+                return 1
+            print("integrity clean")
         elif args.cmd == "calibrate":
             print(_run_calibrate(args.index, args.golden, args.split, args.out))
         else:
@@ -85,7 +98,19 @@ def main(argv=None) -> int:
     return 0
 
 
-def _run_eval(index_dir, golden, suite_path) -> tuple[str, bool]:
+def _run_verify(index_dir: str) -> list[str]:
+    from rag.models import EMBED_MODEL, EMBED_REVISION, PIPELINE_VERSION
+    from rag.store import Index
+
+    index = Index(index_dir, EMBED_MODEL, EMBED_REVISION, PIPELINE_VERSION)
+    index.open()
+    try:
+        return index.integrity_problems()
+    finally:
+        index.close()
+
+
+def _run_eval(index_dir: str, golden: str | None, suite_path: str | None) -> tuple[str, bool]:
     from rag.embed import encode_query, rerank_scores
     from rag.evaluate import check_gates, pick_live
     from rag.models import EMBED_MODEL, EMBED_REVISION, PIPELINE_VERSION
@@ -113,18 +138,25 @@ def _run_eval(index_dir, golden, suite_path) -> tuple[str, bool]:
 
     index = Index(index_dir, EMBED_MODEL, EMBED_REVISION, PIPELINE_VERSION)
     index.open()
+    split = None
+    if suite is not None:
+        split_path = suite.get("split") or "evals/split.json"
+        split = load_split(split_path) if Path(split_path).exists() else None
     try:
-        def ask(mode, row):
+        def ask(mode: str, row: dict[str, Any]) -> Retrieval:
             return retrieve(index, row["q"], encode_query, rerank=rerank_scores, mode=mode)
 
-        lines, fitted = evaluate(index, rows, ask)
+        lines, fitted = evaluate(index, rows, ask, split=split)
+        live = pick_live(lines)
+        answers = None
+        if suite is not None:
+            answers, quality = _answers_for_rows(rows, ask, live)
+            _stamp_quality(lines, live, quality)
     finally:
         index.close()
     body = format_scores(lines, fitted)
     if suite is None:
         return body, True
-    split_path = suite.get("split") or "evals/split.json"
-    split = load_split(split_path) if Path(split_path).exists() else None
     baseline = None
     baseline_path = (suite.get("regression") or {}).get("baseline")
     if baseline_path and Path(baseline_path).exists():
@@ -133,15 +165,80 @@ def _run_eval(index_dir, golden, suite_path) -> tuple[str, bool]:
         suite,
         lines,
         rows=rows,
-        live_mode=pick_live(lines),
+        live_mode=live,
         split=split,
         baseline=baseline,
-        answers=None,  # answer gates need generation; Part F fills them
+        answers=answers,
     )
+    if answers is None:
+        gate_failures.append(
+            "generator down: answer abstention, conflict_disclosure, and injection_resisted were not scored"
+        )
     return body + "\n" + format_gate_report(gate_failures), not gate_failures
 
 
-def _run_calibrate(index_dir, golden, split_path, out_path) -> str:
+def _answers_for_rows(
+    rows: list[dict[str, Any]],
+    ask: Callable[[str, dict[str, Any]], Retrieval],
+    live: str,
+) -> tuple[dict[str, str] | None, dict[str, float | None] | None]:
+    from rag.gates import check_all
+    from rag.generate import complete, writer_up
+
+    if not writer_up():
+        return None, None
+    answers: dict[str, str] = {}
+    grounded: list[float] = []
+    cited: list[float] = []
+    for row in rows:
+        result = ask(live, row)
+        text, gate = _gated_text(row.get("q") or "", result, complete, check_all)
+        answers[row["id"]] = text
+        if gate is None:
+            continue
+        if gate.reason == "unsupported_figure":
+            grounded.append(0.0)
+            cited.append(0.0)
+        elif gate.ok and gate.reason != "declined":
+            grounded.append(1.0 if gate.groundedness is None else float(gate.groundedness))
+            cited.append(1.0 if gate.citation_precision is None else float(gate.citation_precision))
+    quality = {
+        "groundedness": sum(grounded) / len(grounded) if grounded else None,
+        "citation_precision": sum(cited) / len(cited) if cited else None,
+    }
+    return answers, quality
+
+
+def _stamp_quality(
+    lines: list[Score], live: str, quality: dict[str, float | None] | None
+) -> None:
+    if not quality:
+        return
+    for line in lines:
+        if line.mode == live and line.kind == "all":
+            line.groundedness = quality.get("groundedness")
+            line.citation_precision = quality.get("citation_precision")
+            line.citation_recall = quality.get("citation_precision")
+
+
+def _gated_text(
+    query: str,
+    result: Retrieval,
+    complete: Callable[[str, Sequence[Hit]], str],
+    check_all: Callable[..., GateResult],
+) -> tuple[str, GateResult | None]:
+    if getattr(result, "reason", "") == "no_confident_hit" or not result.hits:
+        return "", None
+    text = complete(query, result.hits)
+    gate = check_all(text, result.hits, query=query)
+    if gate.answer:
+        text = gate.answer
+    if not gate.ok or gate.state == "withheld":
+        return "The documents do not say.", gate
+    return text, gate
+
+
+def _run_calibrate(index_dir: str, golden: str, split_path: str, out_path: str) -> str:
     from rag.calibrate import calibrate, write_report
     from rag.embed import encode_query, rerank_scores
     from rag.models import EMBED_MODEL, EMBED_REVISION, PIPELINE_VERSION
@@ -153,7 +250,7 @@ def _run_calibrate(index_dir, golden, split_path, out_path) -> str:
     index = Index(index_dir, EMBED_MODEL, EMBED_REVISION, PIPELINE_VERSION)
     index.open()
     try:
-        def ask(mode, row):
+        def ask(mode: str, row: dict[str, Any]) -> Retrieval:
             return retrieve(index, row["q"], encode_query, rerank=rerank_scores, mode=mode)
 
         report = calibrate(index, rows, ask, split=split)
@@ -163,7 +260,7 @@ def _run_calibrate(index_dir, golden, split_path, out_path) -> str:
     return json.dumps(report, indent=2)
 
 
-def _format_hit(hit) -> str:
+def _format_hit(hit: Hit) -> str:
     pages = f"p.{hit.page_start}-{hit.page_end}" if hit.page_start else "p.-"
     flag = "confident" if hit.confident else "uncertain"
     head = (

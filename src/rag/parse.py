@@ -1,7 +1,9 @@
 import csv
 import io
 import re
+from collections.abc import Callable
 from pathlib import Path
+from typing import Any
 
 from rag.models import Block, IngestError
 from rag.normalize import drop_page_chrome, normalize_text
@@ -16,6 +18,7 @@ MIMES = {
 }
 
 _HEADING = re.compile(r"^(#{1,6})\s+(.*)$")
+_TITLE_SMALL = frozenset({"and", "of", "the", "to", "for", "in", "on", "a", "an", "by", "with"})
 _FENCE = re.compile(r"^```")
 _BULLET = re.compile(r"^(\s*)([-*+]|\d+\.)\s+(.*)$")
 _TABLE_SEP = re.compile(r"^\|?\s*:?-{3,}:?\s*(\|\s*:?-{3,}:?\s*)+\|?$")
@@ -195,13 +198,13 @@ def parse_pdf(path: Path) -> list[Block]:
 
 
 def parse_pdf_pages(
-    pages,
+    pages: list[Any],
     *,
-    layout_extract=None,
-    ocr_engine=None,
-    captioner=None,
-    page_image=None,
-    page_images=None,
+    layout_extract: Callable[..., Any] | None = None,
+    ocr_engine: Callable[[Any], tuple[str, float]] | None = None,
+    captioner: Callable[[Any], str] | None = None,
+    page_image: Callable[[Any], Any] | None = None,
+    page_images: Callable[[Any], list[Any]] | None = None,
 ) -> tuple[list[Block], list[str]]:
     """Per-page PDF parse. One broken page becomes an error entry, not a hard fail."""
     from rag.layout import extract_page_tables
@@ -214,7 +217,7 @@ def parse_pdf_pages(
         layout_extract = _docling_extract
 
     page_texts: list[str] = []
-    page_tables: list[list] = []
+    page_tables: list[list[Any]] = []
     page_extras: list[list[Block]] = []
     errors: list[str] = []
 
@@ -256,7 +259,7 @@ def parse_pdf_pages(
             page_texts.append(text)
             page_tables.append(tables)
             page_extras.append(extras)
-        except Exception as exc:
+        except Exception as exc:  # noqa: BLE001 — parser libraries raise an open set
             page_texts.append("")
             page_tables.append([])
             page_extras.append([])
@@ -268,16 +271,17 @@ def parse_pdf_pages(
         zip(cleaned, page_tables, page_extras), start=1
     ):
         norm = normalize_text(text)
-        for paragraph in [part.strip() for part in re.split(r"\n\s*\n", norm) if part.strip()]:
-            blocks.append(_block("prose", paragraph, "", number))
+        blocks.extend(pdf_prose_blocks(norm, number))
         for table in tables:
             blocks.append(_block("table", table.text, "", number, flagged=table.flagged))
         blocks.extend(extras)
     return blocks, errors
 
 
-def _outside_tables(bboxes: list[tuple[float, float, float, float]]):
-    def keep(obj):
+def _outside_tables(
+    bboxes: list[tuple[float, float, float, float]],
+) -> Callable[[Any], bool]:
+    def keep(obj: Any) -> bool:
         x0 = obj.get("x0")
         x1 = obj.get("x1")
         top = obj.get("top")
@@ -292,20 +296,20 @@ def _outside_tables(bboxes: list[tuple[float, float, float, float]]):
     return keep
 
 
-def _docling_extract(page):
+def _docling_extract(page: Any) -> None:
     """Optional Docling rung. Absent package ⇒ no escalation."""
     try:
         import docling  # noqa: F401
     except ImportError:
-        return None
+        return
     del page
-    return None
+    return
 
 
-def _embedded_images(page) -> list:
+def _embedded_images(page: Any) -> list[Any]:
     try:
         return list(getattr(page, "images", []) or [])
-    except Exception:
+    except Exception:  # noqa: BLE001 — parser libraries raise an open set
         return []
 
 
@@ -360,7 +364,7 @@ def parse_docx(path: Path) -> list[Block]:
     return blocks
 
 
-def _docx_text(element, *, include_textboxes: bool = False) -> str:
+def _docx_text(element: Any, *, include_textboxes: bool = False) -> str:
     """Keep insertions, drop tracked deletions."""
     from docx.oxml.ns import qn
 
@@ -380,7 +384,7 @@ def _docx_text(element, *, include_textboxes: bool = False) -> str:
     return "".join(parts)
 
 
-def _inside_deletion(node) -> bool:
+def _inside_deletion(node: Any) -> bool:
     from docx.oxml.ns import qn
 
     parent = node.getparent()
@@ -391,7 +395,7 @@ def _inside_deletion(node) -> bool:
     return False
 
 
-def _inside_textbox(node) -> bool:
+def _inside_textbox(node: Any) -> bool:
     from docx.oxml.ns import qn
 
     parent = node.getparent()
@@ -402,7 +406,7 @@ def _inside_textbox(node) -> bool:
     return False
 
 
-def _textbox_texts(element) -> list[str]:
+def _textbox_texts(element: Any) -> list[str]:
     from docx.oxml.ns import qn
 
     out = []
@@ -414,14 +418,14 @@ def _textbox_texts(element) -> list[str]:
     return out
 
 
-def _footnote_texts(document) -> list[str]:
+def _footnote_texts(document: Any) -> list[str]:
     from docx.oxml.ns import qn
     from lxml import etree
 
-    out = []
+    out: list[str] = []
     try:
         package = document.part.package
-    except Exception:
+    except Exception:  # noqa: BLE001 — parser libraries raise an open set
         return out
     for other in package.parts:
         name = getattr(other, "partname", None)
@@ -476,6 +480,71 @@ def _path(heading: list[str]) -> str:
     return " > ".join(heading)
 
 
+def is_section_title(line: str) -> bool:
+    """PDF section title: short title-case line, not a sentence, bullet, or table row."""
+    text = line.strip()
+    if not text or len(text) < 3 or len(text) > 70:
+        return False
+    if text[0] in "•-*|":
+        return False
+    if re.match(r"^\d+\.", text):
+        return False
+    if text[-1] in ".!?,;:":
+        return False
+    if any(char.isdigit() for char in text) or "," in text or "|" in text:
+        return False
+    words = text.split()
+    if not 2 <= len(words) <= 8 or not text[0].isupper():
+        return False
+    for word in words:
+        bare = word.strip("()'\"")
+        if not bare:
+            return False
+        if bare.casefold() in _TITLE_SMALL:
+            continue
+        if not bare[0].isupper():
+            return False
+    return True
+
+
+def pdf_prose_blocks(text: str, page: int) -> list[Block]:
+    """Split PDF prose on section titles so each section can be its own parent."""
+    heading: list[str] = []
+    blocks: list[Block] = []
+    buf: list[str] = []
+
+    def flush() -> None:
+        body = "\n".join(buf).strip()
+        buf.clear()
+        if body:
+            blocks.append(_block("prose", body, _path(heading), page))
+
+    lines = (text or "").splitlines()
+    index = 0
+    while index < len(lines):
+        line = lines[index]
+        if is_section_title(line):
+            # A name followed by a role is one block, not two sections.
+            run = [line.strip()]
+            nxt = index + 1
+            while nxt < len(lines) and is_section_title(lines[nxt]):
+                run.append(lines[nxt].strip())
+                nxt += 1
+            flush()
+            heading = [run[0]]
+            blocks.append(_block("prose", "\n".join(run), _path(heading), page))
+            index = nxt
+            continue
+        if not line.strip():
+            flush()
+            index += 1
+            continue
+        buf.append(line.strip())
+        index += 1
+    flush()
+    return blocks
+
+
 def _continues_paragraph(lines: list[str], i: int) -> bool:
     line = lines[i]
     if not line.strip():
@@ -502,7 +571,7 @@ def _markdown_table(lines: list[str]) -> str:
     return normalize_text("\n".join(rows))
 
 
-def _pdf_table(table: list) -> str:
+def _pdf_table(table: list[Any]) -> str:
     rows = []
     for row in table:
         cells = [normalize_text(cell or "") for cell in row]

@@ -1,0 +1,27 @@
+.........F......................F....                                    [100%]
+=================================== FAILURES ===================================
+E   AssertionError: assert ['A'] == ['A', 'B']
+      
+      Right contains one more item: 'B'
+      Use -v to get more diff
+----------------------------- Captured stdout call -----------------------------
+{"ts": "2026-09-23T03:11:45.965090+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "test"}
+{"ts": "2026-09-23T03:11:45.965123+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 0.034, "model": "test"}
+{"ts": "2026-09-23T03:11:45.965154+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:11:45.965241+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.087, "candidates_out": 2}
+{"ts": "2026-09-23T03:11:45.965333+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:11:45.965392+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.059, "candidates_out": 2}
+{"ts": "2026-09-23T03:11:45.965471+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 4}
+{"ts": "2026-09-23T03:11:45.965558+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.094, "candidates_in": 4, "candidates_out": 2, "top_score": 0.03252247488101534}
+{"ts": "2026-09-23T03:11:45.965582+00:00", "trace_id": null, "stage": "rerank", "event": "start", "candidates_in": 2}
+{"ts": "2026-09-23T03:11:45.965627+00:00", "trace_id": null, "stage": "rerank", "event": "finish", "duration_ms": 0.045, "candidates_in": 2, "candidates_out": 2, "top_score": 1.0}
+{"ts": "2026-09-23T03:11:45.965848+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 2}
+{"ts": "2026-09-23T03:11:45.965950+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.102, "candidates_in": 2, "candidates_out": 1, "top_score": 1.0}
+/Users/atharv.raotole/Desktop/RAG-WEEK6/tests/test_retrieve.py:129: AssertionError: assert ['A'] == ['A', 'B']
+E   AssertionError: assert 'Protocol' in 'Declaration and Sign Off. This carbon plan reports emissions.'
+     +  where 'Declaration and Sign Off. This carbon plan reports emissions.' = Hit(parent_id='Carbon_R', parent_text='Declaration and Sign Off. This carbon plan reports emissions.', heading_path=''...rseded=False, version_group='env', status='current', superseded_by=None, supersedes=None, review_date=None, title=None).parent_text
+/Users/atharv.raotole/Desktop/RAG-WEEK6/tests/test_versions.py:196: AssertionError: assert 'Protocol' in 'Declaration and Sign Off. This carbon plan reports emissions.'
+=========================== short test summary info ============================
+FAILED tests/test_retrieve.py::test_close_scores_stay_together - AssertionErr...
+FAILED tests/test_versions.py::test_rarest_query_term_promotes_the_passage_that_contains_it
+2 failed, 35 passed in 0.05s

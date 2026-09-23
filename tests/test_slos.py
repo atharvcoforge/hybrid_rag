@@ -11,6 +11,14 @@ def test_check_slos_flags_slow_retrieve_p95():
     assert any("retrieve p95" in f for f in failures)
 
 
+def test_check_slos_ignores_a_slow_arm_that_is_not_live():
+    scores = [
+        Score(mode="bm25", kind="all", recall=1.0, mrr=1.0, abstain=0.0, n=10, p95=20.0),
+        Score(mode="rerank", kind="all", recall=1.0, mrr=1.0, abstain=0.0, n=10, p95=900.0),
+    ]
+    assert check_slos(scores, live_mode="bm25") == []
+
+
 def test_check_slos_passes_warm_cascade():
     scores = [
         Score(mode="cascade", kind="all", recall=1.0, mrr=1.0, abstain=0.0, n=10, p50=80.0, p95=200.0),

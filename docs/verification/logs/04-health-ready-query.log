@@ -1,0 +1,38 @@
+=== health ===
+{"index":true,"writer":true}
+HTTP 200
+=== ready ===
+{"detail":"Not Found"}
+HTTP 404
+=== web root headers ===
+HTTP/1.1 200 OK
+Server: nginx/1.31.6
+Date: Tue, 22 Sep 2026 19:28:45 GMT
+Content-Type: text/html
+Content-Length: 617
+Last-Modified: Tue, 22 Sep 2026 17:44:54 GMT
+Connection: keep-alive
+ETag: "6ab2be96-269"
+Accept-Ranges: bytes
+
+HTTP 200
+=== web body head ===
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reading room</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/geist@1.3.1/dist/fonts/geist-sans/style.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/geist@1.3.1/dist/fonts/geist-mono/style.css" />
+    <script type="module" crossorigin src="/assets/index-BZDSZ-2f.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-CfmmJ4CF.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
+
+=== query SSE (carbon neutrality) ===
+{"detail":[{"type":"missing","loc":["body","q"],"msg":"Field required","input":{"question":"By when does Coforge reach carbon neutrality in operations?"}}]}
+query_seconds=0

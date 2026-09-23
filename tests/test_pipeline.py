@@ -4,13 +4,13 @@ from pathlib import Path
 import pytest
 
 from rag.evaluate import evaluate, load_rows
-from rag.models import IngestError, PIPELINE_VERSION
+from rag.models import PIPELINE_VERSION, IngestError
 from rag.pipeline import ingest, query
 from rag.retrieve import retrieve
 from rag.store import Index
 from tests.fakes import fake_encode, fake_tokens
 
-CORPUS = Path("evals/corpus")
+CORPUS = Path(__file__).resolve().parents[1] / "evals" / "corpus"
 
 
 def _encode_query(text):
@@ -67,6 +67,28 @@ def test_sku_is_found_and_a_second_ingest_skips(tmp_path):
     try:
         assert index.bm25_search("SKU-7842-XL", 5, doc_id="guide.md")
         assert index.dense_search(_encode_query("SKU-7842-XL"), 5, doc_id="missing.md") == []
+    finally:
+        index.close()
+
+
+def test_stale_pipeline_is_rebuilt_on_ingest(tmp_path):
+    folder = tmp_path / "docs"
+    folder.mkdir()
+    (folder / "note.md").write_text("# One\n\nalpha unique phrase\n", encoding="utf-8")
+    index_dir = tmp_path / "index"
+    _ingest(folder, index_dir)
+    index = Index(index_dir, "test-embed", "rev", PIPELINE_VERSION)
+    index.open()
+    try:
+        index._set_meta("pipeline_version", "1")
+    finally:
+        index.close()
+    rebuilt = _ingest(folder, index_dir)
+    assert rebuilt[0].status == "indexed"
+    index.open()
+    try:
+        assert index._meta("pipeline_version") == str(PIPELINE_VERSION)
+        assert index.child_ids("note.md")
     finally:
         index.close()
 
@@ -169,10 +191,34 @@ def test_gates(tmp_path, monkeypatch):
         _ingest(folder, tmp_path / "index-link")
 
 
+def test_newline_filename_is_rejected(tmp_path):
+    folder = tmp_path / "docs"
+    folder.mkdir()
+    (folder / "bad\nname.md").write_text("# T\n\nhello\n", encoding="utf-8")
+    with pytest.raises(IngestError, match="newline"):
+        _ingest(folder, tmp_path / "index-nl")
+
+
+def test_dotdot_segment_is_rejected():
+    from rag.pipeline import _reject_name
+
+    with pytest.raises(IngestError, match="escapes"):
+        _reject_name(Path("documents/../secret.md"))
+
+
+def test_symlink_loop_is_rejected(tmp_path):
+    folder = tmp_path / "docs"
+    folder.mkdir()
+    loop = folder / "loop.md"
+    loop.symlink_to(loop)
+    with pytest.raises(IngestError, match="loop"):
+        _ingest(folder, tmp_path / "index-loop")
+
+
 def test_golden_bm25_finds_the_sku(tmp_path):
     index_dir = tmp_path / "index"
     _ingest(CORPUS, index_dir)
-    rows = load_rows("evals/fixture.jsonl")
+    rows = load_rows(Path(__file__).resolve().parents[1] / "evals" / "fixture.jsonl")
     index = Index(index_dir, "test-embed", "rev", PIPELINE_VERSION)
     index.open()
     try:

@@ -1,0 +1,3 @@
+src/rag/pipeline.py:133: error: Incompatible types in assignment (expression has type "Callable[[str], list[float]]", variable has type "def encode_query(text: str) -> list[float]")  [assignment]
+src/rag/pipeline.py:137: error: Incompatible types in assignment (expression has type "Callable[[str, list[str]], list[float]]", variable has type "def rerank_scores(query: str, texts: list[str]) -> list[float]")  [assignment]
+Found 2 errors in 1 file (checked 26 source files)

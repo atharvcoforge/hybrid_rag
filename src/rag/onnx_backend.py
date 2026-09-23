@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import os
 from pathlib import Path
+from typing import Any
 
 
 def onnx_embed_path() -> Path | None:
@@ -26,7 +27,7 @@ def onnx_rerank_path() -> Path | None:
     return path if path.is_file() else None
 
 
-def try_onnx_session(path: Path):
+def try_onnx_session(path: Path) -> Any | None:
     try:
         import onnxruntime as ort
     except ImportError:

@@ -10,8 +10,11 @@ import array
 import re
 import sqlite3
 from pathlib import Path
+from typing import Any, Literal, Self
 
-from rag.models import IngestError
+import numpy as np
+
+from rag.models import Child, IngestError, Parent
 
 # Quoted compounds force FTS5 adjacency of the unicode61 parts (SKU-7842-XL,
 # 14,644), so OR over split tokens cannot rank a distractor that only shares pieces.
@@ -56,51 +59,56 @@ _STOP = frozenset(
         "does",
         "do",
         "did",
-        "of",
     }
 )
 
 class SqliteStore:
-    def __init__(self, path, model_id: str, model_revision: str, pipeline_version: int):
+    def __init__(self, path: str | Path, model_id: str, model_revision: str, pipeline_version: int) -> None:
         self.path = Path(path)
         self.model_id = model_id
         self.model_revision = model_revision
         self.pipeline_version = pipeline_version
         self.db: sqlite3.Connection | None = None
-        self._matrix = None  # numpy float32 (n, dim) or None
+        self._matrix: np.ndarray | None = None
         self._chunk_ids: list[str] = []
         self._degraded = False
         self._degraded_reason = ""
 
-    def open(self):
+    def _db(self) -> sqlite3.Connection:
+        db = self.db
+        if db is None:
+            raise RuntimeError("store is not open")
+        return db
+
+    def open(self) -> None:
         self.path.mkdir(parents=True, exist_ok=True)
         self.db = sqlite3.connect(str(self.path / "rag.sqlite"))
-        self.db.row_factory = sqlite3.Row
-        self.db.execute("PRAGMA journal_mode=WAL")
-        self.db.execute("PRAGMA synchronous=NORMAL")
-        self.db.execute("PRAGMA busy_timeout=5000")
+        self._db().row_factory = sqlite3.Row
+        self._db().execute("PRAGMA journal_mode=WAL")
+        self._db().execute("PRAGMA synchronous=NORMAL")
+        self._db().execute("PRAGMA busy_timeout=5000")
         self._schema()
         self._migrate()
         self._check_saved_identity()
         self._load_matrix()
 
-    def close(self):
+    def close(self) -> None:
         if self.db is not None:
-            self.db.close()
+            self._db().close()
             self.db = None
         self._matrix = None
         self._chunk_ids = []
 
-    def __enter__(self):
+    def __enter__(self) -> Self:
         self.open()
         return self
 
-    def __exit__(self, *exc):
+    def __exit__(self, *exc: object) -> Literal[False]:
         self.close()
         return False
 
-    def matches(self, doc_id, digest, pipeline_version, model_id, revision) -> bool:
-        row = self.db.execute("SELECT * FROM documents WHERE doc_id = ?", (doc_id,)).fetchone()
+    def matches(self, doc_id: str, digest: str, pipeline_version: int, model_id: str, revision: str) -> bool:
+        row = self._db().execute("SELECT * FROM documents WHERE doc_id = ?", (doc_id,)).fetchone()
         if row is None:
             return False
         return (
@@ -110,23 +118,23 @@ class SqliteStore:
             and row["model_revision"] == revision
         )
 
-    def save_file(self, doc_id, source_path, digest):
+    def save_file(self, doc_id: str, source_path: str, digest: str) -> None:
         # Kept for pipeline compatibility; upsert already writes documents.
         del source_path
-        row = self.db.execute(
+        row = self._db().execute(
             "SELECT file_sha256 FROM documents WHERE doc_id = ?", (doc_id,)
         ).fetchone()
         if row is None:
             return
         if row["file_sha256"] != digest:
-            self.db.execute(
+            self._db().execute(
                 "UPDATE documents SET file_sha256 = ? WHERE doc_id = ?",
                 (digest, doc_id),
             )
-            self.db.commit()
+            self._db().commit()
 
-    def cache_get(self, model_id, revision, digest):
-        row = self.db.execute(
+    def cache_get(self, model_id: str, revision: str, digest: str) -> list[float] | None:
+        row = self._db().execute(
             "SELECT vec FROM embed_cache WHERE model_id = ? AND model_revision = ? AND text_hash = ?",
             (model_id, revision, digest),
         ).fetchone()
@@ -136,9 +144,9 @@ class SqliteStore:
         values.frombytes(row["vec"])
         return list(values)
 
-    def cache_put(self, model_id, revision, digest, vector):
+    def cache_put(self, model_id: str, revision: str, digest: str, vector: list[float]) -> None:
         blob = array.array("f", vector).tobytes()
-        self.db.execute(
+        self._db().execute(
             """
             INSERT INTO embed_cache (model_id, model_revision, text_hash, vec)
             VALUES (?, ?, ?, ?)
@@ -146,18 +154,18 @@ class SqliteStore:
             """,
             (model_id, revision, digest, blob),
         )
-        self.db.commit()
+        self._db().commit()
 
-    def get_tau(self, key: str):
-        row = self.db.execute(
+    def get_tau(self, key: str) -> float | None:
+        row = self._db().execute(
             "SELECT value FROM thresholds WHERE name = ?", (key,)
         ).fetchone()
         if row is None:
             return None
         return float(row["value"])
 
-    def set_tau(self, key: str, value: float):
-        self.db.execute(
+    def set_tau(self, key: str, value: float) -> None:
+        self._db().execute(
             """
             INSERT INTO thresholds (name, value, fitted_at, fitted_on_n, holdout_metric)
             VALUES (?, ?, datetime('now'), 0, NULL)
@@ -167,9 +175,15 @@ class SqliteStore:
             """,
             (key, float(value)),
         )
-        self.db.commit()
+        self._db().commit()
 
-    def upsert(self, children, parents, vectors, source: dict):
+    def upsert(
+        self,
+        children: list[Child],
+        parents: list[Parent],
+        vectors: list[list[float]],
+        source: dict[str, Any],
+    ) -> None:
         if len(children) != len(vectors):
             raise IngestError(source["source_path"], "embedding count does not match chunks")
         if not children:
@@ -179,9 +193,9 @@ class SqliteStore:
             raise IngestError(source["source_path"], "embedding width changed inside one file")
         self._ensure_dim(dim)
         doc_id = children[0].doc_id
-        self.db.execute("BEGIN")
+        self._db().execute("BEGIN")
         try:
-            self.db.execute(
+            self._db().execute(
                 """
                 INSERT INTO documents (
                     doc_id, source_path, filename, mime, file_sha256,
@@ -210,14 +224,14 @@ class SqliteStore:
                     max((child.page_end for child in children), default=0),
                 ),
             )
-            self.db.execute("DELETE FROM children_fts WHERE doc_id = ?", (doc_id,))
-            self.db.execute(
+            self._db().execute("DELETE FROM children_fts WHERE doc_id = ?", (doc_id,))
+            self._db().execute(
                 "DELETE FROM vectors WHERE chunk_id IN (SELECT chunk_id FROM children WHERE doc_id = ?)",
                 (doc_id,),
             )
-            self.db.execute("DELETE FROM children WHERE doc_id = ?", (doc_id,))
-            self.db.execute("DELETE FROM parents WHERE doc_id = ?", (doc_id,))
-            self.db.executemany(
+            self._db().execute("DELETE FROM children WHERE doc_id = ?", (doc_id,))
+            self._db().execute("DELETE FROM parents WHERE doc_id = ?", (doc_id,))
+            self._db().executemany(
                 """
                 INSERT INTO parents (
                     parent_id, doc_id, text, heading_path, block_type,
@@ -242,7 +256,7 @@ class SqliteStore:
                     for parent in parents
                 ],
             )
-            self.db.executemany(
+            self._db().executemany(
                 """
                 INSERT INTO children (
                     chunk_id, parent_id, doc_id, text, embed_text, context_prefix,
@@ -271,7 +285,7 @@ class SqliteStore:
                     for child in children
                 ],
             )
-            self.db.executemany(
+            self._db().executemany(
                 """
                 INSERT INTO vectors (chunk_id, model_id, model_revision, dim, vec)
                 VALUES (?, ?, ?, ?, ?)
@@ -287,11 +301,11 @@ class SqliteStore:
                     for child, vector in zip(children, vectors)
                 ],
             )
-            fts_rows = []
+            fts_rows: list[tuple[str, str, str, str]] = []
             for child in children:
                 ident, prose = _split_fts(child.embed_text)
                 fts_rows.append((child.chunk_id, child.doc_id, ident, prose))
-            self.db.executemany(
+            self._db().executemany(
                 "INSERT INTO children_fts (chunk_id, doc_id, ident, prose) VALUES (?, ?, ?, ?)",
                 fts_rows,
             )
@@ -301,47 +315,47 @@ class SqliteStore:
             self._set_meta("model_revision", self.model_revision, commit=False)
             self._set_meta("pipeline_version", str(self.pipeline_version), commit=False)
             self._set_meta("dim", str(dim), commit=False)
-            self.db.commit()
+            self._db().commit()
         except Exception:
-            self.db.rollback()
+            self._db().rollback()
             raise
         self._load_matrix()
 
-    def delete_orphans(self, doc_id, keep_child_ids, keep_parent_ids):
+    def delete_orphans(self, doc_id: str, keep_child_ids: list[str], keep_parent_ids: list[str]) -> None:
         keep_c = set(keep_child_ids)
         keep_p = set(keep_parent_ids)
-        child_rows = self.db.execute(
+        child_rows = self._db().execute(
             "SELECT chunk_id FROM children WHERE doc_id = ?", (doc_id,)
         ).fetchall()
         stale_c = [row["chunk_id"] for row in child_rows if row["chunk_id"] not in keep_c]
-        parent_rows = self.db.execute(
+        parent_rows = self._db().execute(
             "SELECT parent_id FROM parents WHERE doc_id = ?", (doc_id,)
         ).fetchall()
         stale_p = [row["parent_id"] for row in parent_rows if row["parent_id"] not in keep_p]
         for chunk_id in stale_c:
-            self.db.execute("DELETE FROM vectors WHERE chunk_id = ?", (chunk_id,))
-            self.db.execute("DELETE FROM children_fts WHERE chunk_id = ?", (chunk_id,))
-            self.db.execute("DELETE FROM children WHERE chunk_id = ?", (chunk_id,))
+            self._db().execute("DELETE FROM vectors WHERE chunk_id = ?", (chunk_id,))
+            self._db().execute("DELETE FROM children_fts WHERE chunk_id = ?", (chunk_id,))
+            self._db().execute("DELETE FROM children WHERE chunk_id = ?", (chunk_id,))
         for parent_id in stale_p:
-            self.db.execute("DELETE FROM parents WHERE parent_id = ?", (parent_id,))
-        self.db.commit()
+            self._db().execute("DELETE FROM parents WHERE parent_id = ?", (parent_id,))
+        self._db().commit()
 
-    def replace_fts(self, doc_id, children):
+    def replace_fts(self, doc_id: str, children: list[Child]) -> None:
         # FTS is written inside upsert; kept as a no-op for pipeline compatibility.
         del doc_id, children
 
-    def child_ids(self, doc_id) -> list[str]:
-        rows = self.db.execute(
+    def child_ids(self, doc_id: str) -> list[str]:
+        rows = self._db().execute(
             "SELECT chunk_id FROM children WHERE doc_id = ?", (doc_id,)
         ).fetchall()
         return [row["chunk_id"] for row in rows]
 
     def list_docs(self) -> list[str]:
-        rows = self.db.execute("SELECT doc_id FROM documents ORDER BY doc_id").fetchall()
+        rows = self._db().execute("SELECT doc_id FROM documents ORDER BY doc_id").fetchall()
         return [row["doc_id"] for row in rows]
 
-    def list_doc_records(self) -> list[dict]:
-        rows = self.db.execute(
+    def list_doc_records(self) -> list[dict[str, Any]]:
+        rows = self._db().execute(
             """
             SELECT doc_id, filename, source_path, title, review_date,
                    version_group, status, supersedes, superseded_by
@@ -349,7 +363,7 @@ class SqliteStore:
             ORDER BY filename
             """
         ).fetchall()
-        out = []
+        out: list[dict[str, Any]] = []
         for row in rows:
             filename = row["filename"] or row["doc_id"]
             title = row["title"] or filename
@@ -369,18 +383,63 @@ class SqliteStore:
         return out
 
     def purge_doc(self, doc_id: str) -> None:
-        self.db.execute("DELETE FROM children_fts WHERE doc_id = ?", (doc_id,))
-        self.db.execute(
+        self._db().execute("DELETE FROM children_fts WHERE doc_id = ?", (doc_id,))
+        self._db().execute(
             "DELETE FROM vectors WHERE chunk_id IN (SELECT chunk_id FROM children WHERE doc_id = ?)",
             (doc_id,),
         )
-        self.db.execute("DELETE FROM children WHERE doc_id = ?", (doc_id,))
-        self.db.execute("DELETE FROM parents WHERE doc_id = ?", (doc_id,))
-        self.db.execute("DELETE FROM documents WHERE doc_id = ?", (doc_id,))
-        self.db.commit()
+        self._db().execute("DELETE FROM children WHERE doc_id = ?", (doc_id,))
+        self._db().execute("DELETE FROM parents WHERE doc_id = ?", (doc_id,))
+        self._db().execute("DELETE FROM documents WHERE doc_id = ?", (doc_id,))
+        self._db().commit()
         self._load_matrix()
 
-    def purge_missing(self, keep_doc_ids) -> list[str]:
+    def integrity_problems(self) -> list[str]:
+        """Every FTS row has a vector, every child a parent, every parent a document."""
+        if self.db is None:
+            raise IngestError(str(self.path), "index is not open")
+        checks = (
+            (
+                "fts row without a vector",
+                """
+                SELECT f.chunk_id AS id FROM children_fts f
+                LEFT JOIN vectors v ON v.chunk_id = f.chunk_id
+                WHERE v.chunk_id IS NULL
+                """,
+            ),
+            (
+                "child without a parent",
+                """
+                SELECT c.chunk_id AS id FROM children c
+                LEFT JOIN parents p ON p.parent_id = c.parent_id
+                WHERE p.parent_id IS NULL
+                """,
+            ),
+            (
+                "parent without a document",
+                """
+                SELECT p.parent_id AS id FROM parents p
+                LEFT JOIN documents d ON d.doc_id = p.doc_id
+                WHERE d.doc_id IS NULL
+                """,
+            ),
+            (
+                "vector without a child",
+                """
+                SELECT v.chunk_id AS id FROM vectors v
+                LEFT JOIN children c ON c.chunk_id = v.chunk_id
+                WHERE c.chunk_id IS NULL
+                """,
+            ),
+        )
+        problems: list[str] = []
+        for label, sql in checks:
+            rows = self._db().execute(sql).fetchall()
+            for row in rows:
+                problems.append(f"{label}: {row['id']}")
+        return problems
+
+    def purge_missing(self, keep_doc_ids: list[str]) -> list[str]:
         keep = set(keep_doc_ids)
         removed = []
         for doc_id in self.list_docs():
@@ -389,11 +448,9 @@ class SqliteStore:
                 removed.append(doc_id)
         return removed
 
-    def dense_search(self, vector, k, doc_id=None):
+    def dense_search(self, vector: list[float], k: int, doc_id: str | None = None) -> list[dict[str, Any]]:
         if self._matrix is None or len(self._chunk_ids) == 0:
             return []
-        import numpy as np
-
         query = np.asarray(vector, dtype=np.float32)
         if query.ndim != 1 or query.shape[0] != self._matrix.shape[1]:
             raise IngestError(str(self.path), "query vector width does not match the index")
@@ -402,7 +459,7 @@ class SqliteStore:
         if doc_id:
             allowed = {
                 row["chunk_id"]
-                for row in self.db.execute(
+                for row in self._db().execute(
                     "SELECT chunk_id FROM children WHERE doc_id = ?", (doc_id,)
                 )
             }
@@ -418,10 +475,10 @@ class SqliteStore:
         else:
             part = np.argpartition(-scores, n - 1)[:n]
             order = part[np.argsort(-scores[part])]
-        out = []
+        out: list[dict[str, Any]] = []
         for index in order:
             chunk_id = self._chunk_ids[int(index)]
-            row = self.db.execute(
+            row = self._db().execute(
                 "SELECT chunk_id, parent_id, embed_text FROM children WHERE chunk_id = ?",
                 (chunk_id,),
             ).fetchone()
@@ -437,13 +494,13 @@ class SqliteStore:
             )
         return out
 
-    def bm25_search(self, text, k, doc_id=None):
+    def bm25_search(self, text: str, k: int, doc_id: str | None = None) -> list[dict[str, Any]]:
         match = fts_query(text)
         if not match:
             return []
         # Weighted: ident column full weight, prose at 0.4.
         if doc_id:
-            rows = self.db.execute(
+            rows = self._db().execute(
                 """
                 SELECT chunk_id, bm25(children_fts, 1.0, 0.4) AS score
                 FROM children_fts
@@ -454,7 +511,7 @@ class SqliteStore:
                 (match, doc_id, k),
             ).fetchall()
         else:
-            rows = self.db.execute(
+            rows = self._db().execute(
                 """
                 SELECT chunk_id, bm25(children_fts, 1.0, 0.4) AS score
                 FROM children_fts
@@ -464,9 +521,9 @@ class SqliteStore:
                 """,
                 (match, k),
             ).fetchall()
-        out = []
+        out: list[dict[str, Any]] = []
         for row in rows:
-            child = self.db.execute(
+            child = self._db().execute(
                 "SELECT chunk_id, parent_id, embed_text FROM children WHERE chunk_id = ?",
                 (row["chunk_id"],),
             ).fetchone()
@@ -483,12 +540,38 @@ class SqliteStore:
             )
         return out
 
-    def get_parents(self, ids):
+    def first_parent_matching(self, doc_id: str, pattern: re.Pattern[str]) -> dict[str, Any] | None:
+        """First non-derived parent in a document whose text matches pattern."""
+        rows = self._db().execute(
+            "SELECT parent_id FROM parents WHERE doc_id = ? ORDER BY parent_index",
+            (doc_id,),
+        ).fetchall()
+        if not rows:
+            return None
+        ids = [row["parent_id"] for row in rows]
+        records = self.get_parents(ids)
+        for parent_id in ids:
+            record = records.get(parent_id)
+            if record is None or record.get("derived"):
+                continue
+            if not pattern.search(record.get("text") or ""):
+                continue
+            found = dict(record)
+            found["parent_id"] = parent_id
+            child = self._db().execute(
+                "SELECT chunk_id FROM children WHERE parent_id = ? ORDER BY child_index LIMIT 1",
+                (parent_id,),
+            ).fetchone()
+            found["child_id"] = child["chunk_id"] if child else parent_id
+            return found
+        return None
+
+    def get_parents(self, ids: list[str]) -> dict[str, dict[str, Any]]:
         if not ids:
             return {}
-        records = {}
+        records: dict[str, dict[str, Any]] = {}
         for parent_id in ids:
-            row = self.db.execute(
+            row = self._db().execute(
                 """
                 SELECT p.*, d.source_path, d.file_sha256, d.filename, d.mime,
                        d.title, d.review_date, d.version_group, d.status,
@@ -504,7 +587,7 @@ class SqliteStore:
             keys = set(row.keys())
             status = (row["status"] if "status" in keys else None) or "current"
             records[parent_id] = {
-                "text": row["text"],
+                "text": repair_extracted_text(row["text"] or ""),
                 "heading_path": row["heading_path"] or "",
                 "source_path": row["source_path"] or "",
                 "file_sha256": row["file_sha256"] or "",
@@ -533,7 +616,7 @@ class SqliteStore:
     def index_generation(self) -> int:
         return int(self._meta("index_generation") or "0")
 
-    def _ensure_dim(self, dim: int):
+    def _ensure_dim(self, dim: int) -> None:
         saved = self._meta("dim")
         if saved is not None and int(saved) != dim:
             raise IngestError(
@@ -541,8 +624,8 @@ class SqliteStore:
                 f"index vectors are {saved}-wide and this encoder is {dim}-wide; delete the index directory to rebuild",
             )
 
-    def _schema(self):
-        self.db.executescript(
+    def _schema(self) -> None:
+        self._db().executescript(
             """
             CREATE TABLE IF NOT EXISTS meta (
                 key TEXT PRIMARY KEY,
@@ -622,12 +705,12 @@ class SqliteStore:
             """
         )
 
-    def _migrate(self):
-        cols = {row[1] for row in self.db.execute("PRAGMA table_info(parents)").fetchall()}
+    def _migrate(self) -> None:
+        cols = {row[1] for row in self._db().execute("PRAGMA table_info(parents)").fetchall()}
         if "derived" not in cols:
-            self.db.execute("ALTER TABLE parents ADD COLUMN derived INTEGER NOT NULL DEFAULT 0")
-            self.db.commit()
-        doc_cols = {row[1] for row in self.db.execute("PRAGMA table_info(documents)").fetchall()}
+            self._db().execute("ALTER TABLE parents ADD COLUMN derived INTEGER NOT NULL DEFAULT 0")
+            self._db().commit()
+        doc_cols = {row[1] for row in self._db().execute("PRAGMA table_info(documents)").fetchall()}
         for name, decl in (
             ("review_date", "TEXT"),
             ("title", "TEXT"),
@@ -637,23 +720,28 @@ class SqliteStore:
             ("superseded_by", "TEXT"),
         ):
             if name not in doc_cols:
-                self.db.execute(f"ALTER TABLE documents ADD COLUMN {name} {decl}")
-                self.db.commit()
+                self._db().execute(f"ALTER TABLE documents ADD COLUMN {name} {decl}")
+                self._db().commit()
 
-    def _check_saved_identity(self):
+    def _check_saved_identity(self) -> None:
         saved = self._meta("model_id")
         if saved is None:
             return
         revision = self._meta("model_revision")
         version = self._meta("pipeline_version")
-        if saved != self.model_id or revision != self.model_revision or int(version) != int(self.pipeline_version):
+        if saved != self.model_id or revision != self.model_revision:
             raise IngestError(
                 str(self.path),
                 f"index was built with {saved}@{revision} pipeline {version}; delete the index directory to rebuild",
             )
+        if int(version or "-1") != int(self.pipeline_version):
+            raise IngestError(
+                str(self.path),
+                f"pipeline version changed from {version} to {self.pipeline_version}; delete the index directory to rebuild",
+            )
 
-    def _load_matrix(self):
-        rows = self.db.execute(
+    def _load_matrix(self) -> None:
+        rows = self._db().execute(
             """
             SELECT v.chunk_id, v.dim, v.vec
             FROM vectors v
@@ -665,11 +753,9 @@ class SqliteStore:
             self._matrix = None
             self._chunk_ids = []
             return
-        import numpy as np
-
         dim = int(rows[0]["dim"])
-        ids = []
-        vecs = []
+        ids: list[str] = []
+        vecs: list[array.array[float]] = []
         for row in rows:
             values = array.array("f")
             values.frombytes(row["vec"])
@@ -686,14 +772,15 @@ class SqliteStore:
         self._matrix = np.asarray(vecs, dtype=np.float32)
         self._chunk_ids = ids
 
-    def _meta(self, key):
-        row = self.db.execute("SELECT value FROM meta WHERE key = ?", (key,)).fetchone()
+    def _meta(self, key: str) -> str | None:
+        row = self._db().execute("SELECT value FROM meta WHERE key = ?", (key,)).fetchone()
         if row is None:
             return None
-        return row["value"]
+        value = row["value"]
+        return str(value) if value is not None else None
 
-    def _set_meta(self, key, value, commit=True):
-        self.db.execute(
+    def _set_meta(self, key: str, value: str, commit: bool = True) -> None:
+        self._db().execute(
             """
             INSERT INTO meta (key, value) VALUES (?, ?)
             ON CONFLICT(key) DO UPDATE SET value = excluded.value
@@ -701,7 +788,22 @@ class SqliteStore:
             (key, value),
         )
         if commit:
-            self.db.commit()
+            self._db().commit()
+
+
+def repair_extracted_text(text: str) -> str:
+    """Undo a doubled PDF text layer in the 2026 policy footer.
+
+    The extractor interleaved two copies of "© 2026 Coforge" into
+    "© ©20 2260 C2o6fo Crgoef orge".
+    """
+    if not text or "©" not in text:
+        return text
+    return re.sub(
+        r"©\s*©20\s*2260\s*C2o6fo\s*Crgoef\s*orge",
+        "© 2026 Coforge",
+        text,
+    )
 
 
 def fts_query(text: str) -> str:
@@ -717,6 +819,21 @@ def fts_query(text: str) -> str:
         kept = words
     if not kept:
         return ""
+    # Abbreviations the corpus spells out. OR-ed so the expanded form can rank.
+    expanded = {"ghg": "greenhouse", "e-waste": "weee", "ewaste": "weee"}
+    seen = {word.casefold() for word in kept}
+    for word in list(kept):
+        extra = expanded.get(word.casefold())
+        if extra and extra not in seen:
+            kept.append(extra)
+            seen.add(extra)
+    # A signature block is just a name and a title. "Who signed" never
+    # shares a token with it unless the title words are added.
+    if re.search(r"\b(?:signed|signatory|approved|approver|approval)\b", text, re.IGNORECASE):
+        for extra in ("president", "executive", "director"):
+            if extra not in seen:
+                kept.append(extra)
+                seen.add(extra)
     return " OR ".join('"' + word.replace('"', "") + '"' for word in kept)
 
 

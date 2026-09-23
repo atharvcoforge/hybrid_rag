@@ -1,0 +1,9 @@
+thresholds before clear:
+Qwen/Qwen3-Embedding-0.6B|97b0c614be4d77ee51c0cef4e5f07c00f9eb65b3|BAAI/bge-reranker-v2-m3|953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e|dense|0.515819311141968
+Qwen/Qwen3-Embedding-0.6B|97b0c614be4d77ee51c0cef4e5f07c00f9eb65b3|BAAI/bge-reranker-v2-m3|953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e|bm25|5.77343984947479
+Qwen/Qwen3-Embedding-0.6B|97b0c614be4d77ee51c0cef4e5f07c00f9eb65b3|BAAI/bge-reranker-v2-m3|953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e|rrf|0.032258064516129
+Qwen/Qwen3-Embedding-0.6B|97b0c614be4d77ee51c0cef4e5f07c00f9eb65b3|BAAI/bge-reranker-v2-m3|953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e|rerank|0.237000793218613
+Qwen/Qwen3-Embedding-0.6B|97b0c614be4d77ee51c0cef4e5f07c00f9eb65b3|BAAI/bge-reranker-v2-m3|953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e|cascade|0.237000793218613
+thresholds after clear:
+0
+EXIT:0

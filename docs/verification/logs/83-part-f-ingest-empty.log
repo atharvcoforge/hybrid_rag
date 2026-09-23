@@ -1,0 +1,106 @@
+2026-09-23T00:27:33.948000+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2  ingest_start {"file_total": 4}
+2026-09-23T00:27:33.948376+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2  ingest_progress {"file": "Carbon_Reduction_Plan.pdf", "file_index": 1, "file_total": 4}
+2026-09-23T00:27:33.948699+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2 parse start {"file": "Carbon_Reduction_Plan.pdf", "file_index": 1, "file_total": 4}
+2026-09-23T00:27:34.115854+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2  ingest_page {"file": "Carbon_Reduction_Plan.pdf", "file_index": 1, "file_total": 4, "page": 1, "page_total": 3}
+2026-09-23T00:27:34.115887+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2  ingest_page {"file": "Carbon_Reduction_Plan.pdf", "file_index": 1, "file_total": 4, "page": 2, "page_total": 3}
+2026-09-23T00:27:34.115895+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2  ingest_page {"file": "Carbon_Reduction_Plan.pdf", "file_index": 1, "file_total": 4, "page": 3, "page_total": 3}
+2026-09-23T00:27:34.115916+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2 parse finish 167.2ms {"file": "Carbon_Reduction_Plan.pdf", "file_index": 1, "file_total": 4, "page_total": 3, "layout_escalations": 0, "ocr_pages": 0}
+2026-09-23T00:27:34.115946+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2 normalize start {"file": "Carbon_Reduction_Plan.pdf"}
+2026-09-23T00:27:34.116345+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2 normalize finish 0.4ms {"file": "Carbon_Reduction_Plan.pdf"}
+2026-09-23T00:27:34.116370+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2 chunk start {"file": "Carbon_Reduction_Plan.pdf"}
+2026-09-23T00:27:39.119310+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2 chunk stage_slow 5003.0ms {"file": "Carbon_Reduction_Plan.pdf", "soft_budget_ms": 5000.0}
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights: 100%|██████████| 310/310 [00:00<00:00, 8277.27it/s]
+2026-09-23T00:28:09.644380+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2 chunk finish 35528.3ms {"file": "Carbon_Reduction_Plan.pdf", "chunks": 16}
+2026-09-23T00:28:09.644469+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2 contextualize start {"file": "Carbon_Reduction_Plan.pdf", "skipped": true}
+2026-09-23T00:28:09.644582+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2 contextualize finish 0.1ms {"file": "Carbon_Reduction_Plan.pdf", "skipped": true, "reason": "contextual_disabled"}
+2026-09-23T00:28:09.644616+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2 embed start {"candidates_in": 16, "model": "Qwen/Qwen3-Embedding-0.6B", "file": "Carbon_Reduction_Plan.pdf"}
+2026-09-23T00:28:11.926720+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2 embed finish 2282.1ms {"candidates_in": 16, "candidates_out": 16, "model": "Qwen/Qwen3-Embedding-0.6B", "file": "Carbon_Reduction_Plan.pdf", "cache_hit_rate": null}
+2026-09-23T00:28:11.928507+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2  ingest_file_done {"file": "Carbon_Reduction_Plan.pdf", "file_index": 1, "file_total": 4, "chunks": 16, "layout_escalations": 0, "ocr_pages": 0}
+2026-09-23T00:28:11.928588+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2  ingest_progress {"file": "Environmental_Sustainability_Policy_2025.pdf", "file_index": 2, "file_total": 4}
+2026-09-23T00:28:11.929664+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2 parse start {"file": "Environmental_Sustainability_Policy_2025.pdf", "file_index": 2, "file_total": 4}
+2026-09-23T00:28:12.155167+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2  ingest_page {"file": "Environmental_Sustainability_Policy_2025.pdf", "file_index": 2, "file_total": 4, "page": 1, "page_total": 7}
+2026-09-23T00:28:12.155200+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2  ingest_page {"file": "Environmental_Sustainability_Policy_2025.pdf", "file_index": 2, "file_total": 4, "page": 2, "page_total": 7}
+2026-09-23T00:28:12.155208+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2  ingest_page {"file": "Environmental_Sustainability_Policy_2025.pdf", "file_index": 2, "file_total": 4, "page": 3, "page_total": 7}
+2026-09-23T00:28:12.155212+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2  ingest_page {"file": "Environmental_Sustainability_Policy_2025.pdf", "file_index": 2, "file_total": 4, "page": 4, "page_total": 7}
+2026-09-23T00:28:12.155217+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2  ingest_page {"file": "Environmental_Sustainability_Policy_2025.pdf", "file_index": 2, "file_total": 4, "page": 5, "page_total": 7}
+2026-09-23T00:28:12.155221+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2  ingest_page {"file": "Environmental_Sustainability_Policy_2025.pdf", "file_index": 2, "file_total": 4, "page": 6, "page_total": 7}
+2026-09-23T00:28:12.155224+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2  ingest_page {"file": "Environmental_Sustainability_Policy_2025.pdf", "file_index": 2, "file_total": 4, "page": 7, "page_total": 7}
+2026-09-23T00:28:12.155239+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2 parse finish 225.6ms {"file": "Environmental_Sustainability_Policy_2025.pdf", "file_index": 2, "file_total": 4, "page_total": 7, "layout_escalations": 0, "ocr_pages": 0}
+2026-09-23T00:28:12.155266+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2 normalize start {"file": "Environmental_Sustainability_Policy_2025.pdf"}
+2026-09-23T00:28:12.155790+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2 normalize finish 0.5ms {"file": "Environmental_Sustainability_Policy_2025.pdf"}
+2026-09-23T00:28:12.155824+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2 chunk start {"file": "Environmental_Sustainability_Policy_2025.pdf"}
+2026-09-23T00:28:12.182812+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2 chunk finish 27.0ms {"file": "Environmental_Sustainability_Policy_2025.pdf", "chunks": 19}
+2026-09-23T00:28:12.182851+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2 contextualize start {"file": "Environmental_Sustainability_Policy_2025.pdf", "skipped": true}
+2026-09-23T00:28:12.182917+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2 contextualize finish 0.1ms {"file": "Environmental_Sustainability_Policy_2025.pdf", "skipped": true, "reason": "contextual_disabled"}
+2026-09-23T00:28:12.182942+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2 embed start {"candidates_in": 19, "model": "Qwen/Qwen3-Embedding-0.6B", "file": "Environmental_Sustainability_Policy_2025.pdf"}
+2026-09-23T00:28:13.084222+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2 embed finish 901.3ms {"candidates_in": 19, "candidates_out": 19, "model": "Qwen/Qwen3-Embedding-0.6B", "file": "Environmental_Sustainability_Policy_2025.pdf", "cache_hit_rate": null}
+2026-09-23T00:28:13.086103+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2  ingest_file_done {"file": "Environmental_Sustainability_Policy_2025.pdf", "file_index": 2, "file_total": 4, "chunks": 19, "layout_escalations": 0, "ocr_pages": 0}
+2026-09-23T00:28:13.086190+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2  ingest_progress {"file": "Environmental_Sustainability_Policy_2026.pdf", "file_index": 3, "file_total": 4}
+2026-09-23T00:28:13.086684+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2 parse start {"file": "Environmental_Sustainability_Policy_2026.pdf", "file_index": 3, "file_total": 4}
+2026-09-23T00:28:13.229388+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2  ingest_page {"file": "Environmental_Sustainability_Policy_2026.pdf", "file_index": 3, "file_total": 4, "page": 1, "page_total": 7}
+2026-09-23T00:28:13.229414+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2  ingest_page {"file": "Environmental_Sustainability_Policy_2026.pdf", "file_index": 3, "file_total": 4, "page": 2, "page_total": 7}
+2026-09-23T00:28:13.229422+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2  ingest_page {"file": "Environmental_Sustainability_Policy_2026.pdf", "file_index": 3, "file_total": 4, "page": 3, "page_total": 7}
+2026-09-23T00:28:13.229427+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2  ingest_page {"file": "Environmental_Sustainability_Policy_2026.pdf", "file_index": 3, "file_total": 4, "page": 4, "page_total": 7}
+2026-09-23T00:28:13.229431+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2  ingest_page {"file": "Environmental_Sustainability_Policy_2026.pdf", "file_index": 3, "file_total": 4, "page": 5, "page_total": 7}
+2026-09-23T00:28:13.229434+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2  ingest_page {"file": "Environmental_Sustainability_Policy_2026.pdf", "file_index": 3, "file_total": 4, "page": 6, "page_total": 7}
+2026-09-23T00:28:13.229438+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2  ingest_page {"file": "Environmental_Sustainability_Policy_2026.pdf", "file_index": 3, "file_total": 4, "page": 7, "page_total": 7}
+2026-09-23T00:28:13.229452+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2 parse finish 142.8ms {"file": "Environmental_Sustainability_Policy_2026.pdf", "file_index": 3, "file_total": 4, "page_total": 7, "layout_escalations": 0, "ocr_pages": 0}
+2026-09-23T00:28:13.229477+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2 normalize start {"file": "Environmental_Sustainability_Policy_2026.pdf"}
+2026-09-23T00:28:13.230005+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2 normalize finish 0.5ms {"file": "Environmental_Sustainability_Policy_2026.pdf"}
+2026-09-23T00:28:13.230039+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2 chunk start {"file": "Environmental_Sustainability_Policy_2026.pdf"}
+2026-09-23T00:28:13.256655+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2 chunk finish 26.6ms {"file": "Environmental_Sustainability_Policy_2026.pdf", "chunks": 19}
+2026-09-23T00:28:13.256701+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2 contextualize start {"file": "Environmental_Sustainability_Policy_2026.pdf", "skipped": true}
+2026-09-23T00:28:13.256777+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2 contextualize finish 0.1ms {"file": "Environmental_Sustainability_Policy_2026.pdf", "skipped": true, "reason": "contextual_disabled"}
+2026-09-23T00:28:13.256794+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2 embed start {"candidates_in": 19, "model": "Qwen/Qwen3-Embedding-0.6B", "file": "Environmental_Sustainability_Policy_2026.pdf"}
+2026-09-23T00:28:13.592766+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2 embed finish 336.0ms {"candidates_in": 19, "candidates_out": 19, "model": "Qwen/Qwen3-Embedding-0.6B", "file": "Environmental_Sustainability_Policy_2026.pdf", "cache_hit_rate": null}
+2026-09-23T00:28:13.594609+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2  ingest_file_done {"file": "Environmental_Sustainability_Policy_2026.pdf", "file_index": 3, "file_total": 4, "chunks": 19, "layout_escalations": 0, "ocr_pages": 0}
+2026-09-23T00:28:13.594694+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2  ingest_progress {"file": "Water_Management_Policy.pdf", "file_index": 4, "file_total": 4}
+2026-09-23T00:28:13.595216+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2 parse start {"file": "Water_Management_Policy.pdf", "file_index": 4, "file_total": 4}
+2026-09-23T00:28:13.933675+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2  ingest_page {"file": "Water_Management_Policy.pdf", "file_index": 4, "file_total": 4, "page": 1, "page_total": 8}
+2026-09-23T00:28:13.933702+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2  ingest_page {"file": "Water_Management_Policy.pdf", "file_index": 4, "file_total": 4, "page": 2, "page_total": 8}
+2026-09-23T00:28:13.933709+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2  ingest_page {"file": "Water_Management_Policy.pdf", "file_index": 4, "file_total": 4, "page": 3, "page_total": 8}
+2026-09-23T00:28:13.933713+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2  ingest_page {"file": "Water_Management_Policy.pdf", "file_index": 4, "file_total": 4, "page": 4, "page_total": 8}
+2026-09-23T00:28:13.933717+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2  ingest_page {"file": "Water_Management_Policy.pdf", "file_index": 4, "file_total": 4, "page": 5, "page_total": 8}
+2026-09-23T00:28:13.933720+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2  ingest_page {"file": "Water_Management_Policy.pdf", "file_index": 4, "file_total": 4, "page": 6, "page_total": 8}
+2026-09-23T00:28:13.933724+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2  ingest_page {"file": "Water_Management_Policy.pdf", "file_index": 4, "file_total": 4, "page": 7, "page_total": 8}
+2026-09-23T00:28:13.933727+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2  ingest_page {"file": "Water_Management_Policy.pdf", "file_index": 4, "file_total": 4, "page": 8, "page_total": 8}
+2026-09-23T00:28:13.933743+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2 parse finish 338.5ms {"file": "Water_Management_Policy.pdf", "file_index": 4, "file_total": 4, "page_total": 8, "layout_escalations": 0, "ocr_pages": 0}
+2026-09-23T00:28:13.933772+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2 normalize start {"file": "Water_Management_Policy.pdf"}
+2026-09-23T00:28:13.934428+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2 normalize finish 0.7ms {"file": "Water_Management_Policy.pdf"}
+2026-09-23T00:28:13.934456+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2 chunk start {"file": "Water_Management_Policy.pdf"}
+2026-09-23T00:28:13.962176+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2 chunk finish 27.7ms {"file": "Water_Management_Policy.pdf", "chunks": 25}
+2026-09-23T00:28:13.962222+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2 contextualize start {"file": "Water_Management_Policy.pdf", "skipped": true}
+2026-09-23T00:28:13.962303+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2 contextualize finish 0.1ms {"file": "Water_Management_Policy.pdf", "skipped": true, "reason": "contextual_disabled"}
+2026-09-23T00:28:13.962333+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2 embed start {"candidates_in": 25, "model": "Qwen/Qwen3-Embedding-0.6B", "file": "Water_Management_Policy.pdf"}
+2026-09-23T00:28:15.486274+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2 embed finish 1523.9ms {"candidates_in": 25, "candidates_out": 25, "model": "Qwen/Qwen3-Embedding-0.6B", "file": "Water_Management_Policy.pdf", "cache_hit_rate": null}
+2026-09-23T00:28:15.488533+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2  ingest_file_done {"file": "Water_Management_Policy.pdf", "file_index": 4, "file_total": 4, "chunks": 25, "layout_escalations": 0, "ocr_pages": 0}
+2026-09-23T00:28:15.551023+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2  version_group_found {"version_group": "vg_environmentalsustainabil_environmentalsustainabil", "current": "Environmental_Sustainability_Policy_2026.pdf", "superseded": ["Environmental_Sustainability_Policy_2025.pdf"], "review_dates": {"Environmental_Sustainability_Policy_2025.pdf": "2025-03-10", "Environmental_Sustainability_Policy_2026.pdf": "2026-03-10"}, "level": "warning"}
+2026-09-23T00:28:15.551121+00:00 01a0cba9-20bb-765a-85ae-2164f1a5fdf2  ingest_done {"files": 4}
+indexed  Carbon_Reduction_Plan.pdf  16
+indexed  Environmental_Sustainability_Policy_2025.pdf  19
+indexed  Environmental_Sustainability_Policy_2026.pdf  19
+indexed  Water_Management_Policy.pdf  25
+total 4224
+drwxr-xr-x@  3 atharv.raotole  staff    96B Sep 22 20:28 .
+drwxr-xr-x@ 29 atharv.raotole  staff   928B Sep 22 20:27 ..
+-rw-r--r--@  1 atharv.raotole  staff   1.1M Sep 22 20:28 rag.sqlite
+sqlite files ['index/rag.sqlite']
+rag.sqlite tables ['meta', 'documents', 'parents', 'children', 'vectors', 'embed_cache', 'thresholds', 'children_fts', 'children_fts_data', 'children_fts_idx', 'children_fts_content', 'children_fts_docsize', 'children_fts_config']
+  meta: 5
+  documents: 4
+  parents: 21
+  children: 79
+  vectors: 79
+  embed_cache: 64
+  thresholds: 0
+  children_fts: 79
+  children_fts_data: 17
+  children_fts_idx: 15
+  children_fts_content: 79
+  children_fts_docsize: 79
+  children_fts_config: 1
+ doc ('Carbon_Reduction_Plan.pdf', 'current', None, None)
+ doc ('Environmental_Sustainability_Policy_2025.pdf', 'superseded', 'vg_environmentalsustainabil_environmentalsustainabil', '2025-03-10')
+ doc ('Environmental_Sustainability_Policy_2026.pdf', 'current', 'vg_environmentalsustainabil_environmentalsustainabil', '2026-03-10')
+ doc ('Water_Management_Policy.pdf', 'current', None, '2026-08-10')

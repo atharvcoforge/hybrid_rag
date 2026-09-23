@@ -1,0 +1,95 @@
+=== pytest no randomly ===
+........................................................................ [ 23%]
+........................................................................ [ 47%]
+........................................................................ [ 70%]
+........................................................................ [ 94%]
+..................                                                       [100%]
+=============================== warnings summary ===============================
+tests/test_cov_server.py::test_server_main_guard
+  <frozen runpy>:128: RuntimeWarning: 'rag.server' found in sys.modules after import of package 'rag', but prior to execution of 'rag.server'; this may result in unpredictable behaviour
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+306 passed, 1 warning in 1.97s
+NO_RANDOM_EXIT:0
+=== pytest randomly ===
+........................................................................ [ 23%]
+........................................................................ [ 47%]
+........................................................................ [ 70%]
+........................................................................ [ 94%]
+..................                                                       [100%]
+=============================== warnings summary ===============================
+tests/test_cov_server.py::test_server_main_guard
+  <frozen runpy>:128: RuntimeWarning: 'rag.server' found in sys.modules after import of package 'rag', but prior to execution of 'rag.server'; this may result in unpredictable behaviour
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+306 passed, 1 warning in 1.93s
+RANDOM_EXIT:0
+=== pytest xdist ===
+bringing up nodes...
+bringing up nodes...
+
+........................................................................ [ 23%]
+........................................................................ [ 47%]
+........................................................................ [ 70%]
+........................................................................ [ 94%]
+..................                                                       [100%]
+=============================== warnings summary ===============================
+tests/test_cov_server.py::test_server_main_guard
+  <frozen runpy>:128: RuntimeWarning: 'rag.server' found in sys.modules after import of package 'rag', but prior to execution of 'rag.server'; this may result in unpredictable behaviour
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+306 passed, 1 warning in 1.68s
+XDIST_EXIT:0
+=== coverage ===
+........................................................................ [ 23%]
+........................................................................ [ 47%]
+........................................................................ [ 70%]
+........................................................................ [ 94%]
+..................                                                       [100%]
+=============================== warnings summary ===============================
+tests/test_cov_server.py::test_server_main_guard
+  <frozen runpy>:128: RuntimeWarning: 'rag.server' found in sys.modules after import of package 'rag', but prior to execution of 'rag.server'; this may result in unpredictable behaviour
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+================================ tests coverage ================================
+______________ coverage: platform darwin, python 3.11.16-final-0 _______________
+
+Name                      Stmts   Miss Branch BrPart  Cover   Missing
+---------------------------------------------------------------------
+src/rag/__init__.py           0      0      0      0   100%
+src/rag/__main__.py           2      0      0      0   100%
+src/rag/cache.py             43      0      6      0   100%
+src/rag/calibrate.py         68      0     30      0   100%
+src/rag/chunk.py            332      0    148      0   100%
+src/rag/cli.py              189      0     64      0   100%
+src/rag/embed.py             74      0     28      0   100%
+src/rag/evaluate.py         381      0    178      0   100%
+src/rag/gates.py            204      0     98      0   100%
+src/rag/generate.py          63      0     14      0   100%
+src/rag/health.py            50      0     10      0   100%
+src/rag/html_parse.py       113      0     66      0   100%
+src/rag/layout.py           146      0     62      0   100%
+src/rag/models.py           117      0      2      0   100%
+src/rag/normalize.py         30      0     14      0   100%
+src/rag/ocr.py               66      0     18      0   100%
+src/rag/onnx_backend.py      24      0      4      0   100%
+src/rag/parse.py            434      0    204      0   100%
+src/rag/pipeline.py         196      0     70      0   100%
+src/rag/queue.py             28      0      2      0   100%
+src/rag/rerank.py            40      0      8      0   100%
+src/rag/retrieve.py         285      0    128      0   100%
+src/rag/server.py           391      0     84      0   100%
+src/rag/store.py            346      0    126      0   100%
+src/rag/telemetry.py        203      0     56      0   100%
+src/rag/versions.py         408      0    196      0   100%
+---------------------------------------------------------------------
+TOTAL                      4233      0   1616      0   100%
+Required test coverage of 100% reached. Total coverage: 100.00%
+306 passed, 1 warning in 3.04s
+COV_EXIT:0
+=== mypy ===
+Success: no issues found in 26 source files
+MYPY_EXIT:0
+=== ruff ===
+[1;32mAll checks passed![0m
+RUFF_EXIT:0

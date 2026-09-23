@@ -1,0 +1,36 @@
+2026-09-23T00:30:23.766441+00:00 01a0cbab-b816-7ba7-b8bd-204234798643  ingest_start {"file_total": 4}
+2026-09-23T00:30:23.766935+00:00 01a0cbab-b816-7ba7-b8bd-204234798643  ingest_progress {"file": "Carbon_Reduction_Plan.pdf", "file_index": 1, "file_total": 4}
+2026-09-23T00:30:23.767348+00:00 01a0cbab-b816-7ba7-b8bd-204234798643  ingest_skip {"file": "Carbon_Reduction_Plan.pdf", "file_index": 1, "file_total": 4, "cache_hit": true}
+2026-09-23T00:30:23.767364+00:00 01a0cbab-b816-7ba7-b8bd-204234798643  ingest_progress {"file": "Environmental_Sustainability_Policy_2025.pdf", "file_index": 2, "file_total": 4}
+2026-09-23T00:30:23.767745+00:00 01a0cbab-b816-7ba7-b8bd-204234798643  ingest_skip {"file": "Environmental_Sustainability_Policy_2025.pdf", "file_index": 2, "file_total": 4, "cache_hit": true}
+2026-09-23T00:30:23.767755+00:00 01a0cbab-b816-7ba7-b8bd-204234798643  ingest_progress {"file": "Environmental_Sustainability_Policy_2026.pdf", "file_index": 3, "file_total": 4}
+2026-09-23T00:30:23.768089+00:00 01a0cbab-b816-7ba7-b8bd-204234798643  ingest_skip {"file": "Environmental_Sustainability_Policy_2026.pdf", "file_index": 3, "file_total": 4, "cache_hit": true}
+2026-09-23T00:30:23.768099+00:00 01a0cbab-b816-7ba7-b8bd-204234798643  ingest_progress {"file": "Water_Management_Policy.pdf", "file_index": 4, "file_total": 4}
+2026-09-23T00:30:23.768461+00:00 01a0cbab-b816-7ba7-b8bd-204234798643 parse start {"file": "Water_Management_Policy.pdf", "file_index": 4, "file_total": 4}
+2026-09-23T00:30:24.034514+00:00 01a0cbab-b816-7ba7-b8bd-204234798643  ingest_page {"file": "Water_Management_Policy.pdf", "file_index": 4, "file_total": 4, "page": 1, "page_total": 8}
+2026-09-23T00:30:24.034548+00:00 01a0cbab-b816-7ba7-b8bd-204234798643  ingest_page {"file": "Water_Management_Policy.pdf", "file_index": 4, "file_total": 4, "page": 2, "page_total": 8}
+2026-09-23T00:30:24.034554+00:00 01a0cbab-b816-7ba7-b8bd-204234798643  ingest_page {"file": "Water_Management_Policy.pdf", "file_index": 4, "file_total": 4, "page": 3, "page_total": 8}
+2026-09-23T00:30:24.034559+00:00 01a0cbab-b816-7ba7-b8bd-204234798643  ingest_page {"file": "Water_Management_Policy.pdf", "file_index": 4, "file_total": 4, "page": 4, "page_total": 8}
+2026-09-23T00:30:24.034567+00:00 01a0cbab-b816-7ba7-b8bd-204234798643  ingest_page {"file": "Water_Management_Policy.pdf", "file_index": 4, "file_total": 4, "page": 5, "page_total": 8}
+2026-09-23T00:30:24.034571+00:00 01a0cbab-b816-7ba7-b8bd-204234798643  ingest_page {"file": "Water_Management_Policy.pdf", "file_index": 4, "file_total": 4, "page": 6, "page_total": 8}
+2026-09-23T00:30:24.034576+00:00 01a0cbab-b816-7ba7-b8bd-204234798643  ingest_page {"file": "Water_Management_Policy.pdf", "file_index": 4, "file_total": 4, "page": 7, "page_total": 8}
+2026-09-23T00:30:24.034581+00:00 01a0cbab-b816-7ba7-b8bd-204234798643  ingest_page {"file": "Water_Management_Policy.pdf", "file_index": 4, "file_total": 4, "page": 8, "page_total": 8}
+2026-09-23T00:30:24.034599+00:00 01a0cbab-b816-7ba7-b8bd-204234798643 parse finish 266.1ms {"file": "Water_Management_Policy.pdf", "file_index": 4, "file_total": 4, "page_total": 8, "layout_escalations": 0, "ocr_pages": 0}
+2026-09-23T00:30:24.034627+00:00 01a0cbab-b816-7ba7-b8bd-204234798643 normalize start {"file": "Water_Management_Policy.pdf"}
+2026-09-23T00:30:24.035294+00:00 01a0cbab-b816-7ba7-b8bd-204234798643 normalize finish 0.7ms {"file": "Water_Management_Policy.pdf"}
+2026-09-23T00:30:24.035312+00:00 01a0cbab-b816-7ba7-b8bd-204234798643 chunk start {"file": "Water_Management_Policy.pdf"}
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights: 100%|██████████| 310/310 [00:00<00:00, 10188.01it/s]
+2026-09-23T00:30:26.840547+00:00 01a0cbab-b816-7ba7-b8bd-204234798643 chunk finish 2805.3ms {"file": "Water_Management_Policy.pdf", "chunks": 25}
+2026-09-23T00:30:26.840780+00:00 01a0cbab-b816-7ba7-b8bd-204234798643 contextualize start {"file": "Water_Management_Policy.pdf", "skipped": true}
+2026-09-23T00:30:26.840917+00:00 01a0cbab-b816-7ba7-b8bd-204234798643 contextualize finish 0.1ms {"file": "Water_Management_Policy.pdf", "skipped": true, "reason": "contextual_disabled"}
+2026-09-23T00:30:26.840941+00:00 01a0cbab-b816-7ba7-b8bd-204234798643 embed start {"candidates_in": 25, "model": "Qwen/Qwen3-Embedding-0.6B", "file": "Water_Management_Policy.pdf"}
+2026-09-23T00:30:26.846492+00:00 01a0cbab-b816-7ba7-b8bd-204234798643 embed finish 5.5ms {"candidates_in": 25, "candidates_out": 25, "model": "Qwen/Qwen3-Embedding-0.6B", "file": "Water_Management_Policy.pdf", "cache_hit_rate": null}
+2026-09-23T00:30:26.849620+00:00 01a0cbab-b816-7ba7-b8bd-204234798643  ingest_file_done {"file": "Water_Management_Policy.pdf", "file_index": 4, "file_total": 4, "chunks": 25, "layout_escalations": 0, "ocr_pages": 0}
+2026-09-23T00:30:26.905971+00:00 01a0cbab-b816-7ba7-b8bd-204234798643  version_group_found {"version_group": "vg_environmentalsustainabil_environmentalsustainabil", "current": "Environmental_Sustainability_Policy_2026.pdf", "superseded": ["Environmental_Sustainability_Policy_2025.pdf"], "review_dates": {"Environmental_Sustainability_Policy_2025.pdf": "2025-03-10", "Environmental_Sustainability_Policy_2026.pdf": "2026-03-10"}, "level": "warning"}
+2026-09-23T00:30:26.906067+00:00 01a0cbab-b816-7ba7-b8bd-204234798643  ingest_done {"files": 4}
+skipped  Carbon_Reduction_Plan.pdf  0
+skipped  Environmental_Sustainability_Policy_2025.pdf  0
+skipped  Environmental_Sustainability_Policy_2026.pdf  0
+indexed  Water_Management_Policy.pdf  25
+docs [('Carbon_Reduction_Plan.pdf',), ('Environmental_Sustainability_Policy_2025.pdf',), ('Environmental_Sustainability_Policy_2026.pdf',), ('Water_Management_Policy.pdf',)]
+children 79

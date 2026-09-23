@@ -1,0 +1,8 @@
+.....................F.............................                      [100%]
+=================================== FAILURES ===================================
+E   AssertionError: assert 'Speight' in 'Declaration and Sign Off. This Carbon Reduction Plan has been completed in accordance with the standard.'
+     +  where 'Declaration and Sign Off. This Carbon Reduction Plan has been completed in accordance with the standard.' = Hit(parent_id='Carbon_R', parent_text='Declaration and Sign Off. This Carbon Reduction Plan has been completed in acco...rseded=False, version_group='env', status='current', superseded_by=None, supersedes=None, review_date=None, title=None).parent_text
+/Users/atharv.raotole/Desktop/RAG-WEEK6/tests/test_versions.py:216: AssertionError: assert 'Speight' in 'Declaration and Sign Off. This Carbon Reduction Plan has been completed in accordance with the standard.'
+=========================== short test summary info ============================
+FAILED tests/test_versions.py::test_who_signed_prefers_the_short_title_block
+1 failed, 50 passed in 0.09s

@@ -1,0 +1,23 @@
+
+> test:coverage
+> vitest run --coverage
+
+
+ RUN  v3.2.4 /Users/atharv.raotole/Desktop/RAG-WEEK6/web
+      Coverage enabled with v8
+
+ ✓ src/stream.test.js (9 tests) 3ms
+
+ Test Files  1 passed (1)
+      Tests  9 passed (9)
+   Start at  09:02:11
+   Duration  200ms (transform 13ms, setup 0ms, collect 13ms, tests 3ms, environment 0ms, prepare 42ms)
+
+ % Coverage report from v8
+-----------|---------|----------|---------|---------|---------------------------
+File       | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s         
+-----------|---------|----------|---------|---------|---------------------------
+All files  |   67.07 |       75 |   85.71 |   67.07 |                           
+ stream.js |   67.07 |       75 |   85.71 |   67.07 | ...04-109,133-145,198-256 
+-----------|---------|----------|---------|---------|---------------------------
+WEB_COV_EXIT:

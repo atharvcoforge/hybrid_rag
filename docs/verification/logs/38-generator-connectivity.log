@@ -1,0 +1,48 @@
+=== from api container to generator ===
+fdc4:f303:9324::254 host.docker.internal
+sh: 1: curl: not found
+=== compose file extra_hosts ===
+11:      GENERATOR_URL: http://host.docker.internal:8081/v1
+18:    extra_hosts:
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      INDEX_DIR: /index
+      CORPUS: /app/documents
+      GOLDEN: /app/evals/policy.jsonl
+      EVAL_OUT: /app/evals/latest.json
+      GENERATOR_URL: http://host.docker.internal:8081/v1
+      HF_HOME: /cache/hf
+    volumes:
+      - index:/index
+      - hf:/cache/hf
+      - ./evals:/app/evals
+      - ./documents:/app/documents
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/ready')"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 40s
+  web:
+    build: ./web
+    ports:
+      - "80:80"
+    depends_on:
+      api:
+        condition: service_healthy
+
+volumes:
+  index:
+  hf:
+getaddrinfo [(<AddressFamily.AF_INET: 2>, <SocketKind.SOCK_STREAM: 1>, 6, '', ('192.168.65.254', 8081)), (<AddressFamily.AF_INET: 2>, <SocketKind.SOCK_DGRAM: 2>, 17, '', ('192.168.65.254', 8081)), (<AddressFamily.AF_INET: 2>, <SocketKind.SOCK_RAW: 3>, 0, '', ('192.168.65.254', 8081)), (<AddressFamily.AF_INET6: 10>, <SocketKind.SOCK_STREAM: 1>, 6, '', ('fdc4:f303:9324::254', 8081, 0, 0)), (<AddressFamily.AF_INET6: 10>, <SocketKind.SOCK_DGRAM: 2>, 17, '', ('fdc4:f303:9324::254', 8081, 0, 0)), (<AddressFamily.AF_INET6: 10>, <SocketKind.SOCK_RAW: 3>, 0, '', ('fdc4:f303:9324::254', 8081, 0, 0))]
+http://host.docker.internal:8081/health URLError <urlopen error [Errno 101] Network is unreachable>
+http://172.17.0.1:8081/health URLError <urlopen error [Errno 111] Connection refused>
+bridge_gw=172.17.0.1
+ipv4 [(<AddressFamily.AF_INET: 2>, <SocketKind.SOCK_STREAM: 1>, 6, '', ('192.168.65.254', 8081))]
+http://192.168.65.254:8081/health <urlopen error [Errno 111] Connection refused>

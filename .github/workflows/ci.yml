@@ -13,13 +13,13 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Install
-        run: |
-          python -m pip install -U pip
-          pip install -e ".[dev]"
+      - name: Install uv
+        run: python -m pip install -U pip uv==0.12.5
+      - name: Install from the lockfile
+        run: uv sync --frozen --extra dev
       - name: Suite corpus pins and kinds
         run: |
-          python - <<'PY'
+          uv run python - <<'PY'
           from rag.evaluate import assert_kind_coverage, load_rows, load_suite, verify_corpus
           suite = load_suite("evals/suite.yaml")
           pins = verify_corpus(suite)
@@ -28,12 +28,49 @@ jobs:
           assert not kinds, kinds
           print("suite corpus pins OK; kinds OK")
           PY
-      - name: Test
-        run: pytest -q --tb=short
-      - name: Coverage gate on critical modules
+      - name: Ruff
+        run: uv run ruff check .
+      - name: Mypy
+        run: uv run mypy --strict src/
+      - name: No coverage pragmas outside the allowed spots
         run: |
-          pip install pytest-cov
-          pytest -q --cov=rag.chunk --cov=rag.retrieve --cov=rag.gates --cov=rag.layout --cov-fail-under=70
+          uv run python - <<'PY'
+          import pathlib
+          bad = []
+          for path in pathlib.Path(".").rglob("*.py"):
+              if any(part in {".venv", "mutants", ".git"} for part in path.parts):
+                  continue
+              typing = False
+              depth = 0
+              for number, line in enumerate(path.read_text().splitlines(), 1):
+                  stripped = line.strip()
+                  indent = len(line) - len(line.lstrip())
+                  if stripped.startswith("if TYPE_CHECKING:"):
+                      typing = True
+                      depth = indent
+                      continue
+                  if typing and stripped and indent <= depth:
+                      typing = False
+                  allowed = path.as_posix() == "src/rag/__main__.py" or typing
+                  if "pragma: no cover" in line and not allowed:
+                      bad.append(f"{path}:{number}")
+          if bad:
+              raise SystemExit(
+                  "pragma: no cover outside TYPE_CHECKING and __main__:\n" + "\n".join(bad)
+              )
+          PY
+      - name: Pytest without random order
+        run: uv run pytest -q --tb=short -p no:randomly
+      - name: Pytest in random order
+        run: uv run pytest -q --tb=short
+      - name: Pytest across workers
+        run: uv run pytest -q --tb=short -n auto -p no:randomly
+      - name: Branch coverage
+        run: uv run pytest -q --tb=short -p no:randomly --cov=rag --cov-branch --cov-fail-under=100
+      - name: Mutation score
+        run: uv run mutmut run
+      - name: Audit dependencies
+        run: uv run pip-audit
 
   web:
     runs-on: ubuntu-latest
@@ -48,5 +85,12 @@ jobs:
           cache: npm
           cache-dependency-path: web/package-lock.json
       - run: npm ci
-      - run: npm test
+      - run: npm run test:coverage
       - run: npm run build
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build the image from the lockfile
+        run: docker build -t reading-room:ci .

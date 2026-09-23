@@ -1,0 +1,32 @@
+=== timing rollup from prior logs ===
+clean_clone_commit=commit: ab82d31458879b62fb1fee91a1e5988323819374
+/Users/atharv.raotole/Desktop/RAG-WEEK6/docs/verification/logs/02b-clean-checkout-tests.log:uv_pip_exit=0
+/Users/atharv.raotole/Desktop/RAG-WEEK6/docs/verification/logs/02b-clean-checkout-tests.log:118 passed in 3.88s
+/Users/atharv.raotole/Desktop/RAG-WEEK6/docs/verification/logs/02b-clean-checkout-tests.log:pytest_exit=0
+/Users/atharv.raotole/Desktop/RAG-WEEK6/docs/verification/logs/02b-clean-checkout-tests.log:pytest_seconds=5
+/Users/atharv.raotole/Desktop/RAG-WEEK6/docs/verification/logs/06-rebuild-stack.log:compose_up_seconds=245
+/Users/atharv.raotole/Desktop/RAG-WEEK6/docs/verification/logs/06-rebuild-stack.log:compose_up_seconds=245
+/Users/atharv.raotole/Desktop/RAG-WEEK6/docs/verification/logs/10-manual-ingest-and-query.log:ingest_seconds=126
+/Users/atharv.raotole/Desktop/RAG-WEEK6/docs/verification/logs/10-manual-ingest-and-query.log:query_seconds=0
+/Users/atharv.raotole/Desktop/RAG-WEEK6/docs/verification/logs/10-manual-ingest-and-query.log:total_seconds=126
+/Users/atharv.raotole/Desktop/RAG-WEEK6/docs/verification/logs/12-index-reuse-and-throwaway.log:ingest_lines=0
+/Users/atharv.raotole/Desktop/RAG-WEEK6/docs/verification/logs/12-index-reuse-and-throwaway.log:throwaway_present False
+=== node/npm local ===
+node MISSING locally (UI verified via docker :80)
+=== entrypoint source still has side.sqlite gate ===
+#!/bin/sh
+set -e
+INDEX_DIR="${INDEX_DIR:-index}"
+CORPUS="${CORPUS:-documents}"
+if [ ! -f "$INDEX_DIR/side.sqlite" ]; then
+  python -m rag ingest "$CORPUS" --index "$INDEX_DIR"
+fi
+exec python -m rag.server
+=== docs list ===
+total 1720
+drwxr-xr-x@  6 atharv.raotole  staff     192 Sep 22 15:37 .
+drwxr-xr-x@ 25 atharv.raotole  staff     800 Sep 22 15:22 ..
+-rw-r--r--@  1 atharv.raotole  staff  112926 Sep 21 17:57 Carbon_New_2040.pdf
+-rw-r--r--@  1 atharv.raotole  staff  202013 Sep 21 17:57 Envi_2040-1.pdf
+-rw-r--r--@  1 atharv.raotole  staff  268090 Sep 22 13:45 Environmental_Sustainability_Policy_2025.pdf
+-rw-r--r--@  1 atharv.raotole  staff  230331 Sep 21 17:57 Water-Management-Policy.pdf

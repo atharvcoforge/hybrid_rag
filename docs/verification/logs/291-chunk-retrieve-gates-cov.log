@@ -1,0 +1,25 @@
+..........F..........FF                                                  [100%]
+=================================== FAILURES ===================================
+E   AssertionError: assert 'col: extra' in 'a: 1; extra'
+     +  where 'a: 1; extra' = _label_row('a', '1 | extra')
+/Users/atharv.raotole/Desktop/RAG-WEEK6/tests/test_cov_chunk.py:65: AssertionError: assert 'col: extra' in 'a: 1; extra'
+E   UnboundLocalError: cannot access local variable 'hit' where it is not associated with a value
+/Users/atharv.raotole/Desktop/RAG-WEEK6/src/rag/versions.py:645: UnboundLocalError: cannot access local variable 'hit' where it is not associated with a value
+E   AssertionError: assert 2 == 1
+     +  where 2 = len([Hit(parent_id='sib', parent_text='sibling', heading_path='', source_path='', file_sha256='', page_start=0, page_end=0...rseded=False, version_group=None, status='current', superseded_by=None, supersedes=None, review_date=None, title=None)])
+/Users/atharv.raotole/Desktop/RAG-WEEK6/tests/test_cov_retrieve.py:112: AssertionError: assert 2 == 1
+================================ tests coverage ================================
+______________ coverage: platform darwin, python 3.11.16-final-0 _______________
+
+Name                  Stmts   Miss Branch BrPart  Cover   Missing
+-----------------------------------------------------------------
+src/rag/chunk.py        341     54    162     26    81%   38, 56-57, 70, 88-99, 136-145, 198-203, 219, 233, 251, 254, 311, 316-317, 329->331, 405-406, 448, 450, 461-467, 483, 514, 530->540, 541, 544, 554->563, 581->606, 584->594, 590-593, 595, 599-605, 616-626
+src/rag/gates.py        206     39    100     26    75%   59->58, 73, 83, 100->108, 103, 110, 120, 124->123, 125->124, 128-130, 135-145, 179, 181, 184, 186, 188, 205, 207, 219, 220->217, 247, 277-278, 283-284, 288, 292-295, 316-317
+src/rag/retrieve.py     286     52    130     21    77%   57-59, 81, 108-110, 125->139, 132, 137->125, 187->193, 207->213, 213->217, 234->236, 239-241, 243-245, 247-251, 264, 298, 322-332, 355, 357, 383, 386-401, 430-436, 446-449
+-----------------------------------------------------------------
+TOTAL                   833    145    392     73    78%
+=========================== short test summary info ============================
+FAILED tests/test_cov_chunk.py::test_empty_child_span_table_summary_and_label_edges
+FAILED tests/test_cov_retrieve.py::test_emit_skips_a_parent_with_no_record_or_child
+FAILED tests/test_cov_retrieve.py::test_fact_sibling_dedupes_and_trims_to_the_parent_cap
+3 failed, 20 passed in 0.15s

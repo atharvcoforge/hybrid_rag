@@ -1,0 +1,24 @@
+=== wait for ready ===
+Tue Sep 22 15:33:34 EDT 2026
+attempt=1 code=200 body={"ready":true,"index_generation":0}
+=== health ===
+{"dense_ok":true,"fts_ok":true,"rerank_ok":true,"nli_ok":true,"writer_ok":true,"warmed":true,"index_generation":0,"degraded":false,"messages":[],"index":true,"writer":true,"circuit":"closed","cache_hit_rate":0.0,"queue_in_flight":0}
+HTTP 200
+=== ready ===
+{"ready":true,"index_generation":0}
+HTTP 200
+=== docker ps ===
+NAME              IMAGE           COMMAND                  SERVICE   CREATED          STATUS                    PORTS
+rag-week6-api-1   rag-week6-api   "/entrypoint.sh"         api       13 seconds ago   Up 13 seconds (healthy)   0.0.0.0:8000->8000/tcp, [::]:8000->8000/tcp
+rag-week6-web-1   rag-week6-web   "/docker-entrypoint.…"   web       13 seconds ago   Up 7 seconds              0.0.0.0:80->80/tcp, [::]:80->80/tcp
+=== api logs (last 60) ===
+INFO:     Started server process [1]
+INFO:     Waiting for application startup.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:  28%|██▊       | 88/310 [00:00<00:00, 865.88it/s]Loading weights:  58%|█████▊    | 180/310 [00:00<00:00, 897.32it/s]Loading weights: 100%|██████████| 310/310 [00:00<00:00, 1490.55it/s]
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:38224 - "GET /api/ready HTTP/1.1" 200 OK
+INFO:     192.168.65.1:27553 - "GET /api/ready HTTP/1.1" 200 OK
+INFO:     192.168.65.1:51409 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     192.168.65.1:53398 - "GET /api/ready HTTP/1.1" 200 OK

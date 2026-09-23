@@ -1,0 +1,6 @@
+bm25             recall@5=0.959 mrr=0.657
+cover            recall@5=0.943 mrr=0.640
+head             recall@5=0.730 mrr=0.434
+mix              recall@5=0.869 mrr=0.562
+rare             recall@5=0.861 mrr=0.532
+rare_then_cover  recall@5=0.730 mrr=0.448

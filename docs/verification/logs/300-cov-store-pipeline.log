@@ -1,0 +1,106 @@
+..F..F...FF..                                                            [100%]
+=================================== FAILURES ===================================
+_________________________ test_store_runtime_branches __________________________
+tests/test_cov_store.py:187: in test_store_runtime_branches
+    store.upsert([_child("a.md", "p", "c")], [], [], _source("a.md"))
+                  ^^^^^^^^^^^^^^^^^^^^^^^^
+E   TypeError: _child() missing 1 required positional argument: 'text'
+______________________ test_ingest_gates_and_single_file _______________________
+tests/test_cov_pipeline.py:120: in test_ingest_gates_and_single_file
+    with pytest.raises(IngestError, match="no chunks"):
+E   AssertionError: Regex pattern did not match.
+E     Expected regex: 'no chunks'
+E     Actual message: '/private/var/folders/s5/4_hmsf7j2qx8wnb21t6grg6m0000gp/T/pytest-of-atharv.raotole/pytest-933/test_ingest_gates_and_single_f0/blank.md: no text'
+----------------------------- Captured stdout call -----------------------------
+{"ts": "2026-09-23T12:55:30.437909+00:00", "event": "ingest_start", "file_total": 0, "trace_id": "01a0ce55-e385-75ae-b032-cb67fde2c9b5"}
+{"ts": "2026-09-23T12:55:30.437959+00:00", "event": "ingest_done", "files": 0, "trace_id": "01a0ce55-e385-75ae-b032-cb67fde2c9b5"}
+{"ts": "2026-09-23T12:55:30.440271+00:00", "event": "ingest_start", "file_total": 1, "trace_id": "01a0ce55-e388-7f47-9d0e-19c25912b77d"}
+{"ts": "2026-09-23T12:55:30.440286+00:00", "event": "ingest_progress", "file": "note.md", "file_index": 1, "file_total": 1, "trace_id": "01a0ce55-e388-7f47-9d0e-19c25912b77d"}
+{"ts": "2026-09-23T12:55:30.440494+00:00", "trace_id": "01a0ce55-e388-7f47-9d0e-19c25912b77d", "stage": "parse", "event": "start", "file": "note.md", "file_index": 1, "file_total": 1}
+{"ts": "2026-09-23T12:55:30.440626+00:00", "event": "ingest_page", "file": "note.md", "file_index": 1, "file_total": 1, "page": 1, "page_total": 1, "trace_id": "01a0ce55-e388-7f47-9d0e-19c25912b77d"}
+{"ts": "2026-09-23T12:55:30.440648+00:00", "trace_id": "01a0ce55-e388-7f47-9d0e-19c25912b77d", "stage": "parse", "event": "finish", "duration_ms": 0.153, "file": "note.md", "file_index": 1, "file_total": 1, "page_total": 1, "layout_escalations": 0, "ocr_pages": 0}
+{"ts": "2026-09-23T12:55:30.440679+00:00", "trace_id": "01a0ce55-e388-7f47-9d0e-19c25912b77d", "stage": "normalize", "event": "start", "file": "note.md"}
+{"ts": "2026-09-23T12:55:30.440732+00:00", "trace_id": "01a0ce55-e388-7f47-9d0e-19c25912b77d", "stage": "normalize", "event": "finish", "duration_ms": 0.053, "file": "note.md"}
+{"ts": "2026-09-23T12:55:30.440757+00:00", "trace_id": "01a0ce55-e388-7f47-9d0e-19c25912b77d", "stage": "chunk", "event": "start", "file": "note.md"}
+{"ts": "2026-09-23T12:55:30.440819+00:00", "trace_id": "01a0ce55-e388-7f47-9d0e-19c25912b77d", "stage": "chunk", "event": "finish", "duration_ms": 0.061, "file": "note.md", "chunks": 1}
+{"ts": "2026-09-23T12:55:30.440845+00:00", "trace_id": "01a0ce55-e388-7f47-9d0e-19c25912b77d", "stage": "contextualize", "event": "start", "file": "note.md", "skipped": true}
+{"ts": "2026-09-23T12:55:30.440885+00:00", "trace_id": "01a0ce55-e388-7f47-9d0e-19c25912b77d", "stage": "contextualize", "event": "finish", "duration_ms": 0.039, "file": "note.md", "skipped": true, "reason": "contextual_disabled"}
+{"ts": "2026-09-23T12:55:30.440909+00:00", "trace_id": "01a0ce55-e388-7f47-9d0e-19c25912b77d", "stage": "embed", "event": "start", "candidates_in": 1, "model": "test-embed", "file": "note.md"}
+{"ts": "2026-09-23T12:55:30.440996+00:00", "trace_id": "01a0ce55-e388-7f47-9d0e-19c25912b77d", "stage": "embed", "event": "finish", "duration_ms": 0.087, "candidates_in": 1, "candidates_out": 1, "model": "test-embed", "file": "note.md", "cache_hit_rate": null}
+{"ts": "2026-09-23T12:55:30.441271+00:00", "event": "ingest_file_done", "file": "note.md", "file_index": 1, "file_total": 1, "chunks": 1, "layout_escalations": 0, "ocr_pages": 0, "trace_id": "01a0ce55-e388-7f47-9d0e-19c25912b77d"}
+{"ts": "2026-09-23T12:55:30.441334+00:00", "event": "ingest_done", "files": 1, "trace_id": "01a0ce55-e388-7f47-9d0e-19c25912b77d"}
+{"ts": "2026-09-23T12:55:30.442301+00:00", "event": "ingest_start", "file_total": 1, "trace_id": "01a0ce55-e38a-7c4e-8cc7-740284220403"}
+{"ts": "2026-09-23T12:55:30.442314+00:00", "event": "ingest_progress", "file": "note.md", "file_index": 1, "file_total": 1, "trace_id": "01a0ce55-e38a-7c4e-8cc7-740284220403"}
+{"ts": "2026-09-23T12:55:30.442509+00:00", "event": "ingest_skip", "file": "note.md", "file_index": 1, "file_total": 1, "cache_hit": true, "trace_id": "01a0ce55-e38a-7c4e-8cc7-740284220403"}
+{"ts": "2026-09-23T12:55:30.442560+00:00", "event": "ingest_done", "files": 1, "trace_id": "01a0ce55-e38a-7c4e-8cc7-740284220403"}
+{"ts": "2026-09-23T12:55:30.444577+00:00", "event": "ingest_start", "file_total": 1, "trace_id": "01a0ce55-e38c-7db4-969f-74659479a32d"}
+{"ts": "2026-09-23T12:55:30.444605+00:00", "event": "ingest_progress", "file": "blank.md", "file_index": 1, "file_total": 1, "trace_id": "01a0ce55-e38c-7db4-969f-74659479a32d"}
+{"ts": "2026-09-23T12:55:30.444860+00:00", "trace_id": "01a0ce55-e38c-7db4-969f-74659479a32d", "stage": "parse", "event": "start", "file": "blank.md", "file_index": 1, "file_total": 1}
+{"ts": "2026-09-23T12:55:30.444993+00:00", "trace_id": "01a0ce55-e38c-7db4-969f-74659479a32d", "stage": "parse", "event": "error", "duration_ms": 0.134, "file": "blank.md", "file_index": 1, "file_total": 1, "error_type": "IngestError", "error": "/private/var/folders/s5/4_hmsf7j2qx8wnb21t6grg6m0000gp/T/pytest-of-atharv.raotole/pytest-933/test_ingest_gates_and_single_f0/blank.md: no text"}
+___________________ test_wipe_missing_path_and_name_rejects ____________________
+tests/test_cov_pipeline.py:72: in test_wipe_missing_path_and_name_rejects
+    with pytest.raises(IngestError, match="escapes"):
+E   Failed: DID NOT RAISE IngestError
+___________________ test_directory_filters_symlink_and_purge ___________________
+tests/test_cov_pipeline.py:159: in test_directory_filters_symlink_and_purge
+    assert "alias.md" in ids
+E   AssertionError: assert 'alias.md' in {'inner/also.md', 'keep.md', 'real.md'}
+----------------------------- Captured stdout call -----------------------------
+{"ts": "2026-09-23T12:55:30.485269+00:00", "event": "ingest_start", "file_total": 4, "trace_id": "01a0ce55-e3b5-7882-980d-ea3cc2a7f06b"}
+{"ts": "2026-09-23T12:55:30.485308+00:00", "event": "ingest_progress", "file": "alias.md", "file_index": 1, "file_total": 4, "trace_id": "01a0ce55-e3b5-7882-980d-ea3cc2a7f06b"}
+{"ts": "2026-09-23T12:55:30.485655+00:00", "trace_id": "01a0ce55-e3b5-7882-980d-ea3cc2a7f06b", "stage": "parse", "event": "start", "file": "real.md", "file_index": 1, "file_total": 4}
+{"ts": "2026-09-23T12:55:30.485835+00:00", "event": "ingest_page", "file": "real.md", "file_index": 1, "file_total": 4, "page": 1, "page_total": 1, "trace_id": "01a0ce55-e3b5-7882-980d-ea3cc2a7f06b"}
+{"ts": "2026-09-23T12:55:30.485857+00:00", "trace_id": "01a0ce55-e3b5-7882-980d-ea3cc2a7f06b", "stage": "parse", "event": "finish", "duration_ms": 0.202, "file": "real.md", "file_index": 1, "file_total": 4, "page_total": 1, "layout_escalations": 0, "ocr_pages": 0}
+{"ts": "2026-09-23T12:55:30.485898+00:00", "trace_id": "01a0ce55-e3b5-7882-980d-ea3cc2a7f06b", "stage": "normalize", "event": "start", "file": "real.md"}
+{"ts": "2026-09-23T12:55:30.485979+00:00", "trace_id": "01a0ce55-e3b5-7882-980d-ea3cc2a7f06b", "stage": "normalize", "event": "finish", "duration_ms": 0.082, "file": "real.md"}
+{"ts": "2026-09-23T12:55:30.485999+00:00", "trace_id": "01a0ce55-e3b5-7882-980d-ea3cc2a7f06b", "stage": "chunk", "event": "start", "file": "real.md"}
+{"ts": "2026-09-23T12:55:30.486086+00:00", "trace_id": "01a0ce55-e3b5-7882-980d-ea3cc2a7f06b", "stage": "chunk", "event": "finish", "duration_ms": 0.087, "file": "real.md", "chunks": 1}
+{"ts": "2026-09-23T12:55:30.486106+00:00", "trace_id": "01a0ce55-e3b5-7882-980d-ea3cc2a7f06b", "stage": "contextualize", "event": "start", "file": "real.md", "skipped": true}
+{"ts": "2026-09-23T12:55:30.486161+00:00", "trace_id": "01a0ce55-e3b5-7882-980d-ea3cc2a7f06b", "stage": "contextualize", "event": "finish", "duration_ms": 0.055, "file": "real.md", "skipped": true, "reason": "contextual_disabled"}
+{"ts": "2026-09-23T12:55:30.486181+00:00", "trace_id": "01a0ce55-e3b5-7882-980d-ea3cc2a7f06b", "stage": "embed", "event": "start", "candidates_in": 1, "model": "test-embed", "file": "real.md"}
+{"ts": "2026-09-23T12:55:30.486298+00:00", "trace_id": "01a0ce55-e3b5-7882-980d-ea3cc2a7f06b", "stage": "embed", "event": "finish", "duration_ms": 0.117, "candidates_in": 1, "candidates_out": 1, "model": "test-embed", "file": "real.md", "cache_hit_rate": null}
+{"ts": "2026-09-23T12:55:30.486618+00:00", "event": "ingest_file_done", "file": "real.md", "file_index": 1, "file_total": 4, "chunks": 1, "layout_escalations": 0, "ocr_pages": 0, "trace_id": "01a0ce55-e3b5-7882-980d-ea3cc2a7f06b"}
+{"ts": "2026-09-23T12:55:30.486635+00:00", "event": "ingest_progress", "file": "also.md", "file_index": 2, "file_total": 4, "trace_id": "01a0ce55-e3b5-7882-980d-ea3cc2a7f06b"}
+{"ts": "2026-09-23T12:55:30.486871+00:00", "trace_id": "01a0ce55-e3b5-7882-980d-ea3cc2a7f06b", "stage": "parse", "event": "start", "file": "inner/also.md", "file_index": 2, "file_total": 4}
+{"ts": "2026-09-23T12:55:30.487025+00:00", "event": "ingest_page", "file": "inner/also.md", "file_index": 2, "file_total": 4, "page": 1, "page_total": 1, "trace_id": "01a0ce55-e3b5-7882-980d-ea3cc2a7f06b"}
+{"ts": "2026-09-23T12:55:30.487043+00:00", "trace_id": "01a0ce55-e3b5-7882-980d-ea3cc2a7f06b", "stage": "parse", "event": "finish", "duration_ms": 0.172, "file": "inner/also.md", "file_index": 2, "file_total": 4, "page_total": 1, "layout_escalations": 0, "ocr_pages": 0}
+{"ts": "2026-09-23T12:55:30.487064+00:00", "trace_id": "01a0ce55-e3b5-7882-980d-ea3cc2a7f06b", "stage": "normalize", "event": "start", "file": "inner/also.md"}
+{"ts": "2026-09-23T12:55:30.487131+00:00", "trace_id": "01a0ce55-e3b5-7882-980d-ea3cc2a7f06b", "stage": "normalize", "event": "finish", "duration_ms": 0.068, "file": "inner/also.md"}
+{"ts": "2026-09-23T12:55:30.487151+00:00", "trace_id": "01a0ce55-e3b5-7882-980d-ea3cc2a7f06b", "stage": "chunk", "event": "start", "file": "inner/also.md"}
+{"ts": "2026-09-23T12:55:30.487225+00:00", "trace_id": "01a0ce55-e3b5-7882-980d-ea3cc2a7f06b", "stage": "chunk", "event": "finish", "duration_ms": 0.074, "file": "inner/also.md", "chunks": 1}
+{"ts": "2026-09-23T12:55:30.487259+00:00", "trace_id": "01a0ce55-e3b5-7882-980d-ea3cc2a7f06b", "stage": "contextualize", "event": "start", "file": "inner/also.md", "skipped": true}
+{"ts": "2026-09-23T12:55:30.487299+00:00", "trace_id": "01a0ce55-e3b5-7882-980d-ea3cc2a7f06b", "stage": "contextualize", "event": "finish", "duration_ms": 0.04, "file": "inner/also.md", "skipped": true, "reason": "contextual_disabled"}
+{"ts": "2026-09-23T12:55:30.487325+00:00", "trace_id": "01a0ce55-e3b5-7882-980d-ea3cc2a7f06b", "stage": "embed", "event": "start", "candidates_in": 1, "model": "test-embed", "file": "inner/also.md"}
+{"ts": "2026-09-23T12:55:30.487423+00:00", "trace_id": "01a0ce55-e3b5-7882-980d-ea3cc2a7f06b", "stage": "embed", "event": "finish", "duration_ms": 0.097, "candidates_in": 1, "candidates_out": 1, "model": "test-embed", "file": "inner/also.md", "cache_hit_rate": null}
+{"ts": "2026-09-23T12:55:30.487661+00:00", "event": "ingest_file_done", "file": "inner/also.md", "file_index": 2, "file_total": 4, "chunks": 1, "layout_escalations": 0, "ocr_pages": 0, "trace_id": "01a0ce55-e3b5-7882-980d-ea3cc2a7f06b"}
+{"ts": "2026-09-23T12:55:30.487681+00:00", "event": "ingest_progress", "file": "keep.md", "file_index": 3, "file_total": 4, "trace_id": "01a0ce55-e3b5-7882-980d-ea3cc2a7f06b"}
+{"ts": "2026-09-23T12:55:30.487903+00:00", "trace_id": "01a0ce55-e3b5-7882-980d-ea3cc2a7f06b", "stage": "parse", "event": "start", "file": "keep.md", "file_index": 3, "file_total": 4}
+{"ts": "2026-09-23T12:55:30.488028+00:00", "event": "ingest_page", "file": "keep.md", "file_index": 3, "file_total": 4, "page": 1, "page_total": 1, "trace_id": "01a0ce55-e3b5-7882-980d-ea3cc2a7f06b"}
+{"ts": "2026-09-23T12:55:30.488046+00:00", "trace_id": "01a0ce55-e3b5-7882-980d-ea3cc2a7f06b", "stage": "parse", "event": "finish", "duration_ms": 0.142, "file": "keep.md", "file_index": 3, "file_total": 4, "page_total": 1, "layout_escalations": 0, "ocr_pages": 0}
+{"ts": "2026-09-23T12:55:30.488066+00:00", "trace_id": "01a0ce55-e3b5-7882-980d-ea3cc2a7f06b", "stage": "normalize", "event": "start", "file": "keep.md"}
+{"ts": "2026-09-23T12:55:30.488132+00:00", "trace_id": "01a0ce55-e3b5-7882-980d-ea3cc2a7f06b", "stage": "normalize", "event": "finish", "duration_ms": 0.066, "file": "keep.md"}
+{"ts": "2026-09-23T12:55:30.488152+00:00", "trace_id": "01a0ce55-e3b5-7882-980d-ea3cc2a7f06b", "stage": "chunk", "event": "start", "file": "keep.md"}
+{"ts": "2026-09-23T12:55:30.488220+00:00", "trace_id": "01a0ce55-e3b5-7882-980d-ea3cc2a7f06b", "stage": "chunk", "event": "finish", "duration_ms": 0.067, "file": "keep.md", "chunks": 1}
+{"ts": "2026-09-23T12:55:30.488243+00:00", "trace_id": "01a0ce55-e3b5-7882-980d-ea3cc2a7f06b", "stage": "contextualize", "event": "start", "file": "keep.md", "skipped": true}
+{"ts": "2026-09-23T12:55:30.488299+00:00", "trace_id": "01a0ce55-e3b5-7882-980d-ea3cc2a7f06b", "stage": "contextualize", "event": "finish", "duration_ms": 0.056, "file": "keep.md", "skipped": true, "reason": "contextual_disabled"}
+{"ts": "2026-09-23T12:55:30.488318+00:00", "trace_id": "01a0ce55-e3b5-7882-980d-ea3cc2a7f06b", "stage": "embed", "event": "start", "candidates_in": 1, "model": "test-embed", "file": "keep.md"}
+{"ts": "2026-09-23T12:55:30.488408+00:00", "trace_id": "01a0ce55-e3b5-7882-980d-ea3cc2a7f06b", "stage": "embed", "event": "finish", "duration_ms": 0.088, "candidates_in": 1, "candidates_out": 1, "model": "test-embed", "file": "keep.md", "cache_hit_rate": null}
+{"ts": "2026-09-23T12:55:30.488579+00:00", "event": "ingest_file_done", "file": "keep.md", "file_index": 3, "file_total": 4, "chunks": 1, "layout_escalations": 0, "ocr_pages": 0, "trace_id": "01a0ce55-e3b5-7882-980d-ea3cc2a7f06b"}
+{"ts": "2026-09-23T12:55:30.488592+00:00", "event": "ingest_progress", "file": "real.md", "file_index": 4, "file_total": 4, "trace_id": "01a0ce55-e3b5-7882-980d-ea3cc2a7f06b"}
+{"ts": "2026-09-23T12:55:30.488781+00:00", "event": "ingest_skip", "file": "real.md", "file_index": 4, "file_total": 4, "cache_hit": true, "trace_id": "01a0ce55-e3b5-7882-980d-ea3cc2a7f06b"}
+{"ts": "2026-09-23T12:55:30.489161+00:00", "event": "ingest_done", "files": 4, "trace_id": "01a0ce55-e3b5-7882-980d-ea3cc2a7f06b"}
+================================ tests coverage ================================
+______________ coverage: platform darwin, python 3.11.16-final-0 _______________
+
+Name                  Stmts   Miss Branch BrPart  Cover   Missing
+-----------------------------------------------------------------
+src/rag/pipeline.py     196      6     70      4    96%   104, 216, 283, 311-312, 314
+src/rag/store.py        346     71    126     23    78%   130-134, 143-145, 165, 168-178, 188, 190, 193, 319-321, 336-338, 340, 348-351, 368-370, 386-395, 439, 447-448, 456, 460-469, 472, 476-477, 486, 500, 503, 531, 545-567, 586, 622, 763-765, 769-771
+-----------------------------------------------------------------
+TOTAL                   542     77    196     27    85%
+=========================== short test summary info ============================
+FAILED tests/test_cov_store.py::test_store_runtime_branches - TypeError: _chi...
+FAILED tests/test_cov_pipeline.py::test_ingest_gates_and_single_file - Assert...
+FAILED tests/test_cov_pipeline.py::test_wipe_missing_path_and_name_rejects - ...
+FAILED tests/test_cov_pipeline.py::test_directory_filters_symlink_and_purge
+4 failed, 9 passed in 0.25s

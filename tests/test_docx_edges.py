@@ -3,11 +3,9 @@
 import io
 import zipfile
 from pathlib import Path
-from xml.etree import ElementTree as ET
 
 from docx import Document
 from docx.oxml import OxmlElement
-from docx.oxml.ns import qn
 
 from rag.parse import parse_file
 
@@ -81,7 +79,6 @@ def test_docx_reads_text_boxes(tmp_path):
 
 def _write_docx_with_footnote(path: Path, body: str, note: str) -> None:
     """Minimal OOXML package with a footnotes part python-docx can open."""
-    W = "{http://schemas.openxmlformats.org/wordprocessingml/2006/main}"
     document_xml = f"""<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
   <w:body>

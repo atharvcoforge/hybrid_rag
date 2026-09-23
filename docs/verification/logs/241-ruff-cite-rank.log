@@ -1,0 +1,51 @@
+[1m[91mRUF007[0m[1m Prefer `itertools.pairwise()` over `zip()` when iterating over successive pairs[0m
+   [1m[94m--> [0msrc/rag/gates.py:116:24
+    [1m[94m|[0m
+[1m[94m114[0m [1m[94m|[0m     asked_words = set(_content_tokens(_norm_quantity(query)))
+[1m[94m115[0m [1m[94m|[0m     phrases = []
+[1m[94m116[0m [1m[94m|[0m     for left, right in zip(words, words[1:]):
+    [1m[94m|[0m                        [1m[91m^^^[0m
+[1m[94m117[0m [1m[94m|[0m         phrase = f"{left} {right}"
+[1m[94m118[0m [1m[94m|[0m         if len(phrase) < 8:
+    [1m[94m|[0m
+[1m[96mhelp[0m[1m: Replace `zip()` with `itertools.pairwise()`[0m
+
+[1m[91mI001[0m [[1m[96m*[0m][1m Import block is un-sorted or un-formatted[0m
+  [1m[94m--> [0msrc/rag/retrieve.py:1:1
+   [1m[94m|[0m
+[1m[94m 1[0m [1m[94m|[0m [1m[91m/[0m import time
+[1m[94m 2[0m [1m[94m|[0m [1m[91m|[0m
+[1m[94m 3[0m [1m[94m|[0m [1m[91m|[0m from rag.models import (
+[1m[94m 4[0m [1m[94m|[0m [1m[91m|[0m     AGREE_TOP,
+[1m[94m 5[0m [1m[94m|[0m [1m[91m|[0m     BM25_K,
+[1m[94m 6[0m [1m[94m|[0m [1m[91m|[0m     DENSE_K,
+[1m[94m 7[0m [1m[94m|[0m [1m[91m|[0m     EMBED_MODEL,
+[1m[94m 8[0m [1m[94m|[0m [1m[91m|[0m     EMBED_REVISION,
+[1m[94m 9[0m [1m[94m|[0m [1m[91m|[0m     FAST_GAP,
+[1m[94m10[0m [1m[94m|[0m [1m[91m|[0m     MAX_PARENTS,
+[1m[94m11[0m [1m[94m|[0m [1m[91m|[0m     RERANK_K,
+[1m[94m12[0m [1m[94m|[0m [1m[91m|[0m     RRF_K,
+[1m[94m13[0m [1m[94m|[0m [1m[91m|[0m     SCORE_BAND,
+[1m[94m14[0m [1m[94m|[0m [1m[91m|[0m     Hit,
+[1m[94m15[0m [1m[94m|[0m [1m[91m|[0m     QueryError,
+[1m[94m16[0m [1m[94m|[0m [1m[91m|[0m     Retrieval,
+[1m[94m17[0m [1m[94m|[0m [1m[91m|[0m     tau_key,
+[1m[94m18[0m [1m[94m|[0m [1m[91m|[0m )
+[1m[94m19[0m [1m[94m|[0m [1m[91m|[0m from rag.telemetry import StageTimer
+[1m[94m20[0m [1m[94m|[0m [1m[91m|[0m from rag.versions import SUPERSEDED_SCORE_FACTOR, entity_mismatch, focus_multiplier, signatory_boost
+   [1m[94m|[0m [1m[91m|____________________________________________________________________________________________________^[0m
+[1m[96mhelp[0m[1m: Organize imports[0m
+[1m[94m  [0m [1m[94m|[0m
+[1m[94m19[0m [1m[94m|[0m from rag.telemetry import StageTimer
+[1m[94m  [0m [1m[31m-[0m [31mfrom rag.versions import SUPERSEDED_SCORE_FACTOR, entity_mismatch, focus_multiplier, signatory_boost
+[0m[1m[94m20[0m [1m[32m+[0m [32mfrom rag.versions import (
+[0m[1m[94m21[0m [1m[32m+[0m [32m    SUPERSEDED_SCORE_FACTOR,
+[0m[1m[94m22[0m [1m[32m+[0m [32m    entity_mismatch,
+[0m[1m[94m23[0m [1m[32m+[0m [32m    focus_multiplier,
+[0m[1m[94m24[0m [1m[32m+[0m [32m    signatory_boost,
+[0m[1m[94m25[0m [1m[32m+[0m [32m)
+[0m[1m[94m26[0m [1m[94m|[0m
+[1m[94m  [0m [1m[94m|[0m
+
+Found 2 errors.
+[[36m*[0m] 1 fixable with the `--fix` option (1 hidden fix can be enabled with the `--unsafe-fixes` option).

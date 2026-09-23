@@ -1,0 +1,40 @@
+{"ts": "2026-09-23T01:40:02.422888+00:00", "event": "ingest_start", "file_total": 1, "trace_id": "01a0cbeb-7af6-7810-bb99-513b434551fd"}
+{"ts": "2026-09-23T01:40:02.423158+00:00", "event": "ingest_progress", "file": "one.md", "file_index": 1, "file_total": 1, "trace_id": "01a0cbeb-7af6-7810-bb99-513b434551fd"}
+{"ts": "2026-09-23T01:40:02.423404+00:00", "trace_id": "01a0cbeb-7af6-7810-bb99-513b434551fd", "stage": "parse", "event": "start", "file": "one.md", "file_index": 1, "file_total": 1}
+{"ts": "2026-09-23T01:40:02.423935+00:00", "event": "ingest_page", "file": "one.md", "file_index": 1, "file_total": 1, "page": 1, "page_total": 1, "trace_id": "01a0cbeb-7af6-7810-bb99-513b434551fd"}
+{"ts": "2026-09-23T01:40:02.423957+00:00", "trace_id": "01a0cbeb-7af6-7810-bb99-513b434551fd", "stage": "parse", "event": "finish", "duration_ms": 0.552, "file": "one.md", "file_index": 1, "file_total": 1, "page_total": 1, "layout_escalations": 0, "ocr_pages": 0}
+{"ts": "2026-09-23T01:40:02.423983+00:00", "trace_id": "01a0cbeb-7af6-7810-bb99-513b434551fd", "stage": "normalize", "event": "start", "file": "one.md"}
+{"ts": "2026-09-23T01:40:02.424041+00:00", "trace_id": "01a0cbeb-7af6-7810-bb99-513b434551fd", "stage": "normalize", "event": "finish", "duration_ms": 0.058, "file": "one.md"}
+{"ts": "2026-09-23T01:40:02.424063+00:00", "trace_id": "01a0cbeb-7af6-7810-bb99-513b434551fd", "stage": "chunk", "event": "start", "file": "one.md"}
+{"ts": "2026-09-23T01:40:02.424127+00:00", "trace_id": "01a0cbeb-7af6-7810-bb99-513b434551fd", "stage": "chunk", "event": "finish", "duration_ms": 0.066, "file": "one.md", "chunks": 1}
+{"ts": "2026-09-23T01:40:02.424149+00:00", "trace_id": "01a0cbeb-7af6-7810-bb99-513b434551fd", "stage": "contextualize", "event": "start", "file": "one.md", "skipped": true}
+{"ts": "2026-09-23T01:40:02.424239+00:00", "trace_id": "01a0cbeb-7af6-7810-bb99-513b434551fd", "stage": "contextualize", "event": "finish", "duration_ms": 0.089, "file": "one.md", "skipped": true, "reason": "contextual_disabled"}
+{"ts": "2026-09-23T01:40:02.424273+00:00", "trace_id": "01a0cbeb-7af6-7810-bb99-513b434551fd", "stage": "embed", "event": "start", "candidates_in": 1, "model": "test-embed", "file": "one.md"}
+{"ts": "2026-09-23T01:40:02.424382+00:00", "trace_id": "01a0cbeb-7af6-7810-bb99-513b434551fd", "stage": "embed", "event": "finish", "duration_ms": 0.109, "candidates_in": 1, "candidates_out": 1, "model": "test-embed", "file": "one.md", "cache_hit_rate": null}
+{"ts": "2026-09-23T01:40:02.444955+00:00", "event": "ingest_file_done", "file": "one.md", "file_index": 1, "file_total": 1, "chunks": 1, "layout_escalations": 0, "ocr_pages": 0, "trace_id": "01a0cbeb-7af6-7810-bb99-513b434551fd"}
+{"ts": "2026-09-23T01:40:02.445092+00:00", "event": "ingest_done", "files": 1, "trace_id": "01a0cbeb-7af6-7810-bb99-513b434551fd"}
+first [('one.md', 'indexed', 1)]
+{"ts": "2026-09-23T01:40:02.446566+00:00", "event": "ingest_start", "file_total": 1, "trace_id": "01a0cbeb-7b0e-7475-a29f-52931930eb5f"}
+{"ts": "2026-09-23T01:40:02.446578+00:00", "event": "ingest_progress", "file": "one.md", "file_index": 1, "file_total": 1, "trace_id": "01a0cbeb-7b0e-7475-a29f-52931930eb5f"}
+{"ts": "2026-09-23T01:40:02.446802+00:00", "event": "ingest_skip", "file": "one.md", "file_index": 1, "file_total": 1, "cache_hit": true, "trace_id": "01a0cbeb-7b0e-7475-a29f-52931930eb5f"}
+{"ts": "2026-09-23T01:40:02.446892+00:00", "event": "ingest_done", "files": 1, "trace_id": "01a0cbeb-7b0e-7475-a29f-52931930eb5f"}
+second [('one.md', 'skipped', 0)]
+{"ts": "2026-09-23T01:40:02.448248+00:00", "event": "ingest_start", "file_total": 2, "trace_id": "01a0cbeb-7b10-7822-83b9-53fdb81cd85d"}
+{"ts": "2026-09-23T01:40:02.448258+00:00", "event": "ingest_progress", "file": "one.md", "file_index": 1, "file_total": 2, "trace_id": "01a0cbeb-7b10-7822-83b9-53fdb81cd85d"}
+{"ts": "2026-09-23T01:40:02.448461+00:00", "event": "ingest_skip", "file": "one.md", "file_index": 1, "file_total": 2, "cache_hit": true, "trace_id": "01a0cbeb-7b10-7822-83b9-53fdb81cd85d"}
+{"ts": "2026-09-23T01:40:02.448470+00:00", "event": "ingest_progress", "file": "throwaway.md", "file_index": 2, "file_total": 2, "trace_id": "01a0cbeb-7b10-7822-83b9-53fdb81cd85d"}
+{"ts": "2026-09-23T01:40:02.448685+00:00", "trace_id": "01a0cbeb-7b10-7822-83b9-53fdb81cd85d", "stage": "parse", "event": "start", "file": "throwaway.md", "file_index": 2, "file_total": 2}
+{"ts": "2026-09-23T01:40:02.448817+00:00", "event": "ingest_page", "file": "throwaway.md", "file_index": 2, "file_total": 2, "page": 1, "page_total": 1, "trace_id": "01a0cbeb-7b10-7822-83b9-53fdb81cd85d"}
+{"ts": "2026-09-23T01:40:02.448831+00:00", "trace_id": "01a0cbeb-7b10-7822-83b9-53fdb81cd85d", "stage": "parse", "event": "finish", "duration_ms": 0.145, "file": "throwaway.md", "file_index": 2, "file_total": 2, "page_total": 1, "layout_escalations": 0, "ocr_pages": 0}
+{"ts": "2026-09-23T01:40:02.448851+00:00", "trace_id": "01a0cbeb-7b10-7822-83b9-53fdb81cd85d", "stage": "normalize", "event": "start", "file": "throwaway.md"}
+{"ts": "2026-09-23T01:40:02.448911+00:00", "trace_id": "01a0cbeb-7b10-7822-83b9-53fdb81cd85d", "stage": "normalize", "event": "finish", "duration_ms": 0.06, "file": "throwaway.md"}
+{"ts": "2026-09-23T01:40:02.448932+00:00", "trace_id": "01a0cbeb-7b10-7822-83b9-53fdb81cd85d", "stage": "chunk", "event": "start", "file": "throwaway.md"}
+{"ts": "2026-09-23T01:40:02.448989+00:00", "trace_id": "01a0cbeb-7b10-7822-83b9-53fdb81cd85d", "stage": "chunk", "event": "finish", "duration_ms": 0.057, "file": "throwaway.md", "chunks": 1}
+{"ts": "2026-09-23T01:40:02.449006+00:00", "trace_id": "01a0cbeb-7b10-7822-83b9-53fdb81cd85d", "stage": "contextualize", "event": "start", "file": "throwaway.md", "skipped": true}
+{"ts": "2026-09-23T01:40:02.449079+00:00", "trace_id": "01a0cbeb-7b10-7822-83b9-53fdb81cd85d", "stage": "contextualize", "event": "finish", "duration_ms": 0.072, "file": "throwaway.md", "skipped": true, "reason": "contextual_disabled"}
+{"ts": "2026-09-23T01:40:02.449103+00:00", "trace_id": "01a0cbeb-7b10-7822-83b9-53fdb81cd85d", "stage": "embed", "event": "start", "candidates_in": 1, "model": "test-embed", "file": "throwaway.md"}
+{"ts": "2026-09-23T01:40:02.449285+00:00", "trace_id": "01a0cbeb-7b10-7822-83b9-53fdb81cd85d", "stage": "embed", "event": "finish", "duration_ms": 0.182, "candidates_in": 1, "candidates_out": 1, "model": "test-embed", "file": "throwaway.md", "cache_hit_rate": null}
+{"ts": "2026-09-23T01:40:02.449581+00:00", "event": "ingest_file_done", "file": "throwaway.md", "file_index": 2, "file_total": 2, "chunks": 1, "layout_escalations": 0, "ocr_pages": 0, "trace_id": "01a0cbeb-7b10-7822-83b9-53fdb81cd85d"}
+{"ts": "2026-09-23T01:40:02.449774+00:00", "event": "ingest_done", "files": 2, "trace_id": "01a0cbeb-7b10-7822-83b9-53fdb81cd85d"}
+third [('one.md', 'skipped', 0), ('throwaway.md', 'indexed', 1)]
+PASS

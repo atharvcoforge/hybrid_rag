@@ -16,10 +16,11 @@ import sys
 import threading
 import time
 import uuid
+from collections.abc import Callable, Iterator
 from contextlib import contextmanager
-from contextvars import ContextVar
-from datetime import datetime, timezone
-from typing import Any, Callable, Iterator
+from contextvars import ContextVar, Token
+from datetime import UTC, datetime
+from typing import Any, cast
 
 _trace_id: ContextVar[str | None] = ContextVar("trace_id", default=None)
 _trace_local = threading.local()
@@ -106,7 +107,7 @@ def content_logging_enabled() -> bool:
     return os.environ.get("LOG_CONTENT", "").strip() in {"1", "true", "yes"}
 
 
-def set_stage_bus(bus) -> None:
+def set_stage_bus(bus: Any) -> None:
     """Attach a queue-like bus (``put(dict)``) so span transitions can feed SSE."""
     _stage_bus_local.bus = bus
 
@@ -141,7 +142,7 @@ def _publish_stage(record: dict[str, Any]) -> None:
     }
     try:
         bus.put(payload)
-    except Exception:
+    except Exception:  # noqa: BLE001, S110 — a full trace bus must not break the request
         pass
 
 
@@ -149,12 +150,12 @@ def current_trace_id() -> str | None:
     return _trace_id.get() or getattr(_trace_local, "trace_id", None)
 
 
-def set_trace_id(trace_id: str | None):
+def set_trace_id(trace_id: str | None) -> Token[str | None]:
     _trace_local.trace_id = trace_id
     return _trace_id.set(trace_id)
 
 
-def reset_trace_id(token) -> None:
+def reset_trace_id(token: Token[str | None]) -> None:
     _trace_local.trace_id = None
     _trace_id.reset(token)
 
@@ -171,7 +172,7 @@ def bind_trace(trace_id: str) -> Iterator[str]:
 def uuid7() -> uuid.UUID:
     """RFC 9562 UUIDv7 (time-ordered). Stdlib until 3.13 lacks uuid.uuid7."""
     if hasattr(uuid, "uuid7"):
-        return uuid.uuid7()  # type: ignore[attr-defined]
+        return cast(uuid.UUID, uuid.uuid7())
     unix_ms = int(time.time() * 1000) & ((1 << 48) - 1)
     rand_a = secrets.randbits(12)
     rand_b = secrets.randbits(62)
@@ -210,7 +211,7 @@ def percentile(samples: list[float], p: float) -> float:
     if len(samples) == 1:
         return float(samples[0])
     ordered = sorted(samples)
-    rank = max(1, min(len(ordered), int(round(p / 100.0 * len(ordered)))))
+    rank = max(1, min(len(ordered), round(p / 100.0 * len(ordered))))
     return float(ordered[rank - 1])
 
 
@@ -240,9 +241,9 @@ def _emit(record: dict[str, Any]) -> None:
     sys.stdout.flush()
 
 
-def log_event(event: str, **fields) -> None:
+def log_event(event: str, **fields: Any) -> None:
     payload = {
-        "ts": datetime.now(timezone.utc).isoformat(),
+        "ts": datetime.now(UTC).isoformat(),
         "event": event,
         **_scrub(fields),
     }
@@ -261,10 +262,10 @@ def log_span(
     *,
     duration_ms: float | None = None,
     error: BaseException | None = None,
-    **payload,
+    **payload: Any,
 ) -> None:
     record: dict[str, Any] = {
-        "ts": datetime.now(timezone.utc).isoformat(),
+        "ts": datetime.now(UTC).isoformat(),
         "trace_id": current_trace_id(),
         "stage": stage,
         "event": event,
@@ -309,7 +310,7 @@ class StageTimer:
         self._ms: dict[str, float] = {}
 
     @contextmanager
-    def measure(self, name: str, **payload) -> Iterator[dict]:
+    def measure(self, name: str, **payload: Any) -> Iterator[dict[str, Any]]:
         # Alias legacy "embed" timer name to the span name embed_query.
         stage = "embed_query" if name == "embed" else name
         started = self._clock()
@@ -327,7 +328,7 @@ class StageTimer:
 
 
 @contextmanager
-def span(stage: str, **payload) -> Iterator[dict[str, Any]]:
+def span(stage: str, **payload: Any) -> Iterator[dict[str, Any]]:
     """Emit start → finish|error. Soft budget → stage_slow while running."""
     handle: dict[str, Any] = dict(payload)
     soft = soft_budget_ms(stage)

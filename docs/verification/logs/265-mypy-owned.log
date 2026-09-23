@@ -1,0 +1,2 @@
+src/rag/pipeline.py:70: error: Incompatible types in assignment (expression has type "Callable[[str], int]", variable has type "def count_tokens(text: str) -> int")  [assignment]
+Found 1 error in 1 file (checked 9 source files)

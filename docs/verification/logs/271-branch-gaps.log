@@ -1,0 +1,10 @@
+.......F........                                                         [100%]
+=================================== FAILURES ===================================
+E   TypeError: old
+
+During handling of the above exception, another exception occurred:
+E   TypeError: old
+/Users/atharv.raotole/Desktop/RAG-WEEK6/tests/test_branch_gaps.py:358: TypeError: old
+=========================== short test summary info ============================
+FAILED tests/test_branch_gaps.py::test_score_table_and_borderless_ladder - Ty...
+1 failed, 15 passed in 0.10s

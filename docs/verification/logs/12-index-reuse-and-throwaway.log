@@ -1,0 +1,114 @@
+=== snapshot index before second boot ===
+documents 4
+children 80
+docs [('Carbon_New_2040.pdf',), ('Envi_2040-1.pdf',), ('Environmental_Sustainability_Policy_2025.pdf',), ('Water-Management-Policy.pdf',)]
+mtime before:
+2026-09-22 19:37:01.919627008 +0000 /index/rag.sqlite
+=== second boot (compose restart api) — expect NO re-ingest because side.sqlite exists ===
+Tue Sep 22 15:37:30 EDT 2026
+ Container rag-week6-api-1 Restarting 
+ Container rag-week6-api-1 Started 
+ready attempt=3 {"ready":true,"index_generation":4}
+=== api logs around restart (look for ingest) ===
+INFO:     127.0.0.1:58614 - "GET /api/ready HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34280 - "GET /api/ready HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58480 - "GET /api/ready HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34472 - "GET /api/ready HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59468 - "GET /api/ready HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56268 - "GET /api/ready HTTP/1.1" 200 OK
+INFO:     192.168.65.1:40758 - "POST /api/query HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36568 - "GET /api/ready HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57244 - "GET /api/ready HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60000 - "GET /api/ready HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [1]
+INFO:     Started server process [1]
+INFO:     Waiting for application startup.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights: 100%|██████████| 310/310 [00:00<00:00, 10127.14it/s]
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     192.168.65.1:29651 - "GET /api/ready HTTP/1.1" 200 OK
+INFO:     192.168.65.1:42412 - "POST /api/query HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60006 - "GET /api/ready HTTP/1.1" 200 OK
+{"ts": "2026-09-22T19:37:07.911577+00:00", "event": "retrieve", "request_id": "39721dbf7896", "mode": "rrf", "retrieve_ms": 221, "hits": 5, "reason": "", "embed_ms": 219.74204199796077, "dense_ms": 0.224584000534378, "lexical_ms": 0.35266699705971405, "fuse_ms": 0.023542001144960523, "gate_ms": 0.012958000297658145, "total_ms": 220.46966700145276}
+{"ts": "2026-09-22T19:37:11.895559+00:00", "event": "gate_fail", "request_id": "39721dbf7896", "reason": "missing_citation", "unsupported": []}
+INFO:     192.168.65.1:39510 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41276 - "GET /api/ready HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40154 - "GET /api/ready HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [1]
+INFO:     Started server process [1]
+INFO:     Waiting for application startup.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights: 100%|██████████| 310/310 [00:00<00:00, 9327.56it/s]
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:36516 - "GET /api/ready HTTP/1.1" 200 OK
+INFO:     192.168.65.1:64444 - "GET /api/ready HTTP/1.1" 200 OK
+ingest_lines=0
+mtime after second boot:
+2026-09-22 19:37:01.919627008 +0000 /index/rag.sqlite
+documents 4
+children 80
+=== add throwaway document ===
+-rw-r--r--@ 1 atharv.raotole  staff  63 Sep 22 15:37 documents/ZZXQ_bringup_throwaway.txt
+=== third boot after throwaway added ===
+ Container rag-week6-api-1 Restarting 
+ Container rag-week6-api-1 Started 
+ready attempt=2 {"ready":true,"index_generation":4}
+=== logs after throwaway boot ===
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [1]
+INFO:     Started server process [1]
+INFO:     Waiting for application startup.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights: 100%|██████████| 310/310 [00:00<00:00, 10127.14it/s]
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     192.168.65.1:29651 - "GET /api/ready HTTP/1.1" 200 OK
+INFO:     192.168.65.1:42412 - "POST /api/query HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60006 - "GET /api/ready HTTP/1.1" 200 OK
+{"ts": "2026-09-22T19:37:07.911577+00:00", "event": "retrieve", "request_id": "39721dbf7896", "mode": "rrf", "retrieve_ms": 221, "hits": 5, "reason": "", "embed_ms": 219.74204199796077, "dense_ms": 0.224584000534378, "lexical_ms": 0.35266699705971405, "fuse_ms": 0.023542001144960523, "gate_ms": 0.012958000297658145, "total_ms": 220.46966700145276}
+{"ts": "2026-09-22T19:37:11.895559+00:00", "event": "gate_fail", "request_id": "39721dbf7896", "reason": "missing_citation", "unsupported": []}
+INFO:     192.168.65.1:39510 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41276 - "GET /api/ready HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40154 - "GET /api/ready HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [1]
+INFO:     Started server process [1]
+INFO:     Waiting for application startup.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights: 100%|██████████| 310/310 [00:00<00:00, 9327.56it/s]
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     127.0.0.1:36516 - "GET /api/ready HTTP/1.1" 200 OK
+INFO:     192.168.65.1:64444 - "GET /api/ready HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [1]
+INFO:     Started server process [1]
+INFO:     Waiting for application startup.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights: 100%|██████████| 310/310 [00:00<00:00, 9449.99it/s]
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     192.168.65.1:54626 - "GET /api/ready HTTP/1.1" 200 OK
+indexed_lines=0
+=== does index contain throwaway? ===
+docs [('Carbon_New_2040.pdf',), ('Envi_2040-1.pdf',), ('Environmental_Sustainability_Policy_2025.pdf',), ('Water-Management-Policy.pdf',)]
+throwaway_present False
+documents_count 4
+=== query for throwaway marker ===
+event: meta
+data: {"hits": [{"parent_id": "0218f4f2786cd8bb", "text": "Baseline Year: 2023–2024 (UK operations) |  |  |  |  | \nAdditional details relating to the baseline emissions calculations |  |  |  |  | \nCoforge is committed to demonstrate strong green credentials and achieve net zero emissions in\nyears to come. In comparison to India operations, international business operations are smaller, and\nheadcount is significantly lower.\nTo support our carbon footprint management journey, we have partnered with \"Carbon Footprint\"\nwho have comprehensive experience in this area. From 2022, all international business operations\n(outside India) are included in carbon emissions assessment calculations. The baseline assessment\nundertaken follows the principles outlined by the Greenhouse Gas Protocol and the UK\nGovernment's Guidelines on Greenhouse Gas reporting. |  |  |  |  | \nBaseline year emissions: FY24 Total (tCO2e) |  |  |  |  | \nEMISSIONS |  |  | UK |  | \nScope 1 |  |  | 0* |  | \nScope 2 |  |  | 22.38 |  | \nScope 3 |  |  | 892.00 |  | \n | Total emissions |  |  | 914.38 |", "heading": "", "source": "Carbon_New_2040.pdf", "title": "Carbon Reduction Plan", "cite": 1, "page_start": 1, "page_end": 1, "norm_start": 1418, "norm_end": 2431, "score": 0.01639344262295082, "confident": false, "derived": false, "ocr": false}, {"parent_id": "75646ff9cdbfb12f", "text": "| Baseline Year: 2023–2024 (India operations) |  |  |  | \n | Additional details relating to the baseline emissions calculations |  |  |  | \nThe baseline emission calculations were done for our operations in India which is the most\nsignificant part of the business. We have already taken significant initiatives to reduce the carbon\nfootprint and continue the process. |  |  |  |  | \n | Baseline year emissions – Total (tCO e) – FY24\n2 |  |  |  | \nEMISSIONS |  |  | India |  | \nScope 1 |  |  | 413 |  | \nScope 2 |  |  | 8,688 |  | \nScope 3 |  |  | 5,543 |  | \n | Total emissions |  |  | 14curl: (23) Failure writing output to destination, passed 6928 returned 4294967295
+
+throwaway_host_file_removed=1

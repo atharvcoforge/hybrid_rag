@@ -102,3 +102,35 @@ def test_a_sentence_longer_than_the_parent_cap_is_cut_on_words(monkeypatch):
     assert all(parent.token_count <= 10 for parent in parents)
     covered = " ".join(parent.text for parent in parents)
     assert all(word in covered.split() for word in words)
+
+
+def test_energy_and_waste_sections_are_different_parents():
+    from rag.parse import pdf_prose_blocks
+
+    text = (
+        "Energy Optimization and Emission Management\n"
+        'We, at Coforge, are committed to become "Carbon Neutral in our operations by 2040".\n'
+        "Procure 10% of electricity from green sources by 2025.\n"
+        "Waste Management and Circularity\n"
+        "Coforge has committed to become Zero Waste by 2040."
+    )
+    blocks = assign_offsets(pdf_prose_blocks(text, 4))
+    parents, _children = chunk_document("envi", blocks, fake_tokens)
+    energy = [parent for parent in parents if "Carbon Neutral in our operations by 2040" in parent.text]
+    assert len(energy) == 1
+    assert "Zero Waste" not in energy[0].text
+    assert energy[0].heading_path == "Energy Optimization and Emission Management"
+    waste = [parent for parent in parents if "Zero Waste" in parent.text]
+    assert len(waste) == 1
+    assert "Carbon Neutral" not in waste[0].text
+
+
+def test_a_name_and_role_stay_one_parent():
+    from rag.parse import pdf_prose_blocks
+
+    text = "John Speight\nPresident and Head of Europe (EVP)"
+    blocks = assign_offsets(pdf_prose_blocks(text, 3))
+    parents, _children = chunk_document("carbon", blocks, fake_tokens)
+    assert len(parents) == 1
+    assert "John Speight" in parents[0].text
+    assert "President and Head of Europe" in parents[0].text

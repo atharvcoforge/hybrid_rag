@@ -6,21 +6,23 @@ import threading
 import time
 from collections import OrderedDict
 
+CacheKey = tuple[str, int, str, str]
+
 
 class AnswerCache:
-    def __init__(self, maxsize: int = 256, ttl_s: float = 3600.0):
+    def __init__(self, maxsize: int = 256, ttl_s: float = 3600.0) -> None:
         self.maxsize = maxsize
         self.ttl_s = ttl_s
-        self._data: OrderedDict = OrderedDict()
+        self._data: OrderedDict[CacheKey, tuple[object, float]] = OrderedDict()
         self._lock = threading.Lock()
         self.hits = 0
         self.misses = 0
 
     @staticmethod
-    def make_key(query: str, generation: int, mode: str):
-        return (query.casefold(), int(generation), mode)
+    def make_key(query: str, generation: int, mode: str, doc_id: str | None = None) -> CacheKey:
+        return (query.casefold(), int(generation), mode, (doc_id or "").casefold())
 
-    def get(self, key):
+    def get(self, key: CacheKey) -> object | None:
         now = time.monotonic()
         with self._lock:
             item = self._data.get(key)
@@ -36,14 +38,14 @@ class AnswerCache:
             self.hits += 1
             return value
 
-    def __setitem__(self, key, value):
+    def __setitem__(self, key: CacheKey, value: object) -> None:
         with self._lock:
             self._data[key] = (value, time.monotonic())
             self._data.move_to_end(key)
             while len(self._data) > self.maxsize:
                 self._data.popitem(last=False)
 
-    def clear(self):
+    def clear(self) -> None:
         with self._lock:
             self._data.clear()
 

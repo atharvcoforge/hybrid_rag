@@ -1,0 +1,11 @@
+ Container rag-week6-web-1 Stopping 
+ Container rag-week6-web-1 Stopped 
+ Container rag-week6-web-1 Removing 
+ Container rag-week6-web-1 Removed 
+ Network rag-week6_default Removing 
+ Network rag-week6_default Resource is still in use 
+Error response from daemon: remove rag-week6_index: volume is in use - [01a4ceec27b760b807f1e49d11b3ce64efd99412ed98e86a1f8a2d482955e2ba]
+{"status":"ok"} Container rag-week6-api-1 Creating 
+ service:api:1 Error response from daemon: Conflict. The container name "/rag-week6-api-1" is already in use by container "01a4ceec27b760b807f1e49d11b3ce64efd99412ed98e86a1f8a2d482955e2ba". You have to remove (or rename) that container to be able to reuse that name. 
+ Container rag-week6-web-1 Creating 
+Error response from daemon: Conflict. The container name "/rag-week6-api-1" is already in use by container "01a4ceec27b760b807f1e49d11b3ce64efd99412ed98e86a1f8a2d482955e2ba". You have to remove (or rename) that container to be able to reuse that name.

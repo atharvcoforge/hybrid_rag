@@ -1,0 +1,43 @@
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights: 100%|██████████| 310/310 [00:00<00:00, 9759.47it/s]
+{"ts": "2026-09-23T04:19:36.605157+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T04:19:36.631706+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 26.558, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T04:19:36.631773+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T04:19:36.632062+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.288, "candidates_out": 20}
+{"ts": "2026-09-23T04:19:36.632099+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T04:19:36.633160+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 1.06, "candidates_out": 20}
+{"ts": "2026-09-23T04:19:36.633218+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 28}
+{"ts": "2026-09-23T04:19:36.633297+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.079, "candidates_in": 28, "candidates_out": 18, "top_score": 0.031746031746031744}
+{"ts": "2026-09-23T04:19:36.637276+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T04:19:36.637591+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.317, "candidates_in": 5, "candidates_out": 5, "top_score": 0.05550284629981025}
+{"ts": "2026-09-23T04:19:38.133066+00:00", "trace_id": null, "stage": "gate_form", "event": "start"}
+{"ts": "2026-09-23T04:19:38.133160+00:00", "trace_id": null, "stage": "gate_form", "event": "finish", "duration_ms": 0.097}
+{"ts": "2026-09-23T04:19:38.133199+00:00", "trace_id": null, "stage": "gate_literal", "event": "start"}
+{"ts": "2026-09-23T04:19:38.133300+00:00", "trace_id": null, "stage": "gate_literal", "event": "finish", "duration_ms": 0.101}
+{"ts": "2026-09-23T04:19:38.133343+00:00", "trace_id": null, "stage": "gate_entail", "event": "start", "skipped": true, "reason": "no_entailment_model"}
+{"ts": "2026-09-23T04:19:38.133390+00:00", "trace_id": null, "stage": "gate_entail", "event": "finish", "duration_ms": 0.048, "degraded": true, "skipped": true, "reason": "no_entailment_model"}
+{"ts": "2026-09-23T04:19:38.133409+00:00", "trace_id": null, "stage": "gate_coverage", "event": "start", "coverage": 1.0}
+{"ts": "2026-09-23T04:19:38.133448+00:00", "trace_id": null, "stage": "gate_coverage", "event": "finish", "duration_ms": 0.039, "coverage": 1.0}
+{"ts": "2026-09-23T04:19:38.133472+00:00", "trace_id": null, "stage": "gate_conflict", "event": "start"}
+{"ts": "2026-09-23T04:19:38.133570+00:00", "trace_id": null, "stage": "gate_conflict", "event": "finish", "duration_ms": 0.098, "reason": "version_conflict"}
+== carbon hits=5 reason= gate=version_conflict
+Coforge commits to becoming Carbon Neutral in its operations by 2040 [1]. Note: a superseded version (Environmental_Sustainability_Policy_2025.pdf) states 2050 [5].
+--- raw Coforge commits to becoming carbon neutral in its operations by 2050.
+{"ts": "2026-09-23T04:19:38.133620+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T04:19:38.171647+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 38.025, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T04:19:38.171706+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T04:19:38.171899+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.193, "candidates_out": 20}
+{"ts": "2026-09-23T04:19:38.171924+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T04:19:38.172550+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.624, "candidates_out": 20}
+{"ts": "2026-09-23T04:19:38.172597+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 31}
+{"ts": "2026-09-23T04:19:38.172675+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.077, "candidates_in": 31, "candidates_out": 21, "top_score": 0.032266458495966696}
+{"ts": "2026-09-23T04:19:38.176323+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T04:19:38.176397+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.074, "candidates_in": 5, "candidates_out": 5, "top_score": 0.032266458495966696}
+{"ts": "2026-09-23T04:19:39.353681+00:00", "trace_id": null, "stage": "gate_form", "event": "start"}
+{"ts": "2026-09-23T04:19:39.353770+00:00", "trace_id": null, "stage": "gate_form", "event": "finish", "duration_ms": 0.093}
+{"ts": "2026-09-23T04:19:39.353810+00:00", "trace_id": null, "stage": "gate_literal", "event": "start", "skipped": true, "reason": "declined"}
+{"ts": "2026-09-23T04:19:39.353850+00:00", "trace_id": null, "stage": "gate_literal", "event": "finish", "duration_ms": 0.039, "skipped": true, "reason": "declined"}
+{"ts": "2026-09-23T04:19:39.353896+00:00", "trace_id": null, "stage": "gate_conflict", "event": "start"}
+{"ts": "2026-09-23T04:19:39.353944+00:00", "trace_id": null, "stage": "gate_conflict", "event": "finish", "duration_ms": 0.048, "skipped": true, "reason": "no_conflict"}
+== unanswerable hits=5 reason= gate=declined
+The documents do not say.
+--- raw The documents do not say.

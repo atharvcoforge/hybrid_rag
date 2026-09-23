@@ -1,0 +1,15 @@
+...............................F..............                           [100%]
+=================================== FAILURES ===================================
+E   AssertionError: assert False
+     +  where False = GateResult(ok=False, reason='missing_citation', coverage=1.0, groundedness=None, citation_precision=None, citation_recall=None, unsupported=[], state='withheld', conflict=None, answer=None).ok
+----------------------------- Captured stdout call -----------------------------
+{"ts": "2026-09-23T03:43:57.870284+00:00", "trace_id": null, "stage": "gate_form", "event": "start"}
+{"ts": "2026-09-23T03:43:57.870317+00:00", "trace_id": null, "stage": "gate_form", "event": "finish", "duration_ms": 0.034}
+{"ts": "2026-09-23T03:43:57.870335+00:00", "trace_id": null, "stage": "gate_literal", "event": "start", "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T03:43:57.870372+00:00", "trace_id": null, "stage": "gate_literal", "event": "finish", "duration_ms": 0.037, "skipped": true, "reason": "form_failed"}
+{"ts": "2026-09-23T03:43:57.870393+00:00", "trace_id": null, "stage": "gate_conflict", "event": "start"}
+{"ts": "2026-09-23T03:43:57.870434+00:00", "trace_id": null, "stage": "gate_conflict", "event": "finish", "duration_ms": 0.041, "skipped": true, "reason": "no_conflict"}
+/Users/atharv.raotole/Desktop/RAG-WEEK6/tests/test_gates.py:69: AssertionError: assert False
+=========================== short test summary info ============================
+FAILED tests/test_gates.py::test_unit_repeated_from_the_question_does_not_block_a_cited_number
+1 failed, 45 passed in 0.08s

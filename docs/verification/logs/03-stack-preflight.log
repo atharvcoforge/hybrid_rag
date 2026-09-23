@@ -1,0 +1,28 @@
+=== preflight ===
+Tue Sep 22 15:28:31 EDT 2026
+total 4143104
+-rw-r--r--@ 1 atharv.raotole  staff   2.0G Sep 21 20:34 qwen2.5-3b-instruct-q4_k_m.gguf
+total 21976
+drwxr-xr-x@ 62 atharv.raotole  staff   1.9K Sep 21 20:18 llama-b11093
+-rwxr-xr-x@  1 atharv.raotole  staff    49K Sep 21 20:35 llama-server
+-rw-r--r--@  1 atharv.raotole  staff    11M Sep 21 20:35 llama.tar.gz
+docker_daemon: ok
+{"status":"ok"}llama_already_up
+{"index":true,"writer":true}api_already_up
+web_already_up
+NAMES                            STATUS                     PORTS
+rag-week6-web-1                  Up 2 hours                 0.0.0.0:80->80/tcp, [::]:80->80/tcp
+rag-week6-api-1                  Up 2 hours                 0.0.0.0:8000->8000/tcp, [::]:8000->8000/tcp
+ragpolicy-pg                     Up 2 days (healthy)        0.0.0.0:5433->5432/tcp, [::]:5433->5432/tcp
+pensive_bohr                     Exited (0) 10 days ago     
+claims-day4                      Exited (143) 13 days ago   
+task-manager-prod                Exited (137) 2 weeks ago   
+task-manager-run                 Exited (137) 2 weeks ago   
+claims-intake-devcontainer-1     Exited (137) 3 weeks ago   
+claims-intake-postgres-1         Exited (0) 3 weeks ago     
+claims-intake-local-registry-1   Exited (2) 3 weeks ago     
+claims-intake-prometheus-1       Exited (0) 3 weeks ago     
+claims-intake-grafana-1          Exited (0) 3 weeks ago     
+claims-intake-otel-collector-1   Exited (0) 3 weeks ago     
+status-tracker-nightmare-app-1   Exited (0) 4 weeks ago     
+priceless_kepler                 Exited (0) 4 weeks ago     

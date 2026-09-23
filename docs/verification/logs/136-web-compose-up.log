@@ -1,0 +1,3 @@
+ Container rag-week6-api-1 Creating 
+ service:api:1 Error response from daemon: Conflict. The container name "/rag-week6-api-1" is already in use by container "01a4ceec27b760b807f1e49d11b3ce64efd99412ed98e86a1f8a2d482955e2ba". You have to remove (or rename) that container to be able to reuse that name. 
+Error response from daemon: Conflict. The container name "/rag-week6-api-1" is already in use by container "01a4ceec27b760b807f1e49d11b3ce64efd99412ed98e86a1f8a2d482955e2ba". You have to remove (or rename) that container to be able to reuse that name.

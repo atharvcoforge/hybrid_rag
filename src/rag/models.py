@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-PIPELINE_VERSION = 2
+PIPELINE_VERSION = 3
 
 PARENT_TARGET = 700
 PARENT_MAX = 900
@@ -120,7 +120,7 @@ class Hit:
 class Retrieval:
     hits: list[Hit]
     reason: str = ""
-    stages_ms: dict | None = None
+    stages_ms: dict[str, float] | None = None
     warnings: list[str] | None = None
 
 
@@ -133,7 +133,7 @@ class Ingested:
 
 
 def tau_key(embed_model: str, embed_revision: str, mode: str = "cascade") -> str:
-    return "|".join((embed_model, embed_revision, RERANK_MODEL, RERANK_REVISION, mode))
+    return f"{embed_model}|{embed_revision}|{RERANK_MODEL}|{RERANK_REVISION}|{mode}"
 
 
 def make_embed_text(heading_path: str, body: str) -> str:

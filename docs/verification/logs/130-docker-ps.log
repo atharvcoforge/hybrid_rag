@@ -1,0 +1,27 @@
+NAMES                            STATUS                     PORTS
+rag-week6-api-1                  Up 4 hours (healthy)       0.0.0.0:8000->8000/tcp, [::]:8000->8000/tcp
+ragpolicy-pg                     Up 2 days (healthy)        0.0.0.0:5433->5432/tcp, [::]:5433->5432/tcp
+pensive_bohr                     Exited (0) 11 days ago     
+claims-day4                      Exited (143) 13 days ago   
+task-manager-prod                Exited (137) 2 weeks ago   
+task-manager-run                 Exited (137) 2 weeks ago   
+claims-intake-devcontainer-1     Exited (137) 4 weeks ago   
+claims-intake-postgres-1         Exited (0) 4 weeks ago     
+claims-intake-local-registry-1   Exited (2) 4 weeks ago     
+claims-intake-prometheus-1       Exited (0) 4 weeks ago     
+claims-intake-grafana-1          Exited (0) 4 weeks ago     
+claims-intake-otel-collector-1   Exited (0) 4 weeks ago     
+status-tracker-nightmare-app-1   Exited (0) 4 weeks ago     
+priceless_kepler                 Exited (0) 4 weeks ago     
+DRIVER    VOLUME NAME
+local     405cec284d5bdb83f028a63a7248759263791bd9688e31e7e1022a2079cad690
+local     181272949a201f5518796148486d61cec16aa265f4c3d538602a9ffb502ffd4b
+local     claims-intake_grafana-storage
+local     claims-intake_ollama-models
+local     claims-intake_postgres-data
+local     claims-intake_prometheus-data
+local     rag-week6_hf
+local     rag-week6_index
+local     rag_pgdata
+local     status-tracker-nightmare_app-data
+local     status-tracker_app-data

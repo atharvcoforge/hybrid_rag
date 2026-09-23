@@ -1,0 +1,23 @@
+TMPDIR=/tmp/rag-week6-bringup-llAw24
+=== clone ===
+Tue Sep 22 15:28:01 EDT 2026
+Cloning into '/tmp/rag-week6-bringup-llAw24/RAG-WEEK6'...
+done.
+commit: ab82d31458879b62fb1fee91a1e5988323819374
+=== create venv with uv python 3.11 ===
+Using CPython 3.11.16
+Creating virtual environment at: .venv
+Activate with: source .venv/bin/activate
+Python 3.11.16
+=== pip install -e .[dev] ===
+(eval):19: command not found: pip
+install_exit=127
+install_seconds=0
+=== pytest -q (fast suite) ===
+(eval):24: command not found: pytest
+pytest_exit=127
+pytest_seconds=0
+=== done ===
+Tue Sep 22 15:28:02 EDT 2026
+TMPDIR=/tmp/rag-week6-bringup-llAw24
+wall_seconds=1

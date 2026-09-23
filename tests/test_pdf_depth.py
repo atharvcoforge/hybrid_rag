@@ -1,6 +1,5 @@
 """PDF page isolation: one bad page must not kill the file (§05)."""
 
-from rag.models import Block
 from rag.parse import parse_pdf_pages
 
 

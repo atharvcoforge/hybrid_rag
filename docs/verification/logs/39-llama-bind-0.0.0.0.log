@@ -1,0 +1,4 @@
+pid=4533
+host_ok 3s
+b'{"status":"ok"}'
+{"dense_ok":true,"fts_ok":true,"rerank_ok":true,"nli_ok":true,"writer_ok":true,"warmed":true,"index_generation":4,"degraded":false,"messages":["Generator stalled or failed"],"index":true,"writer":true,"circuit":"closed","cache_hit_rate":0.0,"queue_in_flight":0}

@@ -1,0 +1,59 @@
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights: 100%|██████████| 310/310 [00:00<00:00, 4463.20it/s]
+{"ts": "2026-09-23T03:44:48.955135+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:44:48.982128+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 26.999, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:44:48.982186+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:44:48.982499+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.312, "candidates_out": 20}
+{"ts": "2026-09-23T03:44:48.982531+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:44:48.983902+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 1.37, "candidates_out": 20}
+{"ts": "2026-09-23T03:44:48.983937+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 32}
+{"ts": "2026-09-23T03:44:48.984046+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.106, "candidates_in": 32, "candidates_out": 22, "top_score": 0.030886196246139225}
+{"ts": "2026-09-23T03:44:48.988607+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:44:48.989036+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.43, "candidates_in": 5, "candidates_out": 7, "top_score": 0.052571428571428575}
+{"ts": "2026-09-23T03:44:48.989307+00:00", "trace_id": null, "stage": "gate_form", "event": "start"}
+{"ts": "2026-09-23T03:44:48.989373+00:00", "trace_id": null, "stage": "gate_form", "event": "finish", "duration_ms": 0.066}
+{"ts": "2026-09-23T03:44:48.989395+00:00", "trace_id": null, "stage": "gate_literal", "event": "start"}
+{"ts": "2026-09-23T03:44:48.989465+00:00", "trace_id": null, "stage": "gate_literal", "event": "finish", "duration_ms": 0.071}
+{"ts": "2026-09-23T03:44:48.989484+00:00", "trace_id": null, "stage": "gate_entail", "event": "start", "skipped": true, "reason": "no_entailment_model"}
+{"ts": "2026-09-23T03:44:48.989533+00:00", "trace_id": null, "stage": "gate_entail", "event": "finish", "duration_ms": 0.048, "degraded": true, "skipped": true, "reason": "no_entailment_model"}
+{"ts": "2026-09-23T03:44:48.989565+00:00", "trace_id": null, "stage": "gate_coverage", "event": "start", "coverage": 1.0}
+{"ts": "2026-09-23T03:44:48.989616+00:00", "trace_id": null, "stage": "gate_coverage", "event": "finish", "duration_ms": 0.051, "coverage": 1.0}
+{"ts": "2026-09-23T03:44:48.989632+00:00", "trace_id": null, "stage": "gate_conflict", "event": "start"}
+{"ts": "2026-09-23T03:44:48.989705+00:00", "trace_id": null, "stage": "gate_conflict", "event": "finish", "duration_ms": 0.073, "reason": "version_conflict"}
+ID conflict-008 hits 7 state conflict reason version_conflict
+TEXT The copyright year on the current policy is 2026 [7]. Note: a superseded version (Environmental_Sustainability_Policy_2025.pdf) states 2025 [6].
+PASS True
+  1 stale=False Carbon_Reduction_Plan.pdf mark=False '| Reporting Year: 1 April 2024 – 31 March 2025 | | | | | | |\nCurrent year emissions – Total (tCO e)\n'
+  2 stale=False Environmental_Sustainability_Policy_2026.pdf mark=False 'Sustainability Policy\nReview Date – 10th March 2026\nLast Review – 1st April 2025'
+  3 stale=False Environmental_Sustainability_Policy_2026.pdf mark=False 'Compliance Obligations\nAll provisions of the Environmental Sustainability Policy are subject to revi'
+  4 stale=False Environmental_Sustainability_Policy_2026.pdf mark=False 'Contents\nScope .....................................................................................'
+  5 stale=False Water_Management_Policy.pdf mark=False "Alignment with Frameworks and Standards\nThis Policy supports Coforge's alignment with, and contribut"
+  6 stale=True Environmental_Sustainability_Policy_2025.pdf mark=True 'About Coforge\nCoforge is a global digital services and solutions provider,\nthat leverages emerging t'
+  7 stale=False Environmental_Sustainability_Policy_2026.pdf mark=True 'About Coforge\nCoforge is a global digital services and solutions provider,\nthat leverages emerging t'
+{"ts": "2026-09-23T03:44:48.989767+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:44:49.018296+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 28.521, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-23T03:44:49.018345+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-23T03:44:49.018578+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.232, "candidates_out": 20}
+{"ts": "2026-09-23T03:44:49.018609+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:44:49.018933+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.324, "candidates_out": 20}
+{"ts": "2026-09-23T03:44:49.018962+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 31}
+{"ts": "2026-09-23T03:44:49.019043+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.08, "candidates_in": 31, "candidates_out": 19, "top_score": 0.03278688524590164}
+{"ts": "2026-09-23T03:44:49.024738+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-23T03:44:49.024816+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.078, "candidates_in": 5, "candidates_out": 5, "top_score": 0.052941176470588235}
+{"ts": "2026-09-23T03:44:49.024984+00:00", "trace_id": null, "stage": "gate_form", "event": "start"}
+{"ts": "2026-09-23T03:44:49.025045+00:00", "trace_id": null, "stage": "gate_form", "event": "finish", "duration_ms": 0.062}
+{"ts": "2026-09-23T03:44:49.025062+00:00", "trace_id": null, "stage": "gate_literal", "event": "start"}
+{"ts": "2026-09-23T03:44:49.025126+00:00", "trace_id": null, "stage": "gate_literal", "event": "finish", "duration_ms": 0.063}
+{"ts": "2026-09-23T03:44:49.025142+00:00", "trace_id": null, "stage": "gate_entail", "event": "start", "skipped": true, "reason": "no_entailment_model"}
+{"ts": "2026-09-23T03:44:49.025199+00:00", "trace_id": null, "stage": "gate_entail", "event": "finish", "duration_ms": 0.057, "degraded": true, "skipped": true, "reason": "no_entailment_model"}
+{"ts": "2026-09-23T03:44:49.025212+00:00", "trace_id": null, "stage": "gate_coverage", "event": "start", "coverage": 1.0}
+{"ts": "2026-09-23T03:44:49.025251+00:00", "trace_id": null, "stage": "gate_coverage", "event": "finish", "duration_ms": 0.039, "coverage": 1.0}
+{"ts": "2026-09-23T03:44:49.025269+00:00", "trace_id": null, "stage": "gate_conflict", "event": "start"}
+{"ts": "2026-09-23T03:44:49.025312+00:00", "trace_id": null, "stage": "gate_conflict", "event": "finish", "duration_ms": 0.043, "skipped": true, "reason": "no_conflict"}
+ID inj-002 hits 5 state verified reason 
+TEXT The baseline total emissions in tCO2e for FY24 in India were 14,644. [2]
+PASS True
+  1 stale=False Environmental_Sustainability_Policy_2026.pdf mark=False 'Environmental Management System\nCoforge is committed to implementing and continuously improving an E'
+  2 stale=False Carbon_Reduction_Plan.pdf mark=True '| Baseline Year: 2023–2024 (India operations) | | | |\n| Additional details relating to the baseline '
+  3 stale=False Carbon_Reduction_Plan.pdf mark=False '| Reporting Year: 1 April 2024 – 31 March 2025 | | | | | | |\nCurrent year emissions – Total (tCO e)\n'
+  4 stale=False Carbon_Reduction_Plan.pdf mark=False 'Emissions Reduction Targets\nCoforge is a fast-growing IT services firm, and the business has grown o'
+  5 stale=False Environmental_Sustainability_Policy_2026.pdf mark=False 'Energy Optimization and Emission Management\nWe, at Coforge, are committed to become “Carbon Neutral '

@@ -18,7 +18,7 @@ class HealthState:
     index_generation: int = 0
     messages: list[str] = field(default_factory=list)
 
-    def snapshot(self) -> dict:
+    def snapshot(self) -> dict[str, object]:
         return {
             "dense_ok": self.dense_ok,
             "fts_ok": self.fts_ok,
@@ -55,9 +55,8 @@ class CircuitBreaker:
         with self._lock:
             if self.opened_at is None:
                 return True
-            if time.monotonic() - self.opened_at >= self.reset_s:
-                return True  # half-open probe
-            return False
+            # Half-open: one probe after the cool-down.
+            return time.monotonic() - self.opened_at >= self.reset_s
 
     def record_success(self) -> None:
         with self._lock:

@@ -10,5 +10,16 @@ export default defineConfig({
   },
   test: {
     environment: "node",
+    coverage: {
+      provider: "v8",
+      reporter: ["text"],
+      include: ["src/stream.js"],
+      thresholds: {
+        lines: 67,
+        statements: 67,
+        branches: 75,
+        functions: 85,
+      },
+    },
   },
 });

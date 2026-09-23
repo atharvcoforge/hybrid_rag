@@ -1,0 +1,8 @@
+ Container rag-week6-api-1 Running 
+ Container rag-week6-api-1 Waiting 
+ Container rag-week6-api-1 Healthy 
+ Container rag-week6-web-1 Starting 
+ Container rag-week6-web-1 Started 
+EXIT:0
+rag-week6-web-1 Up Less than a second
+rag-week6-api-1 Up 3 minutes (healthy)

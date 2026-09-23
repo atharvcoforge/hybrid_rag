@@ -1,0 +1,34 @@
+.......................F........F..........                              [100%]
+=================================== FAILURES ===================================
+__________________ test_india_query_demotes_a_uk_only_passage __________________
+tests/test_retrieve.py:270: in test_india_query_demotes_a_uk_only_passage
+    assert result.hits[0].parent_id == "india"
+E   AssertionError: assert 'uk' == 'india'
+E     
+E     - india
+E     + uk
+----------------------------- Captured stdout call -----------------------------
+{"ts": "2026-09-23T03:07:29.429154+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:07:29.429198+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.043, "candidates_out": 2}
+{"ts": "2026-09-23T03:07:29.429222+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 2}
+{"ts": "2026-09-23T03:07:29.429272+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.051, "candidates_in": 2, "candidates_out": 2, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T03:07:29.429312+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 2}
+{"ts": "2026-09-23T03:07:29.429370+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.058, "candidates_in": 2, "candidates_out": 2, "top_score": 10.0}
+______________ test_named_year_outranks_a_higher_scoring_sibling _______________
+tests/test_retrieve.py:252: in test_named_year_outranks_a_higher_scoring_sibling
+    assert result.hits[0].source_path.endswith("2025.pdf")
+E   AssertionError: assert False
+E    +  where False = <built-in method endswith of str object at 0x108957c30>('2025.pdf')
+E    +    where <built-in method endswith of str object at 0x108957c30> = 'Environmental_Sustainability_Policy_2026.pdf'.endswith
+E    +      where 'Environmental_Sustainability_Policy_2026.pdf' = Hit(parent_id='new', parent_text='Carbon Neutral in our operations by 2040. Review Date – 10th March 2026', heading_pa...alse, version_group='env', status='current', superseded_by=None, supersedes=None, review_date='2026-03-10', title=None).source_path
+----------------------------- Captured stdout call -----------------------------
+{"ts": "2026-09-23T03:07:29.452930+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-23T03:07:29.452973+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 0.043, "candidates_out": 2}
+{"ts": "2026-09-23T03:07:29.452995+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 2}
+{"ts": "2026-09-23T03:07:29.453026+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.031, "candidates_in": 2, "candidates_out": 2, "top_score": 0.01639344262295082}
+{"ts": "2026-09-23T03:07:29.453070+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 2}
+{"ts": "2026-09-23T03:07:29.453111+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.041, "candidates_in": 2, "candidates_out": 2, "top_score": 12.0}
+=========================== short test summary info ============================
+FAILED tests/test_retrieve.py::test_india_query_demotes_a_uk_only_passage - A...
+FAILED tests/test_retrieve.py::test_named_year_outranks_a_higher_scoring_sibling
+2 failed, 41 passed in 0.23s
