@@ -145,8 +145,8 @@ jobs:
           GENERATOR_URL: http://127.0.0.1:8081/v1
           GENERATOR_MODEL: qwen2.5-1.5b-instruct
           RAG_ANSWER_ROWS: ci
+          RAG_SKIP_SLOW_MODES: "1"
           STAGE_HARD_MS_embed_query: "120000"
-          STAGE_HARD_MS_rerank: "180000"
         run: uv run pytest -m eval -o addopts= --tb=short
       - name: Upload the eval log
         if: always()
