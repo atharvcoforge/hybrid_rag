@@ -1,24 +1,24 @@
 {
   "modes": {
     "rrf": {
-      "tau": 0.03278688524590164,
+      "tau": 0.03131881575727918,
       "n": 60,
       "key": "Qwen/Qwen3-Embedding-0.6B|97b0c614be4d77ee51c0cef4e5f07c00f9eb65b3|BAAI/bge-reranker-v2-m3|953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e|rrf",
-      "held_out_abstain": 0.5760869565217391,
-      "held_out_unanswerable_abstain": 0.5555555555555556
+      "held_out_abstain": 0.05434782608695652,
+      "held_out_unanswerable_abstain": 0.1111111111111111
     },
     "rerank": {
-      "tau": 0.999075174331665,
+      "tau": 0.719521087925673,
       "n": 60,
       "key": "Qwen/Qwen3-Embedding-0.6B|97b0c614be4d77ee51c0cef4e5f07c00f9eb65b3|BAAI/bge-reranker-v2-m3|953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e|rerank",
-      "held_out_abstain": 0.967391304347826,
+      "held_out_abstain": 0.7391304347826086,
       "held_out_unanswerable_abstain": 1.0
     },
     "cascade": {
-      "tau": 0.999075174331665,
+      "tau": 0.719521087925673,
       "n": 60,
       "key": "Qwen/Qwen3-Embedding-0.6B|97b0c614be4d77ee51c0cef4e5f07c00f9eb65b3|BAAI/bge-reranker-v2-m3|953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e|cascade",
-      "held_out_abstain": 0.967391304347826,
+      "held_out_abstain": 0.7391304347826086,
       "held_out_unanswerable_abstain": 1.0
     }
   },

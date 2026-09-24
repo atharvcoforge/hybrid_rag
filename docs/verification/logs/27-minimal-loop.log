@@ -1,0 +1,5 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights: 100%|██████████| 310/310 [00:00<00:00, 9257.89it/s]
+1  0.6948  The housing clicks into the rail until the tab seats.
+2  0.2637  SKU-7842-XL ships in a plain carton with no tools.
+top hit is the rail sentence

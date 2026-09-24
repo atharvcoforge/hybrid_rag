@@ -40,6 +40,8 @@ where = ["src"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["."]
+addopts = "-m 'not eval'"
+markers = ["eval: policy golden set against a real index and a local generator"]
 
 [tool.mutmut]
 only_mutate = ["src/rag/chunk.py", "src/rag/retrieve.py", "src/rag/gates.py"]

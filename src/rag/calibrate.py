@@ -80,12 +80,15 @@ def calibrate(
         held_rows = []
     report: dict[str, Any] = {"modes": {}, "held_out": {}}
     for mode in modes:
+        key = tau_key(index.model_id, index.model_revision, mode)
+        # A stored cutoff from a previous score scale would drop every hit
+        # before the fit saw it, and the fit could never recover.
+        index.set_tau(key, 0.0)
         train_results = [ask(mode, row) for row in train_rows]
         fitted = fit_mode_threshold(train_rows, train_results)
         if fitted is None:
             report["modes"][mode] = {"tau": None}
             continue
-        key = tau_key(index.model_id, index.model_revision, mode)
         index.set_tau(key, fitted)
         entry = {"tau": fitted, "n": len(train_rows), "key": key}
         if held_rows:

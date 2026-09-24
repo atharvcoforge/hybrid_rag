@@ -1,19 +1,18 @@
 from rag.models import Child, Hit, Parent
 from rag.store import SqliteStore
 from rag.versions import (
-    _doc_family,
-    _doc_hint,
+    TITLE_MATCH_BOOST,
+    _number_diff,
     _ratio,
-    _swap_exact_tie,
-    _swap_when_the_date_is_close,
+    _window,
+    aligned_peer_records,
     chunk_overlap_ratio,
-    conflict_sibling_records,
     disclose_conflict,
     group_documents,
     parse_review_date,
     reconcile_versions,
-    signatory_boost,
     title_from_text,
+    title_match_boost,
 )
 
 
@@ -35,6 +34,49 @@ def _hit(text, source, group=None, superseded=False, parent_id="p"):
         version_group=group,
         status="superseded" if superseded else "current",
     )
+
+
+def test_unaligned_pair_and_duplicate_windows_are_skipped():
+    from rag.versions import _window
+
+    assert _window("no digits", "2040") == "2040"
+    current = _hit("alpha section with no shared wording 2040", "new.md", group="g", parent_id="new")
+    current.heading_path = "A"
+    stale = _hit("beta section entirely different 2050", "old.md", group="g", superseded=True, parent_id="old")
+    stale.heading_path = "B"
+    assert disclose_conflict("plain", [current, stale], "").fired is False
+    close = _hit("2040 2030", "new.md", group="g", parent_id="c")
+    twin = _hit("2050 2031", "old.md", group="g", superseded=True, parent_id="s")
+    note = disclose_conflict("The documents do not say.", [close, twin], "")
+    assert note.fired
+    assert "2040" in note.answer
+
+
+def test_ratio_match_keeps_the_closer_peer():
+    hit = _hit("Carbon Neutral in operations by 2050 extra words here", "new.md", group="g", parent_id="p-new")
+    hit.heading_path = ""
+
+    class Index:
+        def list_doc_records(self):
+            return [{"id": "old.md", "version_group": "g", "status": "superseded"}]
+
+        def parent_records(self, doc_id):
+            del doc_id
+            return [
+                {
+                    "parent_id": "near",
+                    "text": "Carbon Neutral in operations by 2041 extra words here",
+                    "heading_path": "",
+                },
+                {
+                    "parent_id": "far",
+                    "text": "Carbon Neutral in operations by 2040 extra words here also",
+                    "heading_path": "",
+                },
+            ]
+
+    found = aligned_peer_records(Index(), [hit])
+    assert found and found[0]["parent_id"] in {"far", "near"}
 
 
 def test_ratio_dates_titles_and_overlap_edges():
@@ -80,60 +122,55 @@ def test_reconcile_writes_a_version_group(tmp_path):
         store.close()
 
 
-def test_conflict_siblings_skip_incomplete_records():
+def test_aligned_peers_skip_incomplete_records():
     current = "Carbon Neutral in operations by 2050"
     stale = "Carbon Neutral in operations by 2040"
     hit = _hit(current, "new.md", group="g", parent_id="p-new")
-    assert conflict_sibling_records(object(), "hello", [hit]) == []
-    assert conflict_sibling_records(object(), "when is carbon neutral", []) == []
+    assert aligned_peer_records(object(), [hit]) == []
+    assert aligned_peer_records(object(), []) == []
 
     class Index:
         def list_doc_records(self):
             return [
                 {"id": "other.md", "version_group": "else", "status": "current"},
                 {"id": "now.md", "version_group": "g", "status": "current"},
-                {"id": "blank.md", "version_group": "g", "status": "superseded"},
+                {"id": "", "version_group": "g", "status": "superseded"},
                 {"id": "dup.md", "version_group": "g", "status": "superseded"},
-                {"id": "gone.md", "version_group": "g", "status": "superseded"},
                 {"id": "old.md", "version_group": "g", "status": "superseded"},
             ]
 
-        def first_parent_matching(self, doc_id, _pattern):
-            if doc_id == "blank.md":
-                return {"text": "Carbon Neutral in operations by 2040"}
+        def parent_records(self, doc_id):
             if doc_id == "dup.md":
-                return {"parent_id": "p-new"}
+                return [{"parent_id": "p-new", "text": stale, "heading_path": "H"}]
             if doc_id == "old.md":
-                return {"parent_id": "p-old", "text": stale}
-            return None
+                return [
+                    {"parent_id": "noise", "text": "unrelated irrigation quota text", "heading_path": ""},
+                    {"parent_id": "p-old", "text": stale, "heading_path": "H"},
+                ]
+            return []
 
     ungrouped = _hit("Carbon Neutral in operations by 2050", "loose.md")
-    assert conflict_sibling_records(Index(), "when is carbon neutral", [ungrouped]) == []
-    both = conflict_sibling_records(
+    assert aligned_peer_records(Index(), [ungrouped]) == []
+    both = aligned_peer_records(
         Index(),
-        "when is carbon neutral",
         [
             hit,
             _hit(stale, "old-copy.md", group="g", superseded=True, parent_id="already"),
         ],
     )
     assert both == []
-    found = conflict_sibling_records(
-        Index(),
-        "when is carbon neutral",
-        [
-            _hit("preamble without a year", "notes.md", group="g"),
-            hit,
-            _hit("unrelated section", "notes.md", group="other"),
-        ],
-    )
+    found = aligned_peer_records(Index(), [hit])
     assert [row["parent_id"] for row in found] == ["p-old"]
 
-    class NoMatch:
+    class NoParents:
         def list_doc_records(self):
-            return [{"id": "x", "version_group": "g", "status": "current"}]
+            return [{"id": "x", "version_group": "g", "status": "superseded"}]
 
-    assert conflict_sibling_records(NoMatch(), "when is carbon neutral", [hit]) == []
+        def parent_records(self, doc_id):
+            del doc_id
+            return [{"parent_id": "p", "text": "no numbers here at all", "heading_path": "H"}]
+
+    assert aligned_peer_records(NoParents(), [hit]) == []
 
 
 def test_disclosure_and_rank_swaps():
@@ -168,26 +205,12 @@ def test_disclosure_and_rank_swaps():
     assert already.fired
     assert disclose_conflict("plain", [], "hello").fired is False
 
-    assert _doc_family("water-policy.md") == "water"
-    assert _doc_family("carbon-plan.md") == "carbon"
-    assert _doc_family("environmental-policy.md") == "env"
-    assert _doc_family("other.md") == ""
-    assert _doc_hint("carbon plan and water policy") == ""
-    assert signatory_boost("who signed this", "Jane Doe, President and Director, Europe") == 6.0
-    assert signatory_boost("who signed this", "Jane Doe, President") == 1.0
-    assert signatory_boost("who signed this", "x" * 300) == 1.0
+    assert title_match_boost("", "") == 1.0
+    assert title_match_boost("water policy targets", "Water Policy") == TITLE_MATCH_BOOST
 
-    quiet = [_hit("alpha", "a.md"), _hit("beta", "b.md")]
-    quiet[0].score = 1.0
-    quiet[1].score = 1.0
-    _swap_exact_tie(quiet, "alpha")
-    _swap_when_the_date_is_close(quiet, "by when")
-    both_years = [_hit("target 2040", "a.md"), _hit("target 2050", "b.md")]
-    both_years[0].score = 1.0
-    both_years[1].score = 1.0
-    _swap_when_the_date_is_close(both_years, "by when is it")
-    tied = [_hit("no year here at all", "a.md"), _hit("the target year is 2050", "b.md")]
-    tied[0].score = 1.0
-    tied[1].score = 1.0
-    _swap_when_the_date_is_close(tied, "by when is the target")
-    assert tied[0].parent_id == "b.md" or "2050" in tied[0].parent_text
+
+def test_window_keeps_a_number_glued_to_a_long_token_and_equal_sequences_fall_back():
+    assert _window("x" * 60 + "2040", "2040").endswith("2040")
+    assert _number_diff("Carbon neutral by 2040.", "Carbon neutral by 2040.") == ([], [])
+    shared = "We are committed to become carbon neutral in our operations by 2040. "
+    assert _number_diff(shared, shared + "2030")[1] == ["2030"]

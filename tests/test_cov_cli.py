@@ -160,7 +160,7 @@ def test_eval_and_calibrate_helpers(monkeypatch, tmp_path):
     }
     (tmp_path / "base.json").write_text("{}", encoding="utf-8")
     monkeypatch.setattr("rag.cli.load_suite", lambda _path: with_suite)
-    monkeypatch.setattr("rag.evaluate.pick_live", lambda _lines: "rrf")
+    monkeypatch.setattr("rag.evaluate.pick_live", lambda _lines, p95_limit=None: "rrf")
     monkeypatch.setattr("rag.generate.writer_up", lambda: False)
     monkeypatch.setattr("rag.evaluate.check_gates", lambda *_a, **_k: ["mrr low"])
     text, ok = _run_eval(str(tmp_path / "idx2"), None, str(suite))

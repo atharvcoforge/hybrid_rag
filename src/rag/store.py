@@ -540,6 +540,29 @@ class SqliteStore:
             )
         return out
 
+    def parent_records(self, doc_id: str) -> list[dict[str, Any]]:
+        """Every parent in a document, in reading order, with version metadata."""
+        rows = self._db().execute(
+            "SELECT parent_id FROM parents WHERE doc_id = ? ORDER BY parent_index",
+            (doc_id,),
+        ).fetchall()
+        ids = [row["parent_id"] for row in rows]
+        records = self.get_parents(ids)
+        out: list[dict[str, Any]] = []
+        for parent_id in ids:
+            record = records.get(parent_id)
+            if record is None:
+                continue
+            found = dict(record)
+            found["parent_id"] = parent_id
+            child = self._db().execute(
+                "SELECT chunk_id FROM children WHERE parent_id = ? ORDER BY child_index LIMIT 1",
+                (parent_id,),
+            ).fetchone()
+            found["child_id"] = child["chunk_id"] if child else parent_id
+            out.append(found)
+        return out
+
     def first_parent_matching(self, doc_id: str, pattern: re.Pattern[str]) -> dict[str, Any] | None:
         """First non-derived parent in a document whose text matches pattern."""
         rows = self._db().execute(

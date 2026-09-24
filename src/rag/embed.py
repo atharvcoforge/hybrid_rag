@@ -118,7 +118,9 @@ def load_reranker() -> Any:
     if _reranker is None:
         from sentence_transformers import CrossEncoder
 
-        _reranker = CrossEncoder(RERANK_MODEL, revision=RERANK_REVISION, device=_device())
+        _reranker = CrossEncoder(
+            RERANK_MODEL, revision=RERANK_REVISION, max_length=512, device=_device()
+        )
     return _reranker
 
 

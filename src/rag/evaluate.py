@@ -251,6 +251,23 @@ def _abstain_from_answers(name: str, rows: list[dict[str, Any]], answers: dict[s
     return abstained / len(subset)
 
 
+def answer_hit_rate(rows: list[dict[str, Any]], answers: dict[str, str]) -> float | None:
+    """Share of answerable rows whose expect value appears in the gated answer."""
+    graded = [
+        row
+        for row in rows
+        if row.get("expect") and row.get("kind") != "unanswerable" and row.get("id")
+    ]
+    if not graded:
+        return None
+    hits = sum(
+        1
+        for row in graded
+        if str(row["expect"]).lower() in (answers.get(row["id"]) or "").lower()
+    )
+    return hits / len(graded)
+
+
 def answer_abstained(text: str) -> bool:
     """Final-answer abstain: empty, withheld, or an explicit decline."""
     body = (text or "").strip().lower()
@@ -259,8 +276,8 @@ def answer_abstained(text: str) -> bool:
     return any(marker in body for marker in _DECLINE_MARKERS)
 
 
-def pick_live(lines: list[Score]) -> str:
-    """Best holdout MRR among modes that clear the recall floor. Latency breaks ties."""
+def pick_live(lines: list[Score], p95_limit: float | None = None) -> str:
+    """Best holdout MRR among modes that clear the recall floor and the retrieve SLO."""
     holdout = [line for line in lines if line.kind == "holdout"]
     pool = holdout or [line for line in lines if line.kind == "all"]
     if not pool:
@@ -268,6 +285,13 @@ def pick_live(lines: list[Score]) -> str:
     eligible = [line for line in pool if line.recall + 1e-12 >= _RECALL_FLOOR]
     if not eligible:
         eligible = pool
+    if p95_limit is not None:
+        within = [line for line in eligible if line.p95 <= p95_limit]
+        if within:
+            eligible = within
+        else:
+            eligible = sorted(eligible, key=lambda line: (line.p95, -line.mrr))
+            return eligible[0].mode
     eligible.sort(key=lambda line: (-line.mrr, line.p50, _PREFER.get(line.mode, 9)))
     return eligible[0].mode
 
@@ -446,7 +470,9 @@ def _mean_key(rows: list[dict[str, Any]] | None, key: str) -> float | None:
     return cast(float, sum(values) / len(values))
 
 
-def format_scores(lines: list[Score], fitted: float | None) -> str:
+def format_scores(
+    lines: list[Score], fitted: float | None, p95_limit: float | None = None
+) -> str:
     rendered = []
     for line in lines:
         base = (
@@ -468,7 +494,7 @@ def format_scores(lines: list[Score], fitted: float | None) -> str:
             )
         rendered.append(base)
     rendered.append("tau unset" if fitted is None else f"tau={fitted:.4f}")
-    rendered.append(f"live={pick_live(lines)}")
+    rendered.append(f"live={pick_live(lines, p95_limit=p95_limit)}")
     return "\n".join(rendered)
 
 
@@ -545,6 +571,7 @@ def check_gates(
             "citation_precision": metric_line.citation_precision,
             "unanswerable_abstention": metric_line.unanswerable_abstain,
             "answerable_abstention": metric_line.answerable_abstain,
+            "answer_accuracy": None,
         }
         return mapping.get(name)
 
@@ -561,6 +588,8 @@ def check_gates(
                 failures.append(f"{name}: holdout scores missing")
                 continue
         value = _metric(name, metric_line)
+        if name == "answer_accuracy":
+            value = None if answers is None else answer_hit_rate(rows or [], answers)
         if answers is not None and name in ("unanswerable_abstention", "answerable_abstention"):
             scoped = rows or []
             if scope == "holdout" and split is not None:

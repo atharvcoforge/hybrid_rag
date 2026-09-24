@@ -20,3 +20,6 @@ up: model $(LLAMA)
 
 test:
 	python -m pytest
+
+eval:
+	uv run rag eval --index index

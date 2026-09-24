@@ -135,7 +135,7 @@ def test_check_all_passes_a_clean_answer():
     assert result.state == "verified"
 
 
-def test_check_all_does_not_rewrite_signer_when_policies_conflict():
+def test_check_all_keeps_the_signer_and_discloses_the_policy_conflict():
     signer = _hit("Signed on behalf of the Supplier: John Speight")
     current = _hit('Carbon Neutral in our operations by 2040')
     current.version_group = "env"
@@ -151,5 +151,7 @@ def test_check_all_does_not_rewrite_signer_when_policies_conflict():
         [signer, current, stale],
         query="Who signed the Carbon Reduction Plan?",
     )
-    assert result.state != "conflict"
-    assert result.conflict is None
+    assert result.state == "conflict"
+    assert result.answer is not None
+    assert "John Speight" in result.answer
+    assert "Environmental_Sustainability_Policy_2025.pdf" in result.answer

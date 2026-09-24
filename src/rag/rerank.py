@@ -31,7 +31,7 @@ class NullReranker:
 class CrossEncoderReranker:
     calibrated = False
 
-    def __init__(self, model: Any = None, *, max_length: int = 256) -> None:
+    def __init__(self, model: Any = None, *, max_length: int = 512) -> None:
         self._model = model
         self.max_length = max_length
 

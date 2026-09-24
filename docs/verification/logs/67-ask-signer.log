@@ -1,0 +1,30 @@
+{"ts": "2026-09-24T01:58:14.006974+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-24T01:58:14.412540+00:00", "trace_id": null, "stage": "embed_query", "event": "stage_slow", "duration_ms": 405.566, "model": "Qwen/Qwen3-Embedding-0.6B", "soft_budget_ms": 400.0}
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights: 100%|██████████| 310/310 [00:00<00:00, 27981.28it/s]
+{"ts": "2026-09-24T01:58:17.541870+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 3534.875, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-24T01:58:17.542048+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-24T01:58:17.542439+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.391, "candidates_out": 20}
+{"ts": "2026-09-24T01:58:17.542480+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-24T01:58:17.543630+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 1.15, "candidates_out": 20}
+{"ts": "2026-09-24T01:58:17.543689+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 29}
+{"ts": "2026-09-24T01:58:17.543774+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.084, "candidates_in": 29, "candidates_out": 21, "top_score": 0.032018442622950824}
+{"ts": "2026-09-24T01:58:17.544656+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-24T01:58:17.544745+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.089, "candidates_in": 5, "candidates_out": 5, "top_score": 0.032018442622950824}
+{"ts": "2026-09-24T01:58:19.277898+00:00", "trace_id": null, "stage": "gate_form", "event": "start"}
+{"ts": "2026-09-24T01:58:19.278004+00:00", "trace_id": null, "stage": "gate_form", "event": "finish", "duration_ms": 0.108}
+{"ts": "2026-09-24T01:58:19.278054+00:00", "trace_id": null, "stage": "gate_literal", "event": "start"}
+{"ts": "2026-09-24T01:58:19.278141+00:00", "trace_id": null, "stage": "gate_literal", "event": "finish", "duration_ms": 0.087}
+{"ts": "2026-09-24T01:58:19.278196+00:00", "trace_id": null, "stage": "gate_entail", "event": "start", "skipped": true, "reason": "no_entailment_model"}
+{"ts": "2026-09-24T01:58:19.278255+00:00", "trace_id": null, "stage": "gate_entail", "event": "finish", "duration_ms": 0.06, "degraded": true, "skipped": true, "reason": "no_entailment_model"}
+{"ts": "2026-09-24T01:58:19.278282+00:00", "trace_id": null, "stage": "gate_coverage", "event": "start", "coverage": 1.0}
+{"ts": "2026-09-24T01:58:19.278330+00:00", "trace_id": null, "stage": "gate_coverage", "event": "finish", "duration_ms": 0.047, "coverage": 1.0}
+{"ts": "2026-09-24T01:58:19.278382+00:00", "trace_id": null, "stage": "gate_conflict", "event": "start"}
+{"ts": "2026-09-24T01:58:19.278431+00:00", "trace_id": null, "stage": "gate_conflict", "event": "finish", "duration_ms": 0.048, "skipped": true, "reason": "no_conflict"}
+Signed on behalf of the Supplier: Coforge Limited & All International Locations (including Coforge U.K Limited). [2]
+
+[1] CURRENT  Carbon_Reduction_Plan.pdf  Declaration and Sign Off  p.3-3
+[2] CURRENT  Carbon_Reduction_Plan.pdf  Carbon Reduction Plan  p.1-1
+[3] CURRENT  Carbon_Reduction_Plan.pdf  Carbon Reduction Initiatives  p.2-2
+[4] CURRENT  Carbon_Reduction_Plan.pdf    p.3-3
+[5] CURRENT  Carbon_Reduction_Plan.pdf  Emissions Reduction Targets  p.2-2

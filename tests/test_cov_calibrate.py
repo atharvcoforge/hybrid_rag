@@ -3,7 +3,7 @@
 import json
 
 from rag.calibrate import calibrate, fit_mode_threshold, write_report
-from rag.models import Hit, Retrieval
+from rag.models import Hit, Retrieval, tau_key
 
 
 def _hit(text="yes", score=0.5, doc_id="guide.md"):
@@ -86,6 +86,7 @@ def test_calibrate_skips_a_mode_that_does_not_fit_and_writes_json(tmp_path):
     index = _Index()
 
     def ask(mode, _row):
+        assert index.saved[tau_key("m", "r", mode)] == 0.0
         if mode == "rrf":
             return Retrieval(hits=[])
         return Retrieval(hits=[_hit("yes", 0.9)])

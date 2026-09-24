@@ -10,6 +10,7 @@ from rag.retrieve import (
     _parent_scores_from_chunks,
     _prefer_named_year,
     _retain_superseded_siblings,
+    _sigmoid,
     agreed_parent,
     fuse,
     retrieve,
@@ -89,6 +90,25 @@ def test_band_boundary_is_closed_on_the_low_side():
     assert _in_band(0.85 - 1e-9, 1.0) is False
 
 
+def test_rerank_ignores_a_parent_the_index_does_not_have():
+    dense = [_chunk("c1", "gone", dense_score=0.9), _chunk("c2", "p1", dense_score=0.4)]
+    index = Stub(dense, [], {"p1": _parent()})
+    result = retrieve(
+        index,
+        "hello",
+        lambda _q: [0.0],
+        lambda _q, texts: [0.4 for _ in texts],
+        mode="rerank",
+    )
+    assert [hit.parent_id for hit in result.hits] == ["p1"]
+
+
+def test_sigmoid_clamps_extreme_logits():
+    assert _sigmoid(100) == 1.0
+    assert _sigmoid(-100) == 0.0
+    assert _sigmoid(0) == 0.5
+
+
 def test_superseded_sibling_is_kept_and_a_stranger_is_not():
     current = _hit("new", version_group="g", superseded=False)
     old = _hit("old", version_group="g", superseded=True)
@@ -107,8 +127,8 @@ def test_superseded_sibling_is_kept_and_a_stranger_is_not():
 def test_fact_sibling_dedupes_and_trims_to_the_parent_cap(monkeypatch):
     monkeypatch.setattr("rag.retrieve.MAX_PARENTS", 1)
     monkeypatch.setattr(
-        "rag.versions.conflict_sibling_records",
-        lambda index, query, hits: [
+        "rag.versions.aligned_peer_records",
+        lambda index, hits: [
             {},
             {"parent_id": hits[0].parent_id, "text": "same"},
             {"parent_id": "sib", "text": "sibling", "status": "superseded"},
@@ -146,7 +166,7 @@ def test_zero_rerank_window_and_duplicate_parent(monkeypatch):
     monkeypatch.setattr("rag.retrieve.RERANK_K", 12)
     lexical = [_chunk("c1", "p1", "alpha", bm25_score=2.0), _chunk("c2", "p1", "beta", bm25_score=1.0)]
     scored = Stub([], lexical, {"p1": _parent()})
-    ranked = retrieve(scored, "hello", lambda _q: [0.0], lambda q, texts: [0.2, 0.9], mode="rerank")
+    ranked = retrieve(scored, "hello", lambda _q: [0.0], lambda q, texts: [0.9 for _ in texts], mode="rerank")
     assert ranked.hits
 
 

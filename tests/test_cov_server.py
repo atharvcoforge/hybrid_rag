@@ -310,7 +310,7 @@ def test_build_report_without_a_writer(monkeypatch, tmp_path):
         "rag.server.evaluate",
         lambda *_a, **_k: ([Score("rrf", "all", 1.0, 1.0, 0.0, 1)], {"rrf": 0.1}),
     )
-    monkeypatch.setattr("rag.server.pick_live", lambda lines: "rrf")
+    monkeypatch.setattr("rag.server.pick_live", lambda lines, p95_limit=None: "rrf")
     report = build_report(tmp_path / "index", golden, lambda *_: Retrieval(hits=[]), None)
     assert report["live_mode"] == "rrf"
     assert report["span_hit"] is None

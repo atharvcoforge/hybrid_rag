@@ -1,0 +1,12 @@
+{"ts": "2026-09-24T01:58:31.066991+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-24T01:58:31.478851+00:00", "trace_id": null, "stage": "embed_query", "event": "stage_slow", "duration_ms": 411.862, "model": "Qwen/Qwen3-Embedding-0.6B", "soft_budget_ms": 400.0}
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights: 100%|██████████| 310/310 [00:00<00:00, 25924.32it/s]
+{"ts": "2026-09-24T01:58:35.333314+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 4266.314, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-24T01:58:35.333429+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-24T01:58:35.333725+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.296, "candidates_out": 20}
+{"ts": "2026-09-24T01:58:35.333787+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 15}
+{"ts": "2026-09-24T01:58:35.333852+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.064, "candidates_in": 15, "candidates_out": 15, "top_score": 0.01639344262295082}
+{"ts": "2026-09-24T01:58:35.335082+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-24T01:58:35.335323+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.241, "candidates_in": 5, "candidates_out": 0, "reason": "no_confident_hit"}
+no_confident_hit

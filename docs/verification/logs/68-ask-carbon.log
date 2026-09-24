@@ -1,0 +1,31 @@
+{"ts": "2026-09-24T01:58:19.655258+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-24T01:58:20.066105+00:00", "trace_id": null, "stage": "embed_query", "event": "stage_slow", "duration_ms": 410.848, "model": "Qwen/Qwen3-Embedding-0.6B", "soft_budget_ms": 400.0}
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights: 100%|██████████| 310/310 [00:00<00:00, 25541.87it/s]
+{"ts": "2026-09-24T01:58:23.648412+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 3993.144, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-24T01:58:23.648554+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-24T01:58:23.648901+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.346, "candidates_out": 20}
+{"ts": "2026-09-24T01:58:23.648940+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-24T01:58:23.650443+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 1.501, "candidates_out": 20}
+{"ts": "2026-09-24T01:58:23.650515+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 28}
+{"ts": "2026-09-24T01:58:23.650605+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.089, "candidates_in": 28, "candidates_out": 18, "top_score": 0.031746031746031744}
+{"ts": "2026-09-24T01:58:23.652064+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-24T01:58:23.653097+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 1.033, "candidates_in": 5, "candidates_out": 5, "top_score": 0.031746031746031744}
+{"ts": "2026-09-24T01:58:25.287865+00:00", "trace_id": null, "stage": "gate_form", "event": "start"}
+{"ts": "2026-09-24T01:58:25.287956+00:00", "trace_id": null, "stage": "gate_form", "event": "finish", "duration_ms": 0.093}
+{"ts": "2026-09-24T01:58:25.288005+00:00", "trace_id": null, "stage": "gate_literal", "event": "start"}
+{"ts": "2026-09-24T01:58:25.288124+00:00", "trace_id": null, "stage": "gate_literal", "event": "finish", "duration_ms": 0.119}
+{"ts": "2026-09-24T01:58:25.288169+00:00", "trace_id": null, "stage": "gate_entail", "event": "start", "skipped": true, "reason": "no_entailment_model"}
+{"ts": "2026-09-24T01:58:25.288219+00:00", "trace_id": null, "stage": "gate_entail", "event": "finish", "duration_ms": 0.05, "degraded": true, "skipped": true, "reason": "no_entailment_model"}
+{"ts": "2026-09-24T01:58:25.288256+00:00", "trace_id": null, "stage": "gate_coverage", "event": "start", "coverage": 1.0}
+{"ts": "2026-09-24T01:58:25.288291+00:00", "trace_id": null, "stage": "gate_coverage", "event": "finish", "duration_ms": 0.036, "coverage": 1.0}
+{"ts": "2026-09-24T01:58:25.288307+00:00", "trace_id": null, "stage": "gate_conflict", "event": "start"}
+{"ts": "2026-09-24T01:58:25.288516+00:00", "trace_id": null, "stage": "gate_conflict", "event": "finish", "duration_ms": 0.208, "reason": "version_conflict"}
+Coforge commits to becoming carbon neutral in its operations by 2040. [1]
+The current document states to become “Carbon Neutral in our operations by 2040”. In li; 10% of electricity from green sources by 2025 and inc; by 2025 and increase the share to ~50% by 2030. Transi. Note: a superseded version (Environmental_Sustainability_Policy_2025.pdf) states by 2027 and increase the share to ~50% by 2040. Transi; to become “Carbon Neutral in our operations by 2050”. In li; 10% of electricity from green sources by 2027 and inc; (EVs) in fleet for employee commute to 10% by 2030 and to; employee commute to 10% by 2030 and to 50% by 2045. At Cof.
+
+[1] CURRENT  Carbon_Reduction_Plan.pdf  Carbon Reduction Initiatives  p.2-2
+[2] CURRENT  Carbon_Reduction_Plan.pdf  Carbon Reduction Plan  p.1-1
+[3] CURRENT  Carbon_Reduction_Plan.pdf  Emissions Reduction Targets  p.2-2
+[4] CURRENT  Environmental_Sustainability_Policy_2026.pdf  Energy Optimization and Emission Management  p.4-4
+[5] SUPERSEDED  Environmental_Sustainability_Policy_2025.pdf  Energy Optimization and Emission Management  p.4-4

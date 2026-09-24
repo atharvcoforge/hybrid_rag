@@ -1,0 +1,89 @@
+{"ts": "2026-09-24T01:58:35.684452+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-24T01:58:36.090180+00:00", "trace_id": null, "stage": "embed_query", "event": "stage_slow", "duration_ms": 405.729, "model": "Qwen/Qwen3-Embedding-0.6B", "soft_budget_ms": 400.0}
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights: 100%|██████████| 310/310 [00:00<00:00, 17985.62it/s]
+{"ts": "2026-09-24T01:58:39.214509+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 3530.046, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-24T01:58:39.214642+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-24T01:58:39.214942+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.299, "candidates_out": 20}
+{"ts": "2026-09-24T01:58:39.214980+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-24T01:58:39.216372+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 1.392, "candidates_out": 20}
+{"ts": "2026-09-24T01:58:39.216412+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 33}
+{"ts": "2026-09-24T01:58:39.216491+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.077, "candidates_in": 33, "candidates_out": 23, "top_score": 0.03278688524590164}
+{"ts": "2026-09-24T01:58:39.217203+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-24T01:58:39.218290+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 1.087, "candidates_in": 5, "candidates_out": 5, "top_score": 0.03278688524590164}
+0.0328  uncertain  Carbon_Reduction_Plan.pdf    p.3-3  chars 6087-7969  d296911be1a5
+• Engage in community programs to generate renewable energy.
+3. Coforge has also committed to interventions with relation to sustainable building and energy
+management initiatives in our operations. We have undertaken several pilot initiatives at our
+main campus in India, including the following:
+• Passive solar architecture for provision of natural day lighting in the building.
+• Use of double-glazed, high efficiency reflective glass to reduce the solar heat gain by
+8% to 10%.
+• Rooftop solar energy generation system of 75 KWp and solar-based external area
+lighting systems to reduce the consumption of power grid.
+• Sensor-based lighting system to optimize energy efficiency.
+• Use of low embodied building material in construction, i.e., fly ash bricks, to reduce
+the overall carbon footprint of the building.
+• Use of LEDs as replacement of T-5 and LCDs to reduce electricity consumption.
+• Solar water heating system in cafeteria.
+4. We aim to improve employee engagement and awareness on sustainability and energy
+efficiency. We are taking the following steps for the same:
+• Conduct one mandatory and two voluntary training sessions annually for all employees to
+foster a culture of sustainability.
+• Empower employees with knowledge and skills to implement energy-saving practices and
+reduce carbon footprint through education and incentive programs.
+Coforge has already implemented several of these carbon reduction initiatives at our India locations
+and is actively integrating these in our UK operations as well. In addition to the above initiatives, at UK
+premise, Coforge adheres with Waste Electrical and Electronic Equipment (WEEE) compliance
+standards, which ensures that Coforge responsibly manages electronic waste, promotes recycling,
+and follows proper disposal methods for electronic equipment, thus reducing its carbon footprint and
+environmental impact.
+
+0.0313  uncertain  Carbon_Reduction_Plan.pdf    p.1-1  chars 823-1379  d296911be1a5
+| Baseline Year: 2023–2024 (India operations) | | | |
+| Additional details relating to the baseline emissions calculations | | | |
+The baseline emission calculations were done for our operations in India which is the most
+significant part of the business. We have already taken significant initiatives to reduce the carbon
+footprint and continue the process. | | | | |
+| Baseline year emissions – Total (tCO e) – FY24
+2 | | | |
+EMISSIONS | | | India | |
+Scope 1 | | | 413 | |
+Scope 2 | | | 8,688 | |
+Scope 3 | | | 5,543 | |
+| Total emissions | | | 14,644 |
+
+0.0310  uncertain  Environmental_Sustainability_Policy_2026.pdf  Environmental Management System  p.5-5  chars 10034-10361  be80cf8f28a3
+Environmental Management System
+Coforge is committed to implementing and continuously improving an Environmental Management System (EMS) to
+enhance its environmental performance. The company has obtained ISO 14001 certification, covering 60% of its
+operations Pan India, with a plan to achieve 100% coverage by the end of 2025.
+
+0.0303  uncertain  Carbon_Reduction_Plan.pdf  Emissions Reduction Targets  p.2-2  chars 2892-4392  d296911be1a5
+Emissions Reduction Targets
+Coforge is a fast-growing IT services firm, and the business has grown over 100% in the past 4 years.
+The growth in the business has led to an increase in headcount and operations across the globe. As an
+organisation, we acknowledge that this could lead to increase in absolute emissions, directly
+proportionate to the increase in headcount and business operations. However, as an organisation, we
+are committed to assessing our carbon emissions and target to have zero carbon emissions by 2040.
+We aim to achieve our target by taking active steps through carbon sequestration and use of renewable
+energy technologies, such as solar.
+India location – Since FY24, when the baseline emissions were assessed, there has been a
+continuous focus on emission reduction and focused interventions to ensure that the scope of
+emissions is controlled despite the growth of our business operations. Several of our pilot carbon
+reduction initiatives were conducted in our India operations.
+International locations (including the UK) – In 2022, we conducted emission assessment for all
+international business operations, including the UK. We are looking to undertake multiple initiatives to
+control these emissions, such as reducing the need for air-travel where possible, given that it is a
+significant contributor to our emissions for international locations. We are continually assessing our
+operations for consolidation of resources to reduce the negative impact on the environment.
+
+0.0301  uncertain  Carbon_Reduction_Plan.pdf    p.2-2  chars 5738-6042  d296911be1a5
+| Reporting Year: 1 April 2024 – 31 March 2025 | | | | | | |
+Current year emissions – Total (tCO e)
+2 | | | | | | | |
+EMISSIONS | | | India | | | UK | |
+Scope 1 | | | 1,265 | | | 0* | |
+Scope 2 | | | 6,344 | | | 2.90 | |
+Scope 3 | | | 29,836 | | | 850.05 | |
+| Total emissions | | | 37,445 | | | 852.95 |

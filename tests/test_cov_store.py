@@ -280,6 +280,11 @@ def test_store_runtime_branches(tmp_path: Path) -> None:
         assert records["pb"]["mime"] == ""
         assert records["pb"]["file_sha256"] == ""
 
+        listed_parents = store.parent_records("a.md")
+        assert listed_parents
+        assert listed_parents[0]["parent_id"]
+        assert store.parent_records("missing-doc") == []
+
         alpha = re.compile("alpha")
         bare = store.first_parent_matching("a.md", alpha)
         assert bare is not None
@@ -313,6 +318,7 @@ def test_store_runtime_branches(tmp_path: Path) -> None:
         store._db().commit()
         assert store.first_parent_matching("empty-doc", alpha) is None
         assert store.first_parent_matching("missing-doc", alpha) is None
+        assert store.parent_records("missing-doc") == []
         assert store.integrity_problems()
 
         assert store.child_ids("a.md")

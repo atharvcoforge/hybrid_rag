@@ -228,6 +228,8 @@ def test_suite_yaml_pins_corpus_and_gates():
             )
         if row["kind"] == "injection" and row["id"] not in answers:
             answers[row["id"]] = str(row.get("expect") or row.get("must_contain"))
+        if row.get("expect") and row.get("kind") != "unanswerable" and row["id"] not in answers:
+            answers[row["id"]] = str(row["expect"])
     holdout = Score(
         mode="rrf",
         kind="holdout",
@@ -274,6 +276,28 @@ def test_pick_live_prefers_holdout_mrr_above_the_recall_floor():
     assert pick_live([line("cascade", 0.90, 10, 0.99), line("rerank", 0.92, 40, 0.80)]) == "rerank"
     assert pick_live([line("bm25", 0.95, 1, 0.80), line("rrf", 0.95, 20, 0.90)]) == "rrf"
     assert pick_live([line("bm25", 0.95, 1, 0.90), line("rrf", 0.95, 20, 0.90)]) == "bm25"
+    slow = Score("rerank", "holdout", 0.99, 0.99, 0.0, 10, 10, p95=900)
+    fast = Score("rrf", "holdout", 0.95, 0.80, 0.0, 10, 20, p95=30)
+    assert pick_live([slow, fast], p95_limit=400) == "rrf"
+    assert pick_live([slow], p95_limit=400) == "rerank"
+
+
+def test_answer_accuracy_counts_expect_and_can_fail_its_floor():
+    from rag.evaluate import Score, answer_hit_rate, check_gates
+
+    rows = [
+        {"id": "a", "kind": "lexical", "expect": "2040"},
+        {"id": "b", "kind": "unanswerable", "expect": "nope"},
+    ]
+    assert answer_hit_rate(rows, {"a": "The year is 2040."}) == 1
+    assert answer_hit_rate([{"id": "u", "kind": "unanswerable"}], {}) is None
+    live = Score("rrf", "all", 1, 1, 0, 1, p95=10)
+    hold = Score("rrf", "holdout", 1, 1, 0, 1, p95=10)
+    suite = {"gates": {"answer_accuracy": {"min": 0.9}}, "slo": {"retrieve_p95_ms": 400}}
+    missed = check_gates(suite, [live, hold], answers={"a": "unknown"}, rows=rows, live_mode="rrf")
+    assert any(item.startswith("answer_accuracy") for item in missed)
+    skipped = check_gates(suite, [live, hold], answers=None, rows=rows, live_mode="rrf")
+    assert not any(item.startswith("answer_accuracy") for item in skipped)
 
 
 def test_answer_abstention_uses_the_final_text_when_every_row_is_scored():

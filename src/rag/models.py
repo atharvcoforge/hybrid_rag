@@ -2,6 +2,10 @@ from dataclasses import dataclass
 
 PIPELINE_VERSION = 3
 
+# Parents are a section-sized window, about one policy subsection. Children are
+# the embedding unit: short enough that one fact is not diluted, with overlap so
+# a sentence on a boundary is in two children. Headings and tables are split
+# before these windows are applied.
 PARENT_TARGET = 700
 PARENT_MAX = 900
 PARENT_OVERLAP = 120
@@ -15,7 +19,7 @@ MAX_CHUNKS = 8000
 RRF_K = 60
 DENSE_K = 20
 BM25_K = 20
-RERANK_K = 12
+RERANK_K = 20
 AGREE_TOP = 3
 FAST_GAP = 0.60
 SCORE_BAND = 0.15

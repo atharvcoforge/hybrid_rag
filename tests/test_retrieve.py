@@ -107,15 +107,16 @@ def test_disagreement_reranks_and_abstains_under_tau():
     assert result.reason == "no_confident_hit"
 
 
-def test_tau_is_off_until_a_value_is_stored_and_the_band_drops_a_far_second():
+def test_tau_is_off_until_a_value_is_stored_and_a_far_second_stays():
     stub = Stub(
         [_chunk("c1", "A", "alpha"), _chunk("c2", "B", "other")],
         [_chunk("c2", "B", "other"), _chunk("c1", "A", "alpha")],
         {"A": _parent("alpha body"), "B": _parent("other body")},
     )
     result = retrieve(stub, "alpha", lambda text: [1.0], rerank=_rerank)
-    assert [hit.parent_id for hit in result.hits] == ["A"]
+    assert [hit.parent_id for hit in result.hits] == ["A", "B"]
     assert result.hits[0].confident
+    assert not result.hits[1].confident
     assert result.reason == ""
 
 
@@ -127,7 +128,8 @@ def test_close_scores_stay_together():
     )
     result = retrieve(stub, "alpha", lambda text: [1.0], rerank=_rerank)
     assert [hit.parent_id for hit in result.hits] == ["A", "B"]
-    assert not result.hits[0].confident
+    assert result.hits[0].confident
+    assert result.hits[1].confident
 
 
 def test_empty_query_is_refused():
@@ -252,7 +254,7 @@ def test_named_year_outranks_a_higher_scoring_sibling():
     assert result.hits[0].source_path.endswith("2025.pdf")
 
 
-def test_india_query_demotes_a_section_that_opens_on_the_uk():
+def test_bm25_does_not_demote_by_country_name():
     chunks = [
         {**_chunk("c-uk", "uk", "uk"), "bm25_score": 12.0},
         {**_chunk("c-in", "india", "india"), "bm25_score": 11.0},
@@ -271,10 +273,11 @@ def test_india_query_demotes_a_section_that_opens_on_the_uk():
         lambda text: [1.0],
         mode="bm25",
     )
-    assert result.hits[0].parent_id == "india"
+    assert result.hits[0].parent_id == "uk"
+    assert {hit.parent_id for hit in result.hits} == {"uk", "india"}
 
 
-def test_india_query_demotes_a_uk_only_passage():
+def test_bm25_keeps_score_order_without_a_country_rule():
     chunks = [
         {**_chunk("c-uk", "uk", "uk"), "bm25_score": 10.0},
         {**_chunk("c-in", "india", "india"), "bm25_score": 9.0},
@@ -289,7 +292,8 @@ def test_india_query_demotes_a_uk_only_passage():
         lambda text: [1.0],
         mode="bm25",
     )
-    assert result.hits[0].parent_id == "india"
+    assert result.hits[0].parent_id == "uk"
+    assert {hit.parent_id for hit in result.hits} == {"uk", "india"}
 
 
 def test_conflict_fact_loads_the_missing_superseded_passage():
@@ -308,18 +312,17 @@ def test_conflict_fact_loads_the_missing_superseded_passage():
                 {"id": "old", "version_group": "env", "status": "superseded"},
             ]
 
-        def first_parent_matching(self, doc_id, pattern):
+        def parent_records(self, doc_id):
             text = (
                 "Carbon Neutral in our operations by 2050"
                 if doc_id == "old"
                 else "Carbon Neutral in our operations by 2040"
             )
-            if pattern.search(text) is None:
-                return None
             parent = _parent(text)
             parent.update(
                 {
                     "parent_id": doc_id,
+                    "text": text,
                     "status": "superseded" if doc_id == "old" else "current",
                     "superseded": doc_id == "old",
                     "source_path": (
@@ -328,10 +331,11 @@ def test_conflict_fact_loads_the_missing_superseded_passage():
                         else "Environmental_Sustainability_Policy_2026.pdf"
                     ),
                     "version_group": "env",
+                    "heading_path": "H",
                     "child_id": f"c-{doc_id}",
                 }
             )
-            return parent
+            return [parent]
 
     stub = _Sibling(
         [],

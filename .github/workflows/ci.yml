@@ -67,10 +67,93 @@ jobs:
         run: uv run pytest -q --tb=short -n auto -p no:randomly
       - name: Branch coverage
         run: uv run pytest -q --tb=short -p no:randomly --cov=rag --cov-branch --cov-fail-under=100
-      - name: Mutation score
-        run: uv run mutmut run
       - name: Audit dependencies
         run: uv run pip-audit
+
+  mutation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install uv
+        run: python -m pip install -U pip uv==0.12.5
+      - name: Install from the lockfile
+        run: uv sync --frozen --extra dev
+      - name: Mutation score
+        run: uv run mutmut run
+      - name: Export mutation stats
+        run: uv run mutmut export-cicd-stats
+      - name: Enforce the killed-ratio floor
+        run: uv run python scripts/mutmut_floor.py
+
+  eval:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install uv
+        run: python -m pip install -U pip uv==0.12.5
+      - name: Install from the lockfile
+        run: uv sync --frozen --extra dev
+      - name: Cache embedding models
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: hf-qwen3-bge-${{ hashFiles('src/rag/models.py') }}
+      - name: Cache the CPU generator
+        uses: actions/cache@v4
+        with:
+          path: |
+            tools/llama-b11093
+            models/qwen2.5-1.5b-instruct-q4_k_m.gguf
+          key: llama-b11093-qwen2.5-1.5b-q4
+      - name: Download llama.cpp and the 1.5B model
+        run: |
+          set -euo pipefail
+          if [ ! -x tools/llama-b11093/llama-server ]; then
+            mkdir -p tools
+            curl -L --fail --retry 3 -o tools/llama.tar.gz \
+              https://github.com/ggml-org/llama.cpp/releases/download/b11093/llama-b11093-bin-ubuntu-x64.tar.gz
+            tar -xzf tools/llama.tar.gz -C tools
+          fi
+          mkdir -p models
+          test -f models/qwen2.5-1.5b-instruct-q4_k_m.gguf || curl -L --fail --retry 3 \
+            -o models/qwen2.5-1.5b-instruct-q4_k_m.gguf \
+            https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct-GGUF/resolve/main/qwen2.5-1.5b-instruct-q4_k_m.gguf
+      - name: Start the generator
+        run: |
+          set -euo pipefail
+          tools/llama-b11093/llama-server \
+            -m models/qwen2.5-1.5b-instruct-q4_k_m.gguf \
+            --host 127.0.0.1 --port 8081 -t 4 \
+            --alias qwen2.5-1.5b-instruct \
+            > llama-server.log 2>&1 &
+          for _ in $(seq 1 60); do
+            curl -sf http://127.0.0.1:8081/health && exit 0
+            sleep 2
+          done
+          cat llama-server.log
+          exit 1
+      - name: Policy eval
+        env:
+          GENERATOR_URL: http://127.0.0.1:8081/v1
+          GENERATOR_MODEL: qwen2.5-1.5b-instruct
+          RAG_ANSWER_ROWS: ci
+        run: uv run pytest -m eval -o addopts= --tb=short
+      - name: Upload the eval log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: policy-eval
+          path: |
+            llama-server.log
+            .pytest_cache
 
   web:
     runs-on: ubuntu-latest

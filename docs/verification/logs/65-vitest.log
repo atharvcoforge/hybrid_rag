@@ -1,0 +1,2 @@
+NOT RUN — npm and node are not on PATH on this machine (command -v npm, command -v node).
+The web job on GitHub run 35936842551 passed npm test and npm run build.

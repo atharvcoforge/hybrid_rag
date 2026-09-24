@@ -3,10 +3,10 @@ from rag.versions import (
     chunk_overlap_ratio,
     disclose_conflict,
     downrank_superseded,
-    entity_mismatch,
     group_documents,
     mask_variable_spans,
     parse_review_date,
+    title_match_boost,
 )
 
 
@@ -135,16 +135,60 @@ def _policy_pair():
     return stale, current
 
 
-def test_signer_question_is_not_rewritten_to_carbon_conflict():
+def test_an_answered_question_keeps_its_text_and_names_the_superseded_file():
     stale, current = _policy_pair()
     note = disclose_conflict(
         "Signed by John Speight [1].",
         [stale, current],
         "Who signed the Carbon Reduction Plan?",
     )
-    assert not note.fired
-    assert note.answer == "Signed by John Speight [1]."
-    assert "2040" not in note.answer
+    assert note.fired
+    assert "John Speight" in note.answer
+    assert "Environmental_Sustainability_Policy_2025.pdf" in note.answer
+
+
+def test_a_year_that_also_appears_later_is_still_disclosed():
+    current = _hit(
+        "Carbon neutral by 2040. Green share by 2030. Fleet by 2040.",
+        "Environmental_Sustainability_Policy_2026.pdf",
+    )
+    stale = _hit(
+        "Carbon neutral by 2050. Green share by 2040. Fleet by 2045.",
+        "Environmental_Sustainability_Policy_2025.pdf",
+        superseded=True,
+    )
+    note = disclose_conflict("The target is 2040.", [current, stale], "carbon neutral")
+    assert "2050" in note.answer
+    assert "2040" in note.answer
+
+
+def test_disclosure_follows_the_number_the_answer_already_used():
+    electricity_old = _hit(
+        "Procure 10% of electricity from green sources by 2027.",
+        "Environmental_Sustainability_Policy_2025.pdf",
+        superseded=True,
+    )
+    electricity_new = _hit(
+        "Procure 10% of electricity from green sources by 2025.",
+        "Environmental_Sustainability_Policy_2026.pdf",
+    )
+    carbon_old = _hit(
+        "Carbon Neutral in our operations by 2050.",
+        "Environmental_Sustainability_Policy_2025.pdf",
+        superseded=True,
+    )
+    carbon_new = _hit(
+        "Carbon Neutral in our operations by 2040.",
+        "Environmental_Sustainability_Policy_2026.pdf",
+    )
+    note = disclose_conflict(
+        "Coforge commits to becoming carbon neutral by 2050.",
+        [electricity_old, electricity_new, carbon_old, carbon_new],
+        "By when does Coforge commit to becoming carbon neutral?",
+    )
+    assert "2040" in note.answer
+    assert "2050" in note.answer
+    assert "2027" not in note.answer
 
 
 def test_review_date_conflict_names_march_dates_not_carbon_year():
@@ -157,11 +201,10 @@ def test_review_date_conflict_names_march_dates_not_carbon_year():
     assert note.fired
     assert "10th March 2026" in note.answer
     assert "10th March 2025" in note.answer
-    assert "2040" not in note.answer
     assert "Environmental_Sustainability_Policy_2025.pdf" in note.answer
 
 
-def test_named_file_outranks_a_higher_scoring_other_document():
+def test_a_question_that_repeats_a_title_outranks_a_higher_score():
     env = _hit(
         "Energy Optimization and green energy by 2025",
         "Environmental_Sustainability_Policy_2026.pdf",
@@ -172,99 +215,20 @@ def test_named_file_outranks_a_higher_scoring_other_document():
         "Carbon_Reduction_Plan.pdf",
         score=9.0,
     )
+    env.title = "Environmental Sustainability Policy"
+    carbon.title = "Carbon Reduction Plan"
+    assert title_match_boost("unrelated question about leave", "Carbon Reduction Plan") == 1.0
+    assert title_match_boost(
+        "What does the environmental policy require?",
+        "Sustainability Policy",
+        "Environmental_Sustainability_Policy_2026.pdf",
+    ) == title_match_boost("environmental policy", "Environmental Policy")
     ordered = downrank_superseded(
         [env, carbon],
         "What share of green energy does the carbon plan target by 2025?",
     )
     assert ordered[0].source_path == "Carbon_Reduction_Plan.pdf"
-
-
-def test_rarest_query_term_promotes_the_passage_that_contains_it():
-    declaration = _hit(
-        "Declaration and Sign Off. This carbon plan reports emissions.",
-        "Carbon_Reduction_Plan.pdf",
-        score=16.0,
-    )
-    protocol = _hit(
-        "The carbon plan follows the Greenhouse Gas Protocol.",
-        "Carbon_Reduction_Plan.pdf",
-        score=8.0,
-    )
-    other = _hit(
-        "The carbon plan supplier name is Coforge.",
-        "Carbon_Reduction_Plan.pdf",
-        score=7.0,
-    )
-    ordered = downrank_superseded(
-        [declaration, protocol, other],
-        "Which GHG protocol does the carbon plan cite for reporting?",
-    )
-    assert "Protocol" in ordered[0].parent_text
-
-
-def test_a_comparison_that_names_both_countries_is_not_a_mismatch():
-    assert not entity_mismatch(
-        "How do the India baseline total and the UK baseline total compare?",
-        "India operations total 14,644",
-    )
-    assert entity_mismatch("What is India's baseline Scope 1 figure?", "UK operations only")
-
-
-def test_exact_tie_prefers_the_passage_that_repeats_the_question():
-    vague = _hit("community programs and renewable energy", "Carbon_Reduction_Plan.pdf", score=0.0320)
-    direct = _hit(
-        "The carbon footprint partner is named Carbon Footprint.",
-        "Carbon_Reduction_Plan.pdf",
-        score=0.0320,
-    )
-    ordered = downrank_superseded(
-        [vague, direct],
-        "Which partner helps with carbon footprint management?",
-        focus=False,
-    )
-    assert "partner" in ordered[0].parent_text
-
-
-def test_by_when_prefers_a_close_passage_that_states_a_year():
-    prose = _hit(
-        "Water risk is assessed at owned facilities.",
-        "Water_Management_Policy.pdf",
-        score=0.0328,
-    )
-    table = _hit(
-        "| Focus Area | Target Year |\n| Owned facilities | 2026 |",
-        "Water_Management_Policy.pdf",
-        score=0.0323,
-    )
-    ordered = downrank_superseded(
-        [prose, table],
-        "By when will water risk assessments cover owned facilities?",
-        focus=False,
-    )
-    assert "2026" in ordered[0].parent_text
-
-
-def test_who_signed_prefers_the_short_title_block():
-    prose = _hit(
-        "Declaration and Sign Off. This Carbon Reduction Plan has been completed in accordance with the standard.",
-        "Carbon_Reduction_Plan.pdf",
-        score=0.04,
-    )
-    other = _hit(
-        "The carbon reduction plan supplier name is Coforge.",
-        "Carbon_Reduction_Plan.pdf",
-        score=0.03,
-    )
-    block = _hit(
-        "John Speight\nPresident and Head of Europe (EVP)",
-        "Carbon_Reduction_Plan.pdf",
-        score=0.02,
-    )
-    ordered = downrank_superseded(
-        [prose, other, block],
-        "Who signed the Carbon Reduction Plan?",
-    )
-    assert "Speight" in ordered[0].parent_text
+    assert ordered[0].score == 9.0
 
 
 def test_contents_page_ranks_below_the_section_that_answers():

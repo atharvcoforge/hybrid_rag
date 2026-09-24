@@ -1,0 +1,30 @@
+{"ts": "2026-09-24T01:58:25.669937+00:00", "trace_id": null, "stage": "embed_query", "event": "start", "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-24T01:58:26.071602+00:00", "trace_id": null, "stage": "embed_query", "event": "stage_slow", "duration_ms": 401.666, "model": "Qwen/Qwen3-Embedding-0.6B", "soft_budget_ms": 400.0}
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights: 100%|██████████| 310/310 [00:00<00:00, 21880.26it/s]
+{"ts": "2026-09-24T01:58:29.442332+00:00", "trace_id": null, "stage": "embed_query", "event": "finish", "duration_ms": 3772.393, "model": "Qwen/Qwen3-Embedding-0.6B"}
+{"ts": "2026-09-24T01:58:29.442435+00:00", "trace_id": null, "stage": "dense", "event": "start"}
+{"ts": "2026-09-24T01:58:29.442707+00:00", "trace_id": null, "stage": "dense", "event": "finish", "duration_ms": 0.272, "candidates_out": 20}
+{"ts": "2026-09-24T01:58:29.442743+00:00", "trace_id": null, "stage": "lexical", "event": "start"}
+{"ts": "2026-09-24T01:58:29.444280+00:00", "trace_id": null, "stage": "lexical", "event": "finish", "duration_ms": 1.536, "candidates_out": 20}
+{"ts": "2026-09-24T01:58:29.444353+00:00", "trace_id": null, "stage": "fuse", "event": "start", "candidates_in": 34}
+{"ts": "2026-09-24T01:58:29.444430+00:00", "trace_id": null, "stage": "fuse", "event": "finish", "duration_ms": 0.077, "candidates_in": 34, "candidates_out": 21, "top_score": 0.03252247488101534}
+{"ts": "2026-09-24T01:58:29.445379+00:00", "trace_id": null, "stage": "gate", "event": "start", "candidates_in": 5}
+{"ts": "2026-09-24T01:58:29.445518+00:00", "trace_id": null, "stage": "gate", "event": "finish", "duration_ms": 0.14, "candidates_in": 5, "candidates_out": 5, "top_score": 0.031009615384615385}
+{"ts": "2026-09-24T01:58:30.709000+00:00", "trace_id": null, "stage": "gate_form", "event": "start"}
+{"ts": "2026-09-24T01:58:30.709104+00:00", "trace_id": null, "stage": "gate_form", "event": "finish", "duration_ms": 0.106}
+{"ts": "2026-09-24T01:58:30.709155+00:00", "trace_id": null, "stage": "gate_literal", "event": "start"}
+{"ts": "2026-09-24T01:58:30.709221+00:00", "trace_id": null, "stage": "gate_literal", "event": "finish", "duration_ms": 0.066}
+{"ts": "2026-09-24T01:58:30.709261+00:00", "trace_id": null, "stage": "gate_entail", "event": "start", "skipped": true, "reason": "no_entailment_model"}
+{"ts": "2026-09-24T01:58:30.709306+00:00", "trace_id": null, "stage": "gate_entail", "event": "finish", "duration_ms": 0.044, "degraded": true, "skipped": true, "reason": "no_entailment_model"}
+{"ts": "2026-09-24T01:58:30.709345+00:00", "trace_id": null, "stage": "gate_coverage", "event": "start", "coverage": 1.0}
+{"ts": "2026-09-24T01:58:30.709394+00:00", "trace_id": null, "stage": "gate_coverage", "event": "finish", "duration_ms": 0.05, "coverage": 1.0}
+{"ts": "2026-09-24T01:58:30.709412+00:00", "trace_id": null, "stage": "gate_conflict", "event": "start"}
+{"ts": "2026-09-24T01:58:30.709454+00:00", "trace_id": null, "stage": "gate_conflict", "event": "finish", "duration_ms": 0.042, "skipped": true, "reason": "no_conflict"}
+John Speight is the President and Head of Europe (EVP) on the Carbon Reduction Plan. [2]
+
+[1] CURRENT  Carbon_Reduction_Plan.pdf  Carbon Reduction Plan  p.1-1
+[2] CURRENT  Carbon_Reduction_Plan.pdf  John Speight  p.3-3
+[3] CURRENT  Carbon_Reduction_Plan.pdf  Declaration and Sign Off  p.3-3
+[4] CURRENT  Carbon_Reduction_Plan.pdf  Carbon Reduction Initiatives  p.2-2
+[5] CURRENT  Carbon_Reduction_Plan.pdf    p.3-3

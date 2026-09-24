@@ -1,76 +1,53 @@
 # Reading room
 
-Local hybrid RAG over a small showcase corpus of Coforge policy PDFs. Retrieval is dense + BM25 fused in SQLite; answers are generated locally and gated before they ship.
+Local hybrid RAG over four Coforge policy PDFs. Dense and BM25 results are fused in SQLite. A local llama.cpp model writes the answer, and gates check it before it is shown.
 
-This is still one machine and four documents. Auth, calibration, and the golden set are real — the corpus size is not production scale, and saying so is intentional.
+This is one machine and four documents. The golden set and the abstention gates are real. The corpus is not production scale.
 
 ## Quick start
 
 ```bash
-# needs Python >=3.11 (uv works when system Python is older)
 uv venv --python 3.11 .venv && source .venv/bin/activate
-uv pip install -e ".[dev]"
-# optional: uv pip install -e ".[ocr,layout]"
+uv sync --frozen --extra dev
 
 rag ingest documents --index index
-rag calibrate   # writes thresholds; eval is read-only after that
-rag eval
+rag calibrate --index index
+rag eval --index index          # full 152-row run; needs the generator on :8081
+rag ask "Who signed the Carbon Reduction Plan?" --index index
 
-# API
-INDEX_DIR=index CORPUS=documents uvicorn rag.server:app --port 8000
-
-# UI (requires Node/npm on the host)
-cd web && npm install && npm run dev
-
-# query body field is `q`
-curl -sS -N -X POST http://127.0.0.1:8000/api/query \
-  -H 'Content-Type: application/json' \
-  -d '{"q":"By when does Coforge reach net zero?"}'
+# retrieval only, one mode
+rag query "..." --index index --mode dense
+rag query "..." --index index --mode rrf
 ```
 
-Clone to first answered query should be under ten minutes if the embedder weights are already cached in `HF_HOME`. See `docs/SUBMISSION.md` for the measured run.
-
-Docker: `docker compose up --build` (API on `:8000`, web on `:80`). Point `GENERATOR_URL` at a local llama.cpp OpenAI-compatible server.
-
-The API entrypoint runs `rag ingest` on every boot. Unchanged files are skipped. A new file under `documents/` is indexed on the next start.
-
-## What is gated
-
-| Gate | What it catches |
-| --- | --- |
-| Form | Missing / out-of-range citations, empty or truncated answers |
-| Literal grounding | Fabricated figures, dates, units |
-| Coverage | Withholds when too little of the answer is supported |
-
-Derived blocks (VLM captions) cannot be the sole support for a factual claim. OCR blocks are flagged in the evidence column.
-
-## Design choices worth knowing
-
-- **One SQLite file** (`index/rag.sqlite`) — exact cosine, weighted FTS5. No Chroma.
-- **Parent/child chunking** with optional contextual prefixes behind `--contextual` / `contextual=True`.
-- **Table ladder** — ruled lines → borderless text strategy → optional Docling.
-- **Reranker protocol** — local cross-encoder by default; `NullReranker` keeps incoming order if it fails to load.
-- **Resilience** — LRU answer cache keyed by index generation, bounded inference queue (429), generator circuit breaker with extractive fallback.
-
-## Tests and CI
+Set `GENERATOR_URL=http://127.0.0.1:8081/v1` when the generator is on the host. The default URL is `host.docker.internal`, for the API container.
 
 ```bash
-pytest -q
-cd web && npm test
+make eval                         # same as rag eval
+cd web && npm test && npm run build
+docker compose up --build         # API :8000, web :80
 ```
 
-CI runs pytest on every push. Mutation score ≥ 0.90 on `chunk` / `retrieve` / `gates` is the release bar; run locally with `mutmut` when changing those modules.
+Measured commands and logs are in `docs/SUBMISSION.md`.
+
+## Design choices
+
+- One SQLite file. Exact cosine and FTS5 BM25. No vector server.
+- Parent chunks around 700 characters, child chunks around 180, so a citation can point at the section that contains the fact.
+- Reciprocal-rank fusion (`k=60`) is the live retriever. The cross-encoder is measured and is not live: on this corpus its p95 is about 2.2s and a 0–1 threshold abstains most questions. See the decision log.
+- Version handling is generic. A superseded file stays in the index, passages are tagged current or superseded, and a conflict note names the older file when the numbers differ.
+- The enforced mutation floor is the number in `evals/mutmut_floor.txt`. The latest local run killed 1825 of 2895 decided mutants, ratio 0.630 (`docs/verification/logs/72-mutmut.log`). That measured ratio is the ratchet. It is not 0.90.
 
 ## API
 
 | Route | Notes |
 | --- | --- |
-| `GET /api/health` | Liveness + degradation messages |
+| `GET /api/health` | Liveness |
 | `GET /api/ready` | 503 until warmup finishes |
-| `POST /api/query` | SSE; optional `doc_id` filter |
-| `POST /api/ingest` | Bearer token when `API_TOKEN` set; corpus root only |
-| `GET/POST /api/eval` | Scores report; POST is mutating |
+| `POST /api/query` | SSE. Body field is `q` |
+| `POST /api/ingest` | Bearer token when `API_TOKEN` is set |
+| `GET/POST /api/eval` | Score report |
 
-## Honesty clause
+## Honesty
 
-Still not a production service: one machine, a showcase corpus of four policies, and a golden set written by hand. Auth and abstention gates exist so the numbers mean something; they do not turn four PDFs into an enterprise search product.
+Four hand-written policies and a hand-written golden set. Auth and abstention gates keep the numbers meaningful. They do not make this an enterprise search product.

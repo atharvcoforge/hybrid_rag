@@ -16,7 +16,7 @@ from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, ConfigDict
 
 from rag.cache import AnswerCache
-from rag.evaluate import evaluate, load_rows, pick_live, row_hit
+from rag.evaluate import RETRIEVE_P95_MS, evaluate, load_rows, pick_live, row_hit
 from rag.gates import check_all
 from rag.generate import complete, stream_answer, writer_up
 from rag.health import CircuitBreaker, HealthState
@@ -513,7 +513,7 @@ def build_report(
         lines, fitted = evaluate(index, rows, ask_retrieve)
     finally:
         index.close()
-    mode = pick_live(lines)
+    mode = pick_live(lines, p95_limit=RETRIEVE_P95_MS)
     span = None
     span_n = 0
     if finish is not None and writer_up():

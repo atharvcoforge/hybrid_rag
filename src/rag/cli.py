@@ -40,6 +40,20 @@ def main(argv: list[str] | None = None) -> int:
     query_cmd.add_argument("text")
     query_cmd.add_argument("--index", required=True)
     query_cmd.add_argument("--doc", default=None)
+    query_cmd.add_argument(
+        "--mode",
+        default="cascade",
+        choices=("dense", "bm25", "rrf", "rerank", "cascade"),
+    )
+
+    ask_cmd = sub.add_parser("ask", help="retrieve, answer, and cite")
+    ask_cmd.add_argument("text")
+    ask_cmd.add_argument("--index", required=True)
+    ask_cmd.add_argument(
+        "--mode",
+        default=None,
+        choices=("dense", "bm25", "rrf", "rerank", "cascade"),
+    )
 
     eval_cmd = sub.add_parser("eval", help="score a golden set against suite.yaml gates")
     eval_cmd.add_argument("--index", required=True)
@@ -69,13 +83,15 @@ def main(argv: list[str] | None = None) -> int:
             for item in ingest(args.path, args.index):
                 print(f"{item.status}  {item.doc_id}  {item.chunks}")
         elif args.cmd == "query":
-            result = query(args.text, args.index, doc_id=args.doc)
+            result = query(args.text, args.index, doc_id=args.doc, mode=args.mode)
             if result.reason:
                 print(result.reason)
             elif not result.hits:
                 print("no hits")
             else:
                 print("\n\n".join(_format_hit(hit) for hit in result.hits))
+        elif args.cmd == "ask":
+            print(_run_ask(args.text, args.index, args.mode))
         elif args.cmd == "purge":
             for item in ingest(args.path, args.index):
                 if item.status == "purged":
@@ -142,19 +158,23 @@ def _run_eval(index_dir: str, golden: str | None, suite_path: str | None) -> tup
     if suite is not None:
         split_path = suite.get("split") or "evals/split.json"
         split = load_split(split_path) if Path(split_path).exists() else None
+    slo_limit = None
+    if suite is not None:
+        slo_limit = (suite.get("slo") or {}).get("retrieve_p95_ms")
     try:
         def ask(mode: str, row: dict[str, Any]) -> Retrieval:
             return retrieve(index, row["q"], encode_query, rerank=rerank_scores, mode=mode)
 
         lines, fitted = evaluate(index, rows, ask, split=split)
-        live = pick_live(lines)
+        live = pick_live(lines, p95_limit=slo_limit)
+        index._set_meta("live_mode", live)
         answers = None
         if suite is not None:
             answers, quality = _answers_for_rows(rows, ask, live)
             _stamp_quality(lines, live, quality)
     finally:
         index.close()
-    body = format_scores(lines, fitted)
+    body = format_scores(lines, fitted, p95_limit=slo_limit)
     if suite is None:
         return body, True
     baseline = None
@@ -258,6 +278,38 @@ def _run_calibrate(index_dir: str, golden: str, split_path: str, out_path: str) 
         index.close()
     write_report(out_path, report)
     return json.dumps(report, indent=2)
+
+
+def _live_mode(index_dir: str) -> str:
+    from rag.models import EMBED_MODEL, EMBED_REVISION, PIPELINE_VERSION
+    from rag.store import Index
+
+    index = Index(index_dir, EMBED_MODEL, EMBED_REVISION, PIPELINE_VERSION)
+    index.open()
+    try:
+        saved = index._meta("live_mode")
+    finally:
+        index.close()
+    return saved or "rrf"
+
+
+def _run_ask(text: str, index_dir: str, mode: str | None) -> str:
+    from rag.gates import check_all
+    from rag.generate import complete
+
+    chosen = mode or _live_mode(index_dir)
+    result = query(text, index_dir, mode=chosen)
+    if result.reason:
+        return result.reason
+    if not result.hits:
+        return "no hits"
+    answer, _gate = _gated_text(text, result, complete, check_all)
+    lines = [answer, ""]
+    for number, hit in enumerate(result.hits, start=1):
+        status = "SUPERSEDED" if hit.superseded or hit.status == "superseded" else "CURRENT"
+        pages = f"p.{hit.page_start}-{hit.page_end}" if hit.page_start else "p.-"
+        lines.append(f"[{number}] {status}  {hit.source_path}  {hit.heading_path}  {pages}")
+    return "\n".join(lines)
 
 
 def _format_hit(hit: Hit) -> str:

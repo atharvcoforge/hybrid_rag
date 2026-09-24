@@ -24,8 +24,8 @@ OVERLAP_RATIO = 0.45
 NEAR_DUP_RATIO = 0.88
 # Soft score multiplier for superseded hits (never drop them).
 SUPERSEDED_SCORE_FACTOR = 0.55
-# A question that names one file should not lose to a higher-scoring sibling file.
-DOC_HINT_BOOST = 1.65
+# A question that repeats a stored document title should not lose to a sibling file.
+TITLE_MATCH_BOOST = 1.65
 # Contents pages list every heading, so they win overlap and do not hold the fact.
 TOC_FACTOR = 0.6
 
@@ -35,10 +35,7 @@ _REVIEW = re.compile(
     re.IGNORECASE,
 )
 _YEAR = re.compile(r"\b(20\d{2})\b")
-_CARBON_BY = re.compile(
-    r"Carbon\s+Neutral\s+in\s+(?:our\s+)?operations\s+by\s+(20\d{2})",
-    re.IGNORECASE,
-)
+_NUMBER = re.compile(r"\d[\d,]*(?:\.\d+)?")
 _MONTHS = {
     "january": 1,
     "february": 2,
@@ -278,221 +275,33 @@ class ConflictNote:
     version_group: str = ""
 
 
-def _doc_meta(hit: Hit) -> tuple[str, str, bool, str]:
-    source = getattr(hit, "source_path", "") or ""
-    name = source.rsplit("/", 1)[-1]
-    status = getattr(hit, "status", None) or "current"
-    group = getattr(hit, "version_group", None) or ""
-    superseded = bool(getattr(hit, "superseded", False)) or status == "superseded"
-    return name, group, superseded, status
+_TITLE_STOP = {
+    "what", "when", "which", "who", "how", "does", "with", "from", "that", "this",
+    "have", "been", "will", "should", "under", "about", "their", "there", "into",
+    "the", "and", "for", "are", "was", "were", "you", "your",
+}
+_ABSTAIN = ("do not say", "not in the documents", "documents do not", "not stated")
 
 
-_DATE = (
-    r"(\d{1,2}(?:st|nd|rd|th)?\s+"
-    r"(?:January|February|March|April|May|June|July|August|September|"
-    r"October|November|December)\s+\d{4})"
-)
+def _terms(text: str) -> list[str]:
+    words = re.findall(r"[a-z0-9][a-z0-9-]{2,}", (text or "").casefold())
+    return [word for word in words if word not in _TITLE_STOP]
 
 
-@dataclass(frozen=True)
-class _Fact:
-    """One planted conflict. Query wording selects the fact; the extract pulls its value."""
-
-    label: str
-    query: re.Pattern[str]
-    value: re.Pattern[str]
-
-
-def _ev(percent: str) -> re.Pattern[str]:
-    return re.compile(rf"electric\s+vehicles?.*{percent}\s*%|{percent}\s*%.*electric\s+vehicles?", re.IGNORECASE)
-
-
-def _green(percent: str) -> re.Pattern[str]:
-    return re.compile(
-        rf"(?:green|electricity).{{0,80}}{percent}\s*%|{percent}\s*%.{{0,80}}(?:green|electricity)",
-        re.IGNORECASE,
-    )
-
-
-# Most specific query first. "Last Review date" must not fall through to "Review Date".
-_FACTS: tuple[_Fact, ...] = (
-    _Fact(
-        "The Last Review date on the current policy is",
-        re.compile(r"last\s+review", re.IGNORECASE),
-        re.compile(rf"Last\s+Review\s*[–—\-:]\s*{_DATE}", re.IGNORECASE),
-    ),
-    _Fact(
-        "The Review Date on the current policy is",
-        re.compile(r"review\s+date", re.IGNORECASE),
-        re.compile(rf"Review\s+Date\s*[–—\-:]\s*{_DATE}", re.IGNORECASE),
-    ),
-    _Fact(
-        "The copyright year on the current policy is",
-        re.compile(r"copyright", re.IGNORECASE),
-        re.compile(r"[©]\s*(20\d{2})"),
-    ),
-    _Fact(
-        "Coforge commits to becoming Carbon Neutral in its operations by",
-        re.compile(r"carbon\s+neutral", re.IGNORECASE),
-        _CARBON_BY,
-    ),
-    _Fact(
-        "Electric vehicles reach 10% of the employee commute fleet by",
-        _ev("10"),
-        re.compile(r"to\s+10%\s+by\s+(20\d{2})", re.IGNORECASE),
-    ),
-    _Fact(
-        "Electric vehicles reach 50% of the employee commute fleet by",
-        _ev("50"),
-        re.compile(r"to\s+50%\s+by\s+(20\d{2})", re.IGNORECASE),
-    ),
-    _Fact(
-        "The policy commits to procuring 10% of electricity from green sources by",
-        _green("10"),
-        re.compile(r"green\s+sources\s+by\s+(20\d{2})", re.IGNORECASE),
-    ),
-    _Fact(
-        "The policy aims to increase green electricity share to about 50% by",
-        _green("50"),
-        re.compile(r"share to\s+~?\s*50%\s+by\s+(20\d{2})", re.IGNORECASE),
-    ),
-)
-
-
-def _fact_for_query(query: str) -> _Fact | None:
-    for fact in _FACTS:
-        if fact.query.search(query or ""):
-            return fact
-    return None
-
-
-def conflict_sibling_records(index: Index, query: str, hits: list[Hit]) -> list[dict[str, Any]]:
-    """Parents for the other side of a matched fact, loaded from the index.
-
-    Disclosure needs both versions. Top-k often keeps the right document and
-    the wrong section, so the sibling is fetched by the fact pattern.
-    """
-    fact = _fact_for_query(query)
-    if fact is None or not hits or not hasattr(index, "list_doc_records"):
-        return []
-    group = ""
-    for hit in hits:
-        _name, grp, _superseded, _status = _doc_meta(hit)
-        if grp:
-            group = grp
-            break
-    if not group or not hasattr(index, "first_parent_matching"):
-        return []
-
-    def _side_present(want_stale: bool) -> bool:
-        for hit in hits:
-            _name, grp, superseded, _status = _doc_meta(hit)
-            if grp != group or superseded != want_stale:
-                continue
-            if fact.value.search(getattr(hit, "parent_text", "") or ""):
-                return True
-        return False
-
-    wanted: list[dict[str, Any]] = []
-    seen: set[Any] = set()
-    for record in index.list_doc_records():
-        if record.get("version_group") != group:
-            continue
-        stale = (record.get("status") or "current") == "superseded"
-        if _side_present(stale):
-            continue
-        found = index.first_parent_matching(cast(str, record.get("id")), fact.value)
-        if not found:
-            continue
-        parent_id = found.get("parent_id")
-        if not parent_id or parent_id in seen:
-            continue
-        if any(getattr(hit, "parent_id", None) == parent_id for hit in hits):
-            continue
-        seen.add(parent_id)
-        wanted.append(found)
-    return wanted
-
-
-def disclose_conflict(answer: str, hits: Sequence[Hit], query: str = "") -> ConflictNote:
-    """Disclose the asked fact when both versions state it. Leave other answers alone."""
-    fact = _fact_for_query(query)
-    if fact is None or not hits:
-        return ConflictNote(False, answer or "")
-
-    current_hit = None
-    stale_hit = None
-    cur_v = ""
-    stale_v = ""
-    for hit in hits:
-        _name, group, superseded, _status = _doc_meta(hit)
-        if not group:
-            continue
-        match = fact.value.search(getattr(hit, "parent_text", "") or "")
-        if not match:
-            continue
-        if superseded:
-            if stale_hit is None:
-                stale_hit = hit
-                stale_v = match.group(1)
-        elif current_hit is None:
-            current_hit = hit
-            cur_v = match.group(1)
-    if current_hit is None or stale_hit is None or cur_v == stale_v:
-        return ConflictNote(False, answer or "")
-
-    cur_name = _doc_meta(current_hit)[0]
-    stale_name = _doc_meta(stale_hit)[0]
-    cite = None
-    stale_cite = None
-    for index, hit in enumerate(hits, start=1):
-        if hit is current_hit:
-            cite = index
-        if hit is stale_hit:
-            stale_cite = index
-    cite_s = f" [{cite}]" if cite else ""
-    stale_s = f" [{stale_cite}]" if stale_cite else ""
-    body = (
-        f"{fact.label} {cur_v}{cite_s}. "
-        f"Note: a superseded version ({stale_name}) states {stale_v}{stale_s}."
-    )
-    text = answer or ""
-    low = text.lower()
-    disclosed = any(word in low for word in ("supersed", "outdated", "earlier", "previous", "conflict"))
-    if stale_name.lower() in low:
-        disclosed = True
-    if cur_v in text and stale_v in text and disclosed and "do not say" not in low:
-        return ConflictNote(
-            True,
-            text,
-            current_doc=cur_name,
-            superseded_doc=stale_name,
-            current_value=cur_v,
-            superseded_value=stale_v,
-            cite=cite,
-            version_group=getattr(current_hit, "version_group", "") or "",
-        )
-    return ConflictNote(
-        True,
-        body,
-        current_doc=cur_name,
-        superseded_doc=stale_name,
-        current_value=cur_v,
-        superseded_value=stale_v,
-        cite=cite,
-        version_group=getattr(current_hit, "version_group", "") or "",
-    )
-
-
-def query_names_document(query: str, source_path: str = "", review_date: str | None = None) -> bool:
-    """True when the question names this file, not merely a target year such as 'by 2025'."""
-    if not query_names_version(query, source_path, review_date):
-        return False
-    return bool(re.search(r"\b(policy|version|document|edition)\b", query or "", re.IGNORECASE))
+def title_match_boost(query: str, title: str, source_path: str = "") -> float:
+    """Boost a hit when the question repeats words from the title or the filename."""
+    stem = (source_path or "").rsplit("/", 1)[-1].rsplit(".", 1)[0].replace("_", " ")
+    title_terms = set(_terms(f"{title} {stem}"))
+    if len(title_terms) < 2:
+        return 1.0
+    overlap = {term for term in _terms(query) if term in title_terms}
+    if len(overlap) >= 2:
+        return TITLE_MATCH_BOOST
+    return 1.0
 
 
 def query_names_version(query: str, source_path: str = "", review_date: str | None = None) -> bool:
-    """True when the question names this document's year. The superseded penalty is only a prior."""
+    """True when the question names this document's year."""
     text = (query or "").casefold()
     if not text:
         return False
@@ -503,186 +312,268 @@ def query_names_version(query: str, source_path: str = "", review_date: str | No
     return any(year in text for year in years)
 
 
-def entity_mismatch(query: str, passage: str) -> bool:
-    """True when the passage names the other country or the other GHG scope."""
-    q = (query or "").casefold()
-    p = (passage or "").casefold()
-    if not q or not p:
+def query_names_document(query: str, source_path: str = "", review_date: str | None = None) -> bool:
+    """True when the question names this file, not merely a target year such as 'by 2025'."""
+    if not query_names_version(query, source_path, review_date):
         return False
-    # "India versus UK" names both on purpose. Demote only a side the question did not ask for.
-    if _has_token(q, "india") and _has_token(q, "uk"):
-        return False
-    for wanted, other in (("india", "uk"), ("uk", "india")):
-        if _has_token(q, wanted) and not _has_token(p, wanted) and _has_token(p, other):
-            return True
-        # Same table often names both countries. The section heading does not.
-        opening = p[:120]
-        if _has_token(q, wanted) and _has_token(opening, other) and not _has_token(opening, wanted):
-            return True
-    wanted_scopes = set(re.findall(r"scope\s*([123])", q))
-    if not wanted_scopes:
-        return False
-    present = set(re.findall(r"scope\s*([123])", p))
-    return bool(present) and wanted_scopes.isdisjoint(present)
-
-
-def _has_token(text: str, word: str) -> bool:
-    return re.search(rf"(?<![a-z0-9]){re.escape(word)}(?![a-z0-9])", text) is not None
-
-
-def _query_terms(query: str) -> list[str]:
-    words = re.findall(r"[a-z0-9][a-z0-9-]{2,}", (query or "").casefold())
-    stop = {
-        "what", "when", "which", "who", "how", "does", "with", "from", "that", "this",
-        "have", "been", "will", "should", "under", "about", "their", "there", "into",
-    }
-    terms = [word for word in words if word not in stop]
-    if "ghg" in (query or "").casefold() and "greenhouse" not in terms:
-        terms.append("greenhouse")
-    return terms
-
-
-def _doc_family(source: str) -> str:
-    name = (source or "").casefold()
-    if "water" in name:
-        return "water"
-    if "carbon" in name:
-        return "carbon"
-    if "environmental" in name:
-        return "env"
-    return ""
-
-
-def _doc_hint(query: str) -> str:
-    text = (query or "").casefold()
-    hints = set()
-    if "carbon plan" in text or "carbon reduction" in text:
-        hints.add("carbon")
-    if "water policy" in text or "water management" in text:
-        hints.add("water")
-    if "environmental" in text and "policy" in text:
-        hints.add("env")
-    if len(hints) == 1:
-        return next(iter(hints))
-    return ""
-
-
-_WHO_SIGNED = re.compile(
-    r"\b(?:who|which)\b.{0,60}\b(?:signed|signatory|approved|approver|approval|chairs)\b",
-    re.IGNORECASE,
-)
-
-
-def signatory_boost(query: str, passage: str) -> float:
-    """Who-signed questions prefer the short name-and-title block."""
-    if not _WHO_SIGNED.search(query or ""):
-        return 1.0
-    text = passage or ""
-    if len(text) > 240 or not re.search(r"\bpresident\b", text, re.IGNORECASE):
-        return 1.0
-    if re.search(r"\b(?:director|evp|europe)\b", text, re.IGNORECASE):
-        return 6.0
-    return 1.0
+    return bool(re.search(r"\b(policy|version|document|edition)\b", query or "", re.IGNORECASE))
 
 
 def looks_like_toc(text: str) -> bool:
     return (text or "").lstrip()[:8].casefold() == "contents"
 
 
-def focus_multiplier(query: str, text: str, source: str, texts: list[str]) -> float:
-    """Boost the named file and demote passages missing the rarest query term."""
-    factor = 1.0
-    hint = _doc_hint(query)
-    if hint and _doc_family(source) == hint:
-        factor *= DOC_HINT_BOOST
-    terms = _query_terms(query)
-    blobs = [(item or "").casefold() for item in texts]
-    if not terms or not blobs:
-        return factor
-    counted = [(sum(term in blob for blob in blobs), term) for term in terms]
-    present = [(count, term) for count, term in counted if count]
-    if not present:
-        return factor
-    unique = [term for count, term in present if count == 1]
-    if not unique:
-        return factor
-    blob = (text or "").casefold()
-    owned = sum(1 for term in unique if term in blob)
-    if owned:
-        factor *= 1 + 0.8 * owned
-    return factor
+def _numbers(text: str) -> set[str]:
+    return set(_NUMBER.findall(text or ""))
+
+
+def _is_stale(hit: Hit) -> bool:
+    return bool(getattr(hit, "superseded", False) or getattr(hit, "status", "") == "superseded")
+
+
+def _aligned_texts(heading_a: str, text_a: str, heading_b: str, text_b: str) -> bool:
+    left = (heading_a or "").strip()
+    right = (heading_b or "").strip()
+    if left and right and left == right:
+        return True
+    return (
+        _ratio(mask_variable_spans(text_a), mask_variable_spans(text_b)) >= NEAR_DUP_RATIO
+    )
+
+
+def _window(text: str, token: str) -> str:
+    at = (text or "").find(token)
+    if at < 0:
+        return token
+    start = max(0, at - 48)
+    if start > 0 and not text[start - 1].isspace() and not text[start].isspace():
+        space = text.find(" ", start, at)
+        if space != -1:
+            start = space + 1
+    end = min(len(text), at + len(token) + 8)
+    return " ".join(text[start:end].split())
+
+
+def _windows(text: str, tokens: list[str], focus: str = "") -> str:
+    parts: list[str] = []
+    seen: set[str] = set()
+    focus_nums = _numbers(focus)
+    ordered = sorted(tokens, key=lambda token: (token not in focus_nums, text.find(token)))
+    for token in ordered[:8]:
+        span = _window(text, token)
+        if span not in seen:
+            seen.add(span)
+            parts.append(span)
+    return "; ".join(parts)
+
+
+def _unique(tokens: list[str]) -> list[str]:
+    seen: set[str] = set()
+    out: list[str] = []
+    for token in tokens:
+        if token not in seen:
+            seen.add(token)
+            out.append(token)
+    return out
+
+
+def _number_diff(text_a: str, text_b: str) -> tuple[list[str], list[str]]:
+    """Numbers that differ between two near-duplicate passages.
+
+    Set difference misses a year that moved: 2040 can be the new carbon target
+    and also appear later as the old date of a different target. Compare the
+    number sequences in order when the passages still line up.
+    """
+    if _ratio(mask_variable_spans(text_a), mask_variable_spans(text_b)) < NEAR_DUP_RATIO:
+        return [], []
+    seq_a = _NUMBER.findall(text_a or "")
+    seq_b = _NUMBER.findall(text_b or "")
+    if seq_a and len(seq_a) == len(seq_b):
+        changed_a = [left for left, right in zip(seq_a, seq_b) if left != right]
+        changed_b = [right for left, right in zip(seq_a, seq_b) if left != right]
+        if changed_a:
+            return _unique(changed_a), _unique(changed_b)
+    nums_a, nums_b = set(seq_a), set(seq_b)
+    only_a = sorted(nums_a - nums_b, key=lambda token: text_a.find(token))
+    only_b = sorted(nums_b - nums_a, key=lambda token: text_b.find(token))
+    return only_a, only_b
+
+
+def values_differ(text_a: str, text_b: str) -> bool:
+    only_a, only_b = _number_diff(text_a, text_b)
+    return bool(only_a and only_b)
+
+
+def _hit_name(hit: Hit) -> str:
+    source = getattr(hit, "source_path", "") or ""
+    return source.rsplit("/", 1)[-1]
+
+
+def _conflicting_pair(
+    hits: Sequence[Hit],
+    focus: str = "",
+) -> tuple[Hit, Hit, list[str], list[str]] | None:
+    groups: dict[str, list[Hit]] = {}
+    for hit in hits:
+        group = getattr(hit, "version_group", None) or ""
+        if group:
+            groups.setdefault(group, []).append(hit)
+    found: list[tuple[Hit, Hit, list[str], list[str]]] = []
+    for members in groups.values():
+        currents = [hit for hit in members if not _is_stale(hit)]
+        stales = [hit for hit in members if _is_stale(hit)]
+        for current in currents:
+            for stale in stales:
+                if not _aligned_texts(
+                    current.heading_path,
+                    current.parent_text,
+                    stale.heading_path,
+                    stale.parent_text,
+                ):
+                    continue
+                only_current, only_stale = _number_diff(current.parent_text, stale.parent_text)
+                if only_current and only_stale:
+                    found.append((current, stale, only_current, only_stale))
+    if not found:
+        return None
+    focus_nums = _numbers(focus)
+    if focus_nums:
+        for item in found:
+            numbers = set(item[2]) | set(item[3])
+            if focus_nums & numbers:
+                return item
+    return found[0]
+
+
+def disclose_conflict(answer: str, hits: Sequence[Hit], query: str = "") -> ConflictNote:
+    """When a current passage and its superseded twin disagree, say so."""
+    text = answer or ""
+    pair = _conflicting_pair(hits, f"{query}\n{text}")
+    if pair is None:
+        return ConflictNote(False, text)
+    current, stale, only_current, only_stale = pair
+    stale_name = _hit_name(stale)
+    current_name = _hit_name(current)
+    cite = list(hits).index(current) + 1
+    low = text.lower()
+    named = stale_name.lower() in low
+    has_current = any(value in text for value in only_current)
+    has_stale = any(value in text for value in only_stale)
+    note = ConflictNote(
+        True,
+        text,
+        current_doc=current_name,
+        superseded_doc=stale_name,
+        current_value=only_current[0],
+        superseded_value=only_stale[0],
+        cite=cite,
+        version_group=getattr(current, "version_group", "") or "",
+    )
+    if named and has_current and has_stale:
+        return note
+    sentence = (
+        f"The current document states {_windows(current.parent_text, only_current, text)}. "
+        f"Note: a superseded version ({stale_name}) states {_windows(stale.parent_text, only_stale, text)}."
+    )
+    abstained = (not text.strip()) or any(marker in low for marker in _ABSTAIN)
+    note.answer = sentence if abstained else text.rstrip() + "\n" + sentence
+    return note
+
+
+def aligned_peer_records(index: Index, hits: list[Hit]) -> list[dict[str, Any]]:
+    """The other version of a retrieved section, when its dates or numbers differ."""
+    if not hits or not hasattr(index, "list_doc_records") or not hasattr(index, "parent_records"):
+        return []
+    docs = list(index.list_doc_records())
+    present = {hit.parent_id for hit in hits}
+    wanted: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for hit in hits:
+        group = getattr(hit, "version_group", None)
+        if not group:
+            continue
+        hit_stale = _is_stale(hit)
+        for record in docs:
+            if record.get("version_group") != group:
+                continue
+            peer_stale = (record.get("status") or "current") == "superseded"
+            if peer_stale == hit_stale:
+                continue
+            already = [
+                other
+                for other in hits
+                if (getattr(other, "version_group", None) or "") == group and _is_stale(other) == peer_stale
+            ]
+            if any(
+                _aligned_texts(hit.heading_path, hit.parent_text, other.heading_path, other.parent_text)
+                and values_differ(hit.parent_text, other.parent_text)
+                for other in already
+            ):
+                continue
+            doc_id = record.get("id")
+            if not doc_id:
+                continue
+            best: dict[str, Any] | None = None
+            best_ratio = -1.0
+            for parent in index.parent_records(doc_id):
+                parent_id = parent.get("parent_id")
+                if not parent_id or parent_id in present or parent_id in seen:
+                    continue
+                heading = parent.get("heading_path") or ""
+                text = parent.get("text") or ""
+                same_heading = bool(
+                    (hit.heading_path or "").strip() and (hit.heading_path or "").strip() == heading.strip()
+                )
+                ratio = _ratio(mask_variable_spans(hit.parent_text), mask_variable_spans(text))
+                if not same_heading and ratio < NEAR_DUP_RATIO:
+                    continue
+                if not values_differ(hit.parent_text, text):
+                    continue
+                if same_heading or ratio > best_ratio:
+                    best = parent
+                    best_ratio = 1.0 if same_heading else ratio
+                    if same_heading:
+                        break
+            if best is None:
+                continue
+            parent_id = str(best["parent_id"])
+            seen.add(parent_id)
+            present.add(parent_id)
+            wanted.append(best)
+    return wanted
 
 
 def downrank_superseded(hits: list[Hit], query: str = "", focus: bool = True) -> list[Hit]:
     """Lower superseded scores in place and re-sort; never drop them."""
+    del focus
     for hit in hits:
         named = query_names_document(
             query,
             getattr(hit, "source_path", "") or "",
             getattr(hit, "review_date", None),
         )
-        if not named and (
-            getattr(hit, "superseded", False) or getattr(hit, "status", "") == "superseded"
-        ):
+        if _is_stale(hit) and not named:
             hit.score = float(hit.score) * SUPERSEDED_SCORE_FACTOR
-        if entity_mismatch(query, getattr(hit, "parent_text", "") or ""):
-            hit.score = float(hit.score) * 0.45
         if looks_like_toc(getattr(hit, "parent_text", "") or ""):
             hit.score = float(hit.score) * TOC_FACTOR
-    if focus:
-        passages = [getattr(hit, "parent_text", "") or "" for hit in hits]
-        for hit in hits:
-            hit.score = float(hit.score) * focus_multiplier(
+        # The title boost reorders. It must not scale the score: sigmoid
+        # scores live on 0–1, and a 1.65× factor pushes them above every tau.
+    hits.sort(
+        key=lambda hit: -(
+            float(hit.score)
+            * title_match_boost(
                 query,
-                getattr(hit, "parent_text", "") or "",
+                getattr(hit, "title", None) or "",
                 getattr(hit, "source_path", "") or "",
-                passages,
             )
-        hit.score = float(hit.score) * signatory_boost(query, getattr(hit, "parent_text", "") or "")
-    hits.sort(key=lambda h: -float(h.score))
-    _swap_named_year(hits, query)
-    _swap_when_the_date_is_close(hits, query)
-    _swap_exact_tie(hits, query)
+        )
+    )
+    _prefer_named_copy(hits, query)
     return hits
 
 
-def _term_coverage(query: str, text: str) -> int:
-    blob = (text or "").casefold()
-    return sum(blob.count(term) for term in _query_terms(query))
-
-
-def _swap_exact_tie(hits: list[Hit], query: str) -> None:
-    """Equal scores: keep the passage that repeats more of the question."""
-    if not query or len(hits) < 2:
-        return
-    first, second = hits[0], hits[1]
-    top = float(first.score)
-    if top <= 0 or abs(top - float(second.score)) > top * 0.005:
-        return
-    if _term_coverage(query, getattr(second, "parent_text", "") or "") > _term_coverage(
-        query, getattr(first, "parent_text", "") or ""
-    ):
-        hits[0], hits[1] = second, first
-
-
-def _swap_when_the_date_is_close(hits: list[Hit], query: str) -> None:
-    """A by-when question whose top two scores are tied prefers the passage that states a year."""
-    if not query or len(hits) < 2:
-        return
-    if not re.search(r"\bby when\b|\bwhat year\b|\bwhich year\b|\btarget year\b", query, re.IGNORECASE):
-        return
-    first, second = hits[0], hits[1]
-    top = float(first.score)
-    if top <= 0 or float(second.score) < top * 0.95:
-        return
-    first_year = re.search(r"20\d{2}", getattr(first, "parent_text", "") or "")
-    second_year = re.search(r"20\d{2}", getattr(second, "parent_text", "") or "")
-    if second_year and not first_year:
-        hits[0], hits[1] = second, first
-
-
-def _swap_named_year(hits: list[Hit], query: str) -> None:
-    """Move a named-year copy ahead of its sibling without moving other documents."""
+def _prefer_named_copy(hits: list[Hit], query: str) -> None:
+    """Move a copy whose year the question names ahead of its sibling."""
     if not query or len(hits) < 2:
         return
     groups: dict[str, list[Hit]] = {}
@@ -707,3 +598,5 @@ def _swap_named_year(hits: list[Hit], query: str) -> None:
         other_at = hits.index(others[0])
         if other_at < named_at:
             hits[named_at], hits[other_at] = hits[other_at], hits[named_at]
+
+

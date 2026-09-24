@@ -1,3 +1,4 @@
+import math
 import time
 from collections.abc import Callable
 from typing import Any, cast
@@ -20,12 +21,7 @@ from rag.models import (
 )
 from rag.store import Index
 from rag.telemetry import StageTimer
-from rag.versions import (
-    SUPERSEDED_SCORE_FACTOR,
-    entity_mismatch,
-    focus_multiplier,
-    signatory_boost,
-)
+from rag.versions import SUPERSEDED_SCORE_FACTOR, title_match_boost
 
 
 def fuse(id_lists: list[list[str]], k: int = RRF_K) -> list[tuple[str, float]]:
@@ -88,26 +84,22 @@ def retrieve(
 def _gate(result: Retrieval, index: Index, mode: str, query: str = "") -> Retrieval:
     if not result.hits or result.reason:
         return result
-    top = result.hits[0].score
+    # Tau judges the best retriever score. Title ordering may place a
+    # lower-scored passage first; that must not turn a confident list into an abstention.
+    top = max(hit.score for hit in result.hits)
     cutoff = index.get_tau(_stored_tau_key(index, mode))
     if cutoff is not None and top < cutoff:
         return Retrieval(hits=[], reason="no_confident_hit")
-    # The 15% band is for reranker scores, where 0.2 vs 1.0 is a different
-    # answer. Reciprocal-rank and BM25 lists are not on that scale: rank 2 is
-    # always 0.5, so the band used to delete every hit past the first and
-    # turn recall@5 into precision@1.
-    if mode in ("rerank", "cascade"):
-        kept = [hit for hit in result.hits if _in_band(hit.score, top)]
-    else:
-        kept = list(result.hits)
-    kept = kept[:MAX_PARENTS]
+    # The band marks confidence. It does not drop hits: rank-2 reciprocal
+    # scores sit at half of rank 1, so a cut here used to turn recall@5 into precision@1.
+    kept = list(result.hits)[:MAX_PARENTS]
     kept = _retain_superseded_siblings(kept, result.hits)
     kept = _append_fact_siblings(index, query, kept)
     if len(kept) == 1:
         kept[0].confident = True
     else:
         for hit in kept:
-            hit.confident = False
+            hit.confident = mode in ("rerank", "cascade") and _in_band(hit.score, top)
     return Retrieval(hits=kept)
 
 
@@ -141,13 +133,9 @@ def _retain_superseded_siblings(kept: list[Hit], all_hits: list[Hit]) -> list[Hi
 
 def _append_fact_siblings(index: Index, query: str, hits: list[Hit]) -> list[Hit]:
     """Keep the paired version of a matched fact even when it lost the top-k cut."""
-    from rag.versions import conflict_sibling_records
+    from rag.versions import aligned_peer_records
 
-    # versions.conflict_sibling_records is untyped; cast only the callable.
-    records = cast(
-        Callable[[Index, str, list[Hit]], list[dict[str, Any]]],
-        conflict_sibling_records,
-    )(index, query, hits)
+    records = aligned_peer_records(index, hits)
     if not records:
         return hits
     out = list(hits)
@@ -265,37 +253,46 @@ def _retrieve(
                 index, [winner], chunks, child_scores, dict(parent_ranked), True, query
             )
 
-    top_ids = [chunk_id for chunk_id, _score in child_ranked][:RERANK_K]
-    top_ids = [chunk_id for chunk_id in top_ids if chunk_id in chunks]
+    ranked_parents = [parent_id for parent_id, _score in parent_ranked][:RERANK_K]
+    records = index.get_parents(ranked_parents)
+    passages: list[str] = []
+    top_ids: list[str] = []
+    for parent_id in ranked_parents:
+        record = records.get(parent_id)
+        if record is None:
+            continue
+        heading = record.get("heading_path") or ""
+        body = record.get("text") or ""
+        passages.append(f"{heading}\n{body}" if heading else body)
+        top_ids.append(parent_id)
+    if not top_ids:
+        return Retrieval(hits=[])
     if rerank is None:
         raise QueryError("reranker is not available")
     with timer.measure("rerank", candidates_in=len(top_ids)) as rerank_span:
-        rerank_scores = list(
-            rerank(query, [cast(str, chunks[chunk_id]["embed_text"]) for chunk_id in top_ids])
-        )
-        if len(rerank_scores) != len(top_ids):
+        raw_scores = list(rerank(query, passages))
+        if len(raw_scores) != len(top_ids):
             raise QueryError("reranker returned the wrong number of scores")
+        rerank_scores = [_sigmoid(float(score)) for score in raw_scores]
         rerank_order = sorted(range(len(top_ids)), key=lambda index: -rerank_scores[index])
         rerank_span["candidates_out"] = len(rerank_order)
-        if rerank_scores:
-            rerank_span["top_score"] = float(max(rerank_scores))
+        rerank_span["top_score"] = float(max(rerank_scores))
+    by_parent: dict[str, list[dict[str, Any]]] = {}
+    for chunk in chunks.values():
+        by_parent.setdefault(cast(str, chunk["parent_id"]), []).append(chunk)
     parent_ids: list[str] = []
     parent_scores: dict[str, float] = {}
     child_for: dict[str, str] = {}
     for index_ in rerank_order:
-        parent_id = cast(str, chunks[top_ids[index_]]["parent_id"])
-        if parent_id in parent_scores:
-            continue
-        parent_scores[parent_id] = float(rerank_scores[index_])
-        child_for[parent_id] = top_ids[index_]
+        parent_id = top_ids[index_]
+        parent_scores[parent_id] = rerank_scores[index_]
+        child_for[parent_id] = _best_child(parent_id, by_parent.get(parent_id, []), child_scores)
         parent_ids.append(parent_id)
 
     if mode == "rerank":
         parent_ids = _order_current_first(index, parent_ids, parent_scores, query)
         return _emit(index, parent_ids[:MAX_PARENTS], parent_scores, child_for, False, query, focus=False)
 
-    if not parent_ids:
-        return Retrieval(hits=[])
     parent_ids = _order_current_first(index, parent_ids, parent_scores, query)
     return _emit(index, parent_ids[:MAX_PARENTS], parent_scores, child_for, False, query, focus=False)
 
@@ -306,6 +303,14 @@ def _stored_tau_key(index: Index, mode: str = "cascade") -> str:
         cast(str, getattr(index, "model_revision", EMBED_REVISION)),
         mode,
     )
+
+
+def _sigmoid(value: float) -> float:
+    if value >= 20:
+        return 1.0
+    if value <= -20:
+        return 0.0
+    return 1.0 / (1.0 + math.exp(-value))
 
 
 def _in_band(score: float, top: float) -> bool:
@@ -342,9 +347,6 @@ def _order_current_first(
 
     records = index.get_parents(parent_ids)
     origin = {parent_id: position for position, parent_id in enumerate(parent_ids)}
-    passages = [
-        cast(str, (records.get(parent_id) or {}).get("text") or "") for parent_id in parent_ids
-    ]
 
     def sort_key(parent_id: str) -> tuple[float, int]:
         record = records.get(parent_id) or {}
@@ -353,15 +355,7 @@ def _order_current_first(
         named = query_names_document(query, record.get("source_path") or "", record.get("review_date"))
         if (status == "superseded" or record.get("superseded")) and not named:
             score *= SUPERSEDED_SCORE_FACTOR
-        if entity_mismatch(query, record.get("text") or ""):
-            score *= 0.45
-        score *= focus_multiplier(
-            query,
-            record.get("text") or "",
-            record.get("source_path") or "",
-            passages,
-        )
-        score *= signatory_boost(query, record.get("text") or "")
+        score *= title_match_boost(query, record.get("title") or "", record.get("source_path") or "")
         return (-score, origin[parent_id])
 
     ordered = sorted(parent_ids, key=sort_key)
