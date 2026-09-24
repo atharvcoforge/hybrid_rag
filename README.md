@@ -36,7 +36,7 @@ Measured commands and logs are in `docs/SUBMISSION.md`.
 - Parent chunks around 700 characters, child chunks around 180, so a citation can point at the section that contains the fact.
 - Reciprocal-rank fusion (`k=60`) is the live retriever. The cross-encoder is measured and is not live: on this corpus its p95 is about 2.2s and a 0–1 threshold abstains most questions. See the decision log.
 - Version handling is generic. A superseded file stays in the index, passages are tagged current or superseded, and a conflict note names the older file when the numbers differ.
-- The enforced mutation floor is the number in `evals/mutmut_floor.txt`. The latest local run killed 1825 of 2895 decided mutants, ratio 0.630 (`docs/verification/logs/72-mutmut.log`). That measured ratio is the ratchet. It is not 0.90.
+- The enforced mutation floor is the number in `evals/mutmut_floor.txt` (0.629). A local run killed 1825 of 2895 decided mutants (0.630). The GitHub run killed 1823 (0.630 printed, 0.6297 exact). The floor sits on the lower of those two. It is not 0.90.
 
 ## API
 
