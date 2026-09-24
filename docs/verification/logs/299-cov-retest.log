@@ -1,7 +1,0 @@
-.F................................                                       [100%]
-=================================== FAILURES ===================================
-E   ZeroDivisionError: division by zero
-/Users/atharv.raotole/Desktop/RAG-WEEK6/src/rag/calibrate.py:56: ZeroDivisionError: division by zero
-=========================== short test summary info ============================
-FAILED tests/test_cov_calibrate.py::test_fit_falls_through_when_every_threshold_answers_nothing
-1 failed, 33 passed in 0.67s

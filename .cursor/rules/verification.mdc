@@ -1,0 +1,60 @@
+---
+description: Evidence on disk or it did not happen. Reports cite docs/verification/logs and docs/SUBMISSION.md.
+globs:
+alwaysApply: true
+---
+
+# Verification mode — active
+
+Evidence for this repo is recorded against `docs/SUBMISSION.md`. These rules override
+everything else for a verification run, including `ponytail.mdc`.
+
+## Ponytail stands down
+
+`ponytail.mdc` says shortest working diff wins and no unrequested work. That rule is correct
+for feature work and wrong here. Verification is explicitly requested exhaustive work, which
+ponytail's own "not lazy about: anything explicitly requested" clause already exempts. Do not
+shorten a run, skip a command, sample a subset, or summarise instead of executing, on
+laziness grounds. When the two rules disagree, this file wins.
+
+## Evidence lives on disk
+
+Every command is run as:
+
+    <command> 2>&1 | tee docs/verification/logs/<NN>-<slug>.log
+
+If a claim in any report is not backed by a file in `docs/verification/logs/`, the claim is
+invalid and must be deleted or re-run. Chat output is not evidence — it does not survive the
+session, and `docs/SUBMISSION.md` is assembled from the log files, not from memory.
+
+Never paste invented terminal output. If a command was not run, write
+`NOT RUN — <reason>` and move on. A short honest report beats a long fabricated one.
+
+## Forbidden without an entry in the report
+
+- Deleting or weakening an assertion
+- Lowering `fail_under`, a `suite.yaml` gate, or an SLO target
+- Adding `@pytest.mark.skip`, `xfail`, `# pragma: no cover`, or `# type: ignore`
+- Widening an `except` clause
+- Marking something done that you did not observe working
+
+Any of these may be *proposed* in the report with a justification. None may be done silently.
+
+## Banned phrasings
+
+"should work", "should now", "presumably", "likely", "appears to", "this will fix",
+"I've made sure", "everything passes" without the pasted table.
+
+Replace with: what you ran, the exit code, and the output.
+
+## One part at a time
+
+Work the part you were asked for and stop. Do not start the next part unprompted. End every
+part by writing its section file under `docs/verification/` and printing a three-line status:
+what passed, what failed, what you could not run.
+
+## Long commands
+
+Anything expected to exceed two minutes (`mutmut`, `docker build`, full ingest, contextual
+retrieval) runs detached with output tee'd to a log, then you poll the log. Do not run it in
+the foreground, watch it time out, and report a timeout as a failure of the thing itself.

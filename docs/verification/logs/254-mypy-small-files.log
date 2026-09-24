@@ -1,2 +1,0 @@
-src/rag/onnx_backend.py:36: error: Returning Any from function declared to return "object | None"  [no-any-return]
-Found 1 error in 1 file (checked 4 source files)

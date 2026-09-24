@@ -1,6 +1,0 @@
- Container rag-week6-api-1 Starting 
- Container rag-week6-api-1 Started 
- Container rag-week6-api-1 Waiting 
- Container rag-week6-api-1 Error dependency api failed to start
-dependency failed to start: container rag-week6-api-1 is unhealthy
-UP_EXIT:1

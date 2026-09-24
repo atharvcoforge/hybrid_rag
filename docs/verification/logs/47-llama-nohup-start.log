@@ -1,7 +1,0 @@
-(eval):disown:6: no current job
-pid=5961
-up_at_2s
-{"status":"ok"}
-5961 tools/llama-b11093/llama-server -m models/qwen2.5-3b-instruct-q4_k_m.gguf --port 8081 -ngl 99 --host 0.0.0.0 -c 8192
-b'{"status":"ok"}'
-writer_up True

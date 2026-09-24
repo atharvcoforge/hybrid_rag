@@ -1,69 +1,0 @@
-⠋ Generating mutants⠙ Generating mutants⠹ Generating mutants⠸ Generating mutants⠼ Generating mutants⠴ Generating mutants⠦ Generating mutants⠧ Generating mutants⠇ Generating mutants⠏ Generating mutants⠋ Generating mutants⠙ Generating mutants⠹ Generating mutants⠸ Generating mutants⠼ Generating mutants⠴ Generating mutants⠦ Generating mutants⠧ Generating mutants⠇ Generating mutants⠏ Generating mutants⠋ Generating mutants⠙ Generating mutants⠹ Generating mutants⠸ Generating mutants⠼ Generating mutants⠴ Generating mutants⠦ Generating mutants⠧ Generating mutants⠇ Generating mutants⠏ Generating mutants⠋ Generating mutants⠙ Generating mutants⠹ Generating mutants⠸ Generating mutants⠼ Generating mutants⠴ Generating mutants⠦ Generating mutants⠧ Generating mutants⠧ Generating mutants⠧ Generating mutants⠧ Generating mutants⠧ Generating mutants⠧ Generating mutants⠧ Generating mutants⠧ Generating mutants⠇ Generating mutants⠇ Generating mutants⠧ Generating mutants⠇ Generating mutants⠇ Generating mutants⠇ Generating mutants⠧ Generating mutants⠇ Generating mutants⠇ Generating mutants⠇ Generating mutants⠇ Generating mutants⠇ Generating mutants⠏ Generating mutants⠏ Generating mutants⠏ Generating mutants⠋ Generating mutants⠏ Generating mutants⠏ Generating mutants⠏ Generating mutants⠏ Generating mutants⠏ Generating mutants⠋ Generating mutants⠏ Generating mutants⠋ Generating mutants⠏ Generating mutants⠋ Generating mutants⠋ Generating mutants⠙ Generating mutants⠋ Generating mutants⠋ Generating mutants⠋ Generating mutants⠋ Generating mutants⠙ Generating mutants⠋ Generating mutants⠹ Generating mutants⠙ Generating mutants⠙ Generating mutants⠙ Generating mutants⠹ Generating mutants⠙ Generating mutants⠹ Generating mutants⠹ Generating mutants⠹ Generating mutants⠹ Generating mutants
-    done in 1618ms (3 files mutated, 23 ignored, 0 unmodified)
-⠧ Running stats     ⠇ Running stats⠏ Running stats⠋ Running stats⠙ Running stats⠹ Running stats⠸ Running stats⠼ Running stats⠴ Running stats⠦ Running stats⠧ Running stats⠇ Running stats⠏ Running stats⠋ Running stats⠙ Running stats⠹ Running stats⠸ Running stats⠼ Running stats⠴ Running stats⠦ Running stats⠧ Running stats⠇ Running stats⠏ Running stats⠋ Running stats⠙ Running stats⠹ Running stats⠸ Running stats⠼ Running stats⠴ Running stats⠦ Running stats⠧ Running stats⠇ Running stats⠏ Running stats⠋ Running stats⠙ Running stats⠹ Running stats⠸ Running stats⠼ Running stats⠴ Running stats⠦ Running stats⠧ Running stats⠇ Running stats⠏ Running stats⠋ Running stats⠙ Running stats⠹ Running stats⠸ Running stats⠼ Running stats⠴ Running stats
-.................................F
-=================================== FAILURES ===================================
-____________________ test_suite_yaml_pins_corpus_and_gates _____________________
-Traceback (most recent call last):
-  File "/Users/atharv.raotole/Desktop/RAG-WEEK6/.venv/lib/python3.11/site-packages/_pytest/runner.py", line 361, in from_call
-    result: TResult | None = func()
-                             ^^^^^^
-  File "/Users/atharv.raotole/Desktop/RAG-WEEK6/.venv/lib/python3.11/site-packages/_pytest/runner.py", line 250, in <lambda>
-    lambda: runtest_hook(item=item, **kwds),
-            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/atharv.raotole/Desktop/RAG-WEEK6/.venv/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
-    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/atharv.raotole/Desktop/RAG-WEEK6/.venv/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
-    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/atharv.raotole/Desktop/RAG-WEEK6/.venv/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
-    raise exception
-  File "/Users/atharv.raotole/Desktop/RAG-WEEK6/.venv/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
-    teardown.throw(exception)
-  File "/Users/atharv.raotole/Desktop/RAG-WEEK6/.venv/lib/python3.11/site-packages/_pytest/logging.py", line 865, in pytest_runtest_call
-    yield
-  File "/Users/atharv.raotole/Desktop/RAG-WEEK6/.venv/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
-    teardown.throw(exception)
-  File "/Users/atharv.raotole/Desktop/RAG-WEEK6/.venv/lib/python3.11/site-packages/_pytest/capture.py", line 900, in pytest_runtest_call
-    return (yield)
-            ^^^^^
-  File "/Users/atharv.raotole/Desktop/RAG-WEEK6/.venv/lib/python3.11/site-packages/pluggy/_callers.py", line 139, in _multicall
-    teardown.throw(exception)
-  File "/Users/atharv.raotole/Desktop/RAG-WEEK6/.venv/lib/python3.11/site-packages/_pytest/skipping.py", line 268, in pytest_runtest_call
-    return (yield)
-            ^^^^^
-  File "/Users/atharv.raotole/Desktop/RAG-WEEK6/.venv/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
-    res = hook_impl.function(*args)
-          ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/atharv.raotole/Desktop/RAG-WEEK6/.venv/lib/python3.11/site-packages/_pytest/runner.py", line 184, in pytest_runtest_call
-    item.runtest()
-  File "/Users/atharv.raotole/Desktop/RAG-WEEK6/.venv/lib/python3.11/site-packages/_pytest/python.py", line 1707, in runtest
-    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
-  File "/Users/atharv.raotole/Desktop/RAG-WEEK6/.venv/lib/python3.11/site-packages/pluggy/_hooks.py", line 512, in __call__
-    return self._hookexec(self.name, self._hookimpls.copy(), kwargs, firstresult)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/atharv.raotole/Desktop/RAG-WEEK6/.venv/lib/python3.11/site-packages/pluggy/_manager.py", line 120, in _hookexec
-    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/atharv.raotole/Desktop/RAG-WEEK6/.venv/lib/python3.11/site-packages/pluggy/_callers.py", line 167, in _multicall
-    raise exception
-  File "/Users/atharv.raotole/Desktop/RAG-WEEK6/.venv/lib/python3.11/site-packages/pluggy/_callers.py", line 121, in _multicall
-    res = hook_impl.function(*args)
-          ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/atharv.raotole/Desktop/RAG-WEEK6/.venv/lib/python3.11/site-packages/_pytest/python.py", line 167, in pytest_pyfunc_call
-    result = testfunction(**testargs)
-             ^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/Users/atharv.raotole/Desktop/RAG-WEEK6/tests/test_evaluate.py", line 185, in test_suite_yaml_pins_corpus_and_gates
-    assert verify_corpus(suite) == []
-AssertionError: assert ['missing doc...t_Policy.pdf'] == []
-  
-  Left contains 4 more items, first extra item: 'missing documents/Carbon_Reduction_Plan.pdf'
-  Use -v to get more diff
-=========================== short test summary info ============================
-FAILED tests/test_evaluate.py::test_suite_yaml_pins_corpus_and_gates - Assert...
-!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!!
-1 failed, 33 passed in 0.51s
-failed to collect stats. runner returned 1
-
-EXIT:1

@@ -28,7 +28,7 @@ curl -sS -N -X POST http://127.0.0.1:8000/api/query \
   -d '{"q":"By when does Coforge reach net zero?"}'
 ```
 
-Clone to first answered query should be under ten minutes if the embedder weights are already cached in `HF_HOME`. See `docs/BRINGUP.md` for a measured run and known footguns.
+Clone to first answered query should be under ten minutes if the embedder weights are already cached in `HF_HOME`. See `docs/SUBMISSION.md` for the measured run.
 
 Docker: `docker compose up --build` (API on `:8000`, web on `:80`). Point `GENERATOR_URL` at a local llama.cpp OpenAI-compatible server.
 
@@ -49,7 +49,7 @@ Derived blocks (VLM captions) cannot be the sole support for a factual claim. OC
 - **One SQLite file** (`index/rag.sqlite`) — exact cosine, weighted FTS5. No Chroma.
 - **Parent/child chunking** with optional contextual prefixes behind `--contextual` / `contextual=True`.
 - **Table ladder** — ruled lines → borderless text strategy → optional Docling.
-- **Reranker protocol** — local cross-encoder by default; `NullReranker` on failure; `JevReranker` stub refuses remote unless `ALLOW_REMOTE_INFERENCE=1`.
+- **Reranker protocol** — local cross-encoder by default; `NullReranker` keeps incoming order if it fails to load.
 - **Resilience** — LRU answer cache keyed by index generation, bounded inference queue (429), generator circuit breaker with extractive fallback.
 
 ## Tests and CI

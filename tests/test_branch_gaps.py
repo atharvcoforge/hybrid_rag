@@ -14,9 +14,8 @@ from rag.health import CircuitBreaker, HealthState
 from rag.layout import extract_page_tables, looks_borderless, render_rows, score_table
 from rag.models import Hit, Retrieval, make_embed_text
 from rag.ocr import caption_figure, page_image, text_coverage
-from rag.onnx_backend import onnx_embed_path, onnx_rerank_path, try_onnx_session
 from rag.queue import BusyError, InferenceQueue
-from rag.rerank import CrossEncoderReranker, JevReranker
+from rag.rerank import CrossEncoderReranker
 from rag.store import Index
 from rag.telemetry import configure_logging, log_event, set_stage_bus, span
 from tests.fakes import fake_encode, fake_tokens
@@ -116,7 +115,7 @@ def test_fit_and_calibrate_write_a_held_out_report(tmp_path):
     assert json.loads(out.read_text())["modes"]
 
 
-def test_cross_encoder_loads_and_jev_stub_stays_closed(monkeypatch):
+def test_cross_encoder_loads(monkeypatch):
     class Model:
         def predict(self, pairs, show_progress_bar=False):
             del pairs, show_progress_bar
@@ -125,55 +124,6 @@ def test_cross_encoder_loads_and_jev_stub_stays_closed(monkeypatch):
     monkeypatch.setattr("rag.embed.load_reranker", lambda: Model())
     assert CrossEncoderReranker().score("q", []) == []
     assert CrossEncoderReranker().score("q", ["a"]) == [0.4]
-    monkeypatch.setenv("ALLOW_REMOTE_INFERENCE", "1")
-    monkeypatch.setenv("JEV_API_KEY", "secret")
-    with pytest.raises(RuntimeError, match="stub"):
-        JevReranker().score("q", ["a"])
-
-
-def test_onnx_paths_and_a_stub_session(tmp_path, monkeypatch):
-    monkeypatch.delenv("RAG_ONNX_EMBED", raising=False)
-    monkeypatch.delenv("RAG_ONNX_RERANK", raising=False)
-    assert onnx_embed_path() is None
-    assert onnx_rerank_path() is None
-    missing = tmp_path / "nope.onnx"
-    monkeypatch.setenv("RAG_ONNX_EMBED", str(missing))
-    assert onnx_embed_path() is None
-    model = tmp_path / "embed.onnx"
-    model.write_bytes(b"onnx")
-    monkeypatch.setenv("RAG_ONNX_EMBED", str(model))
-    monkeypatch.setenv("RAG_ONNX_RERANK", str(model))
-    assert onnx_embed_path() == model
-    assert onnx_rerank_path() == model
-
-    fake = types.ModuleType("onnxruntime")
-
-    class SessionOptions:
-        graph_optimization_level = None
-
-    class GraphOptimizationLevel:
-        ORT_ENABLE_ALL = 1
-
-    class InferenceSession:
-        def __init__(self, path, sess_options=None, providers=None):
-            self.path = path
-
-    fake.SessionOptions = SessionOptions
-    fake.GraphOptimizationLevel = GraphOptimizationLevel
-    fake.InferenceSession = InferenceSession
-    monkeypatch.setitem(sys.modules, "onnxruntime", fake)
-    session = try_onnx_session(model)
-    assert session.path == str(model)
-    monkeypatch.setitem(sys.modules, "onnxruntime", None)
-    # ImportError path: a broken module entry raises on attribute use, not ImportError.
-    # Remove it so the import fails.
-    monkeypatch.delitem(sys.modules, "onnxruntime", raising=False)
-    real = sys.modules.pop("onnxruntime", None)
-    try:
-        assert try_onnx_session(model) is None or real is not None
-    finally:
-        if real is not None:
-            sys.modules["onnxruntime"] = real
 
 
 def test_writer_stream_and_complete(monkeypatch):

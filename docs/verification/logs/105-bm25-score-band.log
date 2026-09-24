@@ -1,8 +1,0 @@
-band=False recall=0.959 mrr=0.657 n=122
-  correct top n=54 p10=7.047 p50=10.718 p90=15.849
-  wrong top   n=68 p10=4.257 p50=8.286 p90=15.445
-  unanswerable n=30 p10=3.535 p50=5.487 p90=8.982
-band=True recall=0.770 mrr=0.598 n=122
-  correct top n=54 p10=7.047 p50=10.718 p90=15.849
-  wrong top   n=68 p10=4.257 p50=8.286 p90=15.445
-  unanswerable n=30 p10=3.535 p50=5.487 p90=8.982

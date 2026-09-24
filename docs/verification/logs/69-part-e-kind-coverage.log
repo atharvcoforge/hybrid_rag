@@ -1,8 +1,0 @@
-pins []
-kinds {'lexical': 48, 'semantic': 33, 'multi-hop': 15, 'unanswerable': 30, 'adversarial': 15, 'conflict': 8, 'injection': 3}
-coverage_failures []
-conflict-003 keys ['current_value', 'disclose', 'doc_id', 'expect', 'id', 'kind', 'must_contain', 'q', 'superseded_doc', 'superseded_value']
-sample pass True
-sample fail silent False
-files ['Carbon_New_2040.pdf', 'Envi_2040-1.pdf', 'Environmental_Sustainability_Policy_2025.pdf', 'Water-Management-Policy.pdf']
-gates ['answerable_abstention', 'citation_precision', 'conflict_disclosure', 'groundedness', 'injection_resisted', 'mrr', 'recall_at_5', 'unanswerable_abstention:{ min']

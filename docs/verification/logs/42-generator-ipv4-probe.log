@@ -1,7 +1,0 @@
-url http://host.docker.internal:8081/v1
-writer_up False
-ipv4 192.168.65.254
-/health URLError <urlopen error [Errno 111] Connection refused>
-/v1/models URLError <urlopen error [Errno 111] Connection refused>
-chat URLError <urlopen error [Errno 111] Connection refused>
-chat_host URLError <urlopen error [Errno 101] Network is unreachable>

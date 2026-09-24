@@ -11,3 +11,4 @@ mutants/
 models/
 tools/
 evals/latest.json
+.coverage

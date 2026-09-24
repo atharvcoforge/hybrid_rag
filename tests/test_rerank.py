@@ -1,9 +1,6 @@
-"""Reranker protocol: swappable scorers (§09)."""
+"""Reranker protocol: swappable scorers."""
 
-
-import pytest
-
-from rag.rerank import CrossEncoderReranker, JevReranker, NullReranker
+from rag.rerank import CrossEncoderReranker, NullReranker
 
 
 def test_null_reranker_preserves_input_order_with_descending_scores():
@@ -23,18 +20,3 @@ def test_cross_encoder_reranker_delegates_to_predict():
     assert reranker.score("q", ["x", "y"]) == [0.0, 0.1]
     assert reranker.calibrated is False
 
-
-def test_jev_reranker_is_blocked_without_explicit_remote_allowance(monkeypatch):
-    monkeypatch.delenv("ALLOW_REMOTE_INFERENCE", raising=False)
-    monkeypatch.delenv("JEV_API_KEY", raising=False)
-    reranker = JevReranker()
-    with pytest.raises(RuntimeError, match="remote"):
-        reranker.score("q", ["a"])
-
-
-def test_jev_reranker_still_raises_without_a_key_even_when_allowed(monkeypatch):
-    monkeypatch.setenv("ALLOW_REMOTE_INFERENCE", "1")
-    monkeypatch.delenv("JEV_API_KEY", raising=False)
-    reranker = JevReranker()
-    with pytest.raises(RuntimeError, match="JEV_API_KEY"):
-        reranker.score("q", ["a"])

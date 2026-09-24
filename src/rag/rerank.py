@@ -1,13 +1,11 @@
 """Swappable rerankers.
 
-Default is a local cross-encoder. Null keeps RRF order. Jev is a documented
-stub that refuses unless both a key and ALLOW_REMOTE_INFERENCE=1 are set —
-policy text must not leave the machine by accident.
+Default is a local cross-encoder. Null keeps the incoming order when the
+cross-encoder fails to load.
 """
 
 from __future__ import annotations
 
-import os
 from typing import Any, Protocol, runtime_checkable
 
 
@@ -54,23 +52,3 @@ class CrossEncoderReranker:
         return [float(score) for score in scores]
 
 
-class JevReranker:
-    """Hosted typed-judgment API. Local-by-default policy refuses it."""
-
-    calibrated = True
-
-    def score(self, query: str, passages: list[str]) -> list[float]:
-        del query, passages
-        if os.environ.get("ALLOW_REMOTE_INFERENCE") != "1":
-            raise RuntimeError("JevReranker blocked: remote inference is not allowed")
-        if not os.environ.get("JEV_API_KEY"):
-            raise RuntimeError("JevReranker needs JEV_API_KEY")
-        raise RuntimeError("JevReranker is a stub — wire the client when remote is approved")
-
-
-# Ablation model ids recorded for eval rows; swapped via config, not imports.
-ABLATION_RERANKERS = (
-    "BAAI/bge-reranker-v2-m3",
-    "BAAI/bge-reranker-base",
-    "mixedbread-ai/mxbai-rerank-base-v2",
-)

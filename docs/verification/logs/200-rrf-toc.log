@@ -1,2 +1,0 @@
-rrf all n=122 recall=0.902 mrr=0.767
-rrf holdout n=74 recall=0.892 mrr=0.789 hist={1: 53, 3: 5, 2: 7, 'miss': 8, 4: 1}

@@ -1,3 +1,0 @@
-usage: rag [-h] [--log-format {json,console}]
-           {ingest,query,eval,calibrate,purge} ...
-rag: error: argument cmd: invalid choice: 'verify' (choose from 'ingest', 'query', 'eval', 'calibrate', 'purge')
