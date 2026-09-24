@@ -64,4 +64,8 @@ The earlier strict grade was 61/100, before this work. This table uses only the 
 | Tests and coverage | 10/10 | Log 63: 308 passed, 100% branch coverage, mypy --strict. |
 | Honesty about misses | 5/5 | This file quotes the FAIL lines. |
 
+## CI
+
+[Run 35955416022](https://github.com/atharvcoforge/hybrid_rag/actions/runs/35955416022): python, web, docker, and mutation succeeded. Eval failed. The 1.5B model on the 24-row CI subset scored answer accuracy 0.773 against the 0.90 floor (`docs/verification/logs/78-ci-eval-fail.log` is the earlier rerank crash; this accuracy miss is the later run). The assertions before that one, hybrid recall above dense and a named query, had already passed. An earlier eval attempt was cancelled because a CPU rerank of 20 parents did not finish inside the job; CI now skips that mode. The rerank numbers are in log 64.
+
 Total from the logs: 75/100. The 0.90 accuracy floor and the 0.85 MRR floor are not met, so this is not a 90.
