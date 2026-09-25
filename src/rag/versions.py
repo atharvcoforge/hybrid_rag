@@ -341,16 +341,40 @@ def _aligned_texts(heading_a: str, text_a: str, heading_b: str, text_b: str) -> 
     )
 
 
+# ponytail: 160 characters when the passage has no sentence mark. A missing
+# period is clipped on a space. A sentence segmenter would lift this cap.
+_CLAUSE_CAP = 160
+
+
 def _window(text: str, token: str) -> str:
+    """Quote the clause that contains the number, without cutting the next word."""
     at = (text or "").find(token)
     if at < 0:
         return token
-    start = max(0, at - 48)
-    if start > 0 and not text[start - 1].isspace() and not text[start].isspace():
-        space = text.find(" ", start, at)
-        if space != -1:
-            start = space + 1
-    end = min(len(text), at + len(token) + 8)
+    floor = max(0, at - _CLAUSE_CAP)
+    head = text[floor:at]
+    cut = max(head.rfind(mark) for mark in ".!?\n")
+    if cut == -1:
+        start = floor
+        if start > 0 and not text[start - 1].isspace() and not text[start].isspace():
+            space = text.find(" ", start, at)
+            if space != -1:
+                start = space + 1
+    else:
+        start = floor + cut + 1
+    after = at + len(token)
+    cap = min(len(text), after + _CLAUSE_CAP)
+    tail = text[after:cap]
+    marks = [tail.find(mark) for mark in ".!?\n"]
+    marks = [index for index in marks if index != -1]
+    if marks:
+        end = after + min(marks) + 1
+    else:
+        end = cap
+        if end < len(text) and not text[end - 1].isspace() and not text[end].isspace():
+            space = text.rfind(" ", after, end)
+            if space != -1:
+                end = space
     return " ".join(text[start:end].split())
 
 
@@ -471,9 +495,11 @@ def disclose_conflict(answer: str, hits: Sequence[Hit], query: str = "") -> Conf
     )
     if named and has_current and has_stale:
         return note
+    current_quote = _windows(current.parent_text, only_current, text).rstrip(".")
+    stale_quote = _windows(stale.parent_text, only_stale, text).rstrip(".")
     sentence = (
-        f"The current document states {_windows(current.parent_text, only_current, text)}. "
-        f"Note: a superseded version ({stale_name}) states {_windows(stale.parent_text, only_stale, text)}."
+        f"The current document states {current_quote}. "
+        f"Note: a superseded version ({stale_name}) states {stale_quote}."
     )
     abstained = (not text.strip()) or any(marker in low for marker in _ABSTAIN)
     note.answer = sentence if abstained else text.rstrip() + "\n" + sentence

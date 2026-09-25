@@ -211,6 +211,11 @@ def test_disclosure_and_rank_swaps():
 
 def test_window_keeps_a_number_glued_to_a_long_token_and_equal_sequences_fall_back():
     assert _window("x" * 60 + "2040", "2040").endswith("2040")
+    spaced = ("z" * 180) + " middlewords 2040 endingwords " + ("q" * 180)
+    assert _window(spaced, "2040") == "middlewords 2040 endingwords"
+    glued = ("z" * 200) + "2040" + ("q" * 200)
+    raw = _window(glued, "2040")
+    assert raw.startswith("z") and raw.endswith("q") and "2040" in raw
     assert _number_diff("Carbon neutral by 2040.", "Carbon neutral by 2040.") == ([], [])
     shared = "We are committed to become carbon neutral in our operations by 2040. "
     assert _number_diff(shared, shared + "2030")[1] == ["2030"]

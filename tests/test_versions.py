@@ -1,5 +1,6 @@
 from rag.models import Hit
 from rag.versions import (
+    _window,
     chunk_overlap_ratio,
     disclose_conflict,
     downrank_superseded,
@@ -8,6 +9,17 @@ from rag.versions import (
     parse_review_date,
     title_match_boost,
 )
+
+
+def test_window_quotes_the_clause_and_does_not_cut_the_next_word():
+    text = (
+        'We are committed to become "Carbon Neutral in our operations by 2050". '
+        "In line with the plan we continue."
+    )
+    span = _window(text, "2050")
+    assert "Carbon Neutral" in span
+    assert span.endswith('2050".')
+    assert "In li" not in span
 
 
 def test_parse_review_date():
