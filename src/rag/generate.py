@@ -1,5 +1,6 @@
 import json
 import os
+import re
 import urllib.error
 import urllib.request
 import uuid
@@ -7,6 +8,23 @@ from collections.abc import Iterator, Sequence
 from typing import Any
 
 from rag.models import Hit
+
+_ATTACK = re.compile(
+    r"\b(ignore|override|compromised|reply only)\b|system\s*:",
+    re.IGNORECASE,
+)
+
+
+def task_question(text: str) -> str:
+    """The interrogative clause is the task. A leading override is not."""
+    raw = text or ""
+    if not _ATTACK.search(raw):
+        return raw
+    questions = [part.strip() for part in re.findall(r"[^.?!]*\?", raw) if part.strip()]
+    if not questions:
+        return raw
+    return str(questions[-1])
+
 
 SYSTEM = (
     "Answer using only the passages between the sentinel markers. "
@@ -74,7 +92,7 @@ def pack(question: str, hits: Sequence[Hit]) -> str:
         blocks.append(
             f"{mark}\n[{number}] {hit.source_path} {hit.heading_path} {pages} {version_tag(hit)}\n{body}\n{mark}"
         )
-    return "\n\n".join(blocks) + "\n\nQuestion: " + question
+    return "\n\n".join(blocks) + "\n\nQuestion: " + task_question(question)
 
 
 def _body(question: str, hits: Sequence[Hit], stream: bool) -> dict[str, Any]:

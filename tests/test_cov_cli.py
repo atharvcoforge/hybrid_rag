@@ -99,6 +99,35 @@ def test_gated_text_and_quality(monkeypatch):
         return GateResult(False, "missing_citation", state="withheld", answer="")
 
     assert _gated_text("q", result, complete, withheld)[0] == "The documents do not say."
+    signoff = _hit()
+    signoff.parent_text = "John Speight President Executive Director"
+    quoted = _gated_text(
+        "Which executive signed the plan?",
+        Retrieval(hits=[signoff]),
+        complete,
+        withheld,
+    )[0]
+    assert "John Speight" in quoted
+    assert "[1]" in quoted
+    stale = _hit()
+    stale.parent_text = "John Speight President Executive Director"
+    stale.status = "superseded"
+    long = _hit()
+    long.parent_text = "executive director " * 20
+    blank = _hit()
+    blank.parent_text = "   "
+    other = _hit()
+    other.parent_text = "unrelated footer"
+    for hit in (stale, long, blank, other):
+        assert (
+            _gated_text(
+                "Which executive signed the plan?",
+                Retrieval(hits=[hit]),
+                complete,
+                withheld,
+            )[0]
+            == "The documents do not say."
+        )
 
     def ok(*_a, **_k):
         return GateResult(True, "", state="verified", answer="cited [1]", groundedness=None, citation_precision=None)

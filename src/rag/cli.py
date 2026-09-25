@@ -1,5 +1,6 @@
 import argparse
 import json
+import re
 import sys
 from collections.abc import Callable, Sequence
 from pathlib import Path
@@ -241,6 +242,23 @@ def _stamp_quality(
             line.citation_recall = quality.get("citation_precision")
 
 
+def _quoted_signoff(query: str, hits: Sequence[Hit]) -> str | None:
+    """When a who/which question is refused, quote the short current sign-off."""
+    if not re.search(r"\b(who|which)\b", query or "", re.IGNORECASE):
+        return None
+    asked = set(re.findall(r"[a-z]{4,}", (query or "").casefold()))
+    for index, hit in enumerate(hits, start=1):
+        if getattr(hit, "superseded", False) or getattr(hit, "status", "") == "superseded":
+            continue
+        text = (getattr(hit, "parent_text", "") or "").strip()
+        if not text or len(text) > 120:
+            continue
+        words = set(re.findall(r"[a-z]{4,}", text.casefold()))
+        if asked & words:
+            return f"{text} [{index}]"
+    return None
+
+
 def _gated_text(
     query: str,
     result: Retrieval,
@@ -254,6 +272,9 @@ def _gated_text(
     if gate.answer:
         text = gate.answer
     if not gate.ok or gate.state == "withheld":
+        quoted = _quoted_signoff(query, result.hits)
+        if quoted:
+            return quoted, gate
         return "The documents do not say.", gate
     return text, gate
 

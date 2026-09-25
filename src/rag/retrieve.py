@@ -1,4 +1,5 @@
 import math
+import re
 import time
 from collections.abc import Callable
 from typing import Any, cast
@@ -93,6 +94,9 @@ def _gate(result: Retrieval, index: Index, mode: str, query: str = "") -> Retrie
     # The band marks confidence. It does not drop hits: rank-2 reciprocal
     # scores sit at half of rank 1, so a cut here used to turn recall@5 into precision@1.
     kept = list(result.hits)[:MAX_PARENTS]
+    # _signoff_ids may place one short line just past the cut. Keep that one.
+    if len(result.hits) > MAX_PARENTS:
+        kept.append(result.hits[MAX_PARENTS])
     kept = _retain_superseded_siblings(kept, result.hits)
     kept = _append_fact_siblings(index, query, kept)
     if len(kept) == 1:
@@ -412,6 +416,29 @@ def _rank_scores(parent_ids: list[str]) -> dict[str, float]:
     return {parent_id: 1.0 / (index + 1) for index, parent_id in enumerate(parent_ids)}
 
 
+def _signoff_ids(
+    query: str, parent_ids: list[str], records: dict[str, dict[str, Any]]
+) -> list[str]:
+    """Keep one short current line past the top-k when the question asks who."""
+    chosen = list(parent_ids[:MAX_PARENTS])
+    if not re.search(r"\b(who|which)\b", query or "", re.IGNORECASE):
+        return chosen
+    asked = set(re.findall(r"[a-z]{4,}", (query or "").casefold()))
+    if not asked:
+        return chosen
+    for parent_id in parent_ids[MAX_PARENTS:20]:
+        record = records.get(parent_id) or {}
+        if (record.get("status") or "current") == "superseded" or record.get("superseded"):
+            continue
+        text = record.get("text") or ""
+        if not text or len(text) > 120:
+            continue
+        words = set(re.findall(r"[a-z]{4,}", text.casefold()))
+        if asked & words:
+            return chosen + [parent_id]
+    return chosen
+
+
 def _from_parent_ids(
     index: Index,
     parent_ids: list[str],
@@ -424,10 +451,17 @@ def _from_parent_ids(
     by_parent: dict[str, list[dict[str, Any]]] = {}
     for chunk in chunks.values():
         by_parent.setdefault(cast(str, chunk["parent_id"]), []).append(chunk)
+    tail = parent_ids[MAX_PARENTS:20]
+    records = (
+        index.get_parents(tail)
+        if tail and re.search(r"\b(who|which)\b", query or "", re.IGNORECASE)
+        else {}
+    )
+    chosen = _signoff_ids(query, parent_ids, records)
     child_for: dict[str, str] = {}
-    for parent_id in parent_ids[:MAX_PARENTS]:
+    for parent_id in chosen:
         child_for[parent_id] = _best_child(parent_id, by_parent.get(parent_id, []), child_scores)
-    return _emit(index, parent_ids[:MAX_PARENTS], scores, child_for, confident, query, focus=True)
+    return _emit(index, chosen, scores, child_for, confident, query, focus=True)
 
 
 def _best_child(

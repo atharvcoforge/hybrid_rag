@@ -4,6 +4,52 @@ from rag.models import QueryError
 from rag.retrieve import agreed_parent, fuse, retrieve
 
 
+def test_who_question_keeps_a_short_signoff_past_the_cut():
+    parents = {letter: _parent(f"long passage about {letter} " * 8) for letter in "ABCDE"}
+    parents["F"] = _parent("John Speight President Executive Director")
+    chunks = [_chunk(f"c{letter}", letter, parents[letter]["text"]) for letter in "ABCDEF"]
+    stub = Stub(chunks, chunks, parents)
+    result = retrieve(
+        stub,
+        "Which executive signed the carbon plan?",
+        lambda text: [1.0],
+        rerank=_rerank,
+        mode="rrf",
+    )
+    assert "F" in [hit.parent_id for hit in result.hits]
+
+    plain = retrieve(stub, "carbon plan baseline", lambda text: [1.0], rerank=_rerank, mode="rrf")
+    assert "F" not in [hit.parent_id for hit in plain.hits]
+
+    stale = dict(parents)
+    stale["F"] = {**_parent("John Speight President Executive Director"), "status": "superseded"}
+    skipped = retrieve(
+        Stub(chunks, chunks, stale),
+        "Which executive signed the carbon plan?",
+        lambda text: [1.0],
+        rerank=_rerank,
+        mode="rrf",
+    )
+    assert "F" not in [hit.parent_id for hit in skipped.hits]
+
+
+def test_signoff_skips_a_long_line_and_a_line_with_no_shared_word():
+    from rag.retrieve import _signoff_ids
+
+    records = {
+        "F": {"text": "x" * 200, "status": "current"},
+        "G": {"text": "unrelated footer", "status": "current"},
+    }
+    ids = [*"ABCDE", "F", "G"]
+    assert _signoff_ids("Which executive signed?", ids, records) == [*"ABCDE"]
+    assert _signoff_ids("who", ids, records) == [*"ABCDE"]
+    stale_line = {"F": {"text": "executive signed the plan", "superseded": True}}
+    assert _signoff_ids("Which executive signed?", [*"ABCDE", "F"], stale_line) == [*"ABCDE"]
+    assert _signoff_ids("which", ids, {"H": {"text": "executive", "status": "current"}}) == [
+        *"ABCDE"
+    ]
+
+
 def test_rrf_adds_both_lists_and_keeps_a_lone_hit():
     ranked = dict(fuse([["a", "b"], ["a", "c"]]))
     assert ranked["a"] == pytest.approx(1 / 61 + 1 / 61)

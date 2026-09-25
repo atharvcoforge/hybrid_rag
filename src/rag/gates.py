@@ -189,6 +189,7 @@ def check_form(answer: str, n_hits: int, finish_reason: str | None = None) -> Ga
 
 def _norm_quantity(value: str) -> str:
     text = value.strip().casefold().replace("\u2212", "-")
+    text = re.sub(r"(?<=\d),(?=\d)", "", text)
     text = text.replace("per cent", "%").replace("percent", "%")
     text = re.sub(r"(\d)\s+%", r"\1%", text)
     text = re.sub(r"\b(\d{1,2})(?:st|nd|rd|th)\b", r"\1", text)

@@ -43,7 +43,7 @@ def test_grounding_catches_fabricated_figures():
     bad = check_grounding("India's FY24 baseline was 14,844 tCO2e [1].", hits)
     assert not bad.ok
     assert bad.reason == "unsupported_figure"
-    assert "14,844" in bad.unsupported
+    assert "14844" in bad.unsupported
 
 
 def test_derived_passage_cannot_sole_support_a_figure():
@@ -92,6 +92,14 @@ def test_paraphrase_is_cited_when_the_name_and_title_are_in_the_passage():
     result = check_all(answer, hits, query="Who signed the environmental policy?")
     assert result.ok
     assert result.answer is not None and "[1]" in result.answer
+
+
+def test_a_number_without_a_thousands_separator_still_cites():
+    hits = [_hit("India baseline total emissions 14,644 tCO2e")]
+    result = check_all("India baseline was 14644.", hits, query="India baseline emissions")
+    assert result.ok
+    assert result.answer is not None
+    assert "[1]" in result.answer
 
 
 def test_bare_integer_in_the_passage_is_cited():
