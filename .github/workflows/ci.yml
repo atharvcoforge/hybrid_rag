@@ -111,9 +111,9 @@ jobs:
         with:
           path: |
             tools/llama-b11093
-            models/qwen2.5-1.5b-instruct-q4_k_m.gguf
-          key: llama-b11093-qwen2.5-1.5b-q4
-      - name: Download llama.cpp and the 1.5B model
+            models/qwen2.5-3b-instruct-q4_k_m.gguf
+          key: llama-b11093-qwen2.5-3b-q4
+      - name: Download llama.cpp and the 3B model
         run: |
           set -euo pipefail
           if [ ! -x tools/llama-b11093/llama-server ]; then
@@ -123,18 +123,18 @@ jobs:
             tar -xzf tools/llama.tar.gz -C tools
           fi
           mkdir -p models
-          test -f models/qwen2.5-1.5b-instruct-q4_k_m.gguf || curl -L --fail --retry 3 \
-            -o models/qwen2.5-1.5b-instruct-q4_k_m.gguf \
-            https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct-GGUF/resolve/main/qwen2.5-1.5b-instruct-q4_k_m.gguf
+          test -f models/qwen2.5-3b-instruct-q4_k_m.gguf || curl -L --fail --retry 3 \
+            -o models/qwen2.5-3b-instruct-q4_k_m.gguf \
+            https://huggingface.co/Qwen/Qwen2.5-3B-Instruct-GGUF/resolve/main/qwen2.5-3b-instruct-q4_k_m.gguf
       - name: Start the generator
         run: |
           set -euo pipefail
           tools/llama-b11093/llama-server \
-            -m models/qwen2.5-1.5b-instruct-q4_k_m.gguf \
+            -m models/qwen2.5-3b-instruct-q4_k_m.gguf \
             --host 127.0.0.1 --port 8081 -t 4 \
-            --alias qwen2.5-1.5b-instruct \
+            --alias qwen2.5-3b-instruct \
             > llama-server.log 2>&1 &
-          for _ in $(seq 1 60); do
+          for _ in $(seq 1 150); do
             curl -sf http://127.0.0.1:8081/health && exit 0
             sleep 2
           done
@@ -143,7 +143,7 @@ jobs:
       - name: Policy eval
         env:
           GENERATOR_URL: http://127.0.0.1:8081/v1
-          GENERATOR_MODEL: qwen2.5-1.5b-instruct
+          GENERATOR_MODEL: qwen2.5-3b-instruct
           RAG_ANSWER_ROWS: ci
           RAG_SKIP_SLOW_MODES: "1"
           STAGE_HARD_MS_embed: "900000"
