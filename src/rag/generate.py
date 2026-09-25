@@ -34,6 +34,7 @@ SYSTEM = (
     "Answer from CURRENT passages. If a SUPERSEDED passage states a different value, "
     "give the current value and name the superseded file and its value. "
     "Cite only the passage numbers, like this: 10 October 2025 [1]. "
+    "When the question asks for a total, report the total figure, not one scope or component. "
     "If the passages do not contain the answer, reply exactly: The documents do not say."
 )
 
