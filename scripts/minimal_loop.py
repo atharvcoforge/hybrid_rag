@@ -1,7 +1,8 @@
 """Embed two known texts, store them, and retrieve the more relevant one.
 
-This is the early embed-store-retrieve check. It uses the same encoder and
-SQLite index as the full pipeline, on a throwaway directory.
+This is the early embed-store-retrieve check. It uses the same encoder,
+SQLite text store, and Chroma folder as the full pipeline, on a throwaway
+directory.
 """
 
 import tempfile

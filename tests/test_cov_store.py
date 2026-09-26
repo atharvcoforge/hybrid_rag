@@ -1,8 +1,9 @@
-import array
 import re
+import shutil
 import sqlite3
 from pathlib import Path
 
+import numpy as np
 import pytest
 
 from rag.models import Child, IngestError, Parent
@@ -171,9 +172,6 @@ def test_store_runtime_branches(tmp_path: Path) -> None:
     with store as opened:
         assert opened is store
         assert store.dense_search(V1, 5) == []
-        store._matrix = []
-        store._chunk_ids = []
-        assert store.dense_search(V1, 5) == []
         assert store.list_doc_records() == []
         assert store.purge_missing([]) == []
         assert store.index_generation() == 0
@@ -295,6 +293,7 @@ def test_store_runtime_branches(tmp_path: Path) -> None:
         assert beta["child_id"] == "c4"
         assert store.first_parent_matching("a.md", re.compile("zzz")) is None
 
+        assert store.integrity_problems() == []
         store._db().execute(
             """
             INSERT INTO documents (
@@ -343,6 +342,8 @@ def test_store_runtime_branches(tmp_path: Path) -> None:
 
         assert store.dense_search(V1, 0) == []
         with pytest.raises(IngestError, match="query vector width"):
+            store.dense_search([], 3)
+        with pytest.raises(IngestError, match="query vector width"):
             store.dense_search([1.0, 0.0], 3)
         with pytest.raises(IngestError, match="query vector width"):
             store.dense_search([[1.0, 0.0, 0.0, 0.0]], 3)
@@ -358,20 +359,18 @@ def test_store_runtime_branches(tmp_path: Path) -> None:
 
         store._db().execute("DELETE FROM children WHERE chunk_id = ?", ("c2",))
         store._db().commit()
-        dense_after = store.dense_search(V1, 5)
+        dense_after = store.dense_search(V1, 20)
         assert "c2" not in {hit["chunk_id"] for hit in dense_after}
+        assert any(item == "vector without a child: c2" for item in store.integrity_problems())
         lexical_after = store.bm25_search("plain", 5)
         assert "c2" not in {hit["chunk_id"] for hit in lexical_after}
         assert lexical_after
 
-        blob = array.array("f", [1.0]).tobytes()
-        store._db().execute("UPDATE vectors SET vec = ?", (blob,))
+        store._db().execute("DELETE FROM meta WHERE key = 'dim'")
         store._db().commit()
-        store._load_matrix()
-        assert store._matrix is None
-        assert store._chunk_ids == []
-        assert store._degraded is True
-        assert store._degraded_reason == "vector width mismatch"
+        with pytest.raises(IngestError, match="query vector width"):
+            store.dense_search(V1, 3)
+        store._set_meta("dim", "4")
 
         removed = store.purge_missing(["a.md"])
         assert "b.md" in removed
@@ -430,3 +429,64 @@ def test_saved_identity_mismatches(tmp_path: Path) -> None:
     with pytest.raises(IngestError, match="pipeline version changed from None to 3"):
         missing_version.open()
     missing_version.close()
+
+
+def test_dense_score_matches_numpy_cosine(tmp_path: Path) -> None:
+    left = [1.0, 0.0, 0.0]
+    right = [0.6, 0.8, 0.0]
+    path = tmp_path / "index"
+    with SqliteStore(path, "m", "r", 3) as store:
+        store.upsert(
+            [
+                _child("a.md", "p1", "c1", "left"),
+                _child("a.md", "p2", "c2", "right", index=1),
+            ],
+            [
+                _parent("a.md", "p1", "left"),
+                _parent("a.md", "p2", "right", index=1),
+            ],
+            [left, right],
+            _source("a.md"),
+        )
+        hits = {hit["chunk_id"]: hit["dense_score"] for hit in store.dense_search(left, 2)}
+    assert hits["c1"] == pytest.approx(float(np.dot(left, left)), abs=1e-4)
+    assert hits["c2"] == pytest.approx(float(np.dot(left, right)), abs=1e-4)
+    with SqliteStore(path, "m", "r", 3) as store:
+        again = store.dense_search(left, 1)
+    assert again[0]["chunk_id"] == "c1"
+    assert again[0]["dense_score"] == pytest.approx(1.0, abs=1e-4)
+
+
+def test_index_without_chroma_must_be_rebuilt(tmp_path: Path) -> None:
+    path = tmp_path / "index"
+    with SqliteStore(path, "m", "r", 3) as store:
+        store.upsert(
+            [_child("a.md", "p", "c", "hello")],
+            [_parent("a.md", "p", "hello")],
+            [V1],
+            _source("a.md"),
+        )
+    shutil.rmtree(path / "chroma")
+    store = SqliteStore(path, "m", "r", 3)
+    with pytest.raises(IngestError, match="no Chroma embeddings"):
+        store.open()
+    store.close()
+
+
+def test_failed_commit_removes_chroma_vectors(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    path = tmp_path / "index"
+
+    def fail(self: SqliteStore) -> None:
+        raise sqlite3.OperationalError("commit failed")
+
+    monkeypatch.setattr(SqliteStore, "_commit", fail)
+    with SqliteStore(path, "m", "r", 3) as store:
+        with pytest.raises(sqlite3.OperationalError, match="commit failed"):
+            store.upsert(
+                [_child("a.md", "p", "c", "hello")],
+                [_parent("a.md", "p", "hello")],
+                [V1],
+                _source("a.md"),
+            )
+        assert store.list_docs() == []
+        assert store._collection.get(include=[])["ids"] == []

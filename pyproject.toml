@@ -5,6 +5,7 @@ description = "Local hybrid retrieval over your own files."
 requires-python = ">=3.11"
 dependencies = [
     "numpy>=1.26.0",
+    "chromadb>=1.0.0",
     "sentence-transformers>=3.0.0",
     "pdfplumber>=0.11.0",
     "python-docx>=1.1.0",
@@ -64,6 +65,8 @@ module = [
     "lxml.*",
     "docling",
     "docling.*",
+    "chromadb",
+    "chromadb.*",
     "sentence_transformers",
     "sentence_transformers.*",
     "torch",

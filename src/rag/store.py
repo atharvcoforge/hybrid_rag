@@ -1,7 +1,8 @@
-"""SQLite-backed vector + FTS store.
+"""SQLite text and FTS store, with embeddings in a local Chroma folder.
 
-One file, one transaction per document. Dense search is exact cosine over an
-in-memory float32 matrix — at a few thousand chunks ANN buys nothing here.
+Chunk text, keyword search, and metadata stay in one SQLite file. Dense
+search queries ``<index>/chroma``. Cosine distance is converted back to a
+dot product so scores match the normalized embeddings.
 """
 
 from __future__ import annotations
@@ -12,9 +13,19 @@ import sqlite3
 from pathlib import Path
 from typing import Any, Literal, Self
 
-import numpy as np
+import chromadb
 
 from rag.models import Child, IngestError, Parent
+
+# ponytail: search_ef 4096 returns exact neighbors while the collection stays
+# under that size. Past it, raise ef or accept approximate neighbors.
+_CHROMA_NAME = "chunks"
+_CHROMA_META = {
+    "hnsw:space": "cosine",
+    "hnsw:search_ef": 4096,
+    "hnsw:construction_ef": 4096,
+    "hnsw:M": 32,
+}
 
 # Quoted compounds force FTS5 adjacency of the unicode61 parts (SKU-7842-XL,
 # 14,644), so OR over split tokens cannot rank a distractor that only shares pieces.
@@ -69,10 +80,8 @@ class SqliteStore:
         self.model_revision = model_revision
         self.pipeline_version = pipeline_version
         self.db: sqlite3.Connection | None = None
-        self._matrix: np.ndarray | None = None
-        self._chunk_ids: list[str] = []
-        self._degraded = False
-        self._degraded_reason = ""
+        self._chroma: Any = None
+        self._collection: Any = None
 
     def _db(self) -> sqlite3.Connection:
         db = self.db
@@ -90,14 +99,22 @@ class SqliteStore:
         self._schema()
         self._migrate()
         self._check_saved_identity()
-        self._load_matrix()
+        self._open_chroma()
+        if self._chunks_without_embeddings():
+            self.close()
+            raise IngestError(
+                str(self.path),
+                "index has chunks but no Chroma embeddings; delete the index directory to rebuild",
+            )
 
     def close(self) -> None:
         if self.db is not None:
             self._db().close()
             self.db = None
-        self._matrix = None
-        self._chunk_ids = []
+        if self._chroma is not None:
+            self._chroma.close()
+            self._chroma = None
+        self._collection = None
 
     def __enter__(self) -> Self:
         self.open()
@@ -193,6 +210,8 @@ class SqliteStore:
             raise IngestError(source["source_path"], "embedding width changed inside one file")
         self._ensure_dim(dim)
         doc_id = children[0].doc_id
+        written = False
+        chunk_ids: list[str] = []
         self._db().execute("BEGIN")
         try:
             self._db().execute(
@@ -225,10 +244,6 @@ class SqliteStore:
                 ),
             )
             self._db().execute("DELETE FROM children_fts WHERE doc_id = ?", (doc_id,))
-            self._db().execute(
-                "DELETE FROM vectors WHERE chunk_id IN (SELECT chunk_id FROM children WHERE doc_id = ?)",
-                (doc_id,),
-            )
             self._db().execute("DELETE FROM children WHERE doc_id = ?", (doc_id,))
             self._db().execute("DELETE FROM parents WHERE doc_id = ?", (doc_id,))
             self._db().executemany(
@@ -285,22 +300,6 @@ class SqliteStore:
                     for child in children
                 ],
             )
-            self._db().executemany(
-                """
-                INSERT INTO vectors (chunk_id, model_id, model_revision, dim, vec)
-                VALUES (?, ?, ?, ?, ?)
-                """,
-                [
-                    (
-                        child.chunk_id,
-                        self.model_id,
-                        self.model_revision,
-                        dim,
-                        array.array("f", vector).tobytes(),
-                    )
-                    for child, vector in zip(children, vectors)
-                ],
-            )
             fts_rows: list[tuple[str, str, str, str]] = []
             for child in children:
                 ident, prose = _split_fts(child.embed_text)
@@ -315,11 +314,15 @@ class SqliteStore:
             self._set_meta("model_revision", self.model_revision, commit=False)
             self._set_meta("pipeline_version", str(self.pipeline_version), commit=False)
             self._set_meta("dim", str(dim), commit=False)
-            self._db().commit()
+            chunk_ids = [child.chunk_id for child in children]
+            self._replace_embeddings(doc_id, children, vectors)
+            written = True
+            self._commit()
         except Exception:
             self._db().rollback()
+            if written:
+                self._collection.delete(ids=chunk_ids)
             raise
-        self._load_matrix()
 
     def delete_orphans(self, doc_id: str, keep_child_ids: list[str], keep_parent_ids: list[str]) -> None:
         keep_c = set(keep_child_ids)
@@ -332,8 +335,9 @@ class SqliteStore:
             "SELECT parent_id FROM parents WHERE doc_id = ?", (doc_id,)
         ).fetchall()
         stale_p = [row["parent_id"] for row in parent_rows if row["parent_id"] not in keep_p]
+        if stale_c:
+            self._collection.delete(ids=stale_c)
         for chunk_id in stale_c:
-            self._db().execute("DELETE FROM vectors WHERE chunk_id = ?", (chunk_id,))
             self._db().execute("DELETE FROM children_fts WHERE chunk_id = ?", (chunk_id,))
             self._db().execute("DELETE FROM children WHERE chunk_id = ?", (chunk_id,))
         for parent_id in stale_p:
@@ -383,30 +387,33 @@ class SqliteStore:
         return out
 
     def purge_doc(self, doc_id: str) -> None:
+        chunk_ids = self.child_ids(doc_id)
+        if chunk_ids:
+            self._collection.delete(ids=chunk_ids)
         self._db().execute("DELETE FROM children_fts WHERE doc_id = ?", (doc_id,))
-        self._db().execute(
-            "DELETE FROM vectors WHERE chunk_id IN (SELECT chunk_id FROM children WHERE doc_id = ?)",
-            (doc_id,),
-        )
         self._db().execute("DELETE FROM children WHERE doc_id = ?", (doc_id,))
         self._db().execute("DELETE FROM parents WHERE doc_id = ?", (doc_id,))
         self._db().execute("DELETE FROM documents WHERE doc_id = ?", (doc_id,))
         self._db().commit()
-        self._load_matrix()
 
     def integrity_problems(self) -> list[str]:
         """Every FTS row has a vector, every child a parent, every parent a document."""
         if self.db is None:
             raise IngestError(str(self.path), "index is not open")
+        problems: list[str] = []
+        chroma_ids = set(self._collection.get(include=[])["ids"])
+        child_ids = {
+            row["chunk_id"]
+            for row in self._db().execute("SELECT chunk_id FROM children").fetchall()
+        }
+        fts_rows = self._db().execute("SELECT chunk_id FROM children_fts").fetchall()
+        for row in fts_rows:
+            if row["chunk_id"] not in chroma_ids:
+                problems.append(f"fts row without a vector: {row['chunk_id']}")
+        for chunk_id in chroma_ids:
+            if chunk_id not in child_ids:
+                problems.append(f"vector without a child: {chunk_id}")
         checks = (
-            (
-                "fts row without a vector",
-                """
-                SELECT f.chunk_id AS id FROM children_fts f
-                LEFT JOIN vectors v ON v.chunk_id = f.chunk_id
-                WHERE v.chunk_id IS NULL
-                """,
-            ),
             (
                 "child without a parent",
                 """
@@ -423,16 +430,7 @@ class SqliteStore:
                 WHERE d.doc_id IS NULL
                 """,
             ),
-            (
-                "vector without a child",
-                """
-                SELECT v.chunk_id AS id FROM vectors v
-                LEFT JOIN children c ON c.chunk_id = v.chunk_id
-                WHERE c.chunk_id IS NULL
-                """,
-            ),
         )
-        problems: list[str] = []
         for label, sql in checks:
             rows = self._db().execute(sql).fetchall()
             for row in rows:
@@ -449,35 +447,22 @@ class SqliteStore:
         return removed
 
     def dense_search(self, vector: list[float], k: int, doc_id: str | None = None) -> list[dict[str, Any]]:
-        if self._matrix is None or len(self._chunk_ids) == 0:
+        if k <= 0 or self._collection.count() == 0:
             return []
-        query = np.asarray(vector, dtype=np.float32)
-        if query.ndim != 1 or query.shape[0] != self._matrix.shape[1]:
+        saved = self._meta("dim")
+        flat = bool(vector) and not isinstance(vector[0], (list, tuple))
+        if not flat or saved is None or len(vector) != int(saved):
             raise IngestError(str(self.path), "query vector width does not match the index")
-        # Vectors are L2-normalised at ingest; cosine == dot product.
-        scores = self._matrix @ query
-        if doc_id:
-            allowed = {
-                row["chunk_id"]
-                for row in self._db().execute(
-                    "SELECT chunk_id FROM children WHERE doc_id = ?", (doc_id,)
-                )
-            }
-            mask = np.array([chunk_id in allowed for chunk_id in self._chunk_ids], dtype=bool)
-            if not mask.any():
-                return []
-            scores = np.where(mask, scores, -np.inf)
-        n = min(k, int(np.isfinite(scores).sum()))
-        if n <= 0:
-            return []
-        if n >= len(scores):
-            order = np.argsort(-scores)
-        else:
-            part = np.argpartition(-scores, n - 1)[:n]
-            order = part[np.argsort(-scores[part])]
+        found = self._collection.query(
+            query_embeddings=[vector],
+            n_results=k,
+            where={"doc_id": doc_id} if doc_id else None,
+            include=["distances"],
+        )
+        # Chroma cosine distance is 1 - cosine. Stored vectors are L2-normalised,
+        # so this is the same dot product the abstention cutoff was fitted on.
         out: list[dict[str, Any]] = []
-        for index in order:
-            chunk_id = self._chunk_ids[int(index)]
+        for chunk_id, distance in zip(found["ids"][0], found["distances"][0]):
             row = self._db().execute(
                 "SELECT chunk_id, parent_id, embed_text FROM children WHERE chunk_id = ?",
                 (chunk_id,),
@@ -489,7 +474,7 @@ class SqliteStore:
                     "chunk_id": row["chunk_id"],
                     "parent_id": row["parent_id"],
                     "embed_text": row["embed_text"],
-                    "dense_score": float(scores[int(index)]),
+                    "dense_score": 1.0 - float(distance),
                 }
             )
         return out
@@ -697,13 +682,6 @@ class SqliteStore:
                 child_index INTEGER NOT NULL,
                 token_count INTEGER NOT NULL
             );
-            CREATE TABLE IF NOT EXISTS vectors (
-                chunk_id TEXT PRIMARY KEY REFERENCES children(chunk_id),
-                model_id TEXT NOT NULL,
-                model_revision TEXT NOT NULL,
-                dim INTEGER NOT NULL,
-                vec BLOB NOT NULL
-            );
             CREATE TABLE IF NOT EXISTS embed_cache (
                 model_id TEXT NOT NULL,
                 model_revision TEXT NOT NULL,
@@ -763,37 +741,38 @@ class SqliteStore:
                 f"pipeline version changed from {version} to {self.pipeline_version}; delete the index directory to rebuild",
             )
 
-    def _load_matrix(self) -> None:
-        rows = self._db().execute(
-            """
-            SELECT v.chunk_id, v.dim, v.vec
-            FROM vectors v
-            JOIN children c ON c.chunk_id = v.chunk_id
-            ORDER BY c.child_index, c.chunk_id
-            """
-        ).fetchall()
-        if not rows:
-            self._matrix = None
-            self._chunk_ids = []
-            return
-        dim = int(rows[0]["dim"])
-        ids: list[str] = []
-        vecs: list[array.array[float]] = []
-        for row in rows:
-            values = array.array("f")
-            values.frombytes(row["vec"])
-            if len(values) != dim:
-                self._degraded = True
-                self._degraded_reason = "vector width mismatch"
-                continue
-            vecs.append(values)
-            ids.append(row["chunk_id"])
-        if not ids:
-            self._matrix = None
-            self._chunk_ids = []
-            return
-        self._matrix = np.asarray(vecs, dtype=np.float32)
-        self._chunk_ids = ids
+    def _commit(self) -> None:
+        self._db().commit()
+
+    def _open_chroma(self) -> None:
+        self._chroma = chromadb.PersistentClient(
+            path=str(self.path / "chroma"),
+            settings=chromadb.config.Settings(anonymized_telemetry=False),
+        )
+        self._collection = self._chroma.get_or_create_collection(
+            name=_CHROMA_NAME,
+            metadata=_CHROMA_META,
+            embedding_function=None,
+        )
+
+    def _chunks_without_embeddings(self) -> bool:
+        row = self._db().execute("SELECT COUNT(*) AS n FROM children").fetchone()
+        return int(row["n"]) > 0 and self._collection.count() == 0
+
+    def _replace_embeddings(
+        self,
+        doc_id: str,
+        children: list[Child],
+        vectors: list[list[float]],
+    ) -> None:
+        self._collection.delete(where={"doc_id": doc_id})
+        self._collection.add(
+            ids=[child.chunk_id for child in children],
+            embeddings=vectors,
+            metadatas=[
+                {"doc_id": child.doc_id, "parent_id": child.parent_id} for child in children
+            ],
+        )
 
     def _meta(self, key: str) -> str | None:
         row = self._db().execute("SELECT value FROM meta WHERE key = ?", (key,)).fetchone()

@@ -4,7 +4,8 @@ Short record of choices that closed an argument. Not a changelog.
 
 | Date | Decision | Why | Cost if wrong |
 | --- | --- | --- | --- |
-| 2026-09 | SQLite-only store, drop Chroma | Corpus is thousands of chunks; exact cosine is simpler and scored | Remount ANN later if the corpus grows 100× |
+| 2026-09 | Chroma holds embeddings; SQLite keeps text, FTS, and tau | Dense search goes through a local Chroma folder. Cosine distance is converted back to a dot product, and search_ef 4096 keeps neighbors exact at this size | If the collection grows past a few thousand chunks, raise search_ef or accept approximate neighbors |
+| 2026-09 | Ignore Chroma's HTTP-server advisories | PYSEC-2026-311, 3813, 3814, and 3815 need the Chroma server. This process is the embedded client, telemetry is off, and no fix version exists | A later release that still has the bugs, if someone then turns the server on |
 | 2026-09 | Strictly local inference | Policy text must not leave the machine | Jev / hosted rerankers stay stubs |
 | 2026-09 | Contextual retrieval behind a flag | Ships only if it wins on the golden set | One ablation row forever if it loses |
 | 2026-09 | Docling as rung 3 only | Fast path is right most of the time | Borderless failures stay flagged prose |

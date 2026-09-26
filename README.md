@@ -1,6 +1,6 @@
 # Reading room
 
-Local hybrid RAG over four Coforge policy PDFs. Dense and BM25 results are fused in SQLite. A local llama.cpp model writes the answer, and gates check it before it is shown.
+Local hybrid RAG over four Coforge policy PDFs. Embeddings live in a local Chroma folder. BM25 stays in SQLite, and the two lists are fused by rank. A local llama.cpp model writes the answer, and gates check it before it is shown.
 
 This is one machine and four documents. The golden set and the abstention gates are real. The corpus is not production scale.
 
@@ -32,7 +32,7 @@ Measured commands and logs are in `docs/SUBMISSION.md`.
 
 ## Design choices
 
-- One SQLite file. Exact cosine and FTS5 BM25. No vector server.
+- One SQLite file for chunk text, FTS5 keyword search, and metadata. Embeddings live in a Chroma folder next to it. No vector server.
 - Parent chunks around 700 characters, child chunks around 180, so a citation can point at the section that contains the fact.
 - Reciprocal-rank fusion (`k=60`) is the live retriever. The cross-encoder is measured and is not live: on this corpus its p95 is about 2.2s and a 0–1 threshold abstains most questions. See the decision log.
 - Version handling is generic. A superseded file stays in the index, passages are tagged current or superseded, and a conflict note names the older file when the numbers differ.

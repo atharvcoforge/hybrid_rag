@@ -68,7 +68,15 @@ jobs:
       - name: Branch coverage
         run: uv run pytest -q --tb=short -p no:randomly --cov=rag --cov-branch --cov-fail-under=100
       - name: Audit dependencies
-        run: uv run pip-audit
+        run: |
+          # PYSEC-2026-311/3813/3814/3815 are in Chroma's HTTP server
+          # (remote-code collections and cross-tenant auth). No fix release
+          # exists. This job uses the embedded client and does not open that port.
+          uv run pip-audit \
+            --ignore-vuln PYSEC-2026-311 \
+            --ignore-vuln PYSEC-2026-3813 \
+            --ignore-vuln PYSEC-2026-3814 \
+            --ignore-vuln PYSEC-2026-3815
 
   mutation:
     runs-on: ubuntu-latest
