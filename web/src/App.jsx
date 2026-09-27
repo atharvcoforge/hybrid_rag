@@ -217,8 +217,7 @@ export default function App() {
     <div className="app">
       <header className="topbar">
         <div className="brand">
-          <h1>Reading room</h1>
-          <span className="tag">grounded retrieval</span>
+          <h1>Hybrid RAG</h1>
         </div>
         <nav>
           <button className={view === "read" ? "on" : ""} onClick={() => setView("read")} type="button">

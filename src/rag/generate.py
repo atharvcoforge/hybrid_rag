@@ -33,7 +33,7 @@ SYSTEM = (
     "Each passage begins with its number in brackets and a version tag. "
     "Answer from CURRENT passages. If a SUPERSEDED passage states a different value, "
     "give the current value and name the superseded file and its value. "
-    "Cite only the passage numbers, like this: 10 October 2025 [1]. "
+    "Cite the supporting passage number in brackets after the fact, like [1]. "
     "When the question asks for a total, report the total figure, not one scope or component. "
     "Answer only the fact the question asks for. Do not replace it with a nearby year or a different row. "
     "If the passages do not contain the answer, reply exactly: The documents do not say."

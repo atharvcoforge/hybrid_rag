@@ -79,11 +79,52 @@ def test_signoff_skips_a_long_line_and_a_line_with_no_shared_word():
     ids = [*"ABCDE", "F", "G"]
     assert _signoff_ids("Which executive signed?", ids, records) == [*"ABCDE"]
     assert _signoff_ids("who", ids, records) == [*"ABCDE"]
-    stale_line = {"F": {"text": "executive signed the plan", "superseded": True}}
+    stale_line = {"F": {"text": "John Speight President", "superseded": True}}
     assert _signoff_ids("Which executive signed?", [*"ABCDE", "F"], stale_line) == [*"ABCDE"]
     assert _signoff_ids("which", ids, {"H": {"text": "executive", "status": "current"}}) == [
         *"ABCDE"
     ]
+    cover = {
+        "D": {
+            "text": "Publication date: 10 October 2025",
+            "status": "current",
+            "source_path": "Carbon_Reduction_Plan.pdf",
+        }
+    }
+    assert _signoff_ids("Who signed the carbon plan?", [*"ABC", "D"], cover) == [*"ABC", "D"]
+
+
+def test_a_signoff_line_leads_when_the_question_asks_who_signed():
+    from rag.retrieve import _signoff_ids
+
+    carbon = {
+        "text": "John Speight President and Head of Europe",
+        "status": "current",
+        "source_path": "Carbon_Reduction_Plan.pdf",
+    }
+    env = {
+        "text": "John Speight President, Executive Director",
+        "status": "current",
+        "source_path": "Environmental_Sustainability_Policy_2026.pdf",
+    }
+    water = {
+        "text": "John Speight President, Executive Director",
+        "status": "current",
+        "source_path": "Water_Management_Policy.pdf",
+    }
+    older = {**env, "source_path": "Environmental_Sustainability_Policy_2026.pdf"}
+    records = {"C": carbon, "C2": carbon, "E": env, "W": water, "E2": older}
+    ids = ["a", "b", "c", "d", "e", "W", "C", "C2", "E", "E2"]
+    query = "Which executive signed both the carbon plan and the environmental policy?"
+    scores = {parent_id: 0.01 for parent_id in ids}
+    order = _signoff_ids(query, ids, records, scores)
+    assert order[:2] == ["C", "E"]
+    bare = _signoff_ids(query, ids, records)
+    assert bare[:2] == ["C", "E"]
+    assert scores["C"] > scores["E"] > 0.01
+    assert "W" not in order[:2]
+    untouched = _signoff_ids("Which GHG protocol does the carbon plan cite?", ids, records, dict(scores))
+    assert untouched[0] == "a"
 
 
 def test_rrf_adds_both_lists_and_keeps_a_lone_hit():

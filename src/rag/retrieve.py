@@ -438,27 +438,64 @@ def _keep_second_named_file(
     return ordered
 
 
+_PERSON_Q = re.compile(
+    r"\b(who|signed|signatory|approv\w*|executive|chair\w*)\b",
+    re.IGNORECASE,
+)
+_SIGNATURE = re.compile(r"[A-Z][a-z]+ [A-Z][a-z]+")
+
+
+def _asks_for_a_person(query: str) -> bool:
+    return bool(_PERSON_Q.search(query or ""))
+
+
+def _is_signature(text: str) -> bool:
+    """A short sign-off line, not a cover page that happens to mention a date."""
+    body = (text or "").strip()
+    if not body or len(body) > 120 or re.search(r"20\d{2}", body):
+        return False
+    return _SIGNATURE.match(body) is not None
+
+
 def _signoff_ids(
-    query: str, parent_ids: list[str], records: dict[str, dict[str, Any]]
+    query: str,
+    parent_ids: list[str],
+    records: dict[str, dict[str, Any]],
+    scores: dict[str, float] | None = None,
 ) -> list[str]:
-    """Put one short current line in the window when the question asks who."""
+    """Lead with the sign-off line when the question asks who signed."""
     chosen = list(parent_ids[:MAX_PARENTS])
-    if not re.search(r"\b(who|which)\b", query or "", re.IGNORECASE):
+    if not _asks_for_a_person(query):
         return chosen
-    asked = set(re.findall(r"[a-z]{4,}", (query or "").casefold()))
-    if not asked:
-        return chosen
-    for parent_id in parent_ids[MAX_PARENTS:20]:
+    found: list[tuple[str, float, str]] = []
+    for parent_id in parent_ids[:20]:
         record = records.get(parent_id) or {}
         if (record.get("status") or "current") == "superseded" or record.get("superseded"):
             continue
         text = record.get("text") or ""
-        if not text or len(text) > 120:
+        if not _is_signature(text):
             continue
-        words = set(re.findall(r"[a-z]{4,}", text.casefold()))
-        if asked & words:
-            return [parent_id, *chosen[: MAX_PARENTS - 1]]
-    return chosen
+        boost = title_match_boost(query, record.get("title") or "", record.get("source_path") or "")
+        found.append((parent_id, boost, record.get("source_path") or ""))
+    if not found:
+        return chosen
+    if any(boost > 1 for _parent_id, boost, _source in found):
+        found = [item for item in found if item[1] > 1]
+    picked: list[str] = []
+    seen: set[str] = set()
+    for parent_id, _boost, source in found:
+        if source in seen:
+            continue
+        seen.add(source)
+        picked.append(parent_id)
+        if len(picked) == 2:
+            break
+    if scores and picked:
+        top = max(scores.values())
+        for rank, parent_id in enumerate(picked):
+            scores[parent_id] = top + (len(picked) - rank) * 1e-4
+    rest = [parent_id for parent_id in parent_ids if parent_id not in picked]
+    return (picked + rest)[:MAX_PARENTS]
 
 
 def _from_parent_ids(
@@ -473,13 +510,9 @@ def _from_parent_ids(
     by_parent: dict[str, list[dict[str, Any]]] = {}
     for chunk in chunks.values():
         by_parent.setdefault(cast(str, chunk["parent_id"]), []).append(chunk)
-    tail = parent_ids[MAX_PARENTS:20]
-    records = (
-        index.get_parents(tail)
-        if tail and re.search(r"\b(who|which)\b", query or "", re.IGNORECASE)
-        else {}
-    )
-    chosen = _signoff_ids(query, parent_ids, records)
+    window = parent_ids[:20]
+    records = index.get_parents(window) if window and _asks_for_a_person(query) else {}
+    chosen = _signoff_ids(query, parent_ids, records, scores)
     child_for: dict[str, str] = {}
     for parent_id in chosen:
         child_for[parent_id] = _best_child(parent_id, by_parent.get(parent_id, []), child_scores)
