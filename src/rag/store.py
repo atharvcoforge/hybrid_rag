@@ -1,8 +1,8 @@
 """SQLite text and FTS store, with embeddings in a local Chroma folder.
 
-Chunk text, keyword search, and metadata stay in one SQLite file. Dense
-search queries ``<index>/chroma``. Cosine distance is converted back to a
-dot product so scores match the normalized embeddings.
+Chunk text, keyword search, and metadata stay in one SQLite file. Embeddings
+live in ``<index>/chroma``. Dense search is an exact dot product over those
+stored vectors. HNSW neighbor order dropped holdout MRR under the floor.
 """
 
 from __future__ import annotations
@@ -14,11 +14,11 @@ from pathlib import Path
 from typing import Any, Literal, Self
 
 import chromadb
+import numpy as np
 
 from rag.models import Child, IngestError, Parent
 
-# ponytail: search_ef 4096 returns exact neighbors while the collection stays
-# under that size. Past it, raise ef or accept approximate neighbors.
+# Stored with the collection. Dense search does not use this index; see dense_search.
 _CHROMA_NAME = "chunks"
 _CHROMA_META = {
     "hnsw:space": "cosine",
@@ -453,16 +453,26 @@ class SqliteStore:
         flat = bool(vector) and not isinstance(vector[0], (list, tuple))
         if not flat or saved is None or len(vector) != int(saved):
             raise IngestError(str(self.path), "query vector width does not match the index")
-        found = self._collection.query(
-            query_embeddings=[vector],
-            n_results=k,
-            where={"doc_id": doc_id} if doc_id else None,
-            include=["distances"],
-        )
-        # Chroma cosine distance is 1 - cosine. Stored vectors are L2-normalised,
-        # so this is the same dot product the abstention cutoff was fitted on.
+        where = {"doc_id": doc_id} if doc_id else None
+        got = self._collection.get(where=where, include=["embeddings"])
+        ids = list(got["ids"])
+        if not ids:
+            return []
+        # ponytail: exact scan of the Chroma vectors. HNSW dropped holdout MRR
+        # to 0.808 on CI. Switch back to collection.query only after a measured
+        # holdout MRR still clears 0.83.
+        query = np.asarray(vector, dtype=np.float32)
+        matrix = np.asarray(got["embeddings"], dtype=np.float32)
+        scores = matrix @ query
+        n = min(k, len(scores))
+        if n >= len(scores):
+            order = np.argsort(-scores)
+        else:
+            part = np.argpartition(-scores, n - 1)[:n]
+            order = part[np.argsort(-scores[part])]
         out: list[dict[str, Any]] = []
-        for chunk_id, distance in zip(found["ids"][0], found["distances"][0]):
+        for index in order[:n]:
+            chunk_id = ids[int(index)]
             row = self._db().execute(
                 "SELECT chunk_id, parent_id, embed_text FROM children WHERE chunk_id = ?",
                 (chunk_id,),
@@ -474,7 +484,7 @@ class SqliteStore:
                     "chunk_id": row["chunk_id"],
                     "parent_id": row["parent_id"],
                     "embed_text": row["embed_text"],
-                    "dense_score": 1.0 - float(distance),
+                    "dense_score": float(scores[int(index)]),
                 }
             )
         return out

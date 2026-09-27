@@ -4,7 +4,7 @@ Short record of choices that closed an argument. Not a changelog.
 
 | Date | Decision | Why | Cost if wrong |
 | --- | --- | --- | --- |
-| 2026-09 | Chroma holds embeddings; SQLite keeps text, FTS, and tau | Dense search goes through a local Chroma folder. Cosine distance is converted back to a dot product, and search_ef 4096 keeps neighbors exact at this size | If the collection grows past a few thousand chunks, raise search_ef or accept approximate neighbors |
+| 2026-09 | Chroma holds embeddings; SQLite keeps text, FTS, and tau | Embeddings sit in a local Chroma folder. Dense search is an exact dot product over those vectors. HNSW on CI scored holdout MRR 0.808, under the 0.83 floor | Exact scan gets slow past a few thousand chunks. Switch to collection.query only after a measured holdout MRR still clears 0.83 |
 | 2026-09 | Ignore Chroma's HTTP-server advisories | PYSEC-2026-311, 3813, 3814, and 3815 need the Chroma server. This process is the embedded client, telemetry is off, and no fix version exists | A later release that still has the bugs, if someone then turns the server on |
 | 2026-09 | Strictly local inference | Policy text must not leave the machine | Jev / hosted rerankers stay stubs |
 | 2026-09 | Contextual retrieval behind a flag | Ships only if it wins on the golden set | One ablation row forever if it loses |
