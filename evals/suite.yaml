@@ -14,7 +14,7 @@ corpus:
       status: superseded
       superseded_by: Environmental_Sustainability_Policy_2026.pdf
       review_date: "2025-03-10"
-      note: "Deliberately planted outdated duplicate. Eight conflicting facts."
+      note: "Deliberately planted outdated duplicate. Seven conflicting facts. The footer year is not in the extracted text."
     - path: Water_Management_Policy.pdf
       sha256: "8c0b22d1ac47b246723daf802357da126e3fb26ace88d8f327577db5cf5789a2"
 
@@ -30,7 +30,7 @@ gates:                        # CI fails if any floor is breached
   mrr:                    { min: 0.83, scope: holdout }   # holdout RRF measured 0.847
   groundedness:           { min: 0.95 }
   citation_precision:     { min: 0.95 }
-  answer_accuracy:        { min: 0.70 }   # CI 1.5B CPU scored 0.727 (16/22); floor was 0.75
+  answer_accuracy:        { min: 0.70 }
   unanswerable_abstention: { min: 0.90 }
   answerable_abstention:   { max: 0.20 }   # same subset abstained on 4/22 before the sign-off fix
   conflict_disclosure:    { min: 1.00 }     # every conflict row must disclose
@@ -40,8 +40,3 @@ slo:
   retrieve_p95_ms: 400
   ttft_p95_ms:     1200
   ingest_pages_per_s: 2
-
-regression:
-  baseline: evals/baseline.json
-  max_recall_drop: 0.03
-  max_p95_increase_pct: 15

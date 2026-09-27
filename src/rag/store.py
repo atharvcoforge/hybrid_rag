@@ -458,9 +458,6 @@ class SqliteStore:
         ids = list(got["ids"])
         if not ids:
             return []
-        # ponytail: exact scan of the Chroma vectors. HNSW dropped holdout MRR
-        # to 0.808 on CI. Switch back to collection.query only after a measured
-        # holdout MRR still clears 0.83.
         query = np.asarray(vector, dtype=np.float32)
         matrix = np.asarray(got["embeddings"], dtype=np.float32)
         scores = matrix @ query

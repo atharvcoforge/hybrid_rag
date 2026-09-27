@@ -35,6 +35,7 @@ SYSTEM = (
     "give the current value and name the superseded file and its value. "
     "Cite only the passage numbers, like this: 10 October 2025 [1]. "
     "When the question asks for a total, report the total figure, not one scope or component. "
+    "Answer only the fact the question asks for. Do not replace it with a nearby year or a different row. "
     "If the passages do not contain the answer, reply exactly: The documents do not say."
 )
 

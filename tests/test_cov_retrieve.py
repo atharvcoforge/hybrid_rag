@@ -136,8 +136,8 @@ def test_fact_sibling_dedupes_and_trims_to_the_parent_cap(monkeypatch):
         ],
     )
     hits = _append_fact_siblings(Stub(), "q", [_hit("new", 1.0)])
-    assert len(hits) > 1
-    assert all(hit.parent_id != "new" for hit in hits)
+    assert hits[0].parent_id == "new"
+    assert {hit.parent_id for hit in hits} >= {"new", "sib"}
 
 
 def test_empty_index_and_rerank_failures():

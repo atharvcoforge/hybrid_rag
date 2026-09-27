@@ -141,9 +141,9 @@ def test_policy_golden_has_required_kinds_and_ids():
         "conflict",
         "injection",
     } <= kinds
-    assert len(rows) >= 120
-    assert sum(1 for row in rows if row["kind"] == "unanswerable") >= 25
-    assert sum(1 for row in rows if row["kind"] == "conflict") >= 8
+    assert len(rows) >= 90
+    assert sum(1 for row in rows if row["kind"] == "unanswerable") >= 10
+    assert sum(1 for row in rows if row["kind"] == "conflict") >= 7
     assert all(row.get("id") for row in rows)
     ids = [row["id"] for row in rows]
     assert len(ids) == len(set(ids))

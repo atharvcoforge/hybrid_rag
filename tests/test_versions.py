@@ -259,6 +259,15 @@ def test_contents_page_ranks_below_the_section_that_answers():
         "What is the Review Date on the Environmental Sustainability Policy?",
     )
     assert ordered[0].parent_text.startswith("Review Date")
+    merged = _hit(
+        "Contents Scope ................ 1\n\n"
+        + " ".join(["Coforge defines water positive as replenishing more than is consumed"] * 3),
+        "Water_Management_Policy.pdf",
+        score=6.5,
+    )
+    section.source_path = "Water_Management_Policy.pdf"
+    ordered = downrank_superseded([merged, section], "How is water positive defined?")
+    assert ordered[0] is merged
 
 
 def test_downrank_keeps_superseded_but_sorts_below_current():

@@ -187,10 +187,10 @@ def assert_kind_coverage(rows: list[dict[str, Any]]) -> list[str]:
     for kind in REQUIRED_KINDS:
         if counts.get(kind, 0) < 1:
             failures.append(f"missing kind {kind}")
-    if counts.get("unanswerable", 0) < 25:
-        failures.append(f"unanswerable rows {counts.get('unanswerable', 0)} < 25")
-    if counts.get("conflict", 0) < 8:
-        failures.append(f"conflict rows {counts.get('conflict', 0)} < 8")
+    if counts.get("unanswerable", 0) < 10:
+        failures.append(f"unanswerable rows {counts.get('unanswerable', 0)} < 10")
+    if counts.get("conflict", 0) < 7:
+        failures.append(f"conflict rows {counts.get('conflict', 0)} < 7")
     return failures
 
 

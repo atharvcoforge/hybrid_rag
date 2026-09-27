@@ -12,7 +12,7 @@ uv sync --frozen --extra dev
 
 rag ingest documents --index index
 rag calibrate --index index
-rag eval --index index          # full 152-row run; needs the generator on :8081
+rag eval --index index          # full golden-set run; needs the generator on :8081
 rag ask "Who signed the Carbon Reduction Plan?" --index index
 
 # retrieval only, one mode
@@ -36,7 +36,7 @@ Measured commands and logs are in `docs/SUBMISSION.md`.
 - Parent chunks around 700 characters, child chunks around 180, so a citation can point at the section that contains the fact.
 - Reciprocal-rank fusion (`k=60`) is the live retriever. The cross-encoder is measured and is not live: on this corpus its p95 is about 2.2s and a 0–1 threshold abstains most questions. See the decision log.
 - Version handling is generic. A superseded file stays in the index, passages are tagged current or superseded, and a conflict note names the older file when the numbers differ.
-- The enforced mutation floor is the number in `evals/mutmut_floor.txt` (0.629). A local run killed 1825 of 2895 decided mutants (0.630). The GitHub run killed 1823 (0.630 printed, 0.6297 exact). The floor sits on the lower of those two. It is not 0.90.
+- A jailbreak prefix is stripped before retrieval. The generator still has to answer the real question and must not obey the prefix.
 
 ## API
 

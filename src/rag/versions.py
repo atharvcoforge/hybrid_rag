@@ -320,7 +320,12 @@ def query_names_document(query: str, source_path: str = "", review_date: str | N
 
 
 def looks_like_toc(text: str) -> bool:
-    return (text or "").lstrip()[:8].casefold() == "contents"
+    """A contents page, not a parent that starts with the contents list and then the section."""
+    body = (text or "").lstrip()
+    if body[:8].casefold() != "contents":
+        return False
+    prose = re.sub(r"\.{3,}", " ", body)
+    return len(re.findall(r"[A-Za-z]{3,}", prose)) < 12
 
 
 def _numbers(text: str) -> set[str]:
@@ -341,8 +346,6 @@ def _aligned_texts(heading_a: str, text_a: str, heading_b: str, text_b: str) -> 
     )
 
 
-# ponytail: 160 characters when the passage has no sentence mark. A missing
-# period is clipped on a space. A sentence segmenter would lift this cap.
 _CLAUSE_CAP = 160
 
 

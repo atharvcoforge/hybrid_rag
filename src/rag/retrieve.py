@@ -4,6 +4,7 @@ import time
 from collections.abc import Callable
 from typing import Any, cast
 
+from rag.generate import task_question
 from rag.models import (
     AGREE_TOP,
     BM25_K,
@@ -66,6 +67,8 @@ def retrieve(
 ) -> Retrieval:
     if not query or not query.strip():
         raise QueryError("empty query")
+    # A leading override is not the question. Embedding it pulls the wrong passage.
+    query = task_question(query)
     timer = StageTimer()
     wall = time.perf_counter()
     result = _retrieve(index, query, embed_query, rerank, doc_id, mode, timer)
@@ -94,9 +97,6 @@ def _gate(result: Retrieval, index: Index, mode: str, query: str = "") -> Retrie
     # The band marks confidence. It does not drop hits: rank-2 reciprocal
     # scores sit at half of rank 1, so a cut here used to turn recall@5 into precision@1.
     kept = list(result.hits)[:MAX_PARENTS]
-    # _signoff_ids may place one short line just past the cut. Keep that one.
-    if len(result.hits) > MAX_PARENTS:
-        kept.append(result.hits[MAX_PARENTS])
     kept = _retain_superseded_siblings(kept, result.hits)
     kept = _append_fact_siblings(index, query, kept)
     if len(kept) == 1:
@@ -144,7 +144,6 @@ def _append_fact_siblings(index: Index, query: str, hits: list[Hit]) -> list[Hit
         return hits
     out = list(hits)
     present = {hit.parent_id for hit in out}
-    added: set[str] = set()
     for record in records:
         parent_id = record.get("parent_id")
         if not parent_id or parent_id in present:
@@ -175,13 +174,6 @@ def _append_fact_siblings(index: Index, query: str, hits: list[Hit]) -> list[Hit
             )
         )
         present.add(parent_id)
-        added.add(parent_id)
-    while len(out) > MAX_PARENTS:
-        removable = [hit for hit in out if hit.parent_id not in added]
-        if not removable:
-            break
-        worst = min(removable, key=lambda hit: float(hit.score))
-        out.remove(worst)
     return out
 
 
@@ -363,7 +355,11 @@ def _order_current_first(
         return (-score, origin[parent_id])
 
     ordered = sorted(parent_ids, key=sort_key)
-    return _prefer_named_year(ordered, records, query)
+    ordered = _prefer_named_year(ordered, records, query)
+    mixed = _keep_second_named_file(ordered, records, query)
+    if mixed and ordered and mixed[0] != ordered[0]:
+        scores[mixed[0]] = max(scores.values()) + 1e-6
+    return mixed
 
 
 def _prefer_named_year(
@@ -416,10 +412,36 @@ def _rank_scores(parent_ids: list[str]) -> dict[str, float]:
     return {parent_id: 1.0 / (index + 1) for index, parent_id in enumerate(parent_ids)}
 
 
+def _keep_second_named_file(
+    ordered: list[str], records: dict[str, dict[str, Any]], query: str
+) -> list[str]:
+    """One named file must not fill the window when the question also names another."""
+    if len(ordered) <= MAX_PARENTS:
+        return ordered
+    head = ordered[:MAX_PARENTS]
+
+    def source(parent_id: str) -> str:
+        return (records.get(parent_id) or {}).get("source_path") or ""
+
+    sources = {source(parent_id) for parent_id in head}
+    if len(sources) != 1:
+        return ordered
+    only = next(iter(sources))
+    for parent_id in ordered[MAX_PARENTS:]:
+        other = source(parent_id)
+        if not other or other == only:
+            continue
+        if title_match_boost(query, "", other) <= 1:
+            continue
+        rest = [item for item in ordered if item != parent_id]
+        return [parent_id, *rest]
+    return ordered
+
+
 def _signoff_ids(
     query: str, parent_ids: list[str], records: dict[str, dict[str, Any]]
 ) -> list[str]:
-    """Keep one short current line past the top-k when the question asks who."""
+    """Put one short current line in the window when the question asks who."""
     chosen = list(parent_ids[:MAX_PARENTS])
     if not re.search(r"\b(who|which)\b", query or "", re.IGNORECASE):
         return chosen
@@ -435,7 +457,7 @@ def _signoff_ids(
             continue
         words = set(re.findall(r"[a-z]{4,}", text.casefold()))
         if asked & words:
-            return chosen + [parent_id]
+            return [parent_id, *chosen[: MAX_PARENTS - 1]]
     return chosen
 
 
